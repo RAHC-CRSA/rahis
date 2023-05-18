@@ -1,0 +1,34 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Diseases</strong>
+      </c-card-header>
+      <c-card-body>
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Classification</th>
+            <th>Zoonotic</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let disease of diseases$ | async; index as i">
+              <td>{{ disease.id }}</td>
+              <td>{{ disease.name }}</td>
+              <td>{{ disease.classification }}</td>
+              <td>{{ disease.zoonotic ? 'Yes' : 'No'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- 
+          <ngx-datatable [rows]="diseases$ | async" [columns]="columns" [columnMode]="'force'"
+            class="bootstrap table table-bordered table-striped table-hover"></ngx-datatable> -->
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<ng-template #zoonoticTemplate let-row="row" let-value="value" let-i="index">
+  {{ value ? 'Yes' : 'No' }}
+</ng-template>

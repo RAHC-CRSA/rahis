@@ -1,0 +1,55 @@
+<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col md="8">
+        <c-card-group>
+          <c-card class="p-4">
+            <c-card-body>
+              <form cForm [formGroup]="loginForm" novalidate="novalidate" (ngSubmit)="submit()">
+                <h1>Login</h1>
+                <p class="text-medium-emphasis">Sign In to your account</p>
+
+                <ng-container *ngIf="hasError" class="alert alert-danger">
+                  <p class="text-red">The login details are incorrect</p>
+                </ng-container>
+                <c-input-group class="mb-3">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilUser"></svg>
+                  </span>
+                  <input autoComplete="off" type="email" formControlName="username" cFormControl
+                    placeholder="you@youremail.com" />
+                </c-input-group>
+                <c-input-group class="mb-4">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilLockLocked"></svg>
+                  </span>
+                  <input autoComplete="off" type="password" formControlName="password" cFormControl />
+                </c-input-group>
+                <c-row>
+                  <c-col xs="6">
+                    <button cButton type="submit" class="px-4" color="primary" [disabled]="loginForm.invalid">
+                      Login
+                    </button>
+                  </c-col>
+                  <c-col class="text-right" xs="6">
+                    <button cButton class="px-0" color="link" routerLink="/auth/forgot-password">
+                      Forgot password?
+                    </button>
+                  </c-col>
+                </c-row>
+              </form>
+            </c-card-body>
+          </c-card>
+          <c-card [ngStyle]="{'width.%': 44}" class="text-white bg-primary py-5">
+            <c-card-body class="text-center">
+              <div>
+                <img src="./assets/img/brand/logo-large.png" alt="brand" class="py-4">
+                <h2>RAHIS</h2>
+              </div>
+            </c-card-body>
+          </c-card>
+        </c-card-group>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>

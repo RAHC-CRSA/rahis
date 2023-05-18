@@ -1,0 +1,17 @@
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/bin/Debug/net7.0/RegionalAnimalHealth.Infrastructure.deps.json
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/bin/Debug/net7.0/RegionalAnimalHealth.Infrastructure.dll
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/bin/Debug/net7.0/RegionalAnimalHealth.Infrastructure.pdb
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/bin/Debug/net7.0/RegionalAnimalHealth.Application.dll
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/bin/Debug/net7.0/RegionalAnimalHealth.Domain.dll
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/bin/Debug/net7.0/RegionalAnimalHealth.Application.pdb
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/bin/Debug/net7.0/RegionalAnimalHealth.Domain.pdb
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/obj/Debug/net7.0/Infrastructure.csproj.AssemblyReference.cache
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/obj/Debug/net7.0/Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/obj/Debug/net7.0/Infrastructure.AssemblyInfoInputs.cache
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/obj/Debug/net7.0/Infrastructure.AssemblyInfo.cs
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/obj/Debug/net7.0/Infrastructure.csproj.CoreCompileInputs.cache
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/obj/Debug/net7.0/Infrastructure.csproj.CopyComplete
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/obj/Debug/net7.0/RegionalAnimalHealth.Infrastructure.dll
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/obj/Debug/net7.0/refint/RegionalAnimalHealth.Infrastructure.dll
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/obj/Debug/net7.0/RegionalAnimalHealth.Infrastructure.pdb
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Infrastructure/obj/Debug/net7.0/ref/RegionalAnimalHealth.Infrastructure.dll

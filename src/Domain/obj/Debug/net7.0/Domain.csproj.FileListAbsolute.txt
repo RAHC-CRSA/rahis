@@ -1,0 +1,12 @@
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/bin/Debug/net7.0/RegionalAnimalHealth.Domain.deps.json
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/bin/Debug/net7.0/RegionalAnimalHealth.Domain.dll
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/bin/Debug/net7.0/RegionalAnimalHealth.Domain.pdb
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/obj/Debug/net7.0/Domain.csproj.AssemblyReference.cache
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/obj/Debug/net7.0/Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/obj/Debug/net7.0/Domain.AssemblyInfoInputs.cache
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/obj/Debug/net7.0/Domain.AssemblyInfo.cs
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/obj/Debug/net7.0/Domain.csproj.CoreCompileInputs.cache
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/obj/Debug/net7.0/RegionalAnimalHealth.Domain.dll
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/obj/Debug/net7.0/refint/RegionalAnimalHealth.Domain.dll
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/obj/Debug/net7.0/RegionalAnimalHealth.Domain.pdb
+/Users/sheyin/Projects/RegionalAnimalHealth/src/Domain/obj/Debug/net7.0/ref/RegionalAnimalHealth.Domain.dll

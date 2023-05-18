@@ -1,0 +1,18 @@
+<form [formGroup]="treatmentInfo">
+  <fieldset>
+    <c-row>
+      <c-col class="p-3">
+        <h5 class="mb-3">Treatment Info</h5>
+        <hr>
+
+        <c-row>
+          <c-col>
+            <input (click)="onPrevious()" type="button" name="previous" class="btn btn-light mx-1" value="Previous" />
+            <input (click)="onSubmit()" type="button" name="next" class="next btn btn-light mx-1" value="Next"
+              [disabled]="treatmentInfo.invalid" />
+          </c-col>
+        </c-row>
+      </c-col>
+    </c-row>
+  </fieldset>
+</form>

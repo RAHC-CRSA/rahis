@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:44447",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "/Users/sheyin/Projects/RegionalAnimalHealth/src/WebUI/ClientApp/",
+"MaxTimeoutInSeconds": "120"
+}
+}

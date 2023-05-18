@@ -1,0 +1,32 @@
+<form [formGroup]="infectionInfo">
+  <fieldset>
+    <c-row>
+      <c-col class="p-3">
+        <h5 class="mb-3">Infection Info</h5>
+        <hr>
+
+        <c-row class="g-3 mb-3">
+          <c-col xs>
+            <input aria-label="Number infected" cFormControl formControlName="numberExposed"
+              placeholder="Number exposed" />
+          </c-col>
+          <c-col xs>
+            <input aria-label="Number infected" cFormControl formControlName="numberInfected"
+              placeholder="Number infected" />
+          </c-col>
+          <c-col xs>
+            <input aria-label="Mortality" cFormControl formControlName="mortality" placeholder="Mortality" />
+          </c-col>
+        </c-row>
+
+        <c-row>
+          <c-col>
+            <input (click)="onPrevious()" type="button" name="previous" class="btn btn-light mx-1" value="Previous" />
+            <input (click)="onSubmit()" type="button" name="next" class="next btn btn-light mx-1" value="Next"
+              [disabled]="infectionInfo.invalid" />
+          </c-col>
+        </c-row>
+      </c-col>
+    </c-row>
+  </fieldset>
+</form>
