@@ -23,6 +23,7 @@ export class ReportsService {
   getOccurrences: GetOccurrencesClient;
   createReportClient: CreateReportClient;
   getReportsClient: GetReportsClient;
+  getReport: GetReportsClient;
 
   constructor(http: HttpClient) {
     this.getOccurrences = new GetOccurrencesClient(http);

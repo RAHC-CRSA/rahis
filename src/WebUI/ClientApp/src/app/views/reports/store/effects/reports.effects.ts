@@ -89,4 +89,18 @@ export class ReportsEffects {
       )
     )
   );
+
+  loadReport$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ReportsActions.loadReport),
+      exhaustMap((action) =>
+        this.reportsService.getReport(action.payload).pipe(
+          map((data) => ReportsActions.loadReportSuccess({ payload: data })),
+          catchError((error) =>
+            of(ReportsActions.loadReportFail({ payload: error }))
+          )
+        )
+      )
+    )
+  );
 }
