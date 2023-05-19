@@ -6,6 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.appSettings.Development.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -23,6 +24,19 @@ bin/
 Bin/
 obj/
 Obj/
+
+**/[Dd]ebug/
+**/[Dd]ebugPublic/
+**/[Rr]elease/
+**/[Rr]eleases/
+**/x64/
+**/x86/
+**/build/
+**/bld/
+**/bin/
+**/Bin/
+**/obj/
+**/Obj/
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -236,4 +250,5 @@ _Pvt_Extensions
 /RegionalAnimalHealth.ndproj
 /.mfractor
 src/WebUI/ClientApp/package-lock.json
+src/WebUI/appsettings.Development.json
 /src/WebUI/appsettings.Development.json
