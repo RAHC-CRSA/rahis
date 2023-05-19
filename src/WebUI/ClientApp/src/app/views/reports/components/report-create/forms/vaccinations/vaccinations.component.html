@@ -1,0 +1,29 @@
+<h4 class="mb-3">Vaccinations</h4>
+<form cForm novalidate="novalidate" class="needs-validation">
+  <c-row class="g-3 mb-3">
+    <c-col xs>
+      <label>Vaccine Name</label>
+      <input aria-label="Vaccine name" cFormControl placeholder="Vaccine name" />
+    </c-col>
+    <c-col xs>
+      <label>Number Vaccinated</label>
+      <input aria-label="Number vaccinated" cFormControl placeholder="Number vaccinated" />
+    </c-col>
+  </c-row>
+  <c-row class="mb-3">
+    <c-col>
+      <label>Institution</label>
+      <select aria-label="institution" cSelect>
+        <option [ngValue]="null" [disabled]="true" [selected]="true">Select institution</option>
+      </select>
+    </c-col>
+  </c-row>
+
+  <c-row>
+    <c-col>
+      <button cButton type="submit" class="px-4" color="primary">
+        Add Vaccination
+      </button>
+    </c-col>
+  </c-row>
+</form>

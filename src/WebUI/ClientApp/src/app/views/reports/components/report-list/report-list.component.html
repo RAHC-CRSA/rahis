@@ -18,7 +18,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let report of reports$ | async; index as i">
-              <td>{{ report.id }}</td>
+              <td><a routerLink="reports/{{ report.id }}">{{ report.id }}</a></td>
               <td>{{ report.occurrenceTitle }}</td>
               <td>{{ report.location }}</td>
               <td>{{ report.isVerified ? 'Yes' : 'No' }}</td>

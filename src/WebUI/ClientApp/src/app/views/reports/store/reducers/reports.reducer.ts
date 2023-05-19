@@ -51,6 +51,17 @@ export const reportsReducer = createReducer(
     error: null,
     data: payload,
   })),
+  on(ReportActionTypes.loadReport, (state) => ({ ...state, loading: true })),
+  on(ReportActionTypes.loadReportFail, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    error: payload,
+  })),
+  on(ReportActionTypes.loadReportSuccess, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    data: payload,
+  })),
   on(ReportActionTypes.loadReports, (state) => ({ ...state, loading: true })),
   on(ReportActionTypes.loadReportsFail, (state, { payload }) => ({
     ...state,

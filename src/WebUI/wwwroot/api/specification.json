@@ -51,7 +51,9 @@
         },
         "security": [
           {
-            "JWT": []
+            "JWT": [
+              "Super Admin"
+            ]
           }
         ]
       }
@@ -595,6 +597,69 @@
         "security": [
           {
             "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/report/{ReportId}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Gets a report by id",
+        "description": "Gets a report by id",
+        "operationId": "GetReport_Handle",
+        "parameters": [
+          {
+            "name": "ReportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Verifier"
+            ]
           }
         ]
       }

@@ -45,7 +45,7 @@ export class RegionCreateComponent implements OnInit {
   submit() {
     const payload: IAddRegionCommand = {
       name: this.f.name,
-      code: this.f.name,
+      code: this.f.code,
       countryId: this.f.country,
     };
 

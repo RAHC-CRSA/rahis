@@ -28,7 +28,25 @@ export const createReportSuccess = createAction(
   props<{ payload: ReportDto }>()
 );
 
-// Load regions
+// Load report
+export const LOAD_REPORT = `[Reports] Load Report`;
+export const LOAD_REPORT_FAIL = `[Reports] Load Report Fail`;
+export const LOAD_REPORT_SUCCESS = `[Reports] Load Report Success`;
+
+export const loadReport = createAction(
+  LOAD_REPORT,
+  props<{ payload: number }>()
+);
+export const loadReportFail = createAction(
+  LOAD_REPORT_FAIL,
+  props<{ payload: string }>()
+);
+export const loadReportSuccess = createAction(
+  LOAD_REPORT_SUCCESS,
+  props<{ payload: ReportDto }>()
+);
+
+// Load reports
 export const LOAD_REPORTS = `[Reports] Load Reports`;
 export const LOAD_REPORTS_FAIL = `[Reports] Load Reports Fail`;
 export const LOAD_REPORTS_SUCCESS = `[Reports] Load Reports Success`;

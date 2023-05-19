@@ -21,6 +21,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> {
     this.store.dispatch(checkTokenExpiration());
+    console.log('Guarding...');
     return this.store.select(getUser).pipe(
       map((user) => {
         if (user && user?.authToken != null) {

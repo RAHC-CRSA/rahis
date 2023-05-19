@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { ICreateReportCommand } from 'src/app/web-api-client';
 import { ReportsState } from '../../store';
 import { createReport } from '../../store/actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-report-create',
@@ -54,7 +55,7 @@ export class ReportCreateComponent implements OnInit {
     mortality: '',
   };
 
-  constructor(private store: Store<ReportsState>) {}
+  constructor(private router: Router, private store: Store<ReportsState>) {}
 
   ngOnInit() {}
 
@@ -137,7 +138,7 @@ export class ReportCreateComponent implements OnInit {
   }
 
   submit() {
-    console.log({ data: this.formValues });
+    this.router.navigateByUrl('/reports/create/confirmation');
   }
 
   cancel() {}
