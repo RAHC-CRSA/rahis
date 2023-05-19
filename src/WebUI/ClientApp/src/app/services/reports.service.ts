@@ -8,6 +8,7 @@ import {
   GetCountriesClient,
   GetOccurrencesClient,
   GetRegionsClient,
+  GetReportClient,
   GetReportsClient,
   IAddRegionCommand,
   ICreateReportCommand,
@@ -23,12 +24,12 @@ export class ReportsService {
   getOccurrences: GetOccurrencesClient;
   createReportClient: CreateReportClient;
   getReportsClient: GetReportsClient;
-  getReport: GetReportsClient;
+  getReportClient: GetReportClient;
 
   constructor(http: HttpClient) {
     this.getOccurrences = new GetOccurrencesClient(http);
     this.createReportClient = new CreateReportClient(http);
-    this.getReportsClient = new GetReportsClient(http);
+    this.getReportClient = new GetReportClient(http);
   }
 
   getAllOccurrences() {
@@ -51,5 +52,9 @@ export class ReportsService {
 
   getAllReports() {
     return this.getReportsClient.handle();
+  }
+
+  getReport(id: number) {
+    return this.getReportClient.handle(id);
   }
 }

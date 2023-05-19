@@ -6,9 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Common.Security;
-using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetOccurrences;
 using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReportById;
-using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReports;
 
 namespace WebUI.Endpoints.Reports;
 
