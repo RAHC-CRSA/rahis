@@ -38,6 +38,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { OccurrencesListComponent } from './components/occurrences-list/occurrences-list.component';
 import { OccurrenceDetailComponent } from './components/occurrence-detail/occurrence-detail.component';
 import { ReportVerifyComponent } from './components/report-verify/report-verify.component';
+import { VaccinationsComponent } from './components/report-create/forms/vaccinations/vaccinations.component';
+import { DiagnosticTestsComponent } from './components/report-create/forms/diagnostic-tests/diagnostic-tests.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { ReportVerifyComponent } from './components/report-verify/report-verify.
     OccurrencesListComponent,
     OccurrenceDetailComponent,
     ReportVerifyComponent,
+    VaccinationsComponent,
+    DiagnosticTestsComponent,
   ],
   imports: [
     ButtonGroupModule,
