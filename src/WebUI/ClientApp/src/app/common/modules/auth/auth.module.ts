@@ -17,7 +17,7 @@ import { IconModule } from '@coreui/icons-angular';
 
 import { authReducer } from './store/reducers';
 import { featureKey } from './store/actions/auth.actions';
-import { AuthEffects as effects } from './store/effects/auth.effects';
+import { effects } from './store/effects';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';

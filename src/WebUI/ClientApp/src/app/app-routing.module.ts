@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './common/guards/auth.guard';
 
 import { DefaultLayoutComponent } from './containers';
+import { Page401Component } from './views/pages/page401/page401.component';
 import { Page404Component } from './views/pages/page404/page404.component';
 import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
@@ -99,6 +100,13 @@ const routes: Routes = [
           import('./views/pages/pages.module').then((m) => m.PagesModule),
       },
     ],
+  },
+  {
+    path: '401',
+    component: Page401Component,
+    data: {
+      title: 'Page 401',
+    },
   },
   {
     path: '404',

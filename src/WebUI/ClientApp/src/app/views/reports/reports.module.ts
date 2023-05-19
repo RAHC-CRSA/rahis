@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { Select2Module } from 'ng-select2-component';
+
 import { reducer } from './store';
 import { featureKey } from './store/actions';
 import { effects } from './store/effects';
@@ -35,6 +37,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { OccurrencesListComponent } from './components/occurrences-list/occurrences-list.component';
 import { OccurrenceDetailComponent } from './components/occurrence-detail/occurrence-detail.component';
+import { ReportVerifyComponent } from './components/report-verify/report-verify.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,7 @@ import { OccurrenceDetailComponent } from './components/occurrence-detail/occurr
     TreatmentSourceInfoComponent,
     OccurrencesListComponent,
     OccurrenceDetailComponent,
+    ReportVerifyComponent,
   ],
   imports: [
     ButtonGroupModule,
@@ -65,6 +69,7 @@ import { OccurrenceDetailComponent } from './components/occurrence-detail/occurr
     FormsModule,
     ReactiveFormsModule,
     AppSharedModule,
+    Select2Module,
     StoreModule.forFeature(featureKey, reducer),
     EffectsModule.forFeature(effects),
   ],

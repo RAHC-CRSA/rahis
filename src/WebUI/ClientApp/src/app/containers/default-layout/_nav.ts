@@ -78,6 +78,17 @@ export const verifierNavItems: INavData[] = [
     url: '/dashboard',
     iconComponent: { name: 'cil-home' },
   },
+  {
+    name: 'Reports',
+    url: '/reports',
+    iconComponent: { name: 'cil-chart' },
+    children: [
+      {
+        name: 'View all Reports',
+        url: '/reports',
+      },
+    ],
+  },
 ];
 
 export const reporterNavItems: INavData[] = [

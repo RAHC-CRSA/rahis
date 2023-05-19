@@ -51,7 +51,9 @@
         },
         "security": [
           {
-            "JWT": []
+            "JWT": [
+              "Super Admin"
+            ]
           }
         ]
       }
