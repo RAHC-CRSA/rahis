@@ -6,6 +6,7 @@ import { ReportCreateComponent } from './components/report-create/report-create.
 import { ReportDetailComponent } from './components/report-detail/report-detail.component';
 import { ReportListComponent } from './components/report-list/report-list.component';
 import { ReportsComponent } from './reports.component';
+import { ConfirmationComponent } from './components/report-create/forms/confirmation/confirmation.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,13 @@ const routes: Routes = [
         component: ReportCreateComponent,
         data: {
           title: $localize`Create Report`,
+        },
+      },
+      {
+        path: 'create/confirmation',
+        component: ConfirmationComponent,
+        data: {
+          title: $localize`Create Success`,
         },
       },
       {

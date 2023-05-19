@@ -1,9 +1,127 @@
 <form [formGroup]="treatmentInfo">
   <fieldset>
-    <c-row>
+    <c-row ngPreserveWhitespaces>
       <c-col class="p-3">
         <h5 class="mb-3">Treatment Info</h5>
         <hr>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-3">
+            <label>Stamping Out</label>
+            <div>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="false" />
+                <label cFormCheckLabel>No</label>
+              </c-form-check>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="true" />
+                <label cFormCheckLabel>Yes</label>
+              </c-form-check>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label>Destruction of Corpses</label>
+            <div>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="false" />
+                <label cFormCheckLabel>No</label>
+              </c-form-check>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="true" />
+                <label cFormCheckLabel>Yes</label>
+              </c-form-check>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label>Disinfection</label>
+            <div>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="false" />
+                <label cFormCheckLabel>No</label>
+              </c-form-check>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="true" />
+                <label cFormCheckLabel>Yes</label>
+              </c-form-check>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label>Observation</label>
+            <div>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="false" />
+                <label cFormCheckLabel>No</label>
+              </c-form-check>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="true" />
+                <label cFormCheckLabel>Yes</label>
+              </c-form-check>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+
+          <div class="col-md-3">
+            <label>Quarantine</label>
+            <div class="g-3">
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="false" />
+                <label cFormCheckLabel>No</label>
+              </c-form-check>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="true" />
+                <label cFormCheckLabel>Yes</label>
+              </c-form-check>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label>Movement Control</label>
+            <div>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="false" />
+                <label cFormCheckLabel>No</label>
+              </c-form-check>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="true" />
+                <label cFormCheckLabel>Yes</label>
+              </c-form-check>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label>Treatment</label>
+            <div>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="false" />
+                <label cFormCheckLabel>No</label>
+              </c-form-check>
+              <c-form-check>
+                <input cFormCheckInput type="radio" [value]="true" />
+                <label cFormCheckLabel>Yes</label>
+              </c-form-check>
+            </div>
+          </div>
+        </div>
+
+        <c-row class="mb-5">
+          <c-col>
+            <hr>
+            <app-vaccinations class="mb-4"></app-vaccinations>
+          </c-col>
+        </c-row>
+
+
+        <c-row class="mb-5">
+          <c-col>
+            <hr>
+            <app-diagnostic-tests class="mb-4"></app-diagnostic-tests>
+          </c-col>
+        </c-row>
 
         <c-row>
           <c-col>

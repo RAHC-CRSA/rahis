@@ -29,6 +29,7 @@ export class ReportsService {
   constructor(http: HttpClient) {
     this.getOccurrences = new GetOccurrencesClient(http);
     this.createReportClient = new CreateReportClient(http);
+    this.getReportsClient = new GetReportsClient(http);
     this.getReportClient = new GetReportClient(http);
   }
 

@@ -7,6 +7,7 @@
 
         <c-row class="g-3 mb-3">
           <c-col xs>
+            <label>Infected Species</label>
             <select aria-label="species" cSelect formControlName="species">
               <option [ngValue]="''" [disabled]="true" [selected]="true">Select infected species</option>
               <option *ngFor="let species of species$ | async; index as i" value="{{ species.id}}">{{ species.name }}
@@ -14,6 +15,7 @@
             </select>
           </c-col>
           <c-col xs>
+            <label>Disease</label>
             <select aria-label="disease" cSelect formControlName="disease">
               <option [ngValue]="''" [disabled]="true" [selected]="true">Select disease</option>
               <option *ngFor="let disease of diseases$ | async; index as i" value="{{ disease.id}}">{{ disease.name }}

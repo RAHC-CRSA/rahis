@@ -40,6 +40,7 @@ import { OccurrenceDetailComponent } from './components/occurrence-detail/occurr
 import { ReportVerifyComponent } from './components/report-verify/report-verify.component';
 import { VaccinationsComponent } from './components/report-create/forms/vaccinations/vaccinations.component';
 import { DiagnosticTestsComponent } from './components/report-create/forms/diagnostic-tests/diagnostic-tests.component';
+import { ConfirmationComponent } from './components/report-create/forms/confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { DiagnosticTestsComponent } from './components/report-create/forms/diagn
     ReportVerifyComponent,
     VaccinationsComponent,
     DiagnosticTestsComponent,
+    ConfirmationComponent,
   ],
   imports: [
     ButtonGroupModule,

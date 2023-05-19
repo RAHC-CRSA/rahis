@@ -7,6 +7,7 @@
 
         <c-row class="g-3 mb-3">
           <c-col xs>
+            <label>Country</label>
             <select aria-label="country" cSelect (change)="onCountryChange()" formControlName="country">
               <option [ngValue]="''" [disabled]="true" [selected]="true">Select country</option>
               <option *ngFor="let country of countries$ | async; index as i" value="{{ country.id}}">{{ country.name }}
@@ -14,6 +15,7 @@
             </select>
           </c-col>
           <c-col xs>
+            <label>Region</label>
             <select aria-label="region" cSelect formControlName="region">
               <option [ngValue]="''" [disabled]="true" [selected]="true">Select region</option>
               <option *ngFor="let region of regions$ | async; index as i;" value="{{ region.id}}">{{ region.name }}

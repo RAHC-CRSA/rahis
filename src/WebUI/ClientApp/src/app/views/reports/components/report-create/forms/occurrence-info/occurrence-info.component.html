@@ -7,8 +7,10 @@
 
         <c-row class="mb-3" *ngIf="occurrences.length">
           <c-col>
+            <label>Occurrence</label>
             <app-optional-select [items]="occurrences" [otherLabel]="otherLabel" (otherChanged)="onOtherChanged($event)"
-              [disabled]="newOccurrence" [value]="formData.occurrence" (valueChanged)="onValueChanged($event)"></app-optional-select>
+              [disabled]="newOccurrence" [value]="formData.occurrence"
+              (valueChanged)="onValueChanged($event)"></app-optional-select>
           </c-col>
         </c-row>
 

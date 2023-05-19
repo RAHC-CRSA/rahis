@@ -5,6 +5,24 @@
         <h5 class="mb-3">Treatment Source</h5>
         <hr>
 
+        <c-row class="mb-3">
+          <c-col>
+            <label>Institution</label>
+            <select aria-label="institution" cSelect>
+              <option [ngValue]="null" [disabled]="true" [selected]="true">Select institution</option>
+            </select>
+          </c-col>
+        </c-row>
+
+        <c-row class="g-3 mb-3">
+          <c-col xs>
+            <label>Comments/Remarks</label>
+            <textarea aria-label="Comments" cFormControl placeholder="Comments"></textarea>
+          </c-col>
+        </c-row>
+
+
+
         <c-row>
           <c-col>
             <input (click)="onPrevious()" type="button" name="previous" class="previous btn btn-light mx-1"
