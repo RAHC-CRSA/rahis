@@ -250,57 +250,6 @@
         ]
       }
     },
-    "/api/reports/add-diagnostic-test-type": {
-      "post": {
-        "tags": [
-          "Reports"
-        ],
-        "summary": "Adds a diagnostic test type",
-        "description": "Adds a diagnostic test type to the system",
-        "operationId": "AddDiagnosticTestType_Handle",
-        "requestBody": {
-          "x-name": "request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddDiagnosticTestTypeCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DiagnosticTestTypeDto"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": [
-              "Reporter"
-            ]
-          }
-        ]
-      }
-    },
     "/api/reports/add-vaccination": {
       "post": {
         "tags": [
@@ -324,57 +273,6 @@
         "responses": {
           "200": {
             "description": ""
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": [
-              "Reporter"
-            ]
-          }
-        ]
-      }
-    },
-    "/api/reports/add-vaccination-type": {
-      "post": {
-        "tags": [
-          "Reports"
-        ],
-        "summary": "Adds a vaccination type",
-        "description": "Adds a vaccination type to the system",
-        "operationId": "AddVaccinationType_Handle",
-        "requestBody": {
-          "x-name": "request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddVaccinationTypeCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/VaccinationTypeDto"
-                }
-              }
-            }
           },
           "400": {
             "description": "",
@@ -501,56 +399,6 @@
         ]
       }
     },
-    "/api/reports/diagnostic-test-types": {
-      "get": {
-        "tags": [
-          "Reports"
-        ],
-        "summary": "Gets the list of diagnostic test types",
-        "description": "Gets the list of diagnostic test types in the system",
-        "operationId": "GetDiagnosticTestTypes_Handle",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DiagnosticTestTypeDto"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
     "/api/reports/occurrences": {
       "get": {
         "tags": [
@@ -664,56 +512,6 @@
         ]
       }
     },
-    "/api/reports/vaccination-types": {
-      "get": {
-        "tags": [
-          "Reports"
-        ],
-        "summary": "Gets the list of vaccination types",
-        "description": "Gets the list of vaccination types in the system",
-        "operationId": "GetVaccinationTypes_Handle",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/VaccinationTypeDto"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
     "/api/countries": {
       "post": {
         "tags": [
@@ -750,7 +548,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -800,7 +598,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -849,7 +647,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -960,7 +758,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -995,22 +793,12 @@
               }
             }
           },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
           "400": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1036,7 +824,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthRequestDto"
+                "$ref": "#/components/schemas/CreateAuthTokenCommand"
               }
             }
           },
@@ -1088,6 +876,16 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -1126,6 +924,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1233,9 +1041,8 @@
             "type": "integer",
             "format": "int64"
           },
-          "testId": {
-            "type": "integer",
-            "format": "int64"
+          "name": {
+            "type": "string"
           },
           "numberTested": {
             "type": "integer",
@@ -1252,29 +1059,6 @@
           }
         }
       },
-      "DiagnosticTestTypeDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "nullable": true
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "AddDiagnosticTestTypeCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "name": {
-            "type": "string"
-          }
-        }
-      },
       "AddVaccinationCommand": {
         "type": "object",
         "additionalProperties": false,
@@ -1283,45 +1067,23 @@
             "type": "integer",
             "format": "int64"
           },
-          "vaccinationTypeId": {
-            "type": "integer",
-            "format": "int64"
+          "name": {
+            "type": "string"
           },
           "numberVaccinated": {
             "type": "integer",
             "format": "int32"
           },
-          "diseaseId": {
-            "type": "integer",
-            "format": "int64"
+          "human": {
+            "type": "boolean"
           },
-          "institutionId": {
+          "animal": {
+            "type": "boolean"
+          },
+          "professionalId": {
             "type": "integer",
             "format": "int64",
             "nullable": true
-          }
-        }
-      },
-      "VaccinationTypeDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "nullable": true
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "AddVaccinationTypeCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "name": {
-            "type": "string"
           }
         }
       },
@@ -1511,6 +1273,21 @@
           }
         }
       },
+      "ErrorResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "summary": {
+            "type": "string"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "AddCountryCommand": {
         "type": "object",
         "additionalProperties": false,
@@ -1632,7 +1409,7 @@
           }
         }
       },
-      "AuthRequestDto": {
+      "CreateAuthTokenCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {

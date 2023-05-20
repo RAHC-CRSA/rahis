@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Regions.Commands.AddDisease;
@@ -27,13 +28,14 @@ public class AddDisease : EndpointBaseAsync.WithRequest<AddDiseaseCommand>.WithA
             "Adds a disease to the system")
         ]
     [ProducesResponseType(typeof(DiseaseDto), (int)HttpStatusCode.OK)]
-    [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<DiseaseDto>> HandleAsync(AddDiseaseCommand request, CancellationToken cancellationToken = default)
     {
         var (result, data) = await _mediator.Send(request);
         if (result.Succeeded)
             return Ok(data);
 
-        return BadRequest(result.Errors.ToList());
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

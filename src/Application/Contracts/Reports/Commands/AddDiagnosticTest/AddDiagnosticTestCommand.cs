@@ -3,13 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
-using RegionalAnimalHealth.Domain.Exceptions;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.AddDiagnosticTest;
 public class AddDiagnosticTestCommand : IRequest<Result>
 {
     public long ReportId { get; set; }
-    public long TestId { get; set; }
+    public string Name { get; set; }
     public int NumberTested { get; set; }
     public long ProfessionalId { get; set; }
     public long? InstitutionId { get; set; }
@@ -39,7 +38,7 @@ public class AddDiagnosticTestCommandHandler : IRequestHandler<AddDiagnosticTest
                 return Result.Failure(new List<string> { message });
             }
 
-            report.AddDiagnosticTest(request.TestId, request.NumberTested, request.ProfessionalId, request.InstitutionId);
+            report.AddDiagnosticTest(request.Name, request.NumberTested, request.ProfessionalId, request.InstitutionId);
 
             _context.Reports.Update(report);
             await _context.SaveChangesAsync(cancellationToken);

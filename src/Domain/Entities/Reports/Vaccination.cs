@@ -4,13 +4,12 @@ using RegionalAnimalHealth.Domain.Entities.Personas;
 namespace RegionalAnimalHealth.Domain.Entities.Reports; 
 
 public class Vaccination : BaseAuditableEntity<long> {
-    public long VaccinationTypeId { get; private set; }
+    public string Name { get; private set; }
     public int NumberVaccinated { get; private set; }
     public long ReportId { get; private set; }
-    public long DiseaseId { get; private set; }
+    public bool IsHuman { get; private set; }
+    public bool IsAnimal { get; private set; }
     public virtual Disease Disease { get; private set; }
-    public long? InstitutionId { get; private set; }
-    public virtual Institution Institution { get; private set; }
     public long? ProfessionalId { get; private set; }
     public virtual ParaProfessional Professional { get; private set; }
 
@@ -18,23 +17,23 @@ public class Vaccination : BaseAuditableEntity<long> {
     {
     }
 
-    private Vaccination(long reportId, long vaccinationTypeId, int numberVaccinated, long diseaseId, long? institutionId) : this()
+    private Vaccination(long reportId, string name, int numberVaccinated, bool human, bool animal, long? professionalId) : this()
     {
         ReportId = reportId;
-        VaccinationTypeId = vaccinationTypeId;
+        Name = name;
         NumberVaccinated = numberVaccinated;
-        DiseaseId = diseaseId;
-        InstitutionId = institutionId;
+        IsHuman = human;
+        IsAnimal = animal;
+        ProfessionalId = professionalId;
     }
 
-    public static Vaccination Create(long reportId, long vaccinationTypeId, int numberVaccinated, long diseaseId, long? institutionId = null)
+    public static Vaccination Create(long reportId, string name, int numberVaccinated, bool human, bool animal, long? professionalId = null)
     {
         Guard.IsNotNull(reportId, nameof(reportId));
-        Guard.IsNotNull(vaccinationTypeId, nameof(vaccinationTypeId));
+        Guard.IsNotNullOrEmpty(name, nameof(name));
         Guard.IsNotNull(numberVaccinated, nameof(numberVaccinated));
-        Guard.IsNotNull(diseaseId, nameof(diseaseId));
 
-        return new Vaccination(reportId, vaccinationTypeId, numberVaccinated, diseaseId, institutionId);
+        return new Vaccination(reportId, name, numberVaccinated, human, animal, professionalId);
     }
 
     public void Delete()

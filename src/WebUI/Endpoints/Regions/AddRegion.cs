@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Regions;
 using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Regions.Commands.AddRegion;
@@ -27,13 +28,13 @@ public class AddRegion : EndpointBaseAsync.WithRequest<AddRegionCommand>.WithAct
             "Adds a region to a country in the system")
         ]
     [ProducesResponseType((int)HttpStatusCode.OK)]
-    [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<RegionDto>> HandleAsync(AddRegionCommand request, CancellationToken cancellationToken = default)
     {
         var (result, data) = await _mediator.Send(request);
         if (result.Succeeded)
             return Ok(data);
 
-        return BadRequest(result.Errors.ToList());
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

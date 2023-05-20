@@ -6,19 +6,29 @@ public class Report : BaseAuditableEntity<long>
     public DateOnly OccurenceDate { get; private set; }
     public int NumberInfected { get; private set; }
     public int NumberExposed { get; private set; }
-    public bool IsOngoing { get; private set; }
-    public bool IsVerified { get; private set; }
     public int Mortality { get; private set; }
+    public bool HumanInfection { get; set; }
+    public int HumansInfected { get; private set; }
+    public int HumansExposed { get; private set; }
+    public int HumansMortality { get; private set; }
+    public bool IsOngoing { get; private set; }
+    public bool IsVerified { get; private set; }    
     public ReportType ReportType { get; private set; }
     public decimal? Longitude { get; private set; }
     public decimal? Latitude { get; private set; }
     public bool StampingOut { get; set; }
     public bool DestructionOfCorpses { get; private set; }
+    public int? CorpsesDestroyed { get; set; }
     public bool Disinfection { get; private set; }
     public bool Observation { get; private set; }
+    public int? ObservationDuration { get; private set; }
     public bool Quarantine { get; private set; }
+    public int? QuarantineDuration { get; private set; }
     public bool MovementControl { get; private set; }
+    public string? MovementControlMeasures { get; private set; }
     public bool Treatment { get; private set; }
+    public string? MedicationAdministered { get; private set; }
+    public string? MedicationDosage { get; private set; }
     public string? TreatmentDetails { get; private set; }
 
     public long OccurrenceId { get; private set; }
@@ -26,6 +36,9 @@ public class Report : BaseAuditableEntity<long>
     public long DiseaseId { get; private set; }
     public Disease Disease { get; private set; }
     public long SpeciesId { get; private set; }
+
+    private readonly List<Medication> _medications = new List<Medication>();
+    public virtual IReadOnlyCollection<Medication> Medications => _medications.AsReadOnly();
 
     private readonly List<DiagnosticTest> _diagnosticTests = new();
     public virtual IReadOnlyCollection<DiagnosticTest> DiagnosticTests => _diagnosticTests.AsReadOnly();
@@ -59,15 +72,21 @@ public class Report : BaseAuditableEntity<long>
         return new Report(occurrenceId, diseaseId, speciesId, numberExposed, numberInfected, mortality, occurenceDate);
     }
 
-    public void AddDiagnosticTest(long diagnosticTestTypeId, int numberTested, long professionalId, long? institutionId = null)
+    public void AddMedication(string name, string dosage)
     {
-        var test = DiagnosticTest.Create(Id, diagnosticTestTypeId, numberTested, professionalId, institutionId);
+        var medication = Medication.Create(Id, name, dosage);
+        _medications.Add(medication);
+    }
+
+    public void AddDiagnosticTest(string name, int numberTested, long professionalId, long? institutionId = null)
+    {
+        var test = DiagnosticTest.Create(Id, name, numberTested, professionalId, institutionId);
         _diagnosticTests.Add(test);
     }
 
-    public void AddVaccination(long vaccinationTypeId, int numberVaccinated, long diseaseId, long? institutionId = null)
+    public void AddVaccination(string name, int numberVaccinated, bool human, bool animal, long? professionalId = null)
     {
-        var vacc = Vaccination.Create(Id, vaccinationTypeId, numberVaccinated, diseaseId, institutionId);
+        var vacc = Vaccination.Create(Id, name, numberVaccinated, human, animal, professionalId);
         _vaccinations.Add(vacc);
     }
 
@@ -84,11 +103,18 @@ public class Report : BaseAuditableEntity<long>
 
     public void Delete()
     {
+        DeleteMedications();
         DeleteDiagnosticTests();
         DeleteVaccinations();
 
         IsDeleted = true;
         LastModified = DateTime.UtcNow;
+    }
+
+    public void DeleteMedications()
+    {
+        foreach (var medication in _medications)
+            medication.Delete();
     }
 
     public void DeleteDiagnosticTests()

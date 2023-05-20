@@ -451,90 +451,6 @@ export class AddDiagnosticTestClient implements IAddDiagnosticTestClient {
     }
 }
 
-export interface IAddDiagnosticTestTypeClient {
-    /**
-     * Adds a diagnostic test type
-     */
-    handle(request: AddDiagnosticTestTypeCommand): Observable<DiagnosticTestTypeDto>;
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class AddDiagnosticTestTypeClient implements IAddDiagnosticTestTypeClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * Adds a diagnostic test type
-     */
-    handle(request: AddDiagnosticTestTypeCommand): Observable<DiagnosticTestTypeDto> {
-        let url_ = this.baseUrl + "/api/reports/add-diagnostic-test-type";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHandle(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processHandle(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<DiagnosticTestTypeDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<DiagnosticTestTypeDto>;
-        }));
-    }
-
-    protected processHandle(response: HttpResponseBase): Observable<DiagnosticTestTypeDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = DiagnosticTestTypeDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status === 400) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
-            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
 export interface IAddVaccinationClient {
     /**
      * Adds a vaccination record to a report
@@ -597,90 +513,6 @@ export class AddVaccinationClient implements IAddVaccinationClient {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return _observableOf(null as any);
-            }));
-        } else if (status === 400) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
-            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-export interface IAddVaccinationTypeClient {
-    /**
-     * Adds a vaccination type
-     */
-    handle(request: AddVaccinationTypeCommand): Observable<VaccinationTypeDto>;
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class AddVaccinationTypeClient implements IAddVaccinationTypeClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * Adds a vaccination type
-     */
-    handle(request: AddVaccinationTypeCommand): Observable<VaccinationTypeDto> {
-        let url_ = this.baseUrl + "/api/reports/add-vaccination-type";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHandle(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processHandle(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<VaccinationTypeDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<VaccinationTypeDto>;
-        }));
-    }
-
-    protected processHandle(response: HttpResponseBase): Observable<VaccinationTypeDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = VaccinationTypeDto.fromJS(resultData200);
-            return _observableOf(result200);
             }));
         } else if (status === 400) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -847,100 +679,6 @@ export class GetReportsClient implements IGetReportsClient {
                 result200 = [] as any;
                 for (let item of resultData200)
                     result200!.push(ReportListDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status === 401) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ProblemDetails.fromJS(resultData401);
-            return throwException("A server side error occurred.", status, _responseText, _headers, result401);
-            }));
-        } else if (status === 400) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
-            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-export interface IGetDiagnosticTestTypesClient {
-    /**
-     * Gets the list of diagnostic test types
-     */
-    handle(): Observable<DiagnosticTestTypeDto[]>;
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class GetDiagnosticTestTypesClient implements IGetDiagnosticTestTypesClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * Gets the list of diagnostic test types
-     */
-    handle(): Observable<DiagnosticTestTypeDto[]> {
-        let url_ = this.baseUrl + "/api/reports/diagnostic-test-types";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHandle(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processHandle(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<DiagnosticTestTypeDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<DiagnosticTestTypeDto[]>;
-        }));
-    }
-
-    protected processHandle(response: HttpResponseBase): Observable<DiagnosticTestTypeDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(DiagnosticTestTypeDto.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -1155,100 +893,6 @@ export class GetReportClient implements IGetReportClient {
     }
 }
 
-export interface IGetVaccinationTypesClient {
-    /**
-     * Gets the list of vaccination types
-     */
-    handle(): Observable<VaccinationTypeDto[]>;
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class GetVaccinationTypesClient implements IGetVaccinationTypesClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * Gets the list of vaccination types
-     */
-    handle(): Observable<VaccinationTypeDto[]> {
-        let url_ = this.baseUrl + "/api/reports/vaccination-types";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processHandle(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processHandle(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<VaccinationTypeDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<VaccinationTypeDto[]>;
-        }));
-    }
-
-    protected processHandle(response: HttpResponseBase): Observable<VaccinationTypeDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(VaccinationTypeDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status === 401) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ProblemDetails.fromJS(resultData401);
-            return throwException("A server side error occurred.", status, _responseText, _headers, result401);
-            }));
-        } else if (status === 400) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
-            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
 export interface IAddCountryClient {
     /**
      * Adds a country
@@ -1320,8 +964,7 @@ export class AddCountryClient implements IAddCountryClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
+            result400 = ErrorResponse.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1414,8 +1057,7 @@ export class GetCountriesClient implements IGetCountriesClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
+            result400 = ErrorResponse.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1498,8 +1140,7 @@ export class AddRegionClient implements IAddRegionClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
+            result400 = ErrorResponse.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1680,8 +1321,7 @@ export class AddDiseaseClient implements IAddDiseaseClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
+            result400 = ProblemDetails.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1763,19 +1403,11 @@ export class GetDiseasesClient implements IGetDiseasesClient {
             }
             return _observableOf(result200);
             }));
-        } else if (status === 401) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ProblemDetails.fromJS(resultData401);
-            return throwException("A server side error occurred.", status, _responseText, _headers, result401);
-            }));
         } else if (status === 400) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
+            result400 = ProblemDetails.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1791,7 +1423,7 @@ export interface IGetAuthTokenClient {
     /**
      * Authenticates a user
      */
-    handle(request: AuthRequestDto): Observable<AuthResponseDto>;
+    handle(request: CreateAuthTokenCommand): Observable<AuthResponseDto>;
 }
 
 @Injectable({
@@ -1810,7 +1442,7 @@ export class GetAuthTokenClient implements IGetAuthTokenClient {
     /**
      * Authenticates a user
      */
-    handle(request: AuthRequestDto): Observable<AuthResponseDto> {
+    handle(request: CreateAuthTokenCommand): Observable<AuthResponseDto> {
         let url_ = this.baseUrl + "/api/auth";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1940,6 +1572,13 @@ export class GetSystemRolesClient implements IGetSystemRolesClient {
             }
             return _observableOf(result200);
             }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ErrorResponse.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -2015,6 +1654,13 @@ export class CreateUserClient implements ICreateUserClient {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = UserDto.fromJS(resultData200);
             return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -2255,7 +1901,7 @@ export interface IUpdateSpeciesCommand {
 
 export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
     reportId?: number;
-    testId?: number;
+    name?: string;
     numberTested?: number;
     professionalId?: number;
     institutionId?: number | undefined;
@@ -2272,7 +1918,7 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
     init(_data?: any) {
         if (_data) {
             this.reportId = _data["reportId"];
-            this.testId = _data["testId"];
+            this.name = _data["name"];
             this.numberTested = _data["numberTested"];
             this.professionalId = _data["professionalId"];
             this.institutionId = _data["institutionId"];
@@ -2289,7 +1935,7 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["reportId"] = this.reportId;
-        data["testId"] = this.testId;
+        data["name"] = this.name;
         data["numberTested"] = this.numberTested;
         data["professionalId"] = this.professionalId;
         data["institutionId"] = this.institutionId;
@@ -2299,94 +1945,19 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
 
 export interface IAddDiagnosticTestCommand {
     reportId?: number;
-    testId?: number;
+    name?: string;
     numberTested?: number;
     professionalId?: number;
     institutionId?: number | undefined;
 }
 
-export class DiagnosticTestTypeDto implements IDiagnosticTestTypeDto {
-    id?: number | undefined;
-    name?: string;
-
-    constructor(data?: IDiagnosticTestTypeDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): DiagnosticTestTypeDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new DiagnosticTestTypeDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IDiagnosticTestTypeDto {
-    id?: number | undefined;
-    name?: string;
-}
-
-export class AddDiagnosticTestTypeCommand implements IAddDiagnosticTestTypeCommand {
-    name?: string;
-
-    constructor(data?: IAddDiagnosticTestTypeCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): AddDiagnosticTestTypeCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new AddDiagnosticTestTypeCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IAddDiagnosticTestTypeCommand {
-    name?: string;
-}
-
 export class AddVaccinationCommand implements IAddVaccinationCommand {
     reportId?: number;
-    vaccinationTypeId?: number;
+    name?: string;
     numberVaccinated?: number;
-    diseaseId?: number;
-    institutionId?: number | undefined;
+    human?: boolean;
+    animal?: boolean;
+    professionalId?: number | undefined;
 
     constructor(data?: IAddVaccinationCommand) {
         if (data) {
@@ -2400,10 +1971,11 @@ export class AddVaccinationCommand implements IAddVaccinationCommand {
     init(_data?: any) {
         if (_data) {
             this.reportId = _data["reportId"];
-            this.vaccinationTypeId = _data["vaccinationTypeId"];
+            this.name = _data["name"];
             this.numberVaccinated = _data["numberVaccinated"];
-            this.diseaseId = _data["diseaseId"];
-            this.institutionId = _data["institutionId"];
+            this.human = _data["human"];
+            this.animal = _data["animal"];
+            this.professionalId = _data["professionalId"];
         }
     }
 
@@ -2417,96 +1989,22 @@ export class AddVaccinationCommand implements IAddVaccinationCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["reportId"] = this.reportId;
-        data["vaccinationTypeId"] = this.vaccinationTypeId;
+        data["name"] = this.name;
         data["numberVaccinated"] = this.numberVaccinated;
-        data["diseaseId"] = this.diseaseId;
-        data["institutionId"] = this.institutionId;
+        data["human"] = this.human;
+        data["animal"] = this.animal;
+        data["professionalId"] = this.professionalId;
         return data;
     }
 }
 
 export interface IAddVaccinationCommand {
     reportId?: number;
-    vaccinationTypeId?: number;
+    name?: string;
     numberVaccinated?: number;
-    diseaseId?: number;
-    institutionId?: number | undefined;
-}
-
-export class VaccinationTypeDto implements IVaccinationTypeDto {
-    id?: number | undefined;
-    name?: string;
-
-    constructor(data?: IVaccinationTypeDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): VaccinationTypeDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new VaccinationTypeDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IVaccinationTypeDto {
-    id?: number | undefined;
-    name?: string;
-}
-
-export class AddVaccinationTypeCommand implements IAddVaccinationTypeCommand {
-    name?: string;
-
-    constructor(data?: IAddVaccinationTypeCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): AddVaccinationTypeCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new AddVaccinationTypeCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IAddVaccinationTypeCommand {
-    name?: string;
+    human?: boolean;
+    animal?: boolean;
+    professionalId?: number | undefined;
 }
 
 export class ReportDto implements IReportDto {
@@ -2841,6 +2339,54 @@ export interface ICountryDto {
     regions?: number;
 }
 
+export class ErrorResponse implements IErrorResponse {
+    summary?: string;
+    errors?: string[];
+
+    constructor(data?: IErrorResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.summary = _data["summary"];
+            if (Array.isArray(_data["errors"])) {
+                this.errors = [] as any;
+                for (let item of _data["errors"])
+                    this.errors!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): ErrorResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new ErrorResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["summary"] = this.summary;
+        if (Array.isArray(this.errors)) {
+            data["errors"] = [];
+            for (let item of this.errors)
+                data["errors"].push(item);
+        }
+        return data;
+    }
+}
+
+export interface IErrorResponse {
+    summary?: string;
+    errors?: string[];
+}
+
 export class AddCountryCommand implements IAddCountryCommand {
     name?: string;
     flag?: string;
@@ -3145,11 +2691,11 @@ export interface IAuthResponseDto {
     roles?: string[];
 }
 
-export class AuthRequestDto implements IAuthRequestDto {
+export class CreateAuthTokenCommand implements ICreateAuthTokenCommand {
     username?: string;
     password?: string;
 
-    constructor(data?: IAuthRequestDto) {
+    constructor(data?: ICreateAuthTokenCommand) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3165,9 +2711,9 @@ export class AuthRequestDto implements IAuthRequestDto {
         }
     }
 
-    static fromJS(data: any): AuthRequestDto {
+    static fromJS(data: any): CreateAuthTokenCommand {
         data = typeof data === 'object' ? data : {};
-        let result = new AuthRequestDto();
+        let result = new CreateAuthTokenCommand();
         result.init(data);
         return result;
     }
@@ -3180,7 +2726,7 @@ export class AuthRequestDto implements IAuthRequestDto {
     }
 }
 
-export interface IAuthRequestDto {
+export interface ICreateAuthTokenCommand {
     username?: string;
     password?: string;
 }

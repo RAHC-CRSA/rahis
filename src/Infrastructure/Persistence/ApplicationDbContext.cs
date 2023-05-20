@@ -33,15 +33,14 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
     public DbSet<Country> Countries => Set<Country>();
     public DbSet<DiagnosticTest> DiagnosticTests => Set<DiagnosticTest>();
-    public DbSet<DiagnosticTestType> DiagnosticTestTypes => Set<DiagnosticTestType>();
     public DbSet<Disease> Diseases => Set<Disease>();
+    public DbSet<Medication> Medications => Set<Medication>();
     public DbSet<Occurrence> Occurrences => Set<Occurrence>();
     public DbSet<Region> Regions => Set<Region>();
     public DbSet<Report> Reports => Set<Report>();
     public DbSet<Species> Species => Set<Species>();
     public DbSet<TransboundaryDisease> TransboundaryDiseases => Set<TransboundaryDisease>();
     public DbSet<Vaccination> Vaccinations => Set<Vaccination>();
-    public DbSet<VaccinationType> VaccinationTypes => Set<VaccinationType>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

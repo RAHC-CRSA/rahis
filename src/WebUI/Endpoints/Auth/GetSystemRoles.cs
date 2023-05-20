@@ -1,10 +1,15 @@
-﻿using Ardalis.ApiEndpoints;
+﻿using System.Net;
+using Ardalis.ApiEndpoints;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using RegionalAnimalHealth.Application.Common.Interfaces;
+using RegionalAnimalHealth.Application.Common.Models;
+using RegionalAnimalHealth.Application.Common.Models.Authorization;
 using RegionalAnimalHealth.Application.Common.Security;
+using RegionalAnimalHealth.Application.Contracts.Auth.Queries.GetSystemRoles;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebUI.Endpoints.Auth;
@@ -14,10 +19,11 @@ namespace WebUI.Endpoints.Auth;
 public class GetSystemRoles : EndpointBaseAsync.WithoutRequest.WithActionResult<List<string>>
 {
 
-    private readonly IIdentityService _identityService;
-    public GetSystemRoles(IIdentityService identityService)
+    private readonly IMediator _mediator;
+
+    public GetSystemRoles(IMediator mediator)
     {
-        _identityService = identityService;
+        _mediator = mediator;
     }
 
     [HttpGet("api/authenticate/roles")]
@@ -25,8 +31,14 @@ public class GetSystemRoles : EndpointBaseAsync.WithoutRequest.WithActionResult<
         "Gets all the available roles in the system",
         "Use this endpoint to get all the available roles in the system")
     ]
+    [ProducesResponseType(typeof(List<string>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<List<string>>> HandleAsync(CancellationToken cancellationToken = default)
     {
-        return Ok(await _identityService.GetAvailableRolesAsync());
+        var (result, roles) = await _mediator.Send(new GetSystemRolesQuery(), cancellationToken);
+        if (result.Succeeded)
+            return Ok(roles);
+
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

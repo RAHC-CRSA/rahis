@@ -3,17 +3,18 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Contracts.Regions.Queries.GetCountries;
 using RegionalAnimalHealth.Domain.Entities.Reports;
 using RegionalAnimalHealth.Domain.Exceptions;
 
 namespace RegionalAnimalHealth.Application.Contracts.Diseases.Queries.GetDiseases;
-public class GetDiseasesQuery : IRequest<List<DiseaseDto>>
+public class GetDiseasesQuery : IRequest<(Result, List<DiseaseDto>?)>
 {
 }
 
-public class GetDiseasesQueryHandler : IRequestHandler<GetDiseasesQuery, List<DiseaseDto>>
+public class GetDiseasesQueryHandler : IRequestHandler<GetDiseasesQuery, (Result, List<DiseaseDto>?)>
 {
     private readonly IApplicationDbContext _context;
     private readonly ILogger<GetDiseasesQuery> _logger;
@@ -24,14 +25,16 @@ public class GetDiseasesQueryHandler : IRequestHandler<GetDiseasesQuery, List<Di
         _logger = logger;
     }
 
-    public async Task<List<DiseaseDto>> Handle(GetDiseasesQuery request, CancellationToken cancellationToken)
+    public async Task<(Result, List<DiseaseDto>?)> Handle(GetDiseasesQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            return await _context.Diseases
+            var diseases = await _context.Diseases
                 .Where(x => !x.IsDeleted)
                 .Select(DiseaseSelectorExpression())
                 .ToListAsync();
+
+            return (Result.Success(), diseases);
         }
         catch (Exception ex)
         {

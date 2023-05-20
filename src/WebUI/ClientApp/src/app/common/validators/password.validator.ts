@@ -21,7 +21,9 @@ export class PasswordValidation implements Validators {
     control: AbstractControl
   ): ValidationErrors | null {
     let password = control.get('password')?.value; // to get value in input tag
-    let pattern = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*W)(?=.*d).{8,}$');
+    let pattern = new RegExp(
+      '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[#$^+=!*()@%&]).{8,}$'
+    );
     if (!pattern.test(password)) {
       return { passwordRule: true };
     } else {

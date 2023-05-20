@@ -4,26 +4,30 @@ namespace RegionalAnimalHealth.Domain.Entities.Personas;
 public class ParaProfessional : BaseAuditableEntity<long>
 {
     public string Name { get; private set; }
+    public string Email { get; private set; }
+    public string Phone { get; private set; }
+    public string Position { get; private set; }
     public long? InstitutionId { get; private set; }
-    public bool PublicSector { get; private set; }
-    public string Type { get; private set; }
 
     private ParaProfessional()
     {
     }
 
-    private ParaProfessional(string name, bool publicSector, string type, long? institutionId) : this()
+    private ParaProfessional(string name, string email, string phone, long? institutionId) : this()
     {
         Name = name;
-        PublicSector = publicSector;
-        Type = type;
+        Email = email;
+        Phone = phone;
+        InstitutionId = institutionId;
     }
 
-    public static ParaProfessional Create(string name, bool publicSector = false, string? type = null, long? institutionId = null)
+    public static ParaProfessional Create(string name, string email, string phone, long? institutionId = null)
     {
         Guard.IsNotNullOrEmpty(name, nameof(name));
+        Guard.IsNotNullOrEmpty(email, nameof(email));
+        Guard.IsNotNullOrEmpty(phone, nameof(phone));
 
-        return new ParaProfessional(name, publicSector, type, institutionId);
+        return new ParaProfessional(name, name, email, institutionId);
     }
 
     public void Delete()

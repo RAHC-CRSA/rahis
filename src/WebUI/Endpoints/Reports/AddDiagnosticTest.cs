@@ -30,7 +30,7 @@ public class AddDiagnosticTest : EndpointBaseAsync.WithRequest<AddDiagnosticTest
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult> HandleAsync(AddDiagnosticTestCommand request, CancellationToken cancellationToken = default)
     {
-        var result = await _mediator.Send(request);
+        var result = await _mediator.Send(request, cancellationToken);
         if (result.Succeeded)
             return Ok("Successfully added diagnostic test.");
 

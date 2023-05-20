@@ -9,10 +9,11 @@ namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.AddVaccina
 public class AddVaccinationCommand : IRequest<Result>
 {
     public long ReportId { get; set; }
-    public long VaccinationTypeId { get; set; }
+    public string Name { get; set; }
     public int NumberVaccinated { get; set; }
-    public long DiseaseId { get; set; }
-    public long? InstitutionId { get; set; }
+    public bool Human { get; set; }
+    public bool Animal { get; set; }
+    public long? ProfessionalId { get; set; }
 }
 
 public class AddVaccinationCommandHandler : IRequestHandler<AddVaccinationCommand, Result>
@@ -39,7 +40,7 @@ public class AddVaccinationCommandHandler : IRequestHandler<AddVaccinationComman
                 return Result.Failure(new List<string> { message });
             }
 
-            report.AddVaccination(request.VaccinationTypeId, request.NumberVaccinated, request.DiseaseId, request.InstitutionId);
+            report.AddVaccination(request.Name, request.NumberVaccinated, request.Human, request.Animal, request.ProfessionalId);
 
             _context.Reports.Update(report);
             await _context.SaveChangesAsync(cancellationToken);

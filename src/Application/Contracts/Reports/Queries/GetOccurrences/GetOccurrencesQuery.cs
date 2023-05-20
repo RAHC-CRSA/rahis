@@ -1,11 +1,9 @@
 ﻿using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
-using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetVaccinationTypes;
 using RegionalAnimalHealth.Domain.Entities.Reports;
 using RegionalAnimalHealth.Domain.Exceptions;
 

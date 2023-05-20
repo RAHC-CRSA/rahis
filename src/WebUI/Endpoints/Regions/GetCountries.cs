@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Regions;
 using RegionalAnimalHealth.Application.Contracts.Regions.Queries.GetCountries;
 using Swashbuckle.AspNetCore.Annotations;
@@ -28,10 +29,13 @@ public class GetCountries : EndpointBaseAsync.WithoutRequest.WithActionResult<Li
         ]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-    [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<List<CountryDto>>> HandleAsync(CancellationToken cancellationToken = default)
     {
-        var data = await _mediator.Send(new GetCountriesQuery());
-        return Ok(data);
+        var (result, data) = await _mediator.Send(new GetCountriesQuery());
+        if (result.Succeeded)
+            return Ok(data);
+
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }
