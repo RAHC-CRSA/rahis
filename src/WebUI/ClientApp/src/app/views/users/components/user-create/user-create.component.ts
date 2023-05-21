@@ -35,6 +35,10 @@ export class UserCreateComponent implements OnInit {
     return this.userForm?.value;
   }
 
+  get password() {
+    return this.userForm?.get('password');
+  }
+
   initForm() {
     this.userForm = this.fb.group(
       {

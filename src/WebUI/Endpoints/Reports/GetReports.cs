@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using RegionalAnimalHealth.Application.Common.Security;
-using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetOccurrences;
 using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReports;
 
 namespace WebUI.Endpoints.Reports;
@@ -32,7 +31,7 @@ public class GetReports : EndpointBaseAsync.WithoutRequest.WithActionResult<List
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<List<ReportListDto>>> HandleAsync(CancellationToken cancellationToken = default)
     {
-        var data = await _mediator.Send(new GetReportsQuery());
+        var data = await _mediator.Send(new GetReportsQuery(), cancellationToken);
         return Ok(data);
     }
 }

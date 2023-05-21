@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
-using RegionalAnimalHealth.Domain.Exceptions;
+using RegionalAnimalHealth.Application.Common.Models.Reports;
+using RegionalAnimalHealth.Domain.Entities.Reports;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.AddVaccination;
-public class AddVaccinationCommand : IRequest<Result>
+public class AddVaccinationCommand : IRequest<(Result, VaccinationDto?)>
 {
     public long ReportId { get; set; }
     public string Name { get; set; }
@@ -16,7 +17,7 @@ public class AddVaccinationCommand : IRequest<Result>
     public long? ProfessionalId { get; set; }
 }
 
-public class AddVaccinationCommandHandler : IRequestHandler<AddVaccinationCommand, Result>
+public class AddVaccinationCommandHandler : IRequestHandler<AddVaccinationCommand, (Result, VaccinationDto?)>
 {
     private readonly IApplicationDbContext _context;
     private readonly ILogger<AddVaccinationCommand> _logger;
@@ -27,7 +28,7 @@ public class AddVaccinationCommandHandler : IRequestHandler<AddVaccinationComman
         _logger = logger;
     }
 
-    public async Task<Result> Handle(AddVaccinationCommand request, CancellationToken cancellationToken)
+    public async Task<(Result, VaccinationDto?)> Handle(AddVaccinationCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -37,20 +38,30 @@ public class AddVaccinationCommandHandler : IRequestHandler<AddVaccinationComman
             {
                 var message = "Specified report does not exist.";
                 _logger.LogDebug(message, request.ReportId);
-                return Result.Failure(new List<string> { message });
+                return (Result.Failure(new List<string> { message }), null);
             }
 
-            report.AddVaccination(request.Name, request.NumberVaccinated, request.Human, request.Animal, request.ProfessionalId);
+            var vaccination = Vaccination.Create(report.Id, request.Name, request.NumberVaccinated, request.Human, request.Animal, request.ProfessionalId);
 
-            _context.Reports.Update(report);
+            await _context.Vaccinations.AddAsync(vaccination);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            var data = new VaccinationDto
+            {
+                Id = vaccination.Id,
+                Name = vaccination.Name,
+                ReportId = vaccination.ReportId,
+                IsHuman = vaccination.IsHuman,
+                IsAnimal = vaccination.IsAnimal,
+                ProfessionalId = vaccination.ProfessionalId,
+            };
+
+            return (Result.Success(), data);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message, request);
-            return Result.Failure(new List<string> { ex.Message });
+            _logger.LogError(ex, ex.Message);
+            return (Result.Failure(new List<string> { ex.Message }), null);
         }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Reports.Commands.CreateReport;
@@ -36,6 +37,6 @@ public class CreateReport : EndpointBaseAsync.WithRequest<CreateReportCommand>.W
         if (result.Succeeded)
             return Ok(report);
 
-        return BadRequest(result.Errors.ToArray());
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

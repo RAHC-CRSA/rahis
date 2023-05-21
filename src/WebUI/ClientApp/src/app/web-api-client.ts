@@ -438,8 +438,7 @@ export class AddDiagnosticTestClient implements IAddDiagnosticTestClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
+            result400 = ErrorResponse.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -455,7 +454,7 @@ export interface IAddVaccinationClient {
     /**
      * Adds a vaccination record to a report
      */
-    handle(request: AddVaccinationCommand): Observable<void>;
+    handle(request: AddVaccinationCommand): Observable<VaccinationDto>;
 }
 
 @Injectable({
@@ -474,7 +473,7 @@ export class AddVaccinationClient implements IAddVaccinationClient {
     /**
      * Adds a vaccination record to a report
      */
-    handle(request: AddVaccinationCommand): Observable<void> {
+    handle(request: AddVaccinationCommand): Observable<VaccinationDto> {
         let url_ = this.baseUrl + "/api/reports/add-vaccination";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -486,6 +485,7 @@ export class AddVaccinationClient implements IAddVaccinationClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
+                "Accept": "application/json"
             })
         };
 
@@ -496,14 +496,14 @@ export class AddVaccinationClient implements IAddVaccinationClient {
                 try {
                     return this.processHandle(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<VaccinationDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<VaccinationDto>;
         }));
     }
 
-    protected processHandle(response: HttpResponseBase): Observable<void> {
+    protected processHandle(response: HttpResponseBase): Observable<VaccinationDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -512,14 +512,16 @@ export class AddVaccinationClient implements IAddVaccinationClient {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = VaccinationDto.fromJS(resultData200);
+            return _observableOf(result200);
             }));
         } else if (status === 400) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
+            result400 = VaccinationDto.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1899,12 +1901,59 @@ export interface IUpdateSpeciesCommand {
     name?: string;
 }
 
+export class ErrorResponse implements IErrorResponse {
+    summary?: string;
+    errors?: string[];
+
+    constructor(data?: IErrorResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.summary = _data["summary"];
+            if (Array.isArray(_data["errors"])) {
+                this.errors = [] as any;
+                for (let item of _data["errors"])
+                    this.errors!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): ErrorResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new ErrorResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["summary"] = this.summary;
+        if (Array.isArray(this.errors)) {
+            data["errors"] = [];
+            for (let item of this.errors)
+                data["errors"].push(item);
+        }
+        return data;
+    }
+}
+
+export interface IErrorResponse {
+    summary?: string;
+    errors?: string[];
+}
+
 export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
     reportId?: number;
     name?: string;
     numberTested?: number;
     professionalId?: number;
-    institutionId?: number | undefined;
 
     constructor(data?: IAddDiagnosticTestCommand) {
         if (data) {
@@ -1921,7 +1970,6 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
             this.name = _data["name"];
             this.numberTested = _data["numberTested"];
             this.professionalId = _data["professionalId"];
-            this.institutionId = _data["institutionId"];
         }
     }
 
@@ -1938,7 +1986,6 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
         data["name"] = this.name;
         data["numberTested"] = this.numberTested;
         data["professionalId"] = this.professionalId;
-        data["institutionId"] = this.institutionId;
         return data;
     }
 }
@@ -1948,7 +1995,66 @@ export interface IAddDiagnosticTestCommand {
     name?: string;
     numberTested?: number;
     professionalId?: number;
-    institutionId?: number | undefined;
+}
+
+export class VaccinationDto implements IVaccinationDto {
+    id?: number;
+    name?: string;
+    numberVaccinated?: number;
+    reportId?: number;
+    isHuman?: boolean;
+    isAnimal?: boolean;
+    professionalId?: number | undefined;
+
+    constructor(data?: IVaccinationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.numberVaccinated = _data["numberVaccinated"];
+            this.reportId = _data["reportId"];
+            this.isHuman = _data["isHuman"];
+            this.isAnimal = _data["isAnimal"];
+            this.professionalId = _data["professionalId"];
+        }
+    }
+
+    static fromJS(data: any): VaccinationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new VaccinationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["numberVaccinated"] = this.numberVaccinated;
+        data["reportId"] = this.reportId;
+        data["isHuman"] = this.isHuman;
+        data["isAnimal"] = this.isAnimal;
+        data["professionalId"] = this.professionalId;
+        return data;
+    }
+}
+
+export interface IVaccinationDto {
+    id?: number;
+    name?: string;
+    numberVaccinated?: number;
+    reportId?: number;
+    isHuman?: boolean;
+    isAnimal?: boolean;
+    professionalId?: number | undefined;
 }
 
 export class AddVaccinationCommand implements IAddVaccinationCommand {
@@ -2010,20 +2116,30 @@ export interface IAddVaccinationCommand {
 export class ReportDto implements IReportDto {
     id?: number | undefined;
     occurrenceId?: number;
+    occurrenceTitle?: string;
     diseaseId?: number;
     speciesId?: number;
+    location?: string;
+    created?: string;
     infected?: number;
     exposed?: number;
     mortality?: number;
+    humansInfected?: number;
+    humansExposed?: number;
+    humansMortality?: number;
     isOngoing?: boolean;
     isVerified?: boolean;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
     disinfection?: boolean;
     observation?: boolean;
+    observationDuration?: number | undefined;
     quarantine?: boolean;
+    quarantineDuration?: number | undefined;
     movementControl?: boolean;
+    movementControlMeasures?: string | undefined;
     treatment?: boolean;
+    treatmentDetails?: string | undefined;
 
     constructor(data?: IReportDto) {
         if (data) {
@@ -2038,20 +2154,30 @@ export class ReportDto implements IReportDto {
         if (_data) {
             this.id = _data["id"];
             this.occurrenceId = _data["occurrenceId"];
+            this.occurrenceTitle = _data["occurrenceTitle"];
             this.diseaseId = _data["diseaseId"];
             this.speciesId = _data["speciesId"];
+            this.location = _data["location"];
+            this.created = _data["created"];
             this.infected = _data["infected"];
             this.exposed = _data["exposed"];
             this.mortality = _data["mortality"];
+            this.humansInfected = _data["humansInfected"];
+            this.humansExposed = _data["humansExposed"];
+            this.humansMortality = _data["humansMortality"];
             this.isOngoing = _data["isOngoing"];
             this.isVerified = _data["isVerified"];
             this.stampingOut = _data["stampingOut"];
             this.destructionOfCorpses = _data["destructionOfCorpses"];
             this.disinfection = _data["disinfection"];
             this.observation = _data["observation"];
+            this.observationDuration = _data["observationDuration"];
             this.quarantine = _data["quarantine"];
+            this.quarantineDuration = _data["quarantineDuration"];
             this.movementControl = _data["movementControl"];
+            this.movementControlMeasures = _data["movementControlMeasures"];
             this.treatment = _data["treatment"];
+            this.treatmentDetails = _data["treatmentDetails"];
         }
     }
 
@@ -2066,20 +2192,30 @@ export class ReportDto implements IReportDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["occurrenceId"] = this.occurrenceId;
+        data["occurrenceTitle"] = this.occurrenceTitle;
         data["diseaseId"] = this.diseaseId;
         data["speciesId"] = this.speciesId;
+        data["location"] = this.location;
+        data["created"] = this.created;
         data["infected"] = this.infected;
         data["exposed"] = this.exposed;
         data["mortality"] = this.mortality;
+        data["humansInfected"] = this.humansInfected;
+        data["humansExposed"] = this.humansExposed;
+        data["humansMortality"] = this.humansMortality;
         data["isOngoing"] = this.isOngoing;
         data["isVerified"] = this.isVerified;
         data["stampingOut"] = this.stampingOut;
         data["destructionOfCorpses"] = this.destructionOfCorpses;
         data["disinfection"] = this.disinfection;
         data["observation"] = this.observation;
+        data["observationDuration"] = this.observationDuration;
         data["quarantine"] = this.quarantine;
+        data["quarantineDuration"] = this.quarantineDuration;
         data["movementControl"] = this.movementControl;
+        data["movementControlMeasures"] = this.movementControlMeasures;
         data["treatment"] = this.treatment;
+        data["treatmentDetails"] = this.treatmentDetails;
         return data;
     }
 }
@@ -2087,20 +2223,30 @@ export class ReportDto implements IReportDto {
 export interface IReportDto {
     id?: number | undefined;
     occurrenceId?: number;
+    occurrenceTitle?: string;
     diseaseId?: number;
     speciesId?: number;
+    location?: string;
+    created?: string;
     infected?: number;
     exposed?: number;
     mortality?: number;
+    humansInfected?: number;
+    humansExposed?: number;
+    humansMortality?: number;
     isOngoing?: boolean;
     isVerified?: boolean;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
     disinfection?: boolean;
     observation?: boolean;
+    observationDuration?: number | undefined;
     quarantine?: boolean;
+    quarantineDuration?: number | undefined;
     movementControl?: boolean;
+    movementControlMeasures?: string | undefined;
     treatment?: boolean;
+    treatmentDetails?: string | undefined;
 }
 
 export class CreateReportCommand implements ICreateReportCommand {
@@ -2337,54 +2483,6 @@ export interface ICountryDto {
     code?: string;
     flag?: string;
     regions?: number;
-}
-
-export class ErrorResponse implements IErrorResponse {
-    summary?: string;
-    errors?: string[];
-
-    constructor(data?: IErrorResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.summary = _data["summary"];
-            if (Array.isArray(_data["errors"])) {
-                this.errors = [] as any;
-                for (let item of _data["errors"])
-                    this.errors!.push(item);
-            }
-        }
-    }
-
-    static fromJS(data: any): ErrorResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new ErrorResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["summary"] = this.summary;
-        if (Array.isArray(this.errors)) {
-            data["errors"] = [];
-            for (let item of this.errors)
-                data["errors"].push(item);
-        }
-        return data;
-    }
-}
-
-export interface IErrorResponse {
-    summary?: string;
-    errors?: string[];
 }
 
 export class AddCountryCommand implements IAddCountryCommand {

@@ -27,8 +27,6 @@ public class Report : BaseAuditableEntity<long>
     public bool MovementControl { get; private set; }
     public string? MovementControlMeasures { get; private set; }
     public bool Treatment { get; private set; }
-    public string? MedicationAdministered { get; private set; }
-    public string? MedicationDosage { get; private set; }
     public string? TreatmentDetails { get; private set; }
 
     public long OccurrenceId { get; private set; }
@@ -78,9 +76,9 @@ public class Report : BaseAuditableEntity<long>
         _medications.Add(medication);
     }
 
-    public void AddDiagnosticTest(string name, int numberTested, long professionalId, long? institutionId = null)
+    public void AddDiagnosticTest(string name, int numberTested, long professionalId)
     {
-        var test = DiagnosticTest.Create(Id, name, numberTested, professionalId, institutionId);
+        var test = DiagnosticTest.Create(Id, name, numberTested, professionalId);
         _diagnosticTests.Add(test);
     }
 

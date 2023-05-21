@@ -41,7 +41,7 @@ public class GetRegionsQueryHandler : IRequestHandler<GetRegionsQuery, (Result, 
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message, ex);
+            _logger.LogError(ex, ex.Message);
             return (Result.Failure(new List<string> { ex.Message }), null);
         }
     }

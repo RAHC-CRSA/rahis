@@ -38,8 +38,8 @@ public class GetDiseasesQueryHandler : IRequestHandler<GetDiseasesQuery, (Result
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message);
-            throw new BusinessRuleException(nameof(GetCountriesQuery), ex.Message);
+            _logger.LogError(ex, ex.Message);
+            return (Result.Failure(new List<string> { ex.Message }), null);
         }
     }
 

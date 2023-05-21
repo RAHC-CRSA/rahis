@@ -6,6 +6,7 @@ import {
 } from '@ngrx/store';
 import { UserModel as User } from '../../../../../models';
 import { AuthState } from '../reducers';
+import { ICreateAuthTokenCommand } from 'src/app/web-api-client';
 
 export const featureKey = 'auth';
 
@@ -16,7 +17,7 @@ export const LOGIN_FAIL = `[Auth] Login Fail`;
 
 export const login = createAction(
   LOGIN,
-  props<{ username?: string; password?: string }>()
+  props<{ payload: ICreateAuthTokenCommand }>()
 );
 export const loginFail = createAction(LOGIN_FAIL, props<{ payload: string }>());
 export const loginSuccess = createAction(

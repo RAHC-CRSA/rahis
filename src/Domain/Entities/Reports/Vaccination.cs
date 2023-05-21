@@ -9,7 +9,6 @@ public class Vaccination : BaseAuditableEntity<long> {
     public long ReportId { get; private set; }
     public bool IsHuman { get; private set; }
     public bool IsAnimal { get; private set; }
-    public virtual Disease Disease { get; private set; }
     public long? ProfessionalId { get; private set; }
     public virtual ParaProfessional Professional { get; private set; }
 

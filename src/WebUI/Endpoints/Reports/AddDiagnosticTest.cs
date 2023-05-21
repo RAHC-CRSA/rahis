@@ -4,9 +4,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Reports.Commands.AddDiagnosticTest;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebUI.Endpoints.Reports;
 
@@ -27,13 +27,13 @@ public class AddDiagnosticTest : EndpointBaseAsync.WithRequest<AddDiagnosticTest
             "Adds a diagnostic test record to a report")
         ]
     [ProducesResponseType((int)HttpStatusCode.OK)]
-    [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult> HandleAsync(AddDiagnosticTestCommand request, CancellationToken cancellationToken = default)
     {
-        var result = await _mediator.Send(request, cancellationToken);
+        var (result, data) = await _mediator.Send(request, cancellationToken);
         if (result.Succeeded)
-            return Ok("Successfully added diagnostic test.");
+            return Ok(data);
 
-        return BadRequest(result.Errors.ToArray());
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

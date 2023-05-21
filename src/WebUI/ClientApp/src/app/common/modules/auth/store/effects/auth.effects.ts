@@ -17,7 +17,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.login),
       exhaustMap((action) =>
-        this.authService.login(action.username, action.password).pipe(
+        this.authService.login(action.payload).pipe(
           map((data) => {
             this.authService.setCurrentUser(data);
 

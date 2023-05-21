@@ -55,7 +55,7 @@ public class AddRegionCommandHandler : IRequestHandler<AddRegionCommand, (Result
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message, request);
+            _logger.LogError(ex, ex.Message);
             return (Result.Failure(new List<string> { ex.Message }), null);
         }
     }

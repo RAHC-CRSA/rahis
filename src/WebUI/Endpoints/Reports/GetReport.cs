@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReportById;
@@ -32,7 +33,10 @@ public class GetReport : EndpointBaseAsync.WithRequest<GetReportByIdQuery>.WithA
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<ReportDto>> HandleAsync([FromRoute] GetReportByIdQuery request, CancellationToken cancellationToken = default)
     {
-        var data = await _mediator.Send(request, cancellationToken);
-        return Ok(data);
+        var (result, data) = await _mediator.Send(request, cancellationToken);
+        if (result.Succeeded)
+            return Ok(data);
+
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

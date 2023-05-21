@@ -4,11 +4,11 @@ using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 
 namespace RegionalAnimalHealth.Application.Contracts.Auth.Queries.GetSystemRoles;
-public class GetSystemRolesQuery : IRequest<(Result, List<string>)>
+public class GetSystemRolesQuery : IRequest<(Result, List<string>?)>
 {
 }
 
-public class GetSystemRolesQueryHandler : IRequestHandler<GetSystemRolesQuery, (Result, List<string>)>
+public class GetSystemRolesQueryHandler : IRequestHandler<GetSystemRolesQuery, (Result, List<string>?)>
 {
     private readonly IIdentityService _identityService;
     private readonly ILogger<GetSystemRolesQuery> _logger;
@@ -19,7 +19,7 @@ public class GetSystemRolesQueryHandler : IRequestHandler<GetSystemRolesQuery, (
         _logger = logger;
     }
 
-    public async Task<(Result, List<string>)> Handle(GetSystemRolesQuery request, CancellationToken cancellationToken)
+    public async Task<(Result, List<string>?)> Handle(GetSystemRolesQuery request, CancellationToken cancellationToken)
     {
         try
         {
@@ -28,8 +28,8 @@ public class GetSystemRolesQueryHandler : IRequestHandler<GetSystemRolesQuery, (
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message, ex);
-            return (Result.Failure(new List<string> { ex.Message }), new List<string>());
+            _logger.LogError(ex, ex.Message);
+            return (Result.Failure(new List<string> { ex.Message }), null);
         }
     }
 }
