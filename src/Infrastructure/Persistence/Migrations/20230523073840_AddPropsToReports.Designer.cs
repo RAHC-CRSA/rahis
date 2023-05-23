@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegionalAnimalHealth.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using RegionalAnimalHealth.Infrastructure.Persistence;
 namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230523073840_AddPropsToReports")]
+    partial class AddPropsToReports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -689,13 +692,13 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                     b.Property<bool>("HumanInfection")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("HumansExposed")
+                    b.Property<int>("HumansExposed")
                         .HasColumnType("int");
 
-                    b.Property<int?>("HumansInfected")
+                    b.Property<int>("HumansInfected")
                         .HasColumnType("int");
 
-                    b.Property<int?>("HumansMortality")
+                    b.Property<int>("HumansMortality")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -737,8 +740,8 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                     b.Property<bool>("Observation")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ObservationDuration")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ObservationDuration")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("OccurenceDate")
                         .HasColumnType("date");
@@ -749,8 +752,8 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                     b.Property<bool>("Quarantine")
                         .HasColumnType("bit");
 
-                    b.Property<string>("QuarantineDuration")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("QuarantineDuration")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");

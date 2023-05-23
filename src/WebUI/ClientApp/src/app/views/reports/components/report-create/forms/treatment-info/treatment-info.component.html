@@ -6,122 +6,147 @@
         <hr>
 
         <div class="row g-3 mb-3">
-          <div class="col-md-3">
-            <label>Stamping Out</label>
-            <div>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="false" />
-                <label cFormCheckLabel>No</label>
-              </c-form-check>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="true" />
-                <label cFormCheckLabel>Yes</label>
-              </c-form-check>
-            </div>
+          <label>Were you able to stamp out the disease?</label>
+          <div class="g-3">
+            <c-form-check>
+              <input cFormCheckInput formControlName="stampingOut" type="radio" [value]="false" />
+              <label cFormCheckLabel>No</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput formControlName="stampingOut" type="radio" [value]="true" />
+              <label cFormCheckLabel>Yes</label>
+            </c-form-check>
           </div>
 
-          <div class="col-md-3">
-            <label>Destruction of Corpses</label>
-            <div>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="false" />
-                <label cFormCheckLabel>No</label>
-              </c-form-check>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="true" />
-                <label cFormCheckLabel>Yes</label>
-              </c-form-check>
-            </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <label>Did you destroy infected corpses?</label>
+          <div class="g-3">
+            <c-form-check>
+              <input cFormCheckInput formControlName="destructionOfCorpses" type="radio" [value]="false" />
+              <label cFormCheckLabel>No</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput formControlName="destructionOfCorpses" type="radio" [value]="true" />
+              <label cFormCheckLabel>Yes</label>
+            </c-form-check>
           </div>
 
-          <div class="col-md-3">
-            <label>Disinfection</label>
-            <div>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="false" />
-                <label cFormCheckLabel>No</label>
-              </c-form-check>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="true" />
-                <label cFormCheckLabel>Yes</label>
-              </c-form-check>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <label>Observation</label>
-            <div>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="false" />
-                <label cFormCheckLabel>No</label>
-              </c-form-check>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="true" />
-                <label cFormCheckLabel>Yes</label>
-              </c-form-check>
-            </div>
+          <div *ngIf="corpseDestruction">
+            <c-row class="g-3 mb-3">
+              <c-col xs>
+                <label>How many corpses were destroyed?</label>
+                <input aria-label="Number infected" cFormControl formControlName="corpsesDestroyed"
+                  placeholder="Number of corpses destroyed" />
+              </c-col>
+            </c-row>
           </div>
         </div>
 
         <div class="row g-3 mb-3">
-
-          <div class="col-md-3">
-            <label>Quarantine</label>
-            <div class="g-3">
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="false" />
-                <label cFormCheckLabel>No</label>
-              </c-form-check>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="true" />
-                <label cFormCheckLabel>Yes</label>
-              </c-form-check>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <label>Movement Control</label>
-            <div>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="false" />
-                <label cFormCheckLabel>No</label>
-              </c-form-check>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="true" />
-                <label cFormCheckLabel>Yes</label>
-              </c-form-check>
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <label>Treatment</label>
-            <div>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="false" />
-                <label cFormCheckLabel>No</label>
-              </c-form-check>
-              <c-form-check>
-                <input cFormCheckInput type="radio" [value]="true" />
-                <label cFormCheckLabel>Yes</label>
-              </c-form-check>
-            </div>
+          <label>Did you disinfect infected species?</label>
+          <div>
+            <c-form-check>
+              <input cFormCheckInput formControlName="disinfection" type="radio" [value]="false" />
+              <label cFormCheckLabel>No</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput formControlName="disinfection" type="radio" [value]="true" />
+              <label cFormCheckLabel>Yes</label>
+            </c-form-check>
           </div>
         </div>
 
-        <c-row class="mb-5">
-          <c-col>
-            <hr>
-            <app-vaccinations class="mb-4"></app-vaccinations>
-          </c-col>
-        </c-row>
+        <div class="row g-3 mb-3">
+          <label>Did you observer infected species?</label>
+          <div>
+            <c-form-check>
+              <input cFormCheckInput formControlName="observation" type="radio" [value]="false" />
+              <label cFormCheckLabel>No</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput formControlName="observation" type="radio" [value]="true" />
+              <label cFormCheckLabel>Yes</label>
+            </c-form-check>
+          </div>
 
+          <div *ngIf="wasObservation">
+            <c-row class="g-3 mb-3">
+              <c-col xs>
+                <label>For how long?</label>
+                <input aria-label="Observation duration" cFormControl formControlName="observationDuration"
+                  placeholder="7 days" />
+              </c-col>
+            </c-row>
+          </div>
+        </div>
 
-        <c-row class="mb-5">
-          <c-col>
-            <hr>
-            <app-diagnostic-tests class="mb-4"></app-diagnostic-tests>
-          </c-col>
-        </c-row>
+        <div class="row g-3 mb-3">
+          <label>Did you quarantine infected species?</label>
+          <div class="g-3">
+            <c-form-check>
+              <input cFormCheckInput formControlName="quarantine" type="radio" [value]="false" />
+              <label cFormCheckLabel>No</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput formControlName="quarantine" type="radio" [value]="true" />
+              <label cFormCheckLabel>Yes</label>
+            </c-form-check>
+          </div>
+          <div *ngIf="wasQuarantined">
+            <c-row class="g-3 mb-3">
+              <c-col xs>
+                <label>For how long?</label>
+                <input aria-label="Quarantine duration" cFormControl formControlName="quarantineDuration"
+                  placeholder="10 days" />
+              </c-col>
+            </c-row>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <label>Did you control movement?</label>
+          <div>
+            <c-form-check>
+              <input cFormCheckInput formControlName="movementControl" type="radio" [value]="false" />
+              <label cFormCheckLabel>No</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput formControlName="movementControl" type="radio" [value]="true" />
+              <label cFormCheckLabel>Yes</label>
+            </c-form-check>
+          </div>
+          <div *ngIf="movementControlled">
+            <c-row class="g-3 mb-3">
+              <c-col xs>
+                <label>How?</label>
+                <textarea aria-label="Movement control measures" cFormControl formControlName="movementControlMeasures"
+                  placeholder="10 days"></textarea>
+              </c-col>
+            </c-row>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <label>Did you administer medication?</label>
+          <div>
+            <c-form-check>
+              <input cFormCheckInput formControlName="treatment" type="radio" [value]="false" />
+              <label cFormCheckLabel>No</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput formControlName="treatment" type="radio" [value]="true" />
+              <label cFormCheckLabel>Yes</label>
+            </c-form-check>
+          </div>
+
+          <c-row class="g-3 mb-3" *ngIf="administeredMeds">
+            <c-col>
+              <app-medications class="mb-4"></app-medications>
+            </c-col>
+          </c-row>
+        </div>
 
         <c-row>
           <c-col>

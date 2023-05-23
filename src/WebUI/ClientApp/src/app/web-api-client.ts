@@ -2124,18 +2124,18 @@ export class ReportDto implements IReportDto {
     infected?: number;
     exposed?: number;
     mortality?: number;
-    humansInfected?: number;
-    humansExposed?: number;
-    humansMortality?: number;
+    humansInfected?: number | undefined;
+    humansExposed?: number | undefined;
+    humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
     disinfection?: boolean;
     observation?: boolean;
-    observationDuration?: number | undefined;
+    observationDuration?: string | undefined;
     quarantine?: boolean;
-    quarantineDuration?: number | undefined;
+    quarantineDuration?: string | undefined;
     movementControl?: boolean;
     movementControlMeasures?: string | undefined;
     treatment?: boolean;
@@ -2231,18 +2231,18 @@ export interface IReportDto {
     infected?: number;
     exposed?: number;
     mortality?: number;
-    humansInfected?: number;
-    humansExposed?: number;
-    humansMortality?: number;
+    humansInfected?: number | undefined;
+    humansExposed?: number | undefined;
+    humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
     disinfection?: boolean;
     observation?: boolean;
-    observationDuration?: number | undefined;
+    observationDuration?: string | undefined;
     quarantine?: boolean;
-    quarantineDuration?: number | undefined;
+    quarantineDuration?: string | undefined;
     movementControl?: boolean;
     movementControlMeasures?: string | undefined;
     treatment?: boolean;
@@ -2257,7 +2257,30 @@ export class CreateReportCommand implements ICreateReportCommand {
     numberExposed?: number;
     numberInfected?: number;
     mortality?: number;
+    humanInfection?: boolean;
+    humansInfected?: number | undefined;
+    humansExposed?: number | undefined;
+    humansMortality?: number | undefined;
+    isOngoing?: boolean;
+    isVerified?: boolean;
+    reportType?: ReportType;
+    longitude?: number | undefined;
+    latitude?: number | undefined;
+    stampingOut?: boolean;
+    destructionOfCorpses?: boolean;
+    corpsesDestroyed?: number | undefined;
+    disinfection?: boolean;
+    observation?: boolean;
+    observationDuration?: string | undefined;
+    quarantine?: boolean;
+    quarantineDuration?: string | undefined;
+    movementControl?: boolean;
+    movementControlMeasures?: string | undefined;
+    treatment?: boolean;
     occurenceDate?: Date;
+    diagnosticTests?: DiagnosticTestDto[];
+    medications?: MedicationDto[];
+    vaccinations?: VaccinationDto[];
 
     constructor(data?: ICreateReportCommand) {
         if (data) {
@@ -2277,7 +2300,42 @@ export class CreateReportCommand implements ICreateReportCommand {
             this.numberExposed = _data["numberExposed"];
             this.numberInfected = _data["numberInfected"];
             this.mortality = _data["mortality"];
+            this.humanInfection = _data["humanInfection"];
+            this.humansInfected = _data["humansInfected"];
+            this.humansExposed = _data["humansExposed"];
+            this.humansMortality = _data["humansMortality"];
+            this.isOngoing = _data["isOngoing"];
+            this.isVerified = _data["isVerified"];
+            this.reportType = _data["reportType"];
+            this.longitude = _data["longitude"];
+            this.latitude = _data["latitude"];
+            this.stampingOut = _data["stampingOut"];
+            this.destructionOfCorpses = _data["destructionOfCorpses"];
+            this.corpsesDestroyed = _data["corpsesDestroyed"];
+            this.disinfection = _data["disinfection"];
+            this.observation = _data["observation"];
+            this.observationDuration = _data["observationDuration"];
+            this.quarantine = _data["quarantine"];
+            this.quarantineDuration = _data["quarantineDuration"];
+            this.movementControl = _data["movementControl"];
+            this.movementControlMeasures = _data["movementControlMeasures"];
+            this.treatment = _data["treatment"];
             this.occurenceDate = _data["occurenceDate"] ? new Date(_data["occurenceDate"].toString()) : <any>undefined;
+            if (Array.isArray(_data["diagnosticTests"])) {
+                this.diagnosticTests = [] as any;
+                for (let item of _data["diagnosticTests"])
+                    this.diagnosticTests!.push(DiagnosticTestDto.fromJS(item));
+            }
+            if (Array.isArray(_data["medications"])) {
+                this.medications = [] as any;
+                for (let item of _data["medications"])
+                    this.medications!.push(MedicationDto.fromJS(item));
+            }
+            if (Array.isArray(_data["vaccinations"])) {
+                this.vaccinations = [] as any;
+                for (let item of _data["vaccinations"])
+                    this.vaccinations!.push(VaccinationDto.fromJS(item));
+            }
         }
     }
 
@@ -2297,7 +2355,42 @@ export class CreateReportCommand implements ICreateReportCommand {
         data["numberExposed"] = this.numberExposed;
         data["numberInfected"] = this.numberInfected;
         data["mortality"] = this.mortality;
+        data["humanInfection"] = this.humanInfection;
+        data["humansInfected"] = this.humansInfected;
+        data["humansExposed"] = this.humansExposed;
+        data["humansMortality"] = this.humansMortality;
+        data["isOngoing"] = this.isOngoing;
+        data["isVerified"] = this.isVerified;
+        data["reportType"] = this.reportType;
+        data["longitude"] = this.longitude;
+        data["latitude"] = this.latitude;
+        data["stampingOut"] = this.stampingOut;
+        data["destructionOfCorpses"] = this.destructionOfCorpses;
+        data["corpsesDestroyed"] = this.corpsesDestroyed;
+        data["disinfection"] = this.disinfection;
+        data["observation"] = this.observation;
+        data["observationDuration"] = this.observationDuration;
+        data["quarantine"] = this.quarantine;
+        data["quarantineDuration"] = this.quarantineDuration;
+        data["movementControl"] = this.movementControl;
+        data["movementControlMeasures"] = this.movementControlMeasures;
+        data["treatment"] = this.treatment;
         data["occurenceDate"] = this.occurenceDate ? formatDate(this.occurenceDate) : <any>undefined;
+        if (Array.isArray(this.diagnosticTests)) {
+            data["diagnosticTests"] = [];
+            for (let item of this.diagnosticTests)
+                data["diagnosticTests"].push(item.toJSON());
+        }
+        if (Array.isArray(this.medications)) {
+            data["medications"] = [];
+            for (let item of this.medications)
+                data["medications"].push(item.toJSON());
+        }
+        if (Array.isArray(this.vaccinations)) {
+            data["vaccinations"] = [];
+            for (let item of this.vaccinations)
+                data["vaccinations"].push(item.toJSON());
+        }
         return data;
     }
 }
@@ -2310,7 +2403,135 @@ export interface ICreateReportCommand {
     numberExposed?: number;
     numberInfected?: number;
     mortality?: number;
+    humanInfection?: boolean;
+    humansInfected?: number | undefined;
+    humansExposed?: number | undefined;
+    humansMortality?: number | undefined;
+    isOngoing?: boolean;
+    isVerified?: boolean;
+    reportType?: ReportType;
+    longitude?: number | undefined;
+    latitude?: number | undefined;
+    stampingOut?: boolean;
+    destructionOfCorpses?: boolean;
+    corpsesDestroyed?: number | undefined;
+    disinfection?: boolean;
+    observation?: boolean;
+    observationDuration?: string | undefined;
+    quarantine?: boolean;
+    quarantineDuration?: string | undefined;
+    movementControl?: boolean;
+    movementControlMeasures?: string | undefined;
+    treatment?: boolean;
     occurenceDate?: Date;
+    diagnosticTests?: DiagnosticTestDto[];
+    medications?: MedicationDto[];
+    vaccinations?: VaccinationDto[];
+}
+
+export enum ReportType {
+    Immediate = 0,
+    FollowUp = 1,
+}
+
+export class DiagnosticTestDto implements IDiagnosticTestDto {
+    id?: number;
+    name?: string;
+    reportId?: number;
+    numberTested?: number;
+    professionalId?: number;
+
+    constructor(data?: IDiagnosticTestDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.reportId = _data["reportId"];
+            this.numberTested = _data["numberTested"];
+            this.professionalId = _data["professionalId"];
+        }
+    }
+
+    static fromJS(data: any): DiagnosticTestDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DiagnosticTestDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["reportId"] = this.reportId;
+        data["numberTested"] = this.numberTested;
+        data["professionalId"] = this.professionalId;
+        return data;
+    }
+}
+
+export interface IDiagnosticTestDto {
+    id?: number;
+    name?: string;
+    reportId?: number;
+    numberTested?: number;
+    professionalId?: number;
+}
+
+export class MedicationDto implements IMedicationDto {
+    id?: number;
+    reportId?: number;
+    name?: string;
+    dosage?: string;
+
+    constructor(data?: IMedicationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.reportId = _data["reportId"];
+            this.name = _data["name"];
+            this.dosage = _data["dosage"];
+        }
+    }
+
+    static fromJS(data: any): MedicationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MedicationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["reportId"] = this.reportId;
+        data["name"] = this.name;
+        data["dosage"] = this.dosage;
+        return data;
+    }
+}
+
+export interface IMedicationDto {
+    id?: number;
+    reportId?: number;
+    name?: string;
+    dosage?: string;
 }
 
 export class OccurrenceDto implements IOccurrenceDto {

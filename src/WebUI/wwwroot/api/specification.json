@@ -1180,15 +1180,18 @@
           },
           "humansInfected": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "humansExposed": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "humansMortality": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "isOngoing": {
             "type": "boolean"
@@ -1209,16 +1212,14 @@
             "type": "boolean"
           },
           "observationDuration": {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "nullable": true
           },
           "quarantine": {
             "type": "boolean"
           },
           "quarantineDuration": {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "nullable": true
           },
           "movementControl": {
@@ -1271,9 +1272,159 @@
             "type": "integer",
             "format": "int32"
           },
+          "humanInfection": {
+            "type": "boolean"
+          },
+          "humansInfected": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "humansExposed": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "humansMortality": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isOngoing": {
+            "type": "boolean"
+          },
+          "isVerified": {
+            "type": "boolean"
+          },
+          "reportType": {
+            "$ref": "#/components/schemas/ReportType"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "stampingOut": {
+            "type": "boolean"
+          },
+          "destructionOfCorpses": {
+            "type": "boolean"
+          },
+          "corpsesDestroyed": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "disinfection": {
+            "type": "boolean"
+          },
+          "observation": {
+            "type": "boolean"
+          },
+          "observationDuration": {
+            "type": "string",
+            "nullable": true
+          },
+          "quarantine": {
+            "type": "boolean"
+          },
+          "quarantineDuration": {
+            "type": "string",
+            "nullable": true
+          },
+          "movementControl": {
+            "type": "boolean"
+          },
+          "movementControlMeasures": {
+            "type": "string",
+            "nullable": true
+          },
+          "treatment": {
+            "type": "boolean"
+          },
           "occurenceDate": {
             "type": "string",
             "format": "date"
+          },
+          "diagnosticTests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiagnosticTestDto"
+            }
+          },
+          "medications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MedicationDto"
+            }
+          },
+          "vaccinations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VaccinationDto"
+            }
+          }
+        }
+      },
+      "ReportType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Immediate",
+          "FollowUp"
+        ],
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "DiagnosticTestDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "reportId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "numberTested": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "professionalId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "MedicationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "reportId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "dosage": {
+            "type": "string"
           }
         }
       },

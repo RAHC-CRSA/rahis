@@ -15,9 +15,9 @@ public class ReportDto
     public int Exposed { get; set; }
     public int Mortality { get; set; }
 
-    public int HumansInfected { get; set; }
-    public int HumansExposed { get; set; }
-    public int HumansMortality { get; set; }
+    public int? HumansInfected { get; set; }
+    public int? HumansExposed { get; set; }
+    public int? HumansMortality { get; set; }
 
     public bool IsOngoing { get; set; }
     public bool IsVerified { get; set; }
@@ -26,11 +26,15 @@ public class ReportDto
     public bool DestructionOfCorpses { get; set; }
     public bool Disinfection { get; set; }
     public bool Observation { get; set; }
-    public int? ObservationDuration { get; set; }
+    public string? ObservationDuration { get; set; }
     public bool Quarantine { get; set; }
-    public int? QuarantineDuration { get; set; }
+    public string? QuarantineDuration { get; set; }
     public bool MovementControl { get; set; }
     public string? MovementControlMeasures { get; set; }
     public bool Treatment { get; set; }
     public string? TreatmentDetails { get; set; }
+
+    public List<MedicationDto> Medications { get; set; }
+    public List<DiagnosticTestDto> DiagnosticTests { get; set; }
+    public List<VaccinationDto> Vaccinations { get; set; }
 }

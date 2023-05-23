@@ -12,7 +12,7 @@ public class CreateAuthTokenCommand : IRequest<(Result, AuthResponseDto?)>
     public string Password { get; set; }
 }
 
-public class CreateAuthTokenCommandHandler
+public class CreateAuthTokenCommandHandler : IRequestHandler<CreateAuthTokenCommand, (Result, AuthResponseDto?)>
 {
     private readonly IIdentityService _identityService;
     private readonly ILogger<CreateAuthTokenCommand> _logger;

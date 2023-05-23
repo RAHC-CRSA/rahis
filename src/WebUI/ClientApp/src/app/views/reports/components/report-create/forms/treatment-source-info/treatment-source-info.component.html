@@ -5,23 +5,51 @@
         <h5 class="mb-3">Treatment Source</h5>
         <hr>
 
-        <c-row class="mb-3">
-          <c-col>
-            <label>Institution</label>
-            <select aria-label="institution" cSelect>
-              <option [ngValue]="null" [disabled]="true" [selected]="true">Select institution</option>
-            </select>
-          </c-col>
-        </c-row>
+        <div class="row g-3 mb-3">
+          <label>Vaccination</label>
+          <div>
+            <c-form-check>
+              <input cFormCheckInput formControlName="vaccinated" type="radio" [value]="false" />
+              <label cFormCheckLabel>No</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput formControlName="vaccinated" type="radio" [value]="true" />
+              <label cFormCheckLabel>Yes</label>
+            </c-form-check>
+          </div>
+          <c-row class="g-3 mb-3" *ngIf="vaccinated">
+            <c-col>
+              <app-vaccinations class="mb-4"></app-vaccinations>
+            </c-col>
+          </c-row>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <label>Diagnostic Tests</label>
+          <div>
+            <c-form-check>
+              <input cFormCheckInput formControlName="tests" type="radio" [value]="false" />
+              <label cFormCheckLabel>No</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput formControlName="tests" type="radio" [value]="true" />
+              <label cFormCheckLabel>Yes</label>
+            </c-form-check>
+          </div>
+          <c-row class="g-3 mb-3" *ngIf="tested">
+            <c-col>
+              <app-diagnostic-tests class="mb-4"></app-diagnostic-tests>
+            </c-col>
+          </c-row>
+        </div>
 
         <c-row class="g-3 mb-3">
           <c-col xs>
             <label>Comments/Remarks</label>
-            <textarea aria-label="Comments" cFormControl placeholder="Comments"></textarea>
+            <textarea aria-label="Comments" cFormControl formControlName="treatmentDetails"
+              placeholder="Comments"></textarea>
           </c-col>
         </c-row>
-
-
 
         <c-row>
           <c-col>

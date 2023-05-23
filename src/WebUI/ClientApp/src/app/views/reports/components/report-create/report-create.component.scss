@@ -23,6 +23,7 @@
 /*progressbar*/
 #progressbar {
   margin-bottom: 30px;
+  padding-left: 0 !important;
   overflow: hidden;
   /*CSS counters to number the steps*/
   counter-reset: step;
@@ -43,7 +44,7 @@
   li {
     list-style-type: none;
     font-size: 9px;
-    width: 16.66%;
+    width: 14.2%;
     float: left;
     position: relative;
     letter-spacing: 1px;
@@ -170,5 +171,17 @@ fieldset {
   }
   to {
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  #progressbar {
+    li {
+      width: 100%;
+
+      &:not(.active) {
+        display: none;
+      }
+    }
   }
 }

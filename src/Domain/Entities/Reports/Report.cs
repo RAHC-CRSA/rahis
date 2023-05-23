@@ -8,9 +8,9 @@ public class Report : BaseAuditableEntity<long>
     public int NumberExposed { get; private set; }
     public int Mortality { get; private set; }
     public bool HumanInfection { get; set; }
-    public int HumansInfected { get; private set; }
-    public int HumansExposed { get; private set; }
-    public int HumansMortality { get; private set; }
+    public int? HumansInfected { get; private set; }
+    public int? HumansExposed { get; private set; }
+    public int? HumansMortality { get; private set; }
     public bool IsOngoing { get; private set; }
     public bool IsVerified { get; private set; }    
     public ReportType ReportType { get; private set; }
@@ -21,9 +21,9 @@ public class Report : BaseAuditableEntity<long>
     public int? CorpsesDestroyed { get; set; }
     public bool Disinfection { get; private set; }
     public bool Observation { get; private set; }
-    public int? ObservationDuration { get; private set; }
+    public string? ObservationDuration { get; private set; }
     public bool Quarantine { get; private set; }
-    public int? QuarantineDuration { get; private set; }
+    public string? QuarantineDuration { get; private set; }
     public bool MovementControl { get; private set; }
     public string? MovementControlMeasures { get; private set; }
     public bool Treatment { get; private set; }
@@ -48,26 +48,23 @@ public class Report : BaseAuditableEntity<long>
     {
     }
 
-    private Report(long occurrenceId, long diseaseId, long speciesId, int numberExposed, int numberInfected, int mortality, DateOnly occurenceDate) : this()
+    private Report(long occurrenceId, long diseaseId, long speciesId, DateOnly occurenceDate) : this()
     {
         OccurrenceId = occurrenceId;
         DiseaseId = diseaseId;
         SpeciesId = speciesId;
-        NumberExposed = numberExposed;
-        NumberInfected = numberInfected;
-        Mortality = mortality;
         OccurenceDate = occurenceDate;
         IsOngoing = true;
     }
 
-    public static Report Create(long occurrenceId, long diseaseId, long speciesId, int numberExposed, int numberInfected, int mortality, DateOnly occurenceDate)
+    public static Report Create(long occurrenceId, long diseaseId, long speciesId, DateOnly occurenceDate)
     {
         Guard.IsNotNull(occurrenceId, nameof(occurrenceId));
         Guard.IsNotNull(diseaseId, nameof(diseaseId));
         Guard.IsNotNull(speciesId, nameof(speciesId));
         Guard.IsNotNull(occurenceDate, nameof(occurenceDate));
 
-        return new Report(occurrenceId, diseaseId, speciesId, numberExposed, numberInfected, mortality, occurenceDate);
+        return new Report(occurrenceId, diseaseId, speciesId, occurenceDate);
     }
 
     public void AddMedication(string name, string dosage)
@@ -125,5 +122,31 @@ public class Report : BaseAuditableEntity<long>
     {
         foreach (var vacc in _vaccinations)
             vacc.Delete();
+    }
+
+    public void UpdateInfectionInfo(int numberExposed, int numberInfected, int mortality, bool humanInfection, int? humansExposed, int? humansInfected, int? humansMortality)
+    {
+        NumberExposed = numberExposed;
+        NumberInfected = numberInfected;
+        Mortality = mortality;
+        HumanInfection = humanInfection;
+        HumansExposed = humansExposed;
+        HumansInfected = humansInfected;
+        HumansMortality = humansMortality;
+    }
+
+    public void UpdateTreatmentInfo(bool stampingOut, bool destructionOfCorpses, int? corpsesDestroyed, bool disinfection, bool observation, string? observationDuration, bool quarantine, string? quarantineDuration, bool movementControl, string? movementControlMeasures, bool treatment)
+    {
+        StampingOut = stampingOut;
+        DestructionOfCorpses = destructionOfCorpses;
+        CorpsesDestroyed = corpsesDestroyed;
+        Disinfection = disinfection;
+        Observation = observation;
+        ObservationDuration = observationDuration;
+        Quarantine = quarantine;
+        QuarantineDuration = quarantineDuration;
+        MovementControl = movementControl;
+        MovementControlMeasures = movementControlMeasures;
+        Treatment = treatment;
     }
 }
