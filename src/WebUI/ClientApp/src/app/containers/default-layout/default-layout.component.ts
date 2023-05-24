@@ -8,6 +8,7 @@ import { UserDto } from 'src/app/web-api-client';
 import {
   adminNavItems,
   navItemsDefault,
+  reporterNavItems,
   superAdminNavItems,
   verifierNavItems,
 } from './_nav';
@@ -42,8 +43,8 @@ export class DefaultLayoutComponent implements OnInit {
       this.navItems = adminNavItems;
     } else if (roles?.find((r) => r == 'Verifier')) {
       this.navItems = verifierNavItems;
-    } else if (roles?.find((r) => r == 'Verifier')) {
-      this.navItems = verifierNavItems;
+    } else if (roles?.find((r) => r == 'Reporter')) {
+      this.navItems = reporterNavItems;
     } else {
       this.navItems = navItemsDefault;
     }

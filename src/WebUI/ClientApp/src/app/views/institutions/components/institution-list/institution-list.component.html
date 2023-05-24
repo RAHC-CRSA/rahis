@@ -10,14 +10,14 @@
             <th>ID</th>
             <th>Name</th>
             <th>Classification</th>
-            <th>Zoonotic</th>
+            <th>Sector</th>
           </thead>
           <tbody>
             <tr *ngFor="let inst of institutions$ | async; index as i">
               <td>{{ inst.id }}</td>
               <td>{{ inst.name }}</td>
               <td>{{ inst.type ? inst.type : '-' }}</td>
-              <td>{{ inst.publicSector ? 'Yes' : 'No'}}</td>
+              <td>{{ inst.publicSector ? 'Public' : 'Private' }}</td>
             </tr>
           </tbody>
         </table>

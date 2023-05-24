@@ -28,9 +28,9 @@ export class TreatmentSourceInfoComponent implements OnInit {
 
   initForm() {
     this.treatmentSourceInfo = this.formBuilder.group({
-      vaccinated: [this.formData.vaccinations?.length ? true : false],
+      hasVaccinations: [this.formData.vaccinations?.length ? true : false],
       vaccinations: [this.formData.vaccinations],
-      tested: [this.formData.tests?.length ? true : false],
+      hasTests: [this.formData.tests?.length ? true : false],
       tests: [this.formData.tests],
       treatmentDetails: [this.formData.treatmentDetails],
     });
@@ -38,7 +38,7 @@ export class TreatmentSourceInfoComponent implements OnInit {
 
   initConditionalValidation() {
     this.treatmentSourceInfo
-      .get('vaccinated')
+      .get('hasVaccinations')
       ?.valueChanges.subscribe((value) => {
         if (value) {
           this.treatmentSourceInfo
@@ -51,17 +51,19 @@ export class TreatmentSourceInfoComponent implements OnInit {
         this.vaccinated = value;
       });
 
-    this.treatmentSourceInfo.get('tested')?.valueChanges.subscribe((value) => {
-      if (value) {
-        this.treatmentSourceInfo
-          .get('tests')
-          ?.setValidators([Validators.required]);
-      } else {
-        this.treatmentSourceInfo.get('tests')?.clearValidators();
-      }
+    this.treatmentSourceInfo
+      .get('hasTests')
+      ?.valueChanges.subscribe((value) => {
+        if (value) {
+          this.treatmentSourceInfo
+            .get('tests')
+            ?.setValidators([Validators.required]);
+        } else {
+          this.treatmentSourceInfo.get('tests')?.clearValidators();
+        }
 
-      this.tested = value;
-    });
+        this.tested = value;
+      });
   }
 
   onPrevious() {

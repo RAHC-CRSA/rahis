@@ -98,7 +98,7 @@
                 professionalForm.controls['institution'].touched &&
                 professionalForm.controls['institution'].invalid
               }">
-                <option [ngValue]="null" [disabled]="true" [selected]="true">Select institution</option>
+                <option [ngValue]="''" [disabled]="true" [selected]="true">Select institution</option>
                 <option *ngFor="let institution of institutions$ | async; index as i" value="{{ institution.id }}">{{
                   institution.name }}</option>
               </select>

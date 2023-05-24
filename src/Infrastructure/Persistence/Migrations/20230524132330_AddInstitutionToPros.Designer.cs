@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegionalAnimalHealth.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using RegionalAnimalHealth.Infrastructure.Persistence;
 namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230524132330_AddInstitutionToPros")]
+    partial class AddInstitutionToPros
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1035,9 +1038,11 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("RegionalAnimalHealth.Domain.Entities.Personas.ParaProfessional", b =>
                 {
-                    b.HasOne("RegionalAnimalHealth.Domain.Entities.Personas.Institution", null)
+                    b.HasOne("RegionalAnimalHealth.Domain.Entities.Personas.Institution", "Institution")
                         .WithMany("ParaProfessionals")
                         .HasForeignKey("InstitutionId");
+
+                    b.Navigation("Institution");
                 });
 
             modelBuilder.Entity("RegionalAnimalHealth.Domain.Entities.Regions.Region", b =>

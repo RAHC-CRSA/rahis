@@ -12,6 +12,7 @@ using RegionalAnimalHealth.Domain.Entities.Reports;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegionalAnimalHealth.Domain.Entities.Regions;
+using RegionalAnimalHealth.Domain.Entities.Personas;
 
 namespace RegionalAnimalHealth.Infrastructure.Persistence;
 
@@ -34,8 +35,10 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<Country> Countries => Set<Country>();
     public DbSet<DiagnosticTest> DiagnosticTests => Set<DiagnosticTest>();
     public DbSet<Disease> Diseases => Set<Disease>();
+    public DbSet<Institution> Institutions => Set<Institution>();
     public DbSet<Medication> Medications => Set<Medication>();
     public DbSet<Occurrence> Occurrences => Set<Occurrence>();
+    public DbSet<ParaProfessional> ParaProfessionals => Set<ParaProfessional>();
     public DbSet<Region> Regions => Set<Region>();
     public DbSet<Report> Reports => Set<Report>();
     public DbSet<Species> Species => Set<Species>();
