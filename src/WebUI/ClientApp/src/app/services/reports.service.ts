@@ -1,20 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
-  AddRegionClient,
-  AddRegionCommand,
   CreateReportClient,
   CreateReportCommand,
-  GetCountriesClient,
   GetOccurrencesClient,
-  GetRegionsClient,
   GetReportClient,
   GetReportsClient,
-  IAddRegionCommand,
   ICreateReportCommand,
-  RegionDto,
 } from '../web-api-client';
-import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -38,15 +31,7 @@ export class ReportsService {
   }
 
   createReport(payload: ICreateReportCommand) {
-    const request = new CreateReportCommand({
-      regionId: payload.regionId,
-      speciesId: payload.speciesId,
-      diseaseId: payload.diseaseId,
-      occurrenceId: payload.occurrenceId,
-      numberExposed: payload.numberExposed,
-      numberInfected: payload.numberInfected,
-      mortality: payload.mortality,
-    });
+    const request = new CreateReportCommand(payload);
 
     return this.createReportClient.handle(request);
   }

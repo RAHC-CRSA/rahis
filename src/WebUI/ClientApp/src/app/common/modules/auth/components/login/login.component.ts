@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UserModel as User } from 'src/app/models';
-import { AuthRequestDto } from 'src/app/web-api-client';
+import { ICreateAuthTokenCommand } from 'src/app/web-api-client';
 import { loadUser, login } from '../../store/actions/auth.actions';
 import { AuthState, getUserLoading } from '../../store/reducers';
 
@@ -70,10 +70,10 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    const credentials: AuthRequestDto = new AuthRequestDto({
+    const credentials: ICreateAuthTokenCommand = {
       username: this.f?.username.value,
       password: this.f?.password.value,
-    });
-    this.store.dispatch(login(credentials));
+    };
+    this.store.dispatch(login({ payload: credentials }));
   }
 }

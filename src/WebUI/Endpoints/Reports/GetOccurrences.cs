@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetOccurrences;
 
@@ -30,7 +31,10 @@ public class GetOccurrences : EndpointBaseAsync.WithoutRequest.WithActionResult<
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<List<OccurrenceDto>>> HandleAsync(CancellationToken cancellationToken = default)
     {
-        var data = await _mediator.Send(new GetOccurrencesQuery());
-        return Ok(data);
+        var (result, data) = await _mediator.Send(new GetOccurrencesQuery(), cancellationToken);
+        if (result.Succeeded)
+            return Ok(data);
+
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

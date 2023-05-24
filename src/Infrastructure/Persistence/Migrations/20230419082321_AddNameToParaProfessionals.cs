@@ -10,6 +10,13 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<string>(
+                name: "Name",
+                table: "ParaProfessionals",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
             migrationBuilder.AlterColumn<decimal>(
                 name: "Longitude",
                 table: "Reports",
@@ -32,6 +39,10 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "Name",
+                table: "ParaProfessionals");
+
             migrationBuilder.AlterColumn<decimal>(
                 name: "Longitude",
                 table: "Reports",

@@ -3,19 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
-using RegionalAnimalHealth.Domain.Exceptions;
+using RegionalAnimalHealth.Application.Common.Models.Reports;
+using RegionalAnimalHealth.Domain.Entities.Reports;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.AddDiagnosticTest;
-public class AddDiagnosticTestCommand : IRequest<Result>
+public class AddDiagnosticTestCommand : IRequest<(Result, DiagnosticTestDto?)>
 {
     public long ReportId { get; set; }
-    public long TestId { get; set; }
+    public string Name { get; set; }
     public int NumberTested { get; set; }
     public long ProfessionalId { get; set; }
-    public long? InstitutionId { get; set; }
 }
 
-public class AddDiagnosticTestCommandHandler : IRequestHandler<AddDiagnosticTestCommand, Result>
+public class AddDiagnosticTestCommandHandler : IRequestHandler<AddDiagnosticTestCommand, (Result, DiagnosticTestDto?)>
 {
     private readonly IApplicationDbContext _context;
     private readonly ILogger<AddDiagnosticTestCommand> _logger;
@@ -26,7 +26,7 @@ public class AddDiagnosticTestCommandHandler : IRequestHandler<AddDiagnosticTest
         _logger = logger;
     }
 
-    public async Task<Result> Handle(AddDiagnosticTestCommand request, CancellationToken cancellationToken)
+    public async Task<(Result, DiagnosticTestDto?)> Handle(AddDiagnosticTestCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -36,20 +36,29 @@ public class AddDiagnosticTestCommandHandler : IRequestHandler<AddDiagnosticTest
             {
                 var message = "Specified report does not exist.";
                 _logger.LogDebug(message, request.ReportId);
-                return Result.Failure(new List<string> { message });
+                return (Result.Failure(new List<string> { message }), null);
             }
 
-            report.AddDiagnosticTest(request.TestId, request.NumberTested, request.ProfessionalId, request.InstitutionId);
+            var diagnosticTest = DiagnosticTest.Create(report.Id, request.Name, request.NumberTested, request.ProfessionalId);
 
-            _context.Reports.Update(report);
+            await _context.DiagnosticTests.AddAsync(diagnosticTest);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            var data = new DiagnosticTestDto
+            {
+                Id = diagnosticTest.Id,
+                Name = diagnosticTest.Name,
+                ReportId = diagnosticTest.ReportId,
+                NumberTested = diagnosticTest.NumberTested,
+                ProfessionalId = diagnosticTest.ProfessionalId,
+            };
+
+            return (Result.Success(), data);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message, request);
-            return Result.Failure(new List<string> { ex.Message });
+            _logger.LogError(ex, ex.Message);
+            return (Result.Failure(new List<string> { ex.Message }), null);
         }
     }
 }

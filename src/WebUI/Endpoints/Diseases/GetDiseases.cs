@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Contracts.Diseases.Queries.GetDiseases;
 
@@ -26,11 +27,14 @@ public class GetDiseases : EndpointBaseAsync.WithoutRequest.WithActionResult<Lis
             "Gets the list of diseases in the system")
         ]
     [ProducesResponseType((int)HttpStatusCode.OK)]
-    [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<List<DiseaseDto>>> HandleAsync(CancellationToken cancellationToken = default)
     {
-        var data = await _mediator.Send(new GetDiseasesQuery());
-        return Ok(data);
+        var (result, data) = await _mediator.Send(new GetDiseasesQuery());
+        if (result.Succeeded)
+            return Ok(data);
+
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

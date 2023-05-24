@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Species;
 using RegionalAnimalHealth.Application.Contracts.Regions.Queries.GetCountries;
 using RegionalAnimalHealth.Application.Contracts.Species.Queries.GetSpecies;
@@ -31,7 +32,10 @@ public class GetSpecies : EndpointBaseAsync.WithoutRequest.WithActionResult<List
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<List<SpeciesDto>>> HandleAsync(CancellationToken cancellationToken = default)
     {
-        var data = await _mediator.Send(new GetSpeciesQuery());
-        return Ok(data);
+        var (result, data) = await _mediator.Send(new GetSpeciesQuery());
+        if (result.Succeeded)
+            return Ok(data);
+
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

@@ -40,6 +40,7 @@ import { OccurrenceDetailComponent } from './components/occurrence-detail/occurr
 import { ReportVerifyComponent } from './components/report-verify/report-verify.component';
 import { VaccinationsComponent } from './components/report-create/forms/vaccinations/vaccinations.component';
 import { DiagnosticTestsComponent } from './components/report-create/forms/diagnostic-tests/diagnostic-tests.component';
+import { MedicationsComponent } from './components/report-create/forms/medications/medications.component';
 import { ConfirmationComponent } from './components/report-create/forms/confirmation/confirmation.component';
 
 @NgModule({
@@ -59,6 +60,7 @@ import { ConfirmationComponent } from './components/report-create/forms/confirma
     ReportVerifyComponent,
     VaccinationsComponent,
     DiagnosticTestsComponent,
+    MedicationsComponent,
     ConfirmationComponent,
   ],
   imports: [

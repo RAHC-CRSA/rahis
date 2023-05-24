@@ -1,0 +1,40 @@
+﻿using System.Net;
+using Ardalis.ApiEndpoints;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
+using RegionalAnimalHealth.Application.Common.Models.Institutions;
+using RegionalAnimalHealth.Application.Contracts.Institutions.Queries.GetInstitutions;
+
+namespace WebUI.Endpoints.Institutions;
+
+[OpenApiTag("Institutions")]
+public class GetInstitutions : EndpointBaseAsync.WithoutRequest.WithActionResult<List<InstitutionDto>>
+{
+    private readonly IMediator _mediator;
+
+    public GetInstitutions(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    [Authorize]
+    [HttpGet("api/institutions")]
+    [OpenApiOperation(
+            "Gets the list of institutions",
+            "Gets the list of institutions in the system")
+        ]
+    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(List<InstitutionDto>), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    public override async Task<ActionResult<List<InstitutionDto>>> HandleAsync(CancellationToken cancellationToken = default)
+    {
+        var (result, data) = await _mediator.Send(new GetInstitutionsQuery());
+        if (result.Succeeded)
+            return Ok(data);
+
+        return BadRequest(new ErrorResponse(result.Errors));
+    }
+}

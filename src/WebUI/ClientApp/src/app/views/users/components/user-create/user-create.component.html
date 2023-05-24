@@ -11,6 +11,7 @@
           </ng-container>
           <c-row class="g-3 mb-3">
             <c-col xs>
+              <label>First Name</label>
               <input aria-label="First name" cFormControl formControlName="firstName" placeholder="First name"
                 [ngClass]="{
                 'border border-danger':
@@ -22,7 +23,11 @@
               <ng-container [ngTemplateOutlet]="formError"
                 [ngTemplateOutletContext]="{validation: 'minlength', message: 'First name should have at least 3 characters', control: userForm.controls['firstName']}"></ng-container>
             </c-col>
+          </c-row>
+
+          <c-row class="g-3 mb-3">
             <c-col xs>
+              <label>Last Name</label>
               <input aria-label="Last name" cFormControl formControlName="lastName" placeholder="Last name" [ngClass]="{
                 'border border-danger':
                   userForm.controls['lastName'].touched &&
@@ -34,8 +39,10 @@
                 [ngTemplateOutletContext]="{validation: 'minlength', message: 'Last name should have at least 3 characters', control: userForm.controls['lastName']}"></ng-container>
             </c-col>
           </c-row>
+
           <c-row class="mb-3">
             <c-col>
+              <label>Role</label>
               <select aria-label="Role" cSelect formControlName="role" [ngClass]="{
                 'border border-danger':
                   userForm.controls['role'].touched &&
@@ -48,8 +55,10 @@
                 [ngTemplateOutletContext]="{validation: 'required', message: 'Role is required', control: userForm.controls['role']}"></ng-container>
             </c-col>
           </c-row>
+
           <c-row class="mb-3">
             <c-col xs>
+              <label>Email</label>
               <input type="email" aria-label="Email address" cFormControl formControlName="email"
                 placeholder="Email address" [ngClass]="{
                 'border border-danger':
@@ -80,6 +89,7 @@
           </c-row>
           <c-row class="g-3 mb-3">
             <c-col xs>
+              <label>Password</label>
               <input aria-label="Password" type="password" cFormControl formControlName="password"
                 placeholder="Password" autocomplete="false" [ngClass]="{
                 'border border-danger':
@@ -93,7 +103,11 @@
               <ng-container [ngTemplateOutlet]="formError"
                 [ngTemplateOutletContext]="{validation: 'passwordRule', message: 'Password should have at least one uppercase character, one lowercase character, and one symbol', control: userForm.controls['password']}"></ng-container>
             </c-col>
+          </c-row>
+
+          <c-row class="g-3 mb-3">
             <c-col xs>
+              <label>Confirm Password</label>
               <input aria-label="Confirm Password" type="password" cFormControl formControlName="confirmPassword"
                 placeholder=" Confirm Password" autocomplete="false" [ngClass]="{
                   'border border-danger':
@@ -103,7 +117,7 @@
               <ng-container [ngTemplateOutlet]="formError"
                 [ngTemplateOutletContext]="{validation: 'required', message: 'Password confirmation is required', control: userForm.controls['confirmPassword']}"></ng-container>
               <ng-container [ngTemplateOutlet]="formError"
-                [ngTemplateOutletContext]="{validation: 'confirmedValidator', message: 'Passwords must match', control: userForm.controls['confirmPassword']}"></ng-container>
+                [ngTemplateOutletContext]="{validation: 'passwordMatch', message: 'Passwords must match', control: userForm.controls['confirmPassword']}"></ng-container>
             </c-col>
           </c-row>
 

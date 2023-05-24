@@ -4,6 +4,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
+using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Reports.Commands.AddVaccination;
 using Swashbuckle.AspNetCore.Annotations;
@@ -11,7 +13,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace WebUI.Endpoints.Reports;
 
 [OpenApiTag("Reports")]
-public class AddVaccination : EndpointBaseAsync.WithRequest<AddVaccinationCommand>.WithActionResult
+public class AddVaccination : EndpointBaseAsync.WithRequest<AddVaccinationCommand>.WithActionResult<VaccinationDto>
 {
     private readonly IMediator _mediator;
 
@@ -27,13 +29,13 @@ public class AddVaccination : EndpointBaseAsync.WithRequest<AddVaccinationComman
             "Adds a vaccination record to a report")
         ]
     [ProducesResponseType((int)HttpStatusCode.OK)]
-    [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult> HandleAsync(AddVaccinationCommand request, CancellationToken cancellationToken = default)
+    [ProducesResponseType(typeof(VaccinationDto), (int)HttpStatusCode.BadRequest)]
+    public override async Task<ActionResult<VaccinationDto>> HandleAsync(AddVaccinationCommand request, CancellationToken cancellationToken = default)
     {
-        var result = await _mediator.Send(request);
+        var (result, data)= await _mediator.Send(request);
         if (result.Succeeded)
-            return Ok("Successfully added vaccination.");
+            return Ok(data);
 
-        return BadRequest(result.Errors.ToArray());
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

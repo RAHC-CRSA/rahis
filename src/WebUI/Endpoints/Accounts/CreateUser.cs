@@ -1,9 +1,12 @@
-﻿using Ardalis.ApiEndpoints;
+﻿using System.Net;
+using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
+using RegionalAnimalHealth.Application.Common.Models.Authorization;
 using RegionalAnimalHealth.Application.Common.Models.Personas;
 using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Users.Commands.CreateUser;
@@ -26,14 +29,15 @@ public class CreateUser : EndpointBaseAsync.WithRequest<CreateUserCommand>.WithA
             "Allows an admin to create a user account",
             "Allows an admin to create a user account")
         ]
+    [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<UserDto>> HandleAsync(CreateUserCommand request, CancellationToken cancellationToken = default)
     {
         var (result, user) = await _mediator.Send(request, cancellationToken);
-
-        if (user != null)
-        {
+        if (result.Succeeded)
             return Ok(user);
-        }
-        return BadRequest(string.Join(", ", result.Errors));
+
+        return BadRequest(new ErrorResponse(result.Errors));
     }
 }

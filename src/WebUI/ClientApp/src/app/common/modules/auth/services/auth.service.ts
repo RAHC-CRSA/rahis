@@ -4,7 +4,11 @@ import { Observable, of } from 'rxjs';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { UserModel } from 'src/app/models';
 import { environment } from 'src/environments/environment';
-import { AuthRequestDto, GetAuthTokenClient } from 'src/app/web-api-client';
+import {
+  CreateAuthTokenCommand,
+  GetAuthTokenClient,
+  ICreateAuthTokenCommand,
+} from 'src/app/web-api-client';
 
 @Injectable({
   providedIn: 'root',
@@ -20,15 +24,15 @@ export class AuthService {
     this.getAuthToken = new GetAuthTokenClient(http);
   }
 
-  login(username?: string, password?: string): Observable<any> {
+  login(payload: ICreateAuthTokenCommand): Observable<any> {
     const notFoundError = new Error('Not Found');
-    if (!username || !password) {
+    if (!payload) {
       return of(notFoundError);
     }
 
-    const request: AuthRequestDto = new AuthRequestDto({
-      username,
-      password,
+    const request: CreateAuthTokenCommand = new CreateAuthTokenCommand({
+      username: payload.username,
+      password: payload.password,
     });
 
     return this.getAuthToken.handle(request);

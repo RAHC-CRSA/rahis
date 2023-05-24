@@ -3,7 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { createUser, loadRoles } from '../../store/actions';
-import { CustomValidators } from '../../../../common/validators/custom.validators';
+import {
+  CustomValidators,
+  PasswordValidation,
+} from '../../../../common/validators';
 import { getRoles, UserState } from '../../store/reducers';
 import { ICreateUserCommand } from 'src/app/web-api-client';
 
@@ -30,6 +33,10 @@ export class UserCreateComponent implements OnInit {
 
   get f() {
     return this.userForm?.value;
+  }
+
+  get password() {
+    return this.userForm?.get('password');
   }
 
   initForm() {
@@ -59,10 +66,16 @@ export class UserCreateComponent implements OnInit {
             Validators.required,
             Validators.minLength(8),
             Validators.maxLength(100),
-            // PasswordValidation.PasswordRule,
+            PasswordValidation.PasswordRule,
           ]),
         ],
-        confirmPassword: [null, Validators.compose([Validators.required])],
+        confirmPassword: [
+          null,
+          Validators.compose([
+            Validators.required,
+            PasswordValidation.PasswordMatch,
+          ]),
+        ],
       },
       {
         validator: CustomValidators.confirmedValidator(
@@ -82,7 +95,7 @@ export class UserCreateComponent implements OnInit {
       password: this.f.password,
       roles: [this.f.role],
     };
-    
+
     this.store.dispatch(createUser({ payload }));
   }
 }

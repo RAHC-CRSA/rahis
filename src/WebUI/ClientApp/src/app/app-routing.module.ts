@@ -38,6 +38,20 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'institutions',
+        loadChildren: () =>
+          import('./views/institutions/institutions.module').then(
+            (m) => m.InstitutionsModule
+          ),
+      },
+      {
+        path: 'para-professionals',
+        loadChildren: () =>
+          import('./views/professionals/professionals.module').then(
+            (m) => m.ProfessionalsModule
+          ),
+      },
+      {
         path: 'regions',
         loadChildren: () =>
           import('./views/regions/regions.module').then((m) => m.RegionsModule),

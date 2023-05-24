@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Personas;
@@ -12,21 +13,31 @@ public class GetUserQuery : IRequest<(Result, UserDto?)>
 public class GetUserQueryHandler : IRequestHandler<GetUserQuery, (Result, UserDto?)>
 {
     private readonly IIdentityService _identityService;
+    private readonly ILogger<GetUserQuery> _logger;
 
-    public GetUserQueryHandler(IIdentityService identityService)
+    public GetUserQueryHandler(IIdentityService identityService, ILogger<GetUserQuery> logger)
     {
         _identityService = identityService;
+        _logger = logger;
     }
 
     public async Task<(Result, UserDto?)> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
-        var (result, user) = await _identityService.GetUserAsync(request.UserId);
-
-        if (!result.Succeeded)
+        try
         {
-            return (result, null);
-        }
+            var (result, user) = await _identityService.GetUserAsync(request.UserId);
 
-        return (result, user);
+            if (!result.Succeeded)
+            {
+                return (result, null);
+            }
+
+            return (result, user);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return (Result.Failure(new List<string> { ex.Message }), null);
+        }
     }
 }

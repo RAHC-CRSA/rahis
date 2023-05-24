@@ -49,6 +49,8 @@ export class RegionCreateComponent implements OnInit {
       countryId: this.f.country,
     };
 
+    console.log({ payload });
+
     this.store.dispatch(addRegion({ payload }));
   }
 }
