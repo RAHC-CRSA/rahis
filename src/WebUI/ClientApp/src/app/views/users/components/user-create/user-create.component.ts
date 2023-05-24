@@ -69,7 +69,13 @@ export class UserCreateComponent implements OnInit {
             PasswordValidation.PasswordRule,
           ]),
         ],
-        confirmPassword: [null, Validators.compose([Validators.required])],
+        confirmPassword: [
+          null,
+          Validators.compose([
+            Validators.required,
+            PasswordValidation.PasswordMatch,
+          ]),
+        ],
       },
       {
         validator: CustomValidators.confirmedValidator(

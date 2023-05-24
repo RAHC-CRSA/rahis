@@ -729,6 +729,196 @@
         ]
       }
     },
+    "/api/institutions": {
+      "post": {
+        "tags": [
+          "Institutions"
+        ],
+        "summary": "Adds an institution",
+        "description": "Adds an institution to the system",
+        "operationId": "AddInstitution_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddInstitutionCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstitutionDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Institutions"
+        ],
+        "summary": "Gets the list of institutions",
+        "description": "Gets the list of institutions in the system",
+        "operationId": "GetInstitutions_Handle",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InstitutionDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/para-professionals": {
+      "post": {
+        "tags": [
+          "ParaProfessionals"
+        ],
+        "summary": "Adds a para-professional",
+        "description": "Adds a para-professional to the system",
+        "operationId": "AddParaProfessional_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddParaProfessionalCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParaProfessionalDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "ParaProfessionals"
+        ],
+        "summary": "Gets the list of para-professionals",
+        "description": "Gets the list of para-professionals in the system",
+        "operationId": "GetParaProfessionals_Handle",
+        "parameters": [
+          {
+            "name": "institutionId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParaProfessionalDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
     "/api/diseases": {
       "post": {
         "tags": [
@@ -1235,6 +1425,69 @@
           "treatmentDetails": {
             "type": "string",
             "nullable": true
+          },
+          "medications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MedicationDto"
+            }
+          },
+          "diagnosticTests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiagnosticTestDto"
+            }
+          },
+          "vaccinations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VaccinationDto"
+            }
+          }
+        }
+      },
+      "MedicationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "reportId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "dosage": {
+            "type": "string"
+          }
+        }
+      },
+      "DiagnosticTestDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "reportId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "numberTested": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "professionalId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -1383,51 +1636,6 @@
           1
         ]
       },
-      "DiagnosticTestDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          },
-          "reportId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "numberTested": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "professionalId": {
-            "type": "integer",
-            "format": "int64"
-          }
-        }
-      },
-      "MedicationDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "reportId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          },
-          "dosage": {
-            "type": "string"
-          }
-        }
-      },
       "OccurrenceDto": {
         "type": "object",
         "additionalProperties": false,
@@ -1563,6 +1771,102 @@
           },
           "code": {
             "type": "string"
+          }
+        }
+      },
+      "InstitutionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "publicSector": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "paraProfessionals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParaProfessionalDto"
+            }
+          }
+        }
+      },
+      "ParaProfessionalDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "institutionId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "institutionName": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AddInstitutionCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "publicSector": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AddParaProfessionalCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "institutionId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
           }
         }
       },
@@ -1726,6 +2030,12 @@
     },
     {
       "name": "Regions"
+    },
+    {
+      "name": "Institutions"
+    },
+    {
+      "name": "ParaProfessionals"
     },
     {
       "name": "Diseases"

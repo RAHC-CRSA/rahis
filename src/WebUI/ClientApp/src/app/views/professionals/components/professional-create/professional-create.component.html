@@ -1,0 +1,127 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Add Para-Professional</strong>
+      </c-card-header>
+      <c-card-body>
+        <form cForm [formGroup]="professionalForm" novalidate="novalidate" (ngSubmit)="submit()"
+          class="needs-validation">
+          <ng-container *ngIf="hasError" class="alert alert-danger">
+            <p class="text-red">The form is invalid</p>
+          </ng-container>
+          <c-row class="g-3 mb-3">
+            <c-col>
+              <label>Name</label>
+              <input aria-label="Para-Professional name" cFormControl formControlName="name"
+                placeholder="Para-Professional name" [ngClass]="{
+                'border border-danger':
+                  professionalForm.controls['name'].touched &&
+                  professionalForm.controls['name'].invalid
+              }" />
+              <ng-container [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{validation: 'required', message: 'Para-Professional name is required', control: professionalForm.controls['name']}"></ng-container>
+              <ng-container [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{validation: 'minlength', message: 'Para-Professional name should have at least 3 characters', control: professionalForm.controls['name']}"></ng-container>
+            </c-col>
+          </c-row>
+
+          <c-row class="g-3 mb-3">
+            <c-col>
+              <label>Position</label>
+              <input aria-label="Para-Professional position" cFormControl formControlName="position"
+                placeholder="Para-Professional position" [ngClass]="{
+                'border border-danger':
+                  professionalForm.controls['position'].touched &&
+                  professionalForm.controls['position'].invalid
+              }" />
+              <ng-container [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{validation: 'required', message: 'Para-Professional position is required', control: professionalForm.controls['position']}"></ng-container>
+              <ng-container [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{validation: 'minlength', message: 'Para-Professional position should have at least 3 characters', control: professionalForm.controls['position']}"></ng-container>
+            </c-col>
+          </c-row>
+
+          <c-row class="mb-3">
+            <c-col xs>
+              <label>Email</label>
+              <input type="email" aria-label="Email address" cFormControl formControlName="email"
+                placeholder="Email address" [ngClass]="{
+                'border border-danger':
+                professionalForm.controls['email'].touched &&
+                professionalForm.controls['email'].invalid
+              }" />
+              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                validation: 'required',
+                message: 'Email is required',
+                control: professionalForm.controls['email']
+              }"></ng-container>
+              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                validation: 'email',
+                message: 'Email is invalid',
+                control: professionalForm.controls['email']
+              }"></ng-container>
+              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                validation: 'minlength',
+                message: 'Email should have at least 3 characters',
+                control: professionalForm.controls['email']
+              }"></ng-container>
+              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                validation: 'maxlength',
+                message: 'Email should have maximum 360 symbols',
+                control: professionalForm.controls['email']
+              }"></ng-container>
+            </c-col>
+          </c-row>
+
+          <c-row class="g-3 mb-3">
+            <c-col>
+              <label>Phone Number</label>
+              <input aria-label="Para-Professional phone number" cFormControl formControlName="phone"
+                placeholder="Para-Professional phone number" [ngClass]="{
+                'border border-danger':
+                  professionalForm.controls['phone'].touched &&
+                  professionalForm.controls['phone'].invalid
+              }" />
+              <ng-container [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{validation: 'required', message: 'Para-Professional phone is required', control: professionalForm.controls['phone']}"></ng-container>
+              <ng-container [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{validation: 'minlength', message: 'Para-Professional phone should have at least 3 characters', control: professionalForm.controls['phone']}"></ng-container>
+            </c-col>
+          </c-row>
+
+          <c-row class="mb-3">
+            <c-col>
+              <label>Institution</label>
+              <select aria-label="Institution" cSelect formControlName="institution" [ngClass]="{
+                'border border-danger':
+                professionalForm.controls['institution'].touched &&
+                professionalForm.controls['institution'].invalid
+              }">
+                <option [ngValue]="null" [disabled]="true" [selected]="true">Select institution</option>
+                <option *ngFor="let institution of institutions$ | async; index as i" value="{{ institution.id }}">{{
+                  institution.name }}</option>
+              </select>
+              <ng-container [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{validation: 'required', message: 'Institution is required', control: professionalForm.controls['institution']}"></ng-container>
+            </c-col>
+          </c-row>
+
+          <c-row>
+            <c-col>
+              <button cButton type="submit" class="px-4" color="primary" [disabled]="professionalForm.invalid">
+                Submit
+              </button>
+            </c-col>
+          </c-row>
+        </form>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="text-danger p-2"><small>{{ message }}</small></div>
+  </ng-container>
+</ng-template>

@@ -18,7 +18,7 @@ public class GetRegions : EndpointBaseAsync.WithRequest<long?>.WithActionResult<
     public GetRegions(IMediator mediator)
     {
         _mediator = mediator;
-    }
+    }   
 
     [Authorize]
     [HttpGet("api/regions")]

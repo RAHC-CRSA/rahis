@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class MedicationsComponent implements OnInit {
   medicationForm: FormGroup;
+
+  @Output() submit = new EventEmitter();
 
   constructor(private fb: FormBuilder) {}
 
@@ -20,5 +22,9 @@ export class MedicationsComponent implements OnInit {
       name: ['', Validators.required],
       dosage: ['', Validators.required],
     });
+  }
+
+  onSubmit() {
+    this.submit.emit(this.medicationForm.value);
   }
 }

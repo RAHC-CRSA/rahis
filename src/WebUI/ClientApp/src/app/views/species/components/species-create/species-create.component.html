@@ -8,6 +8,7 @@
         <form cForm [formGroup]="speciesForm" novalidate="novalidate" (ngSubmit)="submit()" class="needs-validation">
           <c-row class="g-3 mb-3">
             <c-col xs>
+              <label>Name</label>
               <input aria-label="Species name" cFormControl formControlName="name" placeholder="Species name" [ngClass]="{
                 'border border-danger':
                   speciesForm.controls['name'].touched &&
@@ -18,10 +19,15 @@
               <ng-container [ngTemplateOutlet]="formError"
                 [ngTemplateOutletContext]="{validation: 'minlength', message: 'Species name should have at least 3 characters', control: speciesForm.controls['name']}"></ng-container>
             </c-col>
+          </c-row>
+
+          <c-row class="g-3 mb-3">
             <c-col xs>
+              <label>Code</label>
               <input aria-label="Code" cFormControl placeholder="Code" />
             </c-col>
           </c-row>
+
           <c-row>
             <c-col>
               <button cButton type="submit" class="px-4" color="primary" [disabled]="speciesForm.invalid">

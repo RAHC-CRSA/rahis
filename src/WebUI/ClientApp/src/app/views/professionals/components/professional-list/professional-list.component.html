@@ -1,0 +1,29 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Para-Professionals</strong>
+      </c-card-header>
+      <c-card-body>
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Institution</th>
+            <th>Position</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pro of professionals$ | async; index as i">
+              <td>{{ pro.name }}</td>
+              <td><a href="mailto:{{ pro.email }}">{{ pro.email }}</a></td>
+              <td>{{ pro.phone }}</td>
+              <td>{{ pro.institutionName }}</td>
+              <td>{{ pro.position }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

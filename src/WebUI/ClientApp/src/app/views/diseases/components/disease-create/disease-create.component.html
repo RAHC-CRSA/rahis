@@ -8,6 +8,7 @@
         <form cForm [formGroup]="diseaseForm" novalidate="novalidate" (ngSubmit)="submit()" class="needs-validation">
           <c-row class="g-3 mb-3">
             <c-col xs>
+              <label>Name</label>
               <input aria-label="Disease name" cFormControl formControlName="name" placeholder="Disease name" />
               <ng-container [ngTemplateOutlet]="formError"
                 [ngTemplateOutletContext]="{validation: 'required', message: 'Species name is required', control: diseaseForm.controls['name']}"></ng-container>
@@ -17,6 +18,7 @@
           </c-row>
           <c-row class="g-3 mb-3">
             <c-col xs>
+              <label>Code</label>
               <input aria-label="Code" cFormControl formControlName="code" placeholder="Code" />
             </c-col>
             <c-col xs>
@@ -26,7 +28,7 @@
           </c-row>
           <c-row class="mb-3">
             <c-col>
-              <label>Zoonotic</label>
+              <label>Is the disease zoonotic?</label>
               <div>
                 <c-form-check>
                   <input cFormCheckInput formControlName="zoonotic" type="radio" [value]="false" />

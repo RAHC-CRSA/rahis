@@ -8,26 +8,29 @@ public class ParaProfessional : BaseAuditableEntity<long>
     public string Phone { get; private set; }
     public string Position { get; private set; }
     public long? InstitutionId { get; private set; }
+    public virtual Institution Institution { get; set; }
 
     private ParaProfessional()
     {
     }
 
-    private ParaProfessional(string name, string email, string phone, long? institutionId) : this()
+    private ParaProfessional(string name, string email, string phone, string position, long? institutionId) : this()
     {
         Name = name;
         Email = email;
         Phone = phone;
+        Position = position;
         InstitutionId = institutionId;
     }
 
-    public static ParaProfessional Create(string name, string email, string phone, long? institutionId = null)
+    public static ParaProfessional Create(string name, string email, string phone, string position, long? institutionId = null)
     {
         Guard.IsNotNullOrEmpty(name, nameof(name));
         Guard.IsNotNullOrEmpty(email, nameof(email));
         Guard.IsNotNullOrEmpty(phone, nameof(phone));
+        Guard.IsNotNullOrEmpty(position, nameof(position));
 
-        return new ParaProfessional(name, name, email, institutionId);
+        return new ParaProfessional(name, name, email, position, institutionId);
     }
 
     public void Delete()

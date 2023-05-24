@@ -70,6 +70,36 @@ export const adminNavItems: INavData[] = [
       },
     ],
   },
+  {
+    name: 'Institutions',
+    url: '/institutions',
+    iconComponent: { name: 'cil-bell' },
+    children: [
+      {
+        name: 'Add Institution',
+        url: '/institutions/create',
+      },
+      {
+        name: 'View All',
+        url: '/institutions',
+      },
+    ],
+  },
+  {
+    name: 'Para-Professionals',
+    url: '/para-professionals',
+    iconComponent: { name: 'cil-bell' },
+    children: [
+      {
+        name: 'Add Para-Professional',
+        url: '/para-professionals/create',
+      },
+      {
+        name: 'View All',
+        url: '/para-professionals',
+      },
+    ],
+  },
 ];
 
 export const verifierNavItems: INavData[] = [
@@ -177,6 +207,36 @@ export const superAdminNavItems: INavData[] = [
       {
         name: 'View All',
         url: '/diseases',
+      },
+    ],
+  },
+  {
+    name: 'Institutions',
+    url: '/institutions',
+    iconComponent: { name: 'cil-bell' },
+    children: [
+      {
+        name: 'Add Institution',
+        url: '/institutions/create',
+      },
+      {
+        name: 'View All',
+        url: '/institutions',
+      },
+    ],
+  },
+  {
+    name: 'Para-Professionals',
+    url: '/para-professionals',
+    iconComponent: { name: 'cil-bell' },
+    children: [
+      {
+        name: 'Add Para-Professional',
+        url: '/para-professionals/create',
+      },
+      {
+        name: 'View All',
+        url: '/para-professionals',
       },
     ],
   },
