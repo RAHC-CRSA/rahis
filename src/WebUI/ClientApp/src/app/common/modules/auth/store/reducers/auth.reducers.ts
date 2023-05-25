@@ -1,76 +1,54 @@
 import {
   login,
   loginSuccess,
-  loginFail,
   logout,
   logoutSuccess,
-  logoutFail,
   loadUser,
-  featureKey,
+  setFeedback,
+  clearFeedback,
+  loginFail,
 } from '../actions/auth.actions';
 import { UserModel as User } from '../../../../../models';
-import {
-  createReducer,
-  on,
-  createFeatureSelector,
-  createSelector,
-} from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
+import { ServerResponse } from 'src/app/web-api-client';
 
 export interface AuthState {
   data?: User | null;
   loaded: boolean;
   loading: boolean;
-  error?: string | null;
+  feedback?: ServerResponse | null;
 }
 
 export const initialState: AuthState = {
   data: null,
   loaded: false,
   loading: false,
-  error: null,
+  feedback: null,
 };
 
 export const authReducer = createReducer(
   initialState,
   on(loadUser, (state) => ({ ...state, loading: true })),
-  on(login, (state) => ({ ...state, loading: true, error: null })),
-  on(loginFail, (state, { payload }) => ({
-    ...state,
-    error: payload,
-    loading: false,
-    loaded: false,
-  })),
+  on(login, (state) => ({ ...state, loading: true, feedback: null })),
+  on(loginFail, (state) => ({ ...state, loading: false })),
   on(loginSuccess, (state, { payload }) => ({
     ...state,
     data: payload,
     loading: false,
     loaded: true,
   })),
-  on(logout, (state) => ({ ...state, loading: true, error: null })),
-  on(logoutFail, (state, { payload }) => ({
-    ...state,
-    error: payload,
-    loading: false,
-  })),
+  on(logout, (state) => ({ ...state, loading: true, feedback: null })),
   on(logoutSuccess, (state) => ({
     ...state,
     loading: false,
     loaded: false,
     data: null,
-  }))
-);
-
-// selectors
-const authState = createFeatureSelector<AuthState>(featureKey);
-export const getUserLoading = createSelector(
-  authState,
-  (state: AuthState) => state.loading
-);
-export const getUserLoaded = createSelector(
-  authState,
-  (state: AuthState) => state.loaded
-);
-export const getUser = createSelector(
-  authState,
-  (state: AuthState) => state.data
+  })),
+  on(setFeedback, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: !payload.isError,
+    feedback: payload,
+  })),
+  on(clearFeedback, (state) => ({ ...state, feedback: null }))
 );

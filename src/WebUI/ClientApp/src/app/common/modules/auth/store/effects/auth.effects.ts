@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, map, mergeMap, of, tap } from 'rxjs';
+import {
+  catchError,
+  exhaustMap,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import * as AuthActions from '../actions/auth.actions';
+import { ServerResponse } from 'src/app/web-api-client';
 
 @Injectable()
 export class AuthEffects {
@@ -29,13 +38,15 @@ export class AuthEffects {
     )
   );
 
-  loginFail$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.loginFail),
-        tap((action) => this.router.navigateByUrl('auth/login'))
-      ),
-    { dispatch: false }
+  loginFail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginFail),
+      switchMap((action) => {
+        console.log(action.payload);
+        return of(AuthActions.setFeedback({ payload: action.payload }));
+      }),
+      tap(() => this.router.navigateByUrl('auth/login'))
+    )
   );
 
   loginSuccess$ = createEffect(
@@ -92,11 +103,9 @@ export class AuthEffects {
           map((user) =>
             user != null
               ? AuthActions.loginSuccess({ payload: user })
-              : AuthActions.loginFail({
-                  payload: 'Could not load user from storage.',
-                })
+              : AuthActions.logout()
           ),
-          catchError((error) => of(AuthActions.loginFail({ payload: error })))
+          catchError(() => of(AuthActions.logout()))
         )
       )
     )
@@ -105,12 +114,12 @@ export class AuthEffects {
   checkTokenExpiration$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.checkTokenExpiration),
-      map(() => {
+      switchMap(() => {
         if (this.authService.checkTokenIsInvalid()) {
-          return AuthActions.logout();
+          return of(AuthActions.logout());
         }
 
-        return AuthActions.checkTokenExpirationSuccess();
+        return of(AuthActions.checkTokenExpirationSuccess());
       })
     )
   );

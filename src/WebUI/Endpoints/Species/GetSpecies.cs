@@ -1,17 +1,19 @@
 ﻿using System.Net;
 using Ardalis.ApiEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Species;
-using RegionalAnimalHealth.Application.Contracts.Regions.Queries.GetCountries;
+using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Species.Queries.GetSpecies;
 
 namespace WebUI.Endpoints.Species;
 
 [OpenApiTag("Species")]
+[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class GetSpecies : EndpointBaseAsync.WithoutRequest.WithActionResult<List<SpeciesDto>>
 {
     private readonly IMediator _mediator;
@@ -21,7 +23,6 @@ public class GetSpecies : EndpointBaseAsync.WithoutRequest.WithActionResult<List
         _mediator = mediator;
     }
 
-    [Authorize]
     [HttpGet("api/species")]
     [OpenApiOperation(
             "Gets the list of species",
@@ -36,6 +37,6 @@ public class GetSpecies : EndpointBaseAsync.WithoutRequest.WithActionResult<List
         if (result.Succeeded)
             return Ok(data);
 
-        return BadRequest(new ErrorResponse(result.Errors));
+        return BadRequest(new ServerResponse(result.Errors));
     }
 }

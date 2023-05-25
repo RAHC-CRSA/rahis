@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Ardalis.ApiEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
@@ -11,6 +12,7 @@ using RegionalAnimalHealth.Application.Contracts.Species.Commands.AddSpecies;
 namespace WebUI.Endpoints.Species;
 
 [OpenApiTag("Species")]
+[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class AddSpecies : EndpointBaseAsync.WithRequest<AddSpeciesCommand>.WithActionResult<SpeciesDto>
 {
     private readonly IMediator _mediator;
@@ -20,7 +22,6 @@ public class AddSpecies : EndpointBaseAsync.WithRequest<AddSpeciesCommand>.WithA
         _mediator = mediator;
     }
 
-    [Authorize(Roles = SecurityRoles.SuperAdmin)]
     [HttpPost("api/species")]
     [OpenApiOperation(
             "Adds a species",

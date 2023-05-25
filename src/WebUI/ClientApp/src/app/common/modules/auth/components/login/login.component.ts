@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { UserModel as User } from 'src/app/models';
-import { ICreateAuthTokenCommand } from 'src/app/web-api-client';
+import {
+  ICreateAuthTokenCommand,
+  ServerResponse,
+} from 'src/app/web-api-client';
 import { loadUser, login } from '../../store/actions/auth.actions';
-import { AuthState, getUserLoading } from '../../store/reducers';
+import { AuthState } from '../../store/reducers';
+import { getFeedback, getUserLoading } from '../../store/selectors';
 
 @Component({
   selector: 'app-login',
@@ -20,9 +24,10 @@ export class LoginComponent implements OnInit {
   };
 
   loginForm: FormGroup;
-  hasError: boolean;
+  hasFeedback: boolean;
   returnUrl: string;
   isLoading$: Observable<boolean>;
+  feedback$: Observable<ServerResponse | null | undefined>;
   user: User;
 
   constructor(
@@ -35,6 +40,9 @@ export class LoginComponent implements OnInit {
     this.initForm();
 
     this.isLoading$ = this.store.select(getUserLoading);
+    this.feedback$ = this.store
+      .select(getFeedback)
+      .pipe(tap((feedback) => (this.hasFeedback = feedback != null)));
     this.store.dispatch(loadUser());
 
     // get return url from route parameters or default to '/'

@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Ardalis.ApiEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
@@ -12,6 +13,7 @@ using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReportById;
 namespace WebUI.Endpoints.Reports;
 
 [OpenApiTag("Reports")]
+[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class GetReport : EndpointBaseAsync.WithRequest<GetReportByIdQuery>.WithActionResult<ReportDto>
 {
     private readonly IMediator _mediator;
@@ -21,8 +23,6 @@ public class GetReport : EndpointBaseAsync.WithRequest<GetReportByIdQuery>.WithA
         _mediator = mediator;
     }
 
-
-    [Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Verifier}")]
     [HttpGet("api/report/{ReportId}")]
     [OpenApiOperation(
             "Gets a report by id",
@@ -37,6 +37,6 @@ public class GetReport : EndpointBaseAsync.WithRequest<GetReportByIdQuery>.WithA
         if (result.Succeeded)
             return Ok(data);
 
-        return BadRequest(new ErrorResponse(result.Errors));
+        return BadRequest(new ServerResponse(result.Errors));
     }
 }

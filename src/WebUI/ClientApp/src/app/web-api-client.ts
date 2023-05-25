@@ -438,7 +438,7 @@ export class AddDiagnosticTestClient implements IAddDiagnosticTestClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorResponse.fromJS(resultData400);
+            result400 = ServerResponse.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -966,7 +966,7 @@ export class AddCountryClient implements IAddCountryClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorResponse.fromJS(resultData400);
+            result400 = ServerResponse.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1059,7 +1059,7 @@ export class GetCountriesClient implements IGetCountriesClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorResponse.fromJS(resultData400);
+            result400 = ServerResponse.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1142,7 +1142,7 @@ export class AddRegionClient implements IAddRegionClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorResponse.fromJS(resultData400);
+            result400 = ServerResponse.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1920,7 +1920,7 @@ export class GetSystemRolesClient implements IGetSystemRolesClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorResponse.fromJS(resultData400);
+            result400 = ServerResponse.fromJS(resultData400);
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2243,11 +2243,12 @@ export interface IUpdateSpeciesCommand {
     name?: string;
 }
 
-export class ErrorResponse implements IErrorResponse {
+export class ServerResponse implements IServerResponse {
     summary?: string;
     errors?: string[];
+    isError?: boolean;
 
-    constructor(data?: IErrorResponse) {
+    constructor(data?: IServerResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2264,12 +2265,13 @@ export class ErrorResponse implements IErrorResponse {
                 for (let item of _data["errors"])
                     this.errors!.push(item);
             }
+            this.isError = _data["isError"];
         }
     }
 
-    static fromJS(data: any): ErrorResponse {
+    static fromJS(data: any): ServerResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new ErrorResponse();
+        let result = new ServerResponse();
         result.init(data);
         return result;
     }
@@ -2282,13 +2284,15 @@ export class ErrorResponse implements IErrorResponse {
             for (let item of this.errors)
                 data["errors"].push(item);
         }
+        data["isError"] = this.isError;
         return data;
     }
 }
 
-export interface IErrorResponse {
+export interface IServerResponse {
     summary?: string;
     errors?: string[];
+    isError?: boolean;
 }
 
 export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
