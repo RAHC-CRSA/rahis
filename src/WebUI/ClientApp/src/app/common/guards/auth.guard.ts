@@ -7,7 +7,8 @@ import {
 } from '@angular/router';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AuthState, getUser } from '../modules/auth/store/reducers';
+import { AuthState } from '../modules/auth/store/reducers';
+import { getUser } from '../modules/auth/store/selectors';
 import { checkTokenExpiration } from '../modules/auth/store/actions/auth.actions';
 
 @Injectable({
@@ -20,8 +21,6 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    this.store.dispatch(checkTokenExpiration());
-    console.log('Guarding...');
     return this.store.select(getUser).pipe(
       map((user) => {
         if (user && user?.authToken != null) {

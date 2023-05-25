@@ -41,7 +41,7 @@ public class AddParaProfessionalCommandHandler : IRequestHandler<AddParaProfessi
                 Email = professional.Email,
                 Phone = professional.Phone,
                 Position = professional.Position,
-                //InstitutionId = professional.InstitutionId,
+                InstitutionId = professional.InstitutionId,
             };
 
             return (Result.Success(), data);

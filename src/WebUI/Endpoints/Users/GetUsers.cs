@@ -11,6 +11,7 @@ using RegionalAnimalHealth.Application.Contracts.Users.Queries.GetUsers;
 namespace WebUI.Endpoints.Users;
 
 [OpenApiTag("Users")]
+[Authorize(Roles = SecurityRoles.SuperAdmin, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class GetUsers : EndpointBaseAsync.WithoutRequest.WithActionResult<List<UserListDto>>
 {
     private readonly IMediator _mediator;
@@ -20,7 +21,6 @@ public class GetUsers : EndpointBaseAsync.WithoutRequest.WithActionResult<List<U
         _mediator = mediator;
     }
 
-    [Authorize(Roles = $"{SecurityRoles.SuperAdmin}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("api/users")]
     [OpenApiOperation(
             "Gets the list of users",

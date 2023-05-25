@@ -9,9 +9,24 @@
                 <h1>Login</h1>
                 <p class="text-medium-emphasis">Sign In to your account</p>
 
-                <ng-container *ngIf="hasError" class="alert alert-danger">
-                  <p class="text-red">The login details are incorrect</p>
+                <ng-container *ngIf="(feedback$ | async)">
+                  <c-alert color="{{ ((feedback$ | async)?.isError ? 'danger' : 'success' )}}">
+                    <p *ngIf="(feedback$ | async)?.errors?.length == 1" class="text-red">{{ (feedback$ | async)?.summary
+                      }}</p>
+
+                    <ul *ngIf="(feedback$ | async)?.errors?.length != 1">
+                      <li *ngFor="let error of (feedback$ | async)?.errors">{{ error }}</li>
+                    </ul>
+                  </c-alert>
                 </ng-container>
+
+                <!-- <ng-container *ngIf="hasError" class="alert alert-danger">
+                  <p class="text-red">The login details are incorrect</p>
+                  <ul *ngIf="feedback$ | async">
+                    <li *ngFor="let error in feedback$ | async">{{ error }}</li>
+                  </ul>
+                </ng-container> -->
+
                 <c-input-group class="mb-3">
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>

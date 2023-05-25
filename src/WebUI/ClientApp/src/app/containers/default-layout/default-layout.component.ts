@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, take, tap } from 'rxjs';
-import { checkTokenExpiration } from 'src/app/common/modules/auth/store/actions/auth.actions';
-import { AuthState, getUser } from 'src/app/common/modules/auth/store/reducers';
+import { AuthState } from 'src/app/common/modules/auth/store/reducers';
+import { getUser } from 'src/app/common/modules/auth/store/selectors';
 import { UserDto } from 'src/app/web-api-client';
 
 import {

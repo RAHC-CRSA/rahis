@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
+  AlertModule,
   ButtonModule,
   CardModule,
   FormModule,
@@ -39,6 +40,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     ReactiveFormsModule,
     HttpClientModule,
     CardModule,
+    AlertModule,
     ButtonModule,
     GridModule,
     IconModule,

@@ -1,18 +1,19 @@
-﻿using Ardalis.ApiEndpoints;
+﻿using System.Net;
+using Ardalis.ApiEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
-using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Common.Models;
-using RegionalAnimalHealth.Application.Contracts.Diseases.Queries.GetDiseases;
-using System.Net;
 using RegionalAnimalHealth.Application.Common.Models.Institutions;
+using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Institutions.Queries.GetParaProfessionals;
 
 namespace WebUI.Endpoints.Institutions;
 
 [OpenApiTag("ParaProfessionals")]
+[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class GetParaProfessionals : EndpointBaseAsync.WithRequest<long?>.WithActionResult<List<ParaProfessionalDto>>
 {
     private readonly IMediator _mediator;
@@ -22,7 +23,6 @@ public class GetParaProfessionals : EndpointBaseAsync.WithRequest<long?>.WithAct
         _mediator = mediator;
     }
 
-    [Authorize]
     [HttpGet("api/para-professionals")]
     [OpenApiOperation(
             "Gets the list of para-professionals",
@@ -37,6 +37,6 @@ public class GetParaProfessionals : EndpointBaseAsync.WithRequest<long?>.WithAct
         if (result.Succeeded)
             return Ok(data);
 
-        return BadRequest(new ErrorResponse(result.Errors));
+        return BadRequest(new ServerResponse(result.Errors));
     }
 }

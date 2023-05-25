@@ -1,16 +1,19 @@
 ﻿using System.Net;
 using Ardalis.ApiEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Institutions;
+using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Institutions.Queries.GetInstitutions;
 
 namespace WebUI.Endpoints.Institutions;
 
 [OpenApiTag("Institutions")]
+[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class GetInstitutions : EndpointBaseAsync.WithoutRequest.WithActionResult<List<InstitutionDto>>
 {
     private readonly IMediator _mediator;
@@ -20,7 +23,6 @@ public class GetInstitutions : EndpointBaseAsync.WithoutRequest.WithActionResult
         _mediator = mediator;
     }
 
-    [Authorize]
     [HttpGet("api/institutions")]
     [OpenApiOperation(
             "Gets the list of institutions",
@@ -35,6 +37,6 @@ public class GetInstitutions : EndpointBaseAsync.WithoutRequest.WithActionResult
         if (result.Succeeded)
             return Ok(data);
 
-        return BadRequest(new ErrorResponse(result.Errors));
+        return BadRequest(new ServerResponse(result.Errors));
     }
 }

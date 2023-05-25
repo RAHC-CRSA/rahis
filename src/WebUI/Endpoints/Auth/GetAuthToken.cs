@@ -25,7 +25,7 @@ public class GetAuthToken : EndpointBaseAsync.WithRequest<CreateAuthTokenCommand
         "Authenticates a user and returns a json web token")
     ]
     [ProducesResponseType(typeof(AuthResponseDto), (int)HttpStatusCode.OK)]
-    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ServerResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<AuthResponseDto>> HandleAsync(CreateAuthTokenCommand request, CancellationToken cancellationToken = default)
     {
@@ -33,6 +33,6 @@ public class GetAuthToken : EndpointBaseAsync.WithRequest<CreateAuthTokenCommand
         if (result.Succeeded)
             return Ok(authResponse);
 
-        return BadRequest(new ErrorResponse(result.Errors));
+        return BadRequest(new ServerResponse(result.Errors));
     }
 }
