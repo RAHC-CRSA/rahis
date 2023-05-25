@@ -103,7 +103,9 @@
         "security": [
           {
             "JWT": [
-              "Super Admin"
+              "Super Admin",
+              " Admin",
+              " Reporter"
             ]
           }
         ]
@@ -152,7 +154,11 @@
         },
         "security": [
           {
-            "JWT": []
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
           }
         ]
       },
@@ -200,7 +206,9 @@
         "security": [
           {
             "JWT": [
-              "Super Admin"
+              "Super Admin",
+              " Admin",
+              " Reporter"
             ]
           }
         ]
@@ -235,7 +243,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/ServerResponse"
                 }
               }
             }
@@ -244,7 +252,9 @@
         "security": [
           {
             "JWT": [
-              "Reporter"
+              "Super Admin",
+              " Admin",
+              " Reporter"
             ]
           }
         ]
@@ -295,7 +305,9 @@
         "security": [
           {
             "JWT": [
-              "Reporter"
+              "Super Admin",
+              " Admin",
+              " Reporter"
             ]
           }
         ]
@@ -346,9 +358,9 @@
         "security": [
           {
             "JWT": [
-              "Reporter",
-              " Super Admin",
-              " Admin"
+              "Super Admin",
+              " Admin",
+              " Reporter"
             ]
           }
         ]
@@ -400,7 +412,7 @@
             "JWT": [
               "Super Admin",
               " Admin",
-              " Verifier"
+              " Reporter"
             ]
           }
         ]
@@ -451,7 +463,11 @@
         },
         "security": [
           {
-            "JWT": []
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
           }
         ]
       }
@@ -513,7 +529,7 @@
             "JWT": [
               "Super Admin",
               " Admin",
-              " Verifier"
+              " Reporter"
             ]
           }
         ]
@@ -555,7 +571,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/ServerResponse"
                 }
               }
             }
@@ -564,7 +580,8 @@
         "security": [
           {
             "JWT": [
-              "Super Admin"
+              "Super Admin",
+              " Admin"
             ]
           }
         ]
@@ -605,7 +622,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/ServerResponse"
                 }
               }
             }
@@ -613,7 +630,11 @@
         },
         "security": [
           {
-            "JWT": []
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
           }
         ]
       }
@@ -654,7 +675,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/ServerResponse"
                 }
               }
             }
@@ -663,7 +684,9 @@
         "security": [
           {
             "JWT": [
-              "Super Admin"
+              "Super Admin",
+              " Admin",
+              " Reporter"
             ]
           }
         ]
@@ -724,7 +747,11 @@
         },
         "security": [
           {
-            "JWT": []
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
           }
         ]
       }
@@ -774,7 +801,9 @@
         "security": [
           {
             "JWT": [
-              "Super Admin"
+              "Super Admin",
+              " Admin",
+              " Reporter"
             ]
           }
         ]
@@ -813,7 +842,11 @@
         },
         "security": [
           {
-            "JWT": []
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
           }
         ]
       }
@@ -863,7 +896,9 @@
         "security": [
           {
             "JWT": [
-              "Super Admin"
+              "Super Admin",
+              " Admin",
+              " Reporter"
             ]
           }
         ]
@@ -914,7 +949,11 @@
         },
         "security": [
           {
-            "JWT": []
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
           }
         ]
       }
@@ -964,7 +1003,9 @@
         "security": [
           {
             "JWT": [
-              "Super Admin"
+              "Super Admin",
+              " Admin",
+              " Reporter"
             ]
           }
         ]
@@ -1003,7 +1044,11 @@
         },
         "security": [
           {
-            "JWT": []
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
           }
         ]
       }
@@ -1079,7 +1124,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/ServerResponse"
                 }
               }
             }
@@ -1230,7 +1275,7 @@
           }
         }
       },
-      "ErrorResponse": {
+      "ServerResponse": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -1242,6 +1287,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "isError": {
+            "type": "boolean"
           }
         }
       },
