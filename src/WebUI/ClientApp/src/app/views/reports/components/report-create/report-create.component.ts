@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ICreateReportCommand } from 'src/app/web-api-client';
+import {
+  DiagnosticTestDto,
+  ICreateReportCommand,
+  MedicationDto,
+  VaccinationDto,
+} from 'src/app/web-api-client';
 import { ReportsState } from '../../store';
 import { createReport } from '../../store/actions';
 import { Router } from '@angular/router';
@@ -174,7 +179,6 @@ export class ReportCreateComponent implements OnInit {
         formData.movementControlMeasures;
       this.formValues.treatment = formData.treatment;
       this.formValues.medications = formData.medications;
-      this.formValues.vaccinations = formData.vaccinations;
 
       this.formStep++;
       return;
@@ -188,6 +192,16 @@ export class ReportCreateComponent implements OnInit {
 
   submit(formData: any) {
     console.log({ formData, currentValues: this.formValues });
+
+    const medications = this.formValues.medications?.map(
+      (e) => new MedicationDto(e)
+    );
+    const vaccinations = this.formValues.vaccinations?.map(
+      (e) => new VaccinationDto(e)
+    );
+    const diagnosticTests = this.formValues.diagnosticTests?.map(
+      (e) => new DiagnosticTestDto(e)
+    );
 
     const payload: ICreateReportCommand = {
       regionId: parseInt(this.formValues.region),
@@ -216,9 +230,9 @@ export class ReportCreateComponent implements OnInit {
       movementControl: this.formValues.movementControl,
       movementControlMeasures: this.formValues.movementControlMeasures,
       treatment: this.formValues.treatment,
-      medications: this.formValues.medications,
-      vaccinations: this.formValues.vaccinations,
-      diagnosticTests: this.formValues.diagnosticTests,
+      medications: medications,
+      vaccinations: vaccinations,
+      diagnosticTests: diagnosticTests,
     };
 
     console.log('Submitting', { payload });

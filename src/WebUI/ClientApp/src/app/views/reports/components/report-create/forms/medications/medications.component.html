@@ -1,4 +1,3 @@
-<h4 class="mb-3">Medications</h4>
 <form [formGroup]="medicationForm" cForm novalidate="novalidate" class="needs-validation">
   <c-row class="g-3 mb-3">
     <c-col xs>
@@ -16,7 +15,7 @@
 
   <c-row>
     <c-col>
-      <button cButton type="submit" class="px-4" color="primary">
+      <button (click)="onSubmit()" cButton class="px-4" color="primary" [disabled]="medicationForm.invalid">
         Add Medication
       </button>
     </c-col>

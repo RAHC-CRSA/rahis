@@ -8,6 +8,7 @@ import {
 import {
   CountryDto,
   OccurrenceDto,
+  ParaProfessionalDto,
   RegionDto,
   ReportDto,
   ReportListDto,
@@ -21,6 +22,7 @@ export interface ReportState {
   regions?: RegionDto[] | null;
   countries?: CountryDto[] | null;
   occurrences?: OccurrenceDto[] | null;
+  professionals?: ParaProfessionalDto[] | null;
   loaded: boolean;
   loading: boolean;
   error: string | null;
@@ -32,6 +34,7 @@ export const initialState: ReportState = {
   regions: [],
   countries: [],
   occurrences: [],
+  professionals: [],
   loaded: false,
   loading: false,
   error: null,
@@ -110,6 +113,21 @@ export const reportsReducer = createReducer(
     loading: false,
     loaded: true,
     occurrences: payload,
+  })),
+  on(ReportActionTypes.loadParaProfessionals, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(ReportActionTypes.loadParaProfessionalsFail, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    error: payload,
+  })),
+  on(ReportActionTypes.loadParaProfessionalsSuccess, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: true,
+    professionals: payload,
   }))
 );
 
@@ -143,4 +161,9 @@ export const getOccurrences = createSelector(
 export const getReport = createSelector(
   reportState,
   (state: ReportState) => state.data
+);
+
+export const getParaProfessionals = createSelector(
+  reportState,
+  (state: ReportState) => state.professionals
 );

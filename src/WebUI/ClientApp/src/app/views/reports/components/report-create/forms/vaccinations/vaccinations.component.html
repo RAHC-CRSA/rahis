@@ -1,29 +1,60 @@
-<h4 class="mb-3">Vaccinations</h4>
-<form cForm novalidate="novalidate" class="needs-validation">
+<form [formGroup]="vaccinationForm" cForm novalidate="novalidate" class="needs-validation">
   <c-row class="g-3 mb-3">
     <c-col>
       <label>Vaccine Name</label>
-      <input aria-label="Vaccine name" cFormControl placeholder="Vaccine name" />
+      <input aria-label="Vaccine name" formControlName="name" cFormControl placeholder="Vaccine name" />
     </c-col>
   </c-row>
   <c-row class="g-3 mb-3">
     <c-col>
       <label>Number Vaccinated</label>
-      <input aria-label="Number vaccinated" cFormControl placeholder="Number vaccinated" />
+      <input aria-label="Number vaccinated" formControlName="numberVaccinated" cFormControl
+        placeholder="Number vaccinated" />
     </c-col>
   </c-row>
+
+  <div class="row g-3 mb-3">
+    <label>Was this vaccine administered to animals?</label>
+    <div>
+      <c-form-check>
+        <input cFormCheckInput formControlName="isAnimal" type="radio" [value]="false" />
+        <label cFormCheckLabel>No</label>
+      </c-form-check>
+      <c-form-check>
+        <input cFormCheckInput formControlName="isAnimal" type="radio" [value]="true" />
+        <label cFormCheckLabel>Yes</label>
+      </c-form-check>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <label>Was this vaccine administered to humans?</label>
+    <div>
+      <c-form-check>
+        <input cFormCheckInput formControlName="isHuman" type="radio" [value]="false" />
+        <label cFormCheckLabel>No</label>
+      </c-form-check>
+      <c-form-check>
+        <input cFormCheckInput formControlName="isHuman" type="radio" [value]="true" />
+        <label cFormCheckLabel>Yes</label>
+      </c-form-check>
+    </div>
+  </div>
+
   <c-row class="mb-3">
     <c-col>
-      <label>Institution</label>
-      <select aria-label="institution" cSelect>
-        <option [ngValue]="null" [disabled]="true" [selected]="true">Select institution</option>
+      <label>Which para-professional carried out the tests?</label>
+      <select aria-label="professional" formControlName="professionalId" cSelect>
+        <option [ngValue]="''" [disabled]="true" [selected]="true">Select para-professional</option>
+        <option *ngFor="let professional of professionals$ | async; index as i" value="{{ professional.id }}">{{
+          professional.name }}</option>
       </select>
     </c-col>
   </c-row>
 
   <c-row>
     <c-col>
-      <button cButton type="submit" class="px-4" color="primary">
+      <button (click)="onSubmit()" cButton class="px-4" color="primary" [disabled]="vaccinationForm.invalid">
         Add Vaccination
       </button>
     </c-col>
