@@ -17,6 +17,10 @@ export class MedicationsComponent implements OnInit {
     this.initForm();
   }
 
+  get f() {
+    return this.medicationForm.value;
+  }
+
   initForm() {
     this.medicationForm = this.fb.group({
       name: ['', Validators.required],
@@ -25,6 +29,7 @@ export class MedicationsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submit.emit(this.medicationForm.value);
+    this.submit.emit(this.f);
+    this.medicationForm.reset();
   }
 }

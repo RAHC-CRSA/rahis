@@ -9,17 +9,42 @@
           <label>Vaccination</label>
           <div>
             <c-form-check>
-              <input cFormCheckInput formControlName="hasVaccinations" type="radio" [value]="false" />
+              <input cFormCheckInput formControlName="vaccinated" type="radio" [value]="false" />
               <label cFormCheckLabel>No</label>
             </c-form-check>
             <c-form-check>
-              <input cFormCheckInput formControlName="hasVaccinations" type="radio" [value]="true" />
+              <input cFormCheckInput formControlName="vaccinated" type="radio" [value]="true" />
               <label cFormCheckLabel>Yes</label>
             </c-form-check>
           </div>
-          <c-row class="g-3 mb-3" *ngIf="vaccinated">
+          <c-row class="g-3 mb-3" *ngIf="hasVaccinations">
             <c-col>
-              <app-vaccinations class="mb-4"></app-vaccinations>
+              <h4 class="mb-3">Vaccinations</h4>
+              <c-row *ngIf="formData.vaccinations?.length" class="mb-3">
+                <c-col>
+                  <table class="table table-hover table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Number Vaccinated</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let vac of formData.vaccinations; index as i">
+                        <td>{{ vac.name }}</td>
+                        <td>{{ vac.numberVaccinated }}</td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </c-col>
+              </c-row>
+
+              <c-row>
+                <c-col>
+                  <app-vaccinations (submit)="onVaccinationSubmitted($event)" class="mb-4"></app-vaccinations>
+                </c-col>
+              </c-row>
             </c-col>
           </c-row>
         </div>
@@ -28,17 +53,42 @@
           <label>Diagnostic Tests</label>
           <div>
             <c-form-check>
-              <input cFormCheckInput formControlName="hasTests" type="radio" [value]="false" />
+              <input cFormCheckInput formControlName="tested" type="radio" [value]="false" />
               <label cFormCheckLabel>No</label>
             </c-form-check>
             <c-form-check>
-              <input cFormCheckInput formControlName="hasTests" type="radio" [value]="true" />
+              <input cFormCheckInput formControlName="tested" type="radio" [value]="true" />
               <label cFormCheckLabel>Yes</label>
             </c-form-check>
           </div>
-          <c-row class="g-3 mb-3" *ngIf="tested">
+          <c-row class="g-3 mb-3" *ngIf="hasTests">
             <c-col>
-              <app-diagnostic-tests class="mb-4"></app-diagnostic-tests>
+              <h4 class="mb-3">Diagnostic Tests</h4>
+              <c-row *ngIf="formData.diagnosticTests?.length" class="mb-3">
+                <c-col>
+                  <table class="table table-hover table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Number Tested</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let test of formData.diagnosticTests; index as i">
+                        <td>{{ test.name }}</td>
+                        <td>{{ test.numberTested }}</td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </c-col>
+              </c-row>
+
+              <c-row>
+                <c-col>
+                  <app-diagnostic-tests (submit)="onTestSubmitted($event)" class="mb-4"></app-diagnostic-tests>
+                </c-col>
+              </c-row>
             </c-col>
           </c-row>
         </div>

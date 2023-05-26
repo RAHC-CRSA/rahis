@@ -94,10 +94,34 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
                 request.Observation, request.ObservationDuration, request.Quarantine, request.QuarantineDuration, request.MovementControl, 
                 request.MovementControlMeasures, request.Treatment);
 
+
             // TODO: Add treatments, tests and vaccinations
+            if (request.Treatment && request.Medications.Any())
+            {
+                foreach (var item in request.Medications)
+                {
+                    report.AddMedication(item.Name, item.Dosage);
+                }
+            }
+
+            if (request.DiagnosticTests.Any())
+            {
+                foreach (var test in request.DiagnosticTests)
+                {
+                    report.AddDiagnosticTest(test.Name, test.NumberTested, test.ProfessionalId);
+                }
+            }
+
+            if (request.Vaccinations.Any())
+            {
+                foreach (var vacc in request.Vaccinations)
+                {
+                    report.AddVaccination(vacc.Name, vacc.NumberVaccinated, vacc.IsHuman, vacc.IsAnimal, vacc.ProfessionalId);
+                }
+            }
+
 
             await _context.Reports.AddAsync(report);
-
 
             await _context.SaveChangesAsync(cancellationToken);
 

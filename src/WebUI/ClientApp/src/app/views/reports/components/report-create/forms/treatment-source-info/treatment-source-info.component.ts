@@ -1,14 +1,28 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  AfterContentChecked,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  IAddDiagnosticTestCommand,
+  IAddVaccinationCommand,
+} from 'src/app/web-api-client';
 
 @Component({
   selector: 'app-treatment-source-info',
   templateUrl: './treatment-source-info.component.html',
   styleUrls: ['./treatment-source-info.component.scss'],
 })
-export class TreatmentSourceInfoComponent implements OnInit {
-  vaccinated: boolean;
-  tested: boolean;
+export class TreatmentSourceInfoComponent
+  implements OnInit, AfterContentChecked
+{
+  hasVaccinations: boolean;
+  hasTests: boolean;
 
   @Input() formData: any;
 
@@ -17,53 +31,83 @@ export class TreatmentSourceInfoComponent implements OnInit {
 
   treatmentSourceInfo: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.vaccinated = this.formData.vaccination;
-    this.tested = this.formData.diagnosticTest;
+    this.hasVaccinations = this.formData.vaccinations?.length ? true : false;
+    this.hasTests = this.formData.diagnosticTests?.length ? true : false;
 
     this.initForm();
+    this.initConditionalValidation();
   }
 
   initForm() {
     this.treatmentSourceInfo = this.formBuilder.group({
-      hasVaccinations: [this.formData.vaccinations?.length ? true : false],
-      vaccinations: [this.formData.vaccinations],
-      hasTests: [this.formData.tests?.length ? true : false],
-      tests: [this.formData.tests],
+      vaccinated: [this.hasVaccinations],
+      vaccinations: [
+        this.formData.vaccinations?.length ? this.formData.vaccinations : null,
+      ],
+      tested: [this.hasTests],
+      tests: [this.formData.tests?.length ? this.formData.tests : null],
       treatmentDetails: [this.formData.treatmentDetails],
     });
   }
 
+  get f() {
+    return this.treatmentSourceInfo.value;
+  }
+
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+
   initConditionalValidation() {
     this.treatmentSourceInfo
-      .get('hasVaccinations')
+      .get('vaccinated')
       ?.valueChanges.subscribe((value) => {
         if (value) {
           this.treatmentSourceInfo
             .get('vaccinations')
             ?.setValidators([Validators.required]);
         } else {
-          this.treatmentSourceInfo.get('vaccinations')?.clearValidators();
+          this.treatmentSourceInfo.controls.vaccinations?.clearValidators();
+          this.treatmentSourceInfo.controls.vaccinations?.updateValueAndValidity();
         }
 
-        this.vaccinated = value;
+        this.hasVaccinations = value;
       });
 
-    this.treatmentSourceInfo
-      .get('hasTests')
-      ?.valueChanges.subscribe((value) => {
-        if (value) {
-          this.treatmentSourceInfo
-            .get('tests')
-            ?.setValidators([Validators.required]);
-        } else {
-          this.treatmentSourceInfo.get('tests')?.clearValidators();
-        }
+    this.treatmentSourceInfo.get('tested')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.treatmentSourceInfo
+          .get('tests')
+          ?.setValidators([Validators.required]);
+      } else {
+        this.treatmentSourceInfo.controls.tests?.clearValidators();
+        this.treatmentSourceInfo.controls.tests?.updateValueAndValidity();
+      }
 
-        this.tested = value;
-      });
+      this.hasTests = value;
+    });
+  }
+
+  onVaccinationSubmitted(vaccination: any) {
+    this.formData.vaccinations = [...this.formData.vaccinations, vaccination];
+    this.treatmentSourceInfo.patchValue({
+      vaccinations: this.formData.vaccinations,
+    });
+    this.treatmentSourceInfo.controls.vaccinations?.updateValueAndValidity();
+  }
+
+  onTestSubmitted(test: any) {
+    this.formData.diagnosticTests = [...this.formData.diagnosticTests, test];
+    this.treatmentSourceInfo.patchValue({
+      diagnosticTests: this.formData.diagnosticTests,
+    });
+    this.treatmentSourceInfo.controls.tests?.updateValueAndValidity();
   }
 
   onPrevious() {
@@ -71,6 +115,6 @@ export class TreatmentSourceInfoComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submit.emit(this.treatmentSourceInfo.value);
+    this.submit.emit(this.f);
   }
 }

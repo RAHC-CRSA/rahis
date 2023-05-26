@@ -6,6 +6,7 @@ import {
   RegionDto,
   ReportDto,
   ReportListDto,
+  ParaProfessionalDto,
 } from '../../../../web-api-client';
 
 // Create report
@@ -107,4 +108,22 @@ export const loadOccurrencesFail = createAction(
 export const loadOccurrencesSuccess = createAction(
   LOAD_OCCURRENCES_SUCCESS,
   props<{ payload: OccurrenceDto[] }>()
+);
+
+// Get countries
+export const LOAD_PARA_PROFESSIONALS = `[Reports] Load Para-Professionals`;
+export const LOAD_PARA_PROFESSIONALS_FAIL = `[Reports] Load Para-Professionals Fail`;
+export const LOAD_PARA_PROFESSIONALS_SUCCESS = `[Reports] Load Para-Professionals Success`;
+
+export const loadParaProfessionals = createAction(
+  LOAD_PARA_PROFESSIONALS,
+  props<{ payload: number | undefined }>()
+);
+export const loadParaProfessionalsFail = createAction(
+  LOAD_PARA_PROFESSIONALS_FAIL,
+  props<{ payload: string }>()
+);
+export const loadParaProfessionalsSuccess = createAction(
+  LOAD_PARA_PROFESSIONALS_SUCCESS,
+  props<{ payload: ParaProfessionalDto[] }>()
 );

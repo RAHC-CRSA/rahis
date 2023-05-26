@@ -65,7 +65,9 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
       movementControl: [this.formData.movementControl, Validators.required],
       movementControlMeasures: [this.formData.movementControlMeasures],
       treatment: [this.formData.treatment, Validators.required],
-      medications: [this.formData.medications],
+      medications: [
+        this.formData.medications?.length ? this.formData.medications : null,
+      ],
     });
   }
 
@@ -78,7 +80,8 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             .get('corpsesDestroyed')
             ?.setValidators([Validators.required]);
         } else {
-          this.treatmentInfo.get('corpsesDestroyed')?.clearValidators();
+          this.treatmentInfo.controls.corpsesDestroyed?.clearValidators();
+          this.treatmentInfo.controls.corpsesDestroyed?.updateValueAndValidity();
         }
 
         this.corpseDestruction = value;
@@ -90,7 +93,8 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
           .get('observationDuration')
           ?.setValidators([Validators.required]);
       } else {
-        this.treatmentInfo.get('observationDuration')?.clearValidators();
+        this.treatmentInfo.controls.observationDuration?.clearValidators();
+        this.treatmentInfo.controls.observationDuration?.updateValueAndValidity();
       }
 
       this.wasObservation = value;
@@ -102,7 +106,8 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
           .get('quarantineDuration')
           ?.setValidators([Validators.required]);
       } else {
-        this.treatmentInfo.get('quarantineDuration')?.clearValidators();
+        this.treatmentInfo.controls.quarantineDuration?.clearValidators();
+        this.treatmentInfo.controls.quarantineDuration?.updateValueAndValidity();
       }
 
       this.wasQuarantined = value;
@@ -116,7 +121,8 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             .get('movementControlMeasures')
             ?.setValidators([Validators.required]);
         } else {
-          this.treatmentInfo.get('movementControlMeasures')?.clearValidators();
+          this.treatmentInfo.controls.movementControlMeasures?.clearValidators();
+          this.treatmentInfo.controls.movementControlMeasures?.updateValueAndValidity();
         }
 
         this.movementControlled = value;
@@ -128,11 +134,18 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
           .get('medications')
           ?.setValidators([Validators.required]);
       } else {
-        this.treatmentInfo.get('medications')?.clearValidators();
+        this.treatmentInfo.controls.medications?.clearValidators();
+        this.treatmentInfo.controls.medications?.updateValueAndValidity();
       }
 
       this.administeredMeds = value;
     });
+  }
+
+  onMedicationSubmit(medication: any) {
+    this.formData.medications = [...this.formData.medications, medication];
+    this.treatmentInfo.patchValue({ medications: this.formData.medications });
+    this.treatmentInfo.controls.medications?.updateValueAndValidity();
   }
 
   onPrevious() {

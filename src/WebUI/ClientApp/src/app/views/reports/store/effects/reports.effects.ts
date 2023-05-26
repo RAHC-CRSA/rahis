@@ -3,7 +3,11 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
-import { RegionsService, ReportsService } from '../../../../services';
+import {
+  InstitutionsService,
+  RegionsService,
+  ReportsService,
+} from '../../../../services';
 import * as ReportsActions from '../actions/reports.actions';
 
 @Injectable()
@@ -11,7 +15,8 @@ export class ReportsEffects {
   constructor(
     private actions$: Actions,
     private regionsService: RegionsService,
-    private reportsService: ReportsService
+    private reportsService: ReportsService,
+    private institutionsService: InstitutionsService
   ) {}
 
   createReport$ = createEffect(() =>
@@ -98,6 +103,22 @@ export class ReportsEffects {
           map((data) => ReportsActions.loadReportSuccess({ payload: data })),
           catchError((error) =>
             of(ReportsActions.loadReportFail({ payload: error }))
+          )
+        )
+      )
+    )
+  );
+
+  loadParaProfessionals$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ReportsActions.loadParaProfessionals),
+      exhaustMap((action) =>
+        this.institutionsService.getAllParaProfessionals(action.payload).pipe(
+          map((data) =>
+            ReportsActions.loadParaProfessionalsSuccess({ payload: data })
+          ),
+          catchError((error) =>
+            of(ReportsActions.loadParaProfessionalsFail({ payload: error }))
           )
         )
       )
