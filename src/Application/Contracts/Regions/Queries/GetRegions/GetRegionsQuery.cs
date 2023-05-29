@@ -3,17 +3,18 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Regions;
 using RegionalAnimalHealth.Domain.Entities.Regions;
 using RegionalAnimalHealth.Domain.Exceptions;
 
 namespace RegionalAnimalHealth.Application.Contracts.Regions.Queries.GetRegions;
-public class GetRegionsQuery : IRequest<List<RegionDto>>
+public class GetRegionsQuery : IRequest<(Result, List<RegionDto>?)>
 {
     public long? CountryId { get; set; }
 }
 
-public class GetRegionsQueryHandler : IRequestHandler<GetRegionsQuery, List<RegionDto>>
+public class GetRegionsQueryHandler : IRequestHandler<GetRegionsQuery, (Result, List<RegionDto>?)>
 {
     private readonly IApplicationDbContext _context;
     private readonly ILogger<GetRegionsQuery> _logger;
@@ -24,22 +25,24 @@ public class GetRegionsQueryHandler : IRequestHandler<GetRegionsQuery, List<Regi
         _logger = logger;
     }
 
-    public async Task<List<RegionDto>> Handle(GetRegionsQuery request, CancellationToken cancellationToken)
+    public async Task<(Result, List<RegionDto>?)> Handle(GetRegionsQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            return await _context.Countries
+            var regions = await _context.Countries
                 .Include(c => c.Regions.Where(x => !x.IsDeleted && x.CountryId == request.CountryId))
                 .Where(x => !x.IsDeleted && (request.CountryId != null ? x.Id == request.CountryId : true))
                 .SelectMany(e => e.Regions)
                 .Select(RegionSelectorExpression())
                 .OrderBy(x => x.Country)
                 .ToListAsync();
+
+            return (Result.Success(), regions);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message, ex);
-            throw new BusinessRuleException(nameof(GetRegionsQuery), ex.Message);
+            _logger.LogError(ex, ex.Message);
+            return (Result.Failure(new List<string> { ex.Message }), null);
         }
     }
 

@@ -5,14 +5,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Reports.Commands.CreateReport;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebUI.Endpoints.Reports;
 
 [OpenApiTag("Reports")]
+[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class CreateReport : EndpointBaseAsync.WithRequest<CreateReportCommand>.WithActionResult<ReportDto>
 {
     private readonly IMediator _mediator;
@@ -22,7 +23,6 @@ public class CreateReport : EndpointBaseAsync.WithRequest<CreateReportCommand>.W
         _mediator = mediator;
     }
 
-    [Authorize(Roles = $"{SecurityRoles.Reporter}, {SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPost("api/reports")]
     [OpenApiOperation(
             "Creates a report",
@@ -36,6 +36,6 @@ public class CreateReport : EndpointBaseAsync.WithRequest<CreateReportCommand>.W
         if (result.Succeeded)
             return Ok(report);
 
-        return BadRequest(result.Errors.ToArray());
+        return BadRequest(new ServerResponse(result.Errors));
     }
 }

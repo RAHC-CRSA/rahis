@@ -3,16 +3,17 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetOccurrences;
 using RegionalAnimalHealth.Domain.Entities.Reports;
 using RegionalAnimalHealth.Domain.Exceptions;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReports;
-public class GetReportsQuery : IRequest<List<ReportListDto>>
+public class GetReportsQuery : IRequest<(Result, List<ReportListDto>?)>
 {
 }
 
-public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, List<ReportListDto>>
+public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, List<ReportListDto>?)>
 {
     private readonly IApplicationDbContext _context;
     private readonly ILogger<GetReportsQuery> _logger;
@@ -23,11 +24,11 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, List<Repo
         _logger = logger;
     }
 
-    public async Task<List<ReportListDto>> Handle(GetReportsQuery request, CancellationToken cancellationToken)
+    public async Task<(Result, List<ReportListDto>?)> Handle(GetReportsQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            return await _context.Reports
+            var reports = await _context.Reports
                 .Include(x => x.Occurrence)
                     .ThenInclude(x => x.Reports.Where(r => !r.IsDeleted))
                         .ThenInclude(e => e.Disease)
@@ -38,11 +39,13 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, List<Repo
                 .Where(x => !x.IsDeleted)
                 .Select(ReportSelectorExpression())
                 .ToListAsync();
+
+            return (Result.Success(), reports);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message);
-            throw new BusinessRuleException(nameof(GetReportsQuery), ex.Message);
+            _logger.LogError(ex, ex.Message);
+            return (Result.Failure(new List<string> { ex.Message }), null);
         }
     }
 

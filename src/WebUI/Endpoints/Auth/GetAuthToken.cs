@@ -3,20 +3,19 @@ using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
-using RegionalAnimalHealth.Application.Common.Interfaces;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Authorization;
+using RegionalAnimalHealth.Application.Contracts.Auth.Commands.CreateAuthTokenCommand;
 
 namespace WebUI.Endpoints.Auth;
 
 [OpenApiTag("Auth")]
-public class GetAuthToken : EndpointBaseAsync.WithRequest<AuthRequestDto>.WithActionResult<AuthResponseDto>
+public class GetAuthToken : EndpointBaseAsync.WithRequest<CreateAuthTokenCommand>.WithActionResult<AuthResponseDto>
 {
-    private readonly IIdentityService _identityService;
     private readonly IMediator _mediator;
 
-    public GetAuthToken(IIdentityService identityService, IMediator mediator)
+    public GetAuthToken(IMediator mediator)
     {
-        _identityService = identityService;
         _mediator = mediator;
     }
 
@@ -26,15 +25,14 @@ public class GetAuthToken : EndpointBaseAsync.WithRequest<AuthRequestDto>.WithAc
         "Authenticates a user and returns a json web token")
     ]
     [ProducesResponseType(typeof(AuthResponseDto), (int)HttpStatusCode.OK)]
-    [ProducesResponseType(typeof(string[]), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ServerResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult<AuthResponseDto>> HandleAsync(AuthRequestDto request, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<AuthResponseDto>> HandleAsync(CreateAuthTokenCommand request, CancellationToken cancellationToken = default)
     {
-        var authResult = await _identityService.SignInAsync(request.Username, request.Password);
-        if (!authResult.Succeeded)
-            return BadRequest(authResult.Errors);
+        var (result, authResponse) = await _mediator.Send(request);
+        if (result.Succeeded)
+            return Ok(authResponse);
 
-        var authResponse = await _identityService.GetTokenAsync(request.Username);
-        return Ok(authResponse);
+        return BadRequest(new ServerResponse(result.Errors));
     }
 }

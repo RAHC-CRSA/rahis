@@ -9,10 +9,10 @@ public class AddVaccinationCommandValidator : AbstractValidator<AddVaccinationCo
         RuleFor(x => x.ReportId)
             .NotEmpty().WithMessage("Report id is required.");
 
+        RuleFor(x => x.Name)
+            .NotEmpty().WithMessage("Vaccine name is required.");
+
         RuleFor(x => x.NumberVaccinated)
             .NotEmpty().WithMessage("Number vaccinated must be specified.");
-
-        RuleFor(x => x.DiseaseId)
-            .NotEmpty().WithMessage("Disease id is required.");
     }
 }

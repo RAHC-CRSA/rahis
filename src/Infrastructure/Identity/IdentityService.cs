@@ -98,12 +98,19 @@ public class IdentityService : IIdentityService
 
     public async Task<Result> SignInAsync(string userName, string password)
     {
-        var result = await _signInManager.PasswordSignInAsync(userName?.Trim(), password, false, false);
-
-        return result.Succeeded ? Result.Success() : Result.Failure(new List<string>()
+        try
         {
-            $"Unable to sign you in. Please ensure you have entered the correct username and password"
+            var result = await _signInManager.PasswordSignInAsync(userName?.Trim(), password, false, false);
+
+            return result.Succeeded ? Result.Success() : Result.Failure(new List<string>()
+        {
+            $"Unable to sign you in. Please ensure you have entered the correct username and password."
         });
+        } 
+        catch(Exception ex)
+        {
+            return Result.Failure(new List<string> { ex.Message });
+        }
     }
 
     public async Task<AuthResponseDto> GetTokenAsync(string userName)

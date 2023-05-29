@@ -33,7 +33,7 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
 
     public void AddReport(long diseaseId, long speciesId, int numberExposed, int numberInfected, int mortality, DateOnly occurrenceDate)
     {
-        var report = Report.Create(Id, diseaseId, speciesId, numberExposed, numberInfected, mortality, occurrenceDate);
+        var report = Report.Create(Id, diseaseId, speciesId, occurrenceDate);
         _reports.Add(report);
     }
 

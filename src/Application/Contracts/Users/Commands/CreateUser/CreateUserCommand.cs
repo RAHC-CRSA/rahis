@@ -66,9 +66,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, (Resu
         catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);
-            throw;
-        }
-
-        
+            return (Result.Failure(new List<string> { ex.Message}), null);
+        }        
     }
 }
