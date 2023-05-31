@@ -1,0 +1,23 @@
+<form [formGroup]="medicationForm" cForm novalidate="novalidate" class="needs-validation">
+  <c-row class="g-3 mb-3">
+    <c-col xs>
+      <label>Name</label>
+      <input aria-label="Medication name" formControlName="name" cFormControl placeholder="Medication name" />
+    </c-col>
+  </c-row>
+
+  <c-row class="g-3 mb-3">
+    <c-col xs>
+      <label>Dosage</label>
+      <input aria-label="Medication dosage" formControlName="dosage" cFormControl placeholder="Medication dosage" />
+    </c-col>
+  </c-row>
+
+  <c-row>
+    <c-col>
+      <button (click)="onSubmit()" cButton class="px-4" color="primary" [disabled]="medicationForm.invalid">
+        Add Medication
+      </button>
+    </c-col>
+  </c-row>
+</form>

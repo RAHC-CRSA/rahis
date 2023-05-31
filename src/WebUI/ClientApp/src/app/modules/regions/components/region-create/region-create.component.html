@@ -1,0 +1,63 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Add Region</strong>
+      </c-card-header>
+      <c-card-body>
+        <form cForm [formGroup]="regionForm" novalidate="novalidate" (ngSubmit)="submit()" class="needs-validation">
+          <c-row class="g-3 mb-3">
+            <c-col xs>
+              <input aria-label="Region name" cFormControl formControlName="name" placeholder="Region name" [ngClass]="{
+                'border border-danger':
+                  regionForm.controls['name'].touched &&
+                  regionForm.controls['name'].invalid
+              }" />
+              <ng-container [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{validation: 'required', message: 'Region name is required', control: regionForm.controls['name']}"></ng-container>
+              <ng-container [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{validation: 'minlength', message: 'Region name should have at least 3 characters', control: regionForm.controls['name']}"></ng-container>
+            </c-col>
+          </c-row>
+
+          <c-row class="g-3 mb-3">
+            <c-col xs>
+              <label>Code</label>
+              <input aria-label="Code" cFormControl formControlName="code" placeholder="Code" />
+            </c-col>
+          </c-row>
+
+          <c-row class="g-3 mb-3">
+            <c-col>
+              <label>Country</label>
+              <select aria-label="Country" cSelect formControlName="country" [ngClass]="{
+                'border border-danger':
+                  regionForm.controls['country'].touched &&
+                  regionForm.controls['country'].invalid
+              }">
+                <option [ngValue]="null" [disabled]="true" [selected]="true">Select country</option>
+                <option *ngFor="let country of countries$ | async; index as i" value="{{ country.id }}">{{ country.name
+                  }}</option>
+              </select>
+              <ng-container [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{validation: 'required', message: 'Country is required', control: regionForm.controls['country']}"></ng-container>
+            </c-col>
+          </c-row>
+          <c-row>
+            <c-col>
+              <button cButton type="submit" class="px-4" color="primary" [disabled]="regionForm.invalid">
+                Submit
+              </button>
+            </c-col>
+          </c-row>
+        </form>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="text-danger p-2"><small>{{ message }}</small></div>
+  </ng-container>
+</ng-template>

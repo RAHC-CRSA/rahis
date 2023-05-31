@@ -1,0 +1,58 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Create Report</strong>
+      </c-card-header>
+      <c-card-body>
+        <c-row id="msForm">
+          <c-col>
+            <!-- fieldsets -->
+
+            <!-- progressbar -->
+            <ul id="progressbar" class="my-3">
+              <li *ngFor="let step of steps; index as i"
+                [ngClass]="{ active: i + 1 == formStep, inactive: i + 1 > formStep, filled: i < formStep }"
+                class="step">
+                <h5 class="step-title">{{ step.title }}</h5>
+                <!-- <p *ngIf="step.description.length">{{ step.description }}</p> -->
+              </li>
+            </ul>
+            <!-- /progressbar -->
+
+            <div *ngIf="formStep == 1">
+              <c-row class="g-3 mb-3">
+                <h5 class="mb-3">Report Type</h5>
+                <hr>
+                <c-col class="text-center">
+                  <button class="btn btn-lg btn-light btn-block" (click)="next('Immediate')">Immediate</button>
+                </c-col>
+                <c-col class="text-center">
+                  <button class="btn btn-lg btn-light btn-block" (click)="next('FollowUp')">Follow-Up</button>
+                </c-col>
+              </c-row>
+            </div>
+
+            <app-location-info [formData]="formValues" (previous)="previous()" (submit)="next($event)"
+              *ngIf="formStep == 2" />
+
+            <app-disease-info [formData]="formValues" (previous)="previous()" (submit)="next($event)"
+              *ngIf="formStep == 3" />
+
+            <app-occurrence-info [formData]="formValues" (previous)="previous()" (submit)="next($event)"
+              *ngIf="formStep == 4" />
+
+            <app-infection-info [formData]="formValues" (previous)="previous()" (submit)="next($event)"
+              *ngIf="formStep == 5" />
+
+            <app-treatment-info [formData]="formValues" (previous)="previous()" (submit)="next($event)"
+              *ngIf="formStep == 6" />
+
+            <app-treatment-source-info [formData]="formValues" (previous)="previous()" (submit)="submit($event)"
+              *ngIf="formStep == 7" />
+          </c-col>
+        </c-row>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

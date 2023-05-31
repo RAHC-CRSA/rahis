@@ -1,60 +1,46 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
-import { AuthService } from 'app/core/auth/auth.service';
-import { AuthUtils } from 'app/core/auth/auth.utils';
+import {
+    HttpEvent,
+    HttpHandler,
+    HttpInterceptor,
+    HttpRequest,
+} from '@angular/common/http';
+import { first, Observable, switchMap, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AuthState } from './store';
+import { getUser } from './store/selectors';
+import { checkTokenExpiration } from './store/actions/auth.actions';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor
-{
-    /**
-     * Constructor
-     */
-    constructor(private _authService: AuthService)
-    {
-    }
+export class AuthInterceptor implements HttpInterceptor {
+    constructor(private router: Router, private store: Store<AuthState>) {}
 
-    /**
-     * Intercept
-     *
-     * @param req
-     * @param next
-     */
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
-    {
-        // Clone the request object
-        let newReq = req.clone();
+    intercept(
+        req: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
+        return this.store.select(getUser).pipe(
+            first(),
+            tap(() => this.store.dispatch(checkTokenExpiration())),
+            switchMap((user) => {
+                const authReq = req.clone({
+                    headers: req.headers.set(
+                        'Authorization',
+                        `Bearer ${user?.authToken}`
+                    ),
+                });
 
-        // Request
-        //
-        // If the access token didn't expire, add the Authorization header.
-        // We won't add the Authorization header if the access token expired.
-        // This will force the server to return a "401 Unauthorized" response
-        // for the protected API routes which our response interceptor will
-        // catch and delete the access token from the local storage while logging
-        // the user out from the app.
-        if ( this._authService.accessToken && !AuthUtils.isTokenExpired(this._authService.accessToken) )
-        {
-            newReq = req.clone({
-                headers: req.headers.set('Authorization', 'Bearer ' + this._authService.accessToken)
-            });
-        }
-
-        // Response
-        return next.handle(newReq).pipe(
-            catchError((error) => {
-
-                // Catch "401 Unauthorized" responses
-                if ( error instanceof HttpErrorResponse && error.status === 401 )
-                {
-                    // Sign out
-                    this._authService.signOut();
-
-                    // Reload the app
-                    location.reload();
-                }
-
-                return throwError(error);
+                return next.handle(authReq).pipe(
+                    tap(
+                        (event: HttpEvent<any>) => {},
+                        (error) => {
+                            if (error.status === 401) {
+                                this.router.navigateByUrl('401');
+                            }
+                        }
+                    )
+                );
             })
         );
     }

@@ -2,21 +2,22 @@ import { Injectable } from '@angular/core';
 import { CanMatch, Route, Router, UrlSegment, UrlTree } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
 import { AuthService } from 'app/core/auth/auth.service';
+import { AuthState } from '../store';
+import { Store } from '@ngrx/store';
+import { getUser } from '../store/selectors';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
-export class NoAuthGuard implements CanMatch
-{
+export class NoAuthGuard implements CanMatch {
     /**
      * Constructor
      */
     constructor(
         private _authService: AuthService,
-        private _router: Router
-    )
-    {
-    }
+        private _router: Router,
+        private _store: Store<AuthState>
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -28,8 +29,14 @@ export class NoAuthGuard implements CanMatch
      * @param route
      * @param segments
      */
-    canMatch(route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
-    {
+    canMatch(
+        route: Route,
+        segments: UrlSegment[]
+    ):
+        | Observable<boolean | UrlTree>
+        | Promise<boolean | UrlTree>
+        | boolean
+        | UrlTree {
         return this._check();
     }
 
@@ -42,12 +49,11 @@ export class NoAuthGuard implements CanMatch
      *
      * @private
      */
-    private _check(): Observable<boolean>
-    {
+    private _check(): Observable<boolean> {
         // Check the authentication status and return an observable of
         // "true" or "false" to allow or prevent the access
-        return this._authService.check().pipe(
-            switchMap((authenticated) => of(!authenticated))
-        );
+        return this._store
+            .select(getUser)
+            .pipe(switchMap((authenticated) => of(!authenticated)));
     }
 }

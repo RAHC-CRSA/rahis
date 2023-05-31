@@ -1,0 +1,86 @@
+<form [formGroup]="infectionInfo">
+  <fieldset>
+    <c-row>
+      <c-col class="p-3">
+        <h5 class="mb-3">Infection Info</h5>
+        <hr>
+
+        <h6>Animals</h6>
+        <c-row class="g-3 mb-3">
+          <c-col xs>
+            <label>How many animals were exposed?</label>
+            <input aria-label="Number infected" cFormControl formControlName="numberExposed"
+              placeholder="Number exposed" />
+          </c-col>
+        </c-row>
+
+        <c-row class="g-3 mb-3">
+          <c-col xs>
+            <label>How many animals were infected?</label>
+            <input aria-label="Number infected" cFormControl formControlName="numberInfected"
+              placeholder="Number infected" />
+          </c-col>
+        </c-row>
+
+        <c-row class="g-3 mb-3">
+          <c-col xs>
+            <label>What is the mortality rate?</label>
+            <input aria-label="Mortality" cFormControl formControlName="mortality" placeholder="Mortality" />
+          </c-col>
+        </c-row>
+
+        <c-row class="mb-3">
+          <c-col>
+            <label>Were any humans infected?</label>
+            <div>
+              <c-form-check>
+                <input cFormCheckInput formControlName="humanInfection" type="radio" [value]="false"
+                  (change)="onHumanInfectionChange(false)" />
+                <label cFormCheckLabel>No</label>
+              </c-form-check>
+              <c-form-check>
+                <input cFormCheckInput formControlName="humanInfection" type="radio" [value]="true"
+                  (change)="onHumanInfectionChange(true)" />
+                <label cFormCheckLabel>Yes</label>
+              </c-form-check>
+            </div>
+          </c-col>
+        </c-row>
+
+        <div *ngIf="humanInfection">
+          <h6>Humans</h6>
+          <c-row class="g-3 mb-3">
+            <c-col xs>
+              <label>How many humans were exposed?</label>
+              <input aria-label="Number infected" cFormControl formControlName="humansExposed"
+                placeholder="Number exposed" />
+            </c-col>
+          </c-row>
+
+          <c-row class="g-3 mb-3">
+            <c-col xs>
+              <label>How many humans were infected?</label>
+              <input aria-label="Number infected" cFormControl formControlName="humansInfected"
+                placeholder="Number infected" />
+            </c-col>
+          </c-row>
+
+          <c-row class="g-3 mb-3">
+            <c-col xs>
+              <label>What is the human mortality rate?</label>
+              <input aria-label="Mortality" cFormControl formControlName="humansMortality" placeholder="Mortality" />
+            </c-col>
+          </c-row>
+        </div>
+
+        <c-row>
+          <c-col>
+            <input (click)="onPrevious()" type="button" name="previous" class="btn btn-light mx-1" value="Previous" />
+            <input (click)="onSubmit()" type="button" name="next" class="next btn btn-light mx-1" value="Next"
+              [disabled]="infectionInfo.invalid" />
+          </c-col>
+        </c-row>
+      </c-col>
+    </c-row>
+  </fieldset>
+</form>

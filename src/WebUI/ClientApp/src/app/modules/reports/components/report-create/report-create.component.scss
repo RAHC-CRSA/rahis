@@ -1,0 +1,187 @@
+/*form styles*/
+#msform {
+  text-align: center;
+  position: relative;
+  margin-top: 30px;
+}
+#msform fieldset {
+  background: white;
+  border: 0 none;
+  border-radius: 0px;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+  padding: 20px 30px;
+  box-sizing: border-box;
+  width: 80%;
+  margin: 0 10%;
+  /*stacking fieldsets above each other*/
+  position: relative;
+}
+/*Hide all except first fieldset*/
+#msform fieldset:not(:first-of-type) {
+  display: none;
+}
+/*progressbar*/
+#progressbar {
+  margin-bottom: 30px;
+  padding-left: 0 !important;
+  overflow: hidden;
+  /*CSS counters to number the steps*/
+  counter-reset: step;
+
+  .step {
+    .step-title {
+      color: #646464;
+      text-align: center;
+    }
+
+    p {
+      color: #8c8c8c;
+      text-align: center;
+      font-size: 12px;
+    }
+  }
+
+  li {
+    list-style-type: none;
+    font-size: 9px;
+    width: 14.2%;
+    float: left;
+    position: relative;
+    letter-spacing: 1px;
+
+    &:before {
+      content: counter(step);
+      counter-increment: step;
+      width: 54px;
+      height: 54px;
+      line-height: 48px;
+      display: block;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      color: #333;
+      background: white;
+      border-radius: 50%;
+      border: 3px solid #018049;
+      margin: 0 auto 10px auto;
+    }
+  }
+
+  &:after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: -50%;
+    top: 9px;
+    z-index: -1; /*put it behind the numbers*/
+  }
+
+  &:first-child:after {
+    /*connector not needed before the first step*/
+    content: none;
+  }
+
+  li.filled {
+    p {
+      color: #000000;
+    }
+
+    &:before {
+      background: #018049;
+      color: #ffffff;
+    }
+  }
+
+  li.inactive {
+    .step-title {
+      color: #8e8e8e;
+    }
+
+    &:before {
+      background: #ececec;
+      color: #cecece;
+      border-color: #cecece;
+    }
+  }
+
+  li.active {
+    .step-title {
+      color: #018049;
+    }
+
+    p {
+      color: #000000;
+    }
+
+    &.active:before,
+    &.active:after {
+      background: #ffffff;
+      color: #018049;
+    }
+  }
+
+  li:before,
+  li:after {
+    transition: all 0.3s ease-in-out;
+  }
+}
+fieldset {
+  /* for chrome and safari*/
+  -webkit-animation-duration: 0.5ms;
+  -webkit-animation-name: fadeIn;
+  /*for firefox*/
+  -moz-animation-duration: 2s;
+  -moz-animation-name: fadeIn;
+  /* for opera*/
+  -o-animation-duration: 2s;
+  -o-animation-name: fadeIn;
+  /* Standard syntax*/
+  animation-duration: 2s;
+  animation-name: fadeIn;
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  #progressbar {
+    li {
+      width: 100%;
+
+      &:not(.active) {
+        display: none;
+      }
+    }
+  }
+}

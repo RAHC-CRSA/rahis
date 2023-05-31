@@ -1,0 +1,34 @@
+<form [formGroup]="testForm" cForm novalidate="novalidate" class="needs-validation">
+  <c-row class="g-3 mb-3">
+    <c-col xs>
+      <label>What is the name of the test?</label>
+      <input aria-label="Test name" formControlName="name" cFormControl placeholder="Test name" />
+    </c-col>
+  </c-row>
+
+  <c-row class="g-3 mb-3">
+    <c-col xs>
+      <label>How many subjects were the test carried out on?</label>
+      <input aria-label="Number tested" formControlName="numberTested" cFormControl placeholder="Number tested" />
+    </c-col>
+  </c-row>
+
+  <c-row class="mb-3">
+    <c-col>
+      <label>Which para-professional carried out the tests?</label>
+      <select aria-label="institution" formControlName="professionalId" cSelect>
+        <option [ngValue]="''" [disabled]="true" [selected]="true">Select para-professional</option>
+        <option *ngFor="let professional of professionals$ | async; index as i" value="{{ professional.id }}">{{
+          professional.name }}</option>
+      </select>
+    </c-col>
+  </c-row>
+
+  <c-row>
+    <c-col>
+      <button (click)="onSubmit()" cButton class="px-4" color="primary" [disabled]="testForm.invalid">
+        Add Test
+      </button>
+    </c-col>
+  </c-row>
+</form>
