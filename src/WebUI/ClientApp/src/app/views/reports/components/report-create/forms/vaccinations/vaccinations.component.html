@@ -1,13 +1,13 @@
 <form [formGroup]="vaccinationForm" cForm novalidate="novalidate" class="needs-validation">
   <c-row class="g-3 mb-3">
     <c-col>
-      <label>Vaccine Name</label>
+      <label>What is the name of the vaccine?</label>
       <input aria-label="Vaccine name" formControlName="name" cFormControl placeholder="Vaccine name" />
     </c-col>
   </c-row>
   <c-row class="g-3 mb-3">
     <c-col>
-      <label>Number Vaccinated</label>
+      <label>How many vaccinations were adminstered?</label>
       <input aria-label="Number vaccinated" formControlName="numberVaccinated" cFormControl
         placeholder="Number vaccinated" />
     </c-col>
@@ -43,7 +43,7 @@
 
   <c-row class="mb-3">
     <c-col>
-      <label>Which para-professional carried out the tests?</label>
+      <label>Which para-professional administered the vaccine?</label>
       <select aria-label="professional" formControlName="professionalId" cSelect>
         <option [ngValue]="''" [disabled]="true" [selected]="true">Select para-professional</option>
         <option *ngFor="let professional of professionals$ | async; index as i" value="{{ professional.id }}">{{
