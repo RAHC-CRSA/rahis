@@ -1,21 +1,21 @@
 <form [formGroup]="treatmentInfo">
   <fieldset>
-    <c-row ngPreserveWhitespaces>
-      <c-col class="p-3">
+    <div ngPreserveWhitespaces>
+      <div class="p-3">
         <h5 class="mb-3">Treatment Info</h5>
         <hr>
 
         <div class="row g-3 mb-3">
           <label>Were you able to stamp out the disease?</label>
           <div class="g-3">
-            <c-form-check>
+            <div>
               <input cFormCheckInput formControlName="stampingOut" type="radio" [value]="false" />
               <label cFormCheckLabel>No</label>
-            </c-form-check>
-            <c-form-check>
+            </div>
+            <div>
               <input cFormCheckInput formControlName="stampingOut" type="radio" [value]="true" />
               <label cFormCheckLabel>Yes</label>
-            </c-form-check>
+            </div>
           </div>
 
         </div>
@@ -23,129 +23,129 @@
         <div class="row g-3 mb-3">
           <label>Did you destroy infected corpses?</label>
           <div class="g-3">
-            <c-form-check>
+            <div>
               <input cFormCheckInput formControlName="destructionOfCorpses" type="radio" [value]="false" />
               <label cFormCheckLabel>No</label>
-            </c-form-check>
-            <c-form-check>
+            </div>
+            <div>
               <input cFormCheckInput formControlName="destructionOfCorpses" type="radio" [value]="true" />
               <label cFormCheckLabel>Yes</label>
-            </c-form-check>
+            </div>
           </div>
 
           <div *ngIf="corpseDestruction">
-            <c-row class="g-3 mb-3">
-              <c-col xs>
+            <div class="g-3 mb-3">
+              <div xs>
                 <label>How many corpses were destroyed?</label>
                 <input aria-label="Number infected" cFormControl formControlName="corpsesDestroyed"
                   placeholder="Number of corpses destroyed" />
-              </c-col>
-            </c-row>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="row g-3 mb-3">
           <label>Did you disinfect infected species?</label>
           <div>
-            <c-form-check>
+            <div>
               <input cFormCheckInput formControlName="disinfection" type="radio" [value]="false" />
               <label cFormCheckLabel>No</label>
-            </c-form-check>
-            <c-form-check>
+            </div>
+            <div>
               <input cFormCheckInput formControlName="disinfection" type="radio" [value]="true" />
               <label cFormCheckLabel>Yes</label>
-            </c-form-check>
+            </div>
           </div>
         </div>
 
         <div class="row g-3 mb-3">
           <label>Did you observer infected species?</label>
           <div>
-            <c-form-check>
+            <div>
               <input cFormCheckInput formControlName="observation" type="radio" [value]="false" />
               <label cFormCheckLabel>No</label>
-            </c-form-check>
-            <c-form-check>
+            </div>
+            <div>
               <input cFormCheckInput formControlName="observation" type="radio" [value]="true" />
               <label cFormCheckLabel>Yes</label>
-            </c-form-check>
+            </div>
           </div>
 
           <div *ngIf="wasObservation">
-            <c-row class="g-3 mb-3">
-              <c-col xs>
+            <div class="g-3 mb-3">
+              <div xs>
                 <label>For how long?</label>
                 <input aria-label="Observation duration" cFormControl formControlName="observationDuration"
                   placeholder="7 days" />
-              </c-col>
-            </c-row>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="row g-3 mb-3">
           <label>Did you quarantine infected species?</label>
           <div class="g-3">
-            <c-form-check>
+            <div>
               <input cFormCheckInput formControlName="quarantine" type="radio" [value]="false" />
               <label cFormCheckLabel>No</label>
-            </c-form-check>
-            <c-form-check>
+            </div>
+            <div>
               <input cFormCheckInput formControlName="quarantine" type="radio" [value]="true" />
               <label cFormCheckLabel>Yes</label>
-            </c-form-check>
+            </div>
           </div>
           <div *ngIf="wasQuarantined">
-            <c-row class="g-3 mb-3">
-              <c-col xs>
+            <div class="g-3 mb-3">
+              <div xs>
                 <label>For how long?</label>
                 <input aria-label="Quarantine duration" cFormControl formControlName="quarantineDuration"
                   placeholder="10 days" />
-              </c-col>
-            </c-row>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="row g-3 mb-3">
           <label>Did you control movement?</label>
           <div>
-            <c-form-check>
+            <div>
               <input cFormCheckInput formControlName="movementControl" type="radio" [value]="false" />
               <label cFormCheckLabel>No</label>
-            </c-form-check>
-            <c-form-check>
+            </div>
+            <div>
               <input cFormCheckInput formControlName="movementControl" type="radio" [value]="true" />
               <label cFormCheckLabel>Yes</label>
-            </c-form-check>
+            </div>
           </div>
           <div *ngIf="movementControlled">
-            <c-row class="g-3 mb-3">
-              <c-col xs>
+            <div class="g-3 mb-3">
+              <div xs>
                 <label>How?</label>
                 <textarea aria-label="Movement control measures" cFormControl formControlName="movementControlMeasures"
                   placeholder="Measures taken to control movement"></textarea>
-              </c-col>
-            </c-row>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="row g-3 mb-3">
           <label>Did you administer medication?</label>
           <div>
-            <c-form-check>
+            <div>
               <input cFormCheckInput formControlName="treatment" type="radio" [value]="false" />
               <label cFormCheckLabel>No</label>
-            </c-form-check>
-            <c-form-check>
+            </div>
+            <div>
               <input cFormCheckInput formControlName="treatment" type="radio" [value]="true" />
               <label cFormCheckLabel>Yes</label>
-            </c-form-check>
+            </div>
           </div>
 
-          <c-row class="g-3 mb-3" *ngIf="administeredMeds">
-            <c-col>
+          <div class="g-3 mb-3" *ngIf="administeredMeds">
+            <div>
               <h4 class="mb-3">Medications</h4>
-              <c-row *ngIf="formData.medications?.length" class="mb-3">
-                <c-col>
+              <div *ngIf="formData.medications?.length" class="mb-3">
+                <div>
                   <table class="table table-hover table-striped">
                     <thead>
                       <tr>
@@ -161,26 +161,26 @@
                       </tr>
                     </tbody>
                   </table>
-                </c-col>
-              </c-row>
+                </div>
+              </div>
 
-              <c-row>
-                <c-col>
+              <div>
+                <div>
                   <app-medications (submit)="onMedicationSubmit($event)" class="mb-4"></app-medications>
-                </c-col>
-              </c-row>
-            </c-col>
-          </c-row>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <c-row>
-          <c-col>
+        <div>
+          <div>
             <input (click)="onPrevious()" type="button" name="previous" class="btn btn-light mx-1" value="Previous" />
             <input (click)="onSubmit()" type="button" name="next" class="next btn btn-light mx-1" value="Next"
               [disabled]="treatmentInfo.invalid" />
-          </c-col>
-        </c-row>
-      </c-col>
-    </c-row>
+          </div>
+        </div>
+      </div>
+    </div>
   </fieldset>
 </form>

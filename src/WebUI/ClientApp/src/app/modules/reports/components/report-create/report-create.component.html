@@ -1,4 +1,4 @@
-<c-row ngPreserveWhitespaces>
+<!-- <c-row ngPreserveWhitespaces>
   <c-col xs="12">
     <c-card class="mb-4">
       <c-card-header>
@@ -6,21 +6,21 @@
       </c-card-header>
       <c-card-body>
         <c-row id="msForm">
-          <c-col>
+          <c-col> -->
             <!-- fieldsets -->
 
             <!-- progressbar -->
-            <ul id="progressbar" class="my-3">
+            <!-- <ul id="progressbar" class="my-3">
               <li *ngFor="let step of steps; index as i"
                 [ngClass]="{ active: i + 1 == formStep, inactive: i + 1 > formStep, filled: i < formStep }"
                 class="step">
                 <h5 class="step-title">{{ step.title }}</h5>
-                <!-- <p *ngIf="step.description.length">{{ step.description }}</p> -->
+                <p *ngIf="step.description.length">{{ step.description }}</p>
               </li>
-            </ul>
+            </ul> -->
             <!-- /progressbar -->
 
-            <div *ngIf="formStep == 1">
+            <!-- <div *ngIf="formStep == 1">
               <c-row class="g-3 mb-3">
                 <h5 class="mb-3">Report Type</h5>
                 <hr>
@@ -55,4 +55,4 @@
       </c-card-body>
     </c-card>
   </c-col>
-</c-row>
+</c-row> -->

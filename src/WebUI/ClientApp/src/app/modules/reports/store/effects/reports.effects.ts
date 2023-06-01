@@ -4,9 +4,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
 import {
-  InstitutionsService,
-  RegionsService,
-  ReportsService,
+  InstitutionService,
+  RegionService,
+  ReportService,
 } from '../../../../services';
 import * as ReportsActions from '../actions/reports.actions';
 
@@ -14,9 +14,9 @@ import * as ReportsActions from '../actions/reports.actions';
 export class ReportsEffects {
   constructor(
     private actions$: Actions,
-    private regionsService: RegionsService,
-    private reportsService: ReportsService,
-    private institutionsService: InstitutionsService
+    private regionsService: RegionService,
+    private reportsService: ReportService,
+    private institutionsService: InstitutionService
   ) {}
 
   createReport$ = createEffect(() =>

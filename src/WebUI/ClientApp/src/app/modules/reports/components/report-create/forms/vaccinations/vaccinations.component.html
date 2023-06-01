@@ -1,4 +1,18 @@
-<form [formGroup]="vaccinationForm" cForm novalidate="novalidate" class="needs-validation">
+<form [formGroup]="vaccinationForm" novalidate="novalidate" class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
+  <div class="flex">
+    <mat-form-field class="fuse-mat-dense flex-auto">
+      <mat-label>Vaccine Name</mat-label>
+      <input aria-label="Vaccine name" formControlName="name" matInput placeholder="Vaccine name" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Number Vaccinated</mat-label>
+      <input aria-label="Number vaccinated" formControlName="numberVaccinated" matInput
+        placeholder="Number vaccinated" />
+    </mat-form-field>
+  </div>
+</form>
+
+<!-- <form [formGroup]="vaccinationForm" cForm novalidate="novalidate" class="needs-validation">
   <c-row class="g-3 mb-3">
     <c-col>
       <label>Vaccine Name</label>
@@ -59,4 +73,4 @@
       </button>
     </c-col>
   </c-row>
-</form>
+</form> -->

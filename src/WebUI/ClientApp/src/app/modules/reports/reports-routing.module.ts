@@ -13,51 +13,51 @@ const routes: Routes = [
     path: '',
     component: ReportsComponent,
     data: {
-      title: $localize`Reports`,
+      title: `Reports`,
     },
     children: [
       {
         path: '',
         component: ReportListComponent,
         data: {
-          title: $localize`Report List`,
+          title: `Report List`,
         },
       },
-      {
-        path: 'occurrences',
-        component: OccurrencesListComponent,
-        data: {
-          title: $localize`Occurrences`,
-        },
-      },
-      {
-        path: 'occurrences/:id',
-        component: OccurrenceDetailComponent,
-        data: {
-          title: $localize`Occurrence Detail`,
-        },
-      },
+      // {
+      //   path: 'occurrences',
+      //   component: OccurrencesListComponent,
+      //   data: {
+      //     title: `Occurrences`,
+      //   },
+      // },
+      // {
+      //   path: 'occurrences/:id',
+      //   component: OccurrenceDetailComponent,
+      //   data: {
+      //     title: `Occurrence Detail`,
+      //   },
+      // },
       {
         path: 'create',
         component: ReportCreateComponent,
         data: {
-          title: $localize`Create Report`,
+          title: `Create Report`,
         },
       },
-      {
-        path: 'create/confirmation',
-        component: ConfirmationComponent,
-        data: {
-          title: $localize`Create Success`,
-        },
-      },
-      {
-        path: ':id',
-        component: ReportDetailComponent,
-        data: {
-          title: $localize`Report Detail`,
-        },
-      },
+      // {
+      //   path: 'create/confirmation',
+      //   component: ConfirmationComponent,
+      //   data: {
+      //     title: `Create Success`,
+      //   },
+      // },
+      // {
+      //   path: ':id',
+      //   component: ReportDetailComponent,
+      //   data: {
+      //     title: `Report Detail`,
+      //   },
+      // },
     ],
   },
 ];

@@ -3,24 +3,23 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { Select2Module } from 'ng-select2-component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { SharedModule } from 'app/shared/shared.module';
 
 import { reducer } from './store';
 import { featureKey } from './store/actions';
 import { effects } from './store/effects';
-
-import {
-  ButtonGroupModule,
-  ButtonModule,
-  CardModule,
-  DropdownModule,
-  FormModule,
-  GridModule,
-  ListGroupModule,
-  SharedModule,
-} from '@coreui/angular';
-
-import { SharedModule as AppSharedModule } from '../../common/modules/shared/shared.module';
 
 import { ReportsRoutingModule } from './reports-routing.module';
 import { ReportsComponent } from './reports.component';
@@ -44,42 +43,44 @@ import { MedicationsComponent } from './components/report-create/forms/medicatio
 import { ConfirmationComponent } from './components/report-create/forms/confirmation/confirmation.component';
 
 @NgModule({
-  declarations: [
-    ReportsComponent,
-    ReportCreateComponent,
-    ReportListComponent,
-    ReportDetailComponent,
-    LocationInfoComponent,
-    DiseaseInfoComponent,
-    OccurrenceInfoComponent,
-    InfectionInfoComponent,
-    TreatmentInfoComponent,
-    TreatmentSourceInfoComponent,
-    OccurrencesListComponent,
-    OccurrenceDetailComponent,
-    ReportVerifyComponent,
-    VaccinationsComponent,
-    DiagnosticTestsComponent,
-    MedicationsComponent,
-    ConfirmationComponent,
-  ],
-  imports: [
-    ButtonGroupModule,
-    ButtonModule,
-    CardModule,
-    DropdownModule,
-    FormModule,
-    GridModule,
-    ListGroupModule,
-    SharedModule,
-    CommonModule,
-    ReportsRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppSharedModule,
-    Select2Module,
-    StoreModule.forFeature(featureKey, reducer),
-    EffectsModule.forFeature(effects),
-  ],
+    declarations: [
+        ReportsComponent,
+        ReportCreateComponent,
+        ReportListComponent,
+        ReportDetailComponent,
+        LocationInfoComponent,
+        DiseaseInfoComponent,
+        OccurrenceInfoComponent,
+        InfectionInfoComponent,
+        TreatmentInfoComponent,
+        TreatmentSourceInfoComponent,
+        OccurrencesListComponent,
+        OccurrenceDetailComponent,
+        ReportVerifyComponent,
+        VaccinationsComponent,
+        DiagnosticTestsComponent,
+        MedicationsComponent,
+        ConfirmationComponent,
+    ],
+    imports: [
+        SharedModule,
+        CommonModule,
+        ReportsRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatStepperModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        StoreModule.forFeature(featureKey, reducer),
+        EffectsModule.forFeature(effects),
+    ],
 })
 export class ReportsModule {}

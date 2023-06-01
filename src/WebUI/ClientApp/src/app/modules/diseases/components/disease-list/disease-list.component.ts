@@ -1,15 +1,13 @@
 import {
-    AfterViewInit,
     Component,
     OnInit,
     ViewChild,
-    ViewEncapsulation,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { loadDiseases } from '../../store/actions/diseases.actions';
 import { getDiseases, getDiseasesLoading } from '../../store/selectors';
 import { DiseaseState } from '../../store/reducers/diseases.reducer';

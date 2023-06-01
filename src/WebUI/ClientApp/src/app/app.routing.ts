@@ -153,13 +153,13 @@ export const appRoutes: Route[] = [
             //             (m) => m.RegionsModule
             //         ),
             // },
-            // {
-            //     path: 'reports',
-            //     loadChildren: () =>
-            //         import('app/modules/reports/reports.module').then(
-            //             (m) => m.ReportsModule
-            //         ),
-            // },
+            {
+                path: 'reports',
+                loadChildren: () =>
+                    import('app/modules/reports/reports.module').then(
+                        (m) => m.ReportsModule
+                    ),
+            },
             // {
             //     path: 'species',
             //     loadChildren: () =>
