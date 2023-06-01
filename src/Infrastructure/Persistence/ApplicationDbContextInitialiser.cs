@@ -50,6 +50,7 @@ public class ApplicationDbContextInitialiser
             await SeedCountriesAsync();
             await SeedDiseasesAsync();
             await SeedSpeciesAsync();
+            await SeedRegionsAsync();
         }
         catch (Exception ex)
         {
@@ -298,6 +299,36 @@ public class ApplicationDbContextInitialiser
             catch (Exception ex)
             {
                 throw new BusinessRuleException("DbInitializer", ex.Message ?? "Error occured while seeding species.");
+            }
+        }
+    }
+
+    public async Task SeedRegionsAsync()
+    {
+        if (!_context.Regions.Any())
+        {
+            try
+            {
+                var country = await _context.Countries.Where(x => x.Name == "Nigeria").FirstOrDefaultAsync();
+                if (country != null)
+                {
+                    var regions = new List<Region>
+                    {
+                        Region.Create(country.Id, "South East", "SE"),
+                        Region.Create(country.Id, "South Wesr", "SW"),
+                        Region.Create(country.Id, "South South", "SS"),
+                        Region.Create(country.Id, "North East", "NE"),
+                        Region.Create(country.Id, "North West", "NW"),
+                        Region.Create(country.Id, "North Central", "NC"),
+                    };
+
+                    await _context.Regions.AddRangeAsync(regions);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BusinessRuleException("DbInitializer", ex.Message ?? "Error occurred while seeding regions.");
             }
         }
     }
