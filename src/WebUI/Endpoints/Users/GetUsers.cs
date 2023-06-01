@@ -34,7 +34,7 @@ public class GetUsers : EndpointBaseAsync.WithoutRequest.WithActionResult<List<U
     {
         var (result, data) = await _mediator.Send(new GetUsersQuery());
         if (result.Succeeded)
-            return Ok(result);
+            return Ok(data);
 
         return BadRequest(new ServerResponse(result.Errors));
     }
