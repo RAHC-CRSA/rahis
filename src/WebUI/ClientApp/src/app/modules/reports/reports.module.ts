@@ -8,6 +8,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -69,6 +70,7 @@ import { ConfirmationComponent } from './components/report-create/forms/confirma
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
+        MatAutocompleteModule,
         MatCheckboxModule,
         MatFormFieldModule,
         MatIconModule,
