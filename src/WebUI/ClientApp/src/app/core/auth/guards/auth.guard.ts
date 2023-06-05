@@ -5,6 +5,7 @@ import { AuthService } from 'app/core/auth/auth.service';
 import { AuthState } from '../store';
 import { Store } from '@ngrx/store';
 import { getUser } from '../store/selectors';
+import { checkTokenExpiration } from '../store/actions/auth.actions';
 
 @Injectable({
     providedIn: 'root',
@@ -52,6 +53,7 @@ export class AuthGuard implements CanMatch {
      */
     private _check(segments: UrlSegment[]): Observable<boolean | UrlTree> {
         // Check the authentication status
+        this._store.dispatch(checkTokenExpiration());
         return this._store.select(getUser).pipe(
             map((user) => {
                 if (user && user?.authToken != null) {

@@ -118,11 +118,51 @@ export const appRoutes: Route[] = [
             initialData: InitialDataResolver,
         },
         children: [
+            // {
+            //     path: 'dashboard',
+            //     loadChildren: () =>
+            //         import('app/modules/admin/example/example.module').then(
+            //             (m) => m.ExampleModule
+            //         ),
+            // },
             {
                 path: 'dashboard',
+                data: {
+                    roles: ['Super Admin'],
+                },
                 loadChildren: () =>
-                    import('app/modules/admin/example/example.module').then(
-                        (m) => m.ExampleModule
+                    import(
+                        'app/dashboards/super-admin/super-admin.module'
+                    ).then((m) => m.SuperAdminModule),
+            },
+            {
+                path: 'dashboard',
+                data: {
+                    roles: ['Admin'],
+                },
+                loadChildren: () =>
+                    import('app/dashboards/admin/admin.module').then(
+                        (m) => m.AdminModule
+                    ),
+            },
+            {
+                path: 'dashboard',
+                data: {
+                    roles: ['Reporter'],
+                },
+                loadChildren: () =>
+                    import('app/dashboards/reporter/reporter.module').then(
+                        (m) => m.ReporterModule
+                    ),
+            },
+            {
+                path: 'dashboard',
+                data: {
+                    roles: ['Verifier'],
+                },
+                loadChildren: () =>
+                    import('app/dashboards/verifier/verifier.module').then(
+                        (m) => m.VerifierModule
                     ),
             },
             {
