@@ -1,10 +1,34 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ReporterComponent } from './reporter.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+    {
+        path: '',
+        component: ReporterComponent,
+        data: {
+            roles: ['Reporter'],
+            title: 'Reporter Dashboard',
+        },
+        children: [
+            {
+                path: 'reports',
+                children: [
+                    {
+                        path: 'create',
+                        loadChildren: () =>
+                            import(
+                                'app/views/reports/create-report/create-report.module'
+                            ).then((m) => m.CreateReportModule),
+                    },
+                ],
+            },
+        ],
+    },
+];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class ReporterRoutingModule { }
+export class ReporterRoutingModule {}
