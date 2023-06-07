@@ -21,7 +21,7 @@ export const loadInstitutionsSuccess = createAction(
   props<{ payload: InstitutionDto[] }>()
 );
 
-// Add region
+// Add institution
 export const ADD_INSTITUTION = `[Institutions] Add Institution`;
 export const ADD_INSTITUTION_FAIL = `[Institutions] Add Institution Fail`;
 export const ADD_INSTITUTION_SUCCESS = `[Institutions] Add Institution Success`;

@@ -1,0 +1,18 @@
+<form [formGroup]="medicationForm">
+  <mat-form-field class="w-full mb-4">
+    <mat-label>Name</mat-label>
+    <input aria-label="Medication name" formControlName="name" matInput placeholder="Medication name" />
+  </mat-form-field>
+
+  <mat-form-field class="w-full mb-4">
+    <mat-label>Dosage</mat-label>
+    <input aria-label="Medication dosage" formControlName="dosage" matInput placeholder="Medication dosage" />
+  </mat-form-field>
+
+  <div class="flex justify-end mb-4">
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onSubmit()"
+      [disabled]="medicationForm.invalid">
+      Add Medication
+    </button>
+  </div>
+</form>

@@ -3,6 +3,7 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
+import { RoleGuard } from './core/auth/guards/role.guard';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -127,6 +128,7 @@ export const appRoutes: Route[] = [
             // },
             {
                 path: 'dashboard',
+                canActivate: [RoleGuard],
                 data: {
                     roles: ['Super Admin'],
                 },
@@ -137,6 +139,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'dashboard',
+                canActivate: [RoleGuard],
                 data: {
                     roles: ['Admin'],
                 },
@@ -147,6 +150,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'dashboard',
+                canActivate: [RoleGuard],
                 data: {
                     roles: ['Reporter'],
                 },
@@ -157,6 +161,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'dashboard',
+                canActivate: [RoleGuard],
                 data: {
                     roles: ['Verifier'],
                 },
@@ -193,13 +198,13 @@ export const appRoutes: Route[] = [
             //             (m) => m.RegionsModule
             //         ),
             // },
-            {
-                path: 'reports',
-                loadChildren: () =>
-                    import('app/modules/reports/reports.module').then(
-                        (m) => m.ReportsModule
-                    ),
-            },
+            // {
+            //     path: 'reports',
+            //     loadChildren: () =>
+            //         import('app/modules/reports/reports.module').then(
+            //             (m) => m.ReportsModule
+            //         ),
+            // },
             // {
             //     path: 'species',
             //     loadChildren: () =>

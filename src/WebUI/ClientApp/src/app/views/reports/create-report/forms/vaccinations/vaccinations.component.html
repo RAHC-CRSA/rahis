@@ -1,0 +1,59 @@
+<form [formGroup]="vaccinationsInfo">
+
+  <div class="w-full mb-4">
+    <mat-label>Were vaccines administered?</mat-label>
+    <mat-radio-group class="flex" formControlName="vaccinated" aria-label="Vaccinated">
+      <mat-radio-button [value]="false">No</mat-radio-button>
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+    </mat-radio-group>
+
+    <ng-container *ngIf="hasVaccinations">
+      <div class="w-full mt-4">
+        <h4 class="text-2xl mb-4">Vaccinations</h4>
+        <ng-container *ngIf="formData.vaccinations?.length">
+          <div class="mb-4">
+            <table mat-table [dataSource]="formData.vaccinations" class="w-full">
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let el"> {{el.name}} </td>
+              </ng-container>
+
+              <!-- Dosage Column -->
+              <ng-container matColumnDef="numberVaccinated">
+                <th mat-header-cell *matHeaderCellDef> Number Vaccinated </th>
+                <td mat-cell *matCellDef="let el"> {{el.numberVaccinated}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+          </div>
+        </ng-container>
+
+        <div>
+          <form [formGroup]="vaccinationForm">
+            <mat-form-field class="fuse-mat-dense flex-auto">
+              <mat-label>Vaccine Name</mat-label>
+              <input aria-label="Vaccine name" formControlName="name" matInput placeholder="Vaccine name" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Number Vaccinated</mat-label>
+              <input aria-label="Number vaccinated" formControlName="numberVaccinated" matInput
+                placeholder="Number vaccinated" />
+            </mat-form-field>
+
+            <div class="flex justify-end mb-4">
+              <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onVaccinationSubmitted()"
+                [disabled]="vaccinationForm.invalid">
+                Add Vaccination
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</form>

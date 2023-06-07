@@ -5,18 +5,22 @@ import { AuthState } from '../reducers';
 // selectors
 const authState = createFeatureSelector<AuthState>(featureKey);
 export const getUserLoading = createSelector(
-  authState,
-  (state: AuthState) => state.loading
+    authState,
+    (state: AuthState) => state.loading
 );
 export const getUserLoaded = createSelector(
-  authState,
-  (state: AuthState) => state.loaded
+    authState,
+    (state: AuthState) => state.loaded
 );
 export const getUser = createSelector(
-  authState,
-  (state: AuthState) => state.data
+    authState,
+    (state: AuthState) => state.data
+);
+export const getRoles = createSelector(
+    authState,
+    (state: AuthState) => state.data.roles
 );
 export const getFeedback = createSelector(
-  authState,
-  (state: AuthState) => state.feedback
+    authState,
+    (state: AuthState) => state.feedback
 );

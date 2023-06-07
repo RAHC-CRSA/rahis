@@ -59,7 +59,6 @@ export class AuthGuard implements CanMatch {
                 if (user && user?.authToken != null) {
                     return true;
                 } else {
-                    console.log('Redirecting...');
                     // Redirect to the sign-in page with a redirectUrl param
                     const redirectURL = `/${segments.join('/')}`;
                     const urlTree = this._router.parseUrl(
@@ -70,8 +69,6 @@ export class AuthGuard implements CanMatch {
                 }
             }),
             catchError((error) => {
-                console.log({ error });
-                // this._router.navigateByUrl('sign-in');
                 return of(false);
             })
         );

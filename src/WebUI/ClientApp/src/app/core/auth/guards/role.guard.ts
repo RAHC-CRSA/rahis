@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import {
     ActivatedRouteSnapshot,
     CanActivate,
+    CanActivateChild,
     RouterStateSnapshot,
     UrlTree,
 } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { AuthState } from '../store';
 import { Store } from '@ngrx/store';
-import { getRoles } from 'app/modules/users/store';
+import { getRoles } from '../store/selectors';
 
 @Injectable({
     providedIn: 'root',
 })
-export class RoleGuard implements CanActivate {
+export class RoleGuard implements CanActivate, CanActivateChild {
     userRoles$: Observable<string[] | null | undefined>;
 
     constructor(private _store: Store<AuthState>) {}
@@ -28,13 +29,26 @@ export class RoleGuard implements CanActivate {
         | UrlTree {
         return this._store.select(getRoles).pipe(
             map((roles) => {
-                const allowedRoles = route.data.roles;
-                for (let role in allowedRoles) {
-                    if (!roles.includes(role)) return false;
+                if (roles) {
+                    const allowedRoles = route.data.roles;
+                    for (let role of allowedRoles) {
+                        if (!roles.includes(role)) return false;
+                    }
                 }
 
                 return true;
             })
         );
+    }
+
+    canActivateChild(
+        childRoute: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+    ):
+        | boolean
+        | UrlTree
+        | Observable<boolean | UrlTree>
+        | Promise<boolean | UrlTree> {
+        return this.canActivate(childRoute, state);
     }
 }

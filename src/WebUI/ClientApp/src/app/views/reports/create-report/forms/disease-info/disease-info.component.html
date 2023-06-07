@@ -1,0 +1,38 @@
+<form [formGroup]="diseaseInfo" class="p-6">
+  <div class="flex flex-col g-3 my-4">
+
+    <mat-form-field class="w-full">
+      <mat-label>What is the name of the disease?</mat-label>
+      <input type="text" aria-label="Disease" matInput [formControl]="diseaseControl"
+        [matAutocomplete]="diseaseAutocomplete">
+      <mat-autocomplete #diseaseAutocomplete="matAutocomplete" [displayWith]="displayDiseaseFn"
+        (optionSelected)="updateSelectedDisease($event)">
+        <mat-option *ngFor="let disease of filteredDiseases | async" [value]="disease">
+          {{ disease.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>What is the affected species?</mat-label>
+      <input type="text" aria-label="Species" matInput [formControl]="speciesControl"
+        [matAutocomplete]="speciesAutocomplete">
+      <mat-autocomplete #speciesAutocomplete="matAutocomplete" [displayWith]="displaySpeciesFn"
+        (optionSelected)="updateSelectedSpecies($event)">
+        <mat-option *ngFor="let species of filteredSpecies | async" [value]="species">
+          {{ species.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div class="flex justify-between my-4">
+    <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
+      Back
+    </button>
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="diseaseInfo.invalid"
+      (click)="onSubmit()">
+      Next
+    </button>
+  </div>
+</form>

@@ -7,9 +7,18 @@ const routes: Routes = [
         path: '',
         component: SuperAdminComponent,
         data: {
+            roles: ['Super Admin'],
             title: `Super Admin Dashboard`,
         },
-        children: [],
+        children: [
+            {
+                path: 'reports/create',
+                loadChildren: () =>
+                    import(
+                        'app/views/reports/create-report/create-report.module'
+                    ).then((m) => m.CreateReportModule),
+            },
+        ],
     },
 ];
 

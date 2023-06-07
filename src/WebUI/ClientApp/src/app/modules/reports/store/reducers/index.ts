@@ -1,3 +1,3 @@
-export * from './diseases.reducer';
+// export * from './diseases.reducer';
 export * from './reports.reducer';
-export * from './species.reducer';
+// export * from './species.reducer';
