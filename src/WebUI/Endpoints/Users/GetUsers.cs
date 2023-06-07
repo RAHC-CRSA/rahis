@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Application.Contracts.Users.Queries.GetUsers;
 
@@ -31,7 +32,10 @@ public class GetUsers : EndpointBaseAsync.WithoutRequest.WithActionResult<List<U
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<List<UserListDto>>> HandleAsync(CancellationToken cancellationToken = default)
     {
-        var result = await _mediator.Send(new GetUsersQuery());
-        return Ok(result);
+        var (result, data) = await _mediator.Send(new GetUsersQuery());
+        if (result.Succeeded)
+            return Ok(data);
+
+        return BadRequest(new ServerResponse(result.Errors));
     }
 }
