@@ -15,6 +15,11 @@ const routes: Routes = [
                 path: 'reports',
                 children: [
                     {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -35,11 +40,23 @@ const routes: Routes = [
                                 'app/views/reports/occurrences-list/occurrences-list.module'
                             ).then((m) => m.OccurrencesListModule),
                     },
+                    {
+                        path: 'create-confirmation',
+                        loadChildren: () =>
+                            import(
+                                'app/views/reports/create-confirmation/create-confirmation.module'
+                            ).then((m) => m.CreateConfirmationModule),
+                    },
                 ],
             },
             {
                 path: 'regions',
                 children: [
+                    {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
                     {
                         path: 'create',
                         loadChildren: () =>
@@ -60,6 +77,11 @@ const routes: Routes = [
                 path: 'species',
                 children: [
                     {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -78,6 +100,11 @@ const routes: Routes = [
             {
                 path: 'diseases',
                 children: [
+                    {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
                     {
                         path: 'create',
                         loadChildren: () =>
@@ -98,6 +125,11 @@ const routes: Routes = [
                 path: 'institutions',
                 children: [
                     {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -117,6 +149,11 @@ const routes: Routes = [
                 path: 'para-professionals',
                 children: [
                     {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -135,6 +172,11 @@ const routes: Routes = [
             {
                 path: 'users',
                 children: [
+                    {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
                     {
                         path: 'create',
                         loadChildren: () =>

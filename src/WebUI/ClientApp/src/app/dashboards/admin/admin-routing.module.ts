@@ -15,6 +15,11 @@ const routes: Routes = [
                 path: 'reports',
                 children: [
                     {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -41,6 +46,11 @@ const routes: Routes = [
                 path: 'regions',
                 children: [
                     {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -59,6 +69,11 @@ const routes: Routes = [
             {
                 path: 'species',
                 children: [
+                    {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
                     {
                         path: 'create',
                         loadChildren: () =>
@@ -79,6 +94,11 @@ const routes: Routes = [
                 path: 'diseases',
                 children: [
                     {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -98,6 +118,11 @@ const routes: Routes = [
                 path: 'institutions',
                 children: [
                     {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -116,6 +141,11 @@ const routes: Routes = [
             {
                 path: 'para-professionals',
                 children: [
+                    {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
                     {
                         path: 'create',
                         loadChildren: () =>

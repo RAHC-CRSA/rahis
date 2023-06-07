@@ -75,8 +75,14 @@ export class VaccinationsComponent implements OnInit, AfterContentChecked {
             vaccinations: [
                 this.formData.vaccinations?.length
                     ? this.formData.vaccinations
-                    : null,
+                    : [],
             ],
+        });
+
+        this.vaccinationForm = this.formBuilder.group({
+            name: ['', Validators.required],
+            numberVaccinated: ['', Validators.required],
+            professionalId: ['', Validators.required],
         });
     }
 
@@ -157,14 +163,17 @@ export class VaccinationsComponent implements OnInit, AfterContentChecked {
             });
     }
 
-    onVaccinationSubmitted(vaccination: any) {
+    onVaccinationSubmitted() {
         this.formData.vaccinations = [
             ...this.formData.vaccinations,
-            vaccination,
+            this.vaccinationForm.value,
         ];
         this.vaccinationsInfo.patchValue({
             vaccinations: this.formData.vaccinations,
         });
+
+        this.vaccinationForm.reset();
+        this.professionalControl.reset();
         this.vaccinationsInfo.controls.vaccinations?.updateValueAndValidity();
     }
 

@@ -70,7 +70,11 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
     initForm() {
         this.testsInfo = this.formBuilder.group({
             tested: [this.hasTests],
-            tests: [this.formData.tests?.length ? this.formData.tests : null],
+            tests: [
+                this.formData.diagnosticTests?.length
+                    ? this.formData.tests
+                    : [],
+            ],
         });
 
         this.testForm = this.formBuilder.group({
@@ -158,14 +162,17 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
         });
     }
 
-    onTestSubmitted(test: any) {
+    onTestSubmitted() {
         this.formData.diagnosticTests = [
             ...this.formData.diagnosticTests,
-            test,
+            this.testForm.value,
         ];
         this.testsInfo.patchValue({
             diagnosticTests: this.formData.diagnosticTests,
         });
+
+        this.testForm.reset();
+        this.professionalControl.reset();
         this.testsInfo.controls.tests?.updateValueAndValidity();
     }
 

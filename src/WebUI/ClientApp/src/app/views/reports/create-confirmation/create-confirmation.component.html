@@ -1,0 +1,45 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+  <!-- Header -->
+  <div
+    class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div class="flex-1 min-w-0">
+      <!-- Breadcrumbs -->
+      <div class="flex flex-wrap items-center font-medium">
+        <div>
+          <a class="whitespace-nowrap text-primary-500">Reports</a>
+        </div>
+        <div>
+          <a class="whitespace-nowrap text-primary-500">Create a Report</a>
+        </div>
+        <div class="flex items-center ml-1 whitespace-nowrap">
+          <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+          <a class="ml-1 text-primary-500">Confirmation</a>
+        </div>
+      </div>
+      <!-- Title -->
+      <div class="mt-2">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+          Confirmation
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="flex-auto p-6 sm:p-10">
+
+    <div class="w-full">
+
+      <div class="g-5 p-4 bg-card shadow rounded justify-center text-center overflow-hidden">
+        <h3 class="text-4xl font-extrabold text-center my-12">Report created successfully</h3>
+        <p>
+          The report has been successfully submitted.
+        </p>
+
+        <a [routerLink]="['/dashboard/reports']" class="px-8 my-8" mat-flat-button [color]="'primary'">Back to
+          reports</a>
+      </div>
+    </div>
+  </div>
+</div>

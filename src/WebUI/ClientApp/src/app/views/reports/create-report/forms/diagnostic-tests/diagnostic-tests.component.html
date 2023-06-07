@@ -10,9 +10,9 @@
     <ng-container *ngIf="hasTests">
       <div class="w-full mt-4">
         <h4 class="text-2xl mb-4">Diagnostic Tests</h4>
-        <ng-container *ngIf="formData.tests?.length">
+        <ng-container *ngIf="formData.diagnosticTests?.length">
           <div class="mb-4">
-            <table mat-table [dataSource]="formData.tests" class="w-full">
+            <table mat-table [dataSource]="formData.diagnosticTests" class="w-full">
               <!-- Name Column -->
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -69,5 +69,15 @@
         </form>
       </div>
     </ng-container>
+  </div>
+
+  <div class="flex justify-between my-4">
+    <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
+      Back
+    </button>
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="testsInfo.invalid"
+      (click)="onSubmit()">
+      Next
+    </button>
   </div>
 </form>

@@ -5,8 +5,4 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './super-admin.component.html',
     styleUrls: ['./super-admin.component.scss'],
 })
-export class SuperAdminComponent implements OnInit {
-    ngOnInit(): void {
-        console.log('From super admin dashboard');
-    }
-}
+export class SuperAdminComponent {}

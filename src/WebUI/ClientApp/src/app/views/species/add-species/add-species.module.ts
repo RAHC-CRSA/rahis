@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AddSpeciesComponent } from './add-species.component';
 import { Route, RouterModule } from '@angular/router';
+import { SpeciesModule } from 'app/modules/species/species.module';
+import { SharedModule } from 'app/shared/shared.module';
 
 export const routes: Route[] = [
     {
@@ -12,6 +13,6 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [AddSpeciesComponent],
-    imports: [CommonModule, RouterModule.forChild(routes)],
+    imports: [SpeciesModule, SharedModule, RouterModule.forChild(routes)],
 })
 export class AddSpeciesModule {}

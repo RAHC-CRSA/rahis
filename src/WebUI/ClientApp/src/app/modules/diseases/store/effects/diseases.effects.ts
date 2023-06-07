@@ -51,7 +51,7 @@ export class DiseaseEffects {
             this.actions$.pipe(
                 ofType(DiseaseActions.addDiseaseSuccess),
                 tap((action) => {
-                    this.router.navigateByUrl('/diseases');
+                    this.router.navigateByUrl('/dashboard/diseases');
                 })
             ),
         { dispatch: false }

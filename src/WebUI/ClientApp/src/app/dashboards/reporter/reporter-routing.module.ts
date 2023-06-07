@@ -15,6 +15,11 @@ const routes: Routes = [
                 path: 'reports',
                 children: [
                     {
+                        path: '',
+                        redirectTo: 'create',
+                        pathMatch: 'full',
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(

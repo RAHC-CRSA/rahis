@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OccurrencesListComponent } from './occurrences-list.component';
 import { Route, RouterModule } from '@angular/router';
+import { SharedModule } from 'app/shared/shared.module';
+import { ReportsModule } from 'app/modules/reports/reports.module';
 
 export const routes: Route[] = [
     {
@@ -12,6 +14,6 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [OccurrencesListComponent],
-    imports: [CommonModule, RouterModule.forChild(routes)],
+    imports: [ReportsModule, SharedModule, RouterModule.forChild(routes)],
 })
 export class OccurrencesListModule {}

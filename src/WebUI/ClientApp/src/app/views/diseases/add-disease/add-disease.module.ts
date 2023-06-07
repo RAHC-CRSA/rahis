@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AddDiseaseComponent } from './add-disease.component';
 import { Route, RouterModule } from '@angular/router';
+import { SharedModule } from 'app/shared/shared.module';
+import { DiseasesModule } from 'app/modules/diseases/diseases.module';
 
 export const routes: Route[] = [
     {
@@ -12,6 +13,6 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [AddDiseaseComponent],
-    imports: [CommonModule, RouterModule.forChild(routes)],
+    imports: [DiseasesModule, SharedModule, RouterModule.forChild(routes)],
 })
 export class AddDiseaseModule {}

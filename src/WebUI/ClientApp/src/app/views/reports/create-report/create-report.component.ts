@@ -25,7 +25,7 @@ export class CreateReportComponent {
     constructor(private router: Router, private store: Store<ReportsState>) {}
 
     next(formData: any) {
-        if (this.formStep == 7) return;
+        if (this.formStep == 9) return;
 
         console.log({ formData, currentValues: this.formValues });
 
@@ -122,7 +122,23 @@ export class CreateReportComponent {
         }
 
         if (this.formStep == 7) {
-            this.formValues.diagnosticTests = formData.diagnosticTests;
+            this.formValues.diagnosticTests = formData.tests;
+
+            this.formStep++;
+
+            this.reportFormStepper.selected.completed = true;
+            this.reportFormStepper.next();
+            return;
+        }
+
+        if (this.formStep == 8) {
+            this.formValues.vaccinations = formData.vaccinations;
+
+            this.formStep++;
+
+            this.reportFormStepper.selected.completed = true;
+            this.reportFormStepper.next();
+            return;
         }
     }
 
@@ -134,7 +150,7 @@ export class CreateReportComponent {
     }
 
     cancel() {
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/dashboard/reports');
     }
 
     submit(formData: any) {
@@ -186,7 +202,7 @@ export class CreateReportComponent {
 
         this.store.dispatch(createReport({ payload }));
 
-        this.router.navigateByUrl('/reports/create/confirmation');
+        this.router.navigateByUrl('/dashboard/reports/create-confirmation');
     }
 
     private _getFormValues() {

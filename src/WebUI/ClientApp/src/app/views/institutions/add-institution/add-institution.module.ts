@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddInstitutionComponent } from './add-institution.component';
 import { Route, RouterModule } from '@angular/router';
+import { SharedModule } from 'app/shared/shared.module';
+import { InstitutionsModule } from 'app/modules/institutions/institutions.module';
 
 export const routes: Route[] = [
     {
@@ -12,6 +14,6 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [AddInstitutionComponent],
-    imports: [CommonModule, RouterModule.forChild(routes)],
+    imports: [InstitutionsModule, SharedModule, RouterModule.forChild(routes)],
 })
 export class AddInstitutionModule {}
