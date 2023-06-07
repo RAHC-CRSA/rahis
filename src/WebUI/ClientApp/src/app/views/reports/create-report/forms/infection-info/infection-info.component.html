@@ -1,0 +1,78 @@
+<form [formGroup]="infectionInfo" class="p-6">
+  <fieldset>
+    <div>
+      <div class="p-3">
+        <h4 class="text-2xl mb-4">Animals</h4>
+        <mat-form-field class="w-full mb-4">
+          <mat-label>How many animals were exposed?</mat-label>
+          <input aria-label="Number infected" matInput formControlName="numberExposed" placeholder="Number exposed" />
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Number exposed is required', control: infectionInfo.controls['numberExposed']}"></ng-container>
+        </mat-form-field>
+
+        <mat-form-field class="w-full mb-4">
+          <mat-label>How many animals were infected?</mat-label>
+          <input aria-label="Number infected" matInput formControlName="numberInfected" placeholder="Number infected" />
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Number infected is required', control: infectionInfo.controls['numberInfected']}"></ng-container>
+        </mat-form-field>
+
+        <mat-form-field class="w-full mb-4">
+          <mat-label>What is the mortality rate?</mat-label>
+          <input aria-label="Mortality" matInput formControlName="mortality" placeholder="Mortality" />
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Mortality is required', control: infectionInfo.controls['mortality']}"></ng-container>
+        </mat-form-field>
+
+        <div class="w-full mb-4">
+          <mat-label>Were any humans infected?</mat-label>
+          <mat-radio-group class="flex" formControlName="humanInfection" aria-label="Human infection">
+            <mat-radio-button [value]="false" (change)="onHumanInfectionChange(false)">No</mat-radio-button>
+            <mat-radio-button [value]="true" (change)="onHumanInfectionChange(true)">Yes</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <ng-container *ngIf="humanInfection">
+          <h4 class="text-2xl mb-4">Humans</h4>
+          <mat-form-field class="w-full mb-4">
+            <mat-label>How many humans were exposed?</mat-label>
+            <input aria-label="Humans exposed" matInput formControlName="humansExposed" placeholder="Number exposed" />
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Humans exposed is required', control: infectionInfo.controls['humansExposed']}"></ng-container>
+          </mat-form-field>
+
+          <mat-form-field class="w-full mb-4">
+            <mat-label>How many humans were infected?</mat-label>
+            <input aria-label="Humans infected" matInput formControlName="humansInfected"
+              placeholder="Humans infected" />
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Humans infected is required', control: infectionInfo.controls['humansInfected']}"></ng-container>
+          </mat-form-field>
+
+          <mat-form-field class="w-full mb-4">
+            <mat-label>What is the human mortality rate?</mat-label>
+            <input aria-label="Mortality" matInput formControlName="humansMortality" placeholder="Mortality" />
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Humans mortality is required', control: infectionInfo.controls['humansMortality']}"></ng-container>
+          </mat-form-field>
+        </ng-container>
+
+        <div class="flex justify-between my-4">
+          <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
+            Back
+          </button>
+          <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="infectionInfo.invalid"
+            (click)="onSubmit()">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

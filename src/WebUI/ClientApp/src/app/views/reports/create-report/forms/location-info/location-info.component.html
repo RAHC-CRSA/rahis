@@ -1,0 +1,39 @@
+<form [formGroup]="locationInfo" class="p-6">
+  <div class="flex flex-col g-3 my-4">
+
+    <mat-form-field class="w-full">
+      <mat-label>What is the country of occurrence?</mat-label>
+      <input type="text" aria-label="Country" matInput [formControl]="countryControl"
+        [matAutocomplete]="countryAutocomplete" placeholder="Select occurrence country">
+      <mat-autocomplete #countryAutocomplete="matAutocomplete" [displayWith]="displayCountryFn"
+        (optionSelected)="updateSelectedCountry($event)">
+        <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+          <img [src]="country.flag" class="w-6 m-1 inline-block">
+          {{ country.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>In what region?</mat-label>
+      <input type="text" aria-label="Region" matInput [formControl]="regionControl"
+        [matAutocomplete]="regionAutocomplete" placeholder="Select occurrence region">
+      <mat-autocomplete #regionAutocomplete="matAutocomplete" [displayWith]="displayRegionFn"
+        (optionSelected)="updateSelectedRegion($event)">
+        <mat-option *ngFor="let region of filteredRegions | async" [value]="region">
+          {{ region.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div class="flex justify-between my-4">
+    <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
+      Back
+    </button>
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="locationInfo.invalid"
+      (click)="onSubmit()">
+      Next
+    </button>
+  </div>
+</form>

@@ -5,7 +5,6 @@ import {
   AddSpeciesCommand,
   GetSpeciesClient,
   IAddSpeciesCommand,
-  IUpdateSpeciesClient,
   IUpdateSpeciesCommand,
   UpdateSpeciesClient,
   UpdateSpeciesCommand,

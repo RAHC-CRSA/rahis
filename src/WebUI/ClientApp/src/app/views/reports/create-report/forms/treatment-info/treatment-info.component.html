@@ -1,0 +1,132 @@
+<form [formGroup]="treatmentInfo" class="p-6">
+
+  <div class="w-full mb-4">
+    <mat-label>Were you able to stamp out the disease?</mat-label>
+    <mat-radio-group class="flex" formControlName="stampingOut" aria-label="Stamping out">
+      <mat-radio-button [value]="false">No</mat-radio-button>
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="w-full mb-4">
+    <mat-label>Did you destroy infected corpses?</mat-label>
+    <mat-radio-group class="flex" formControlName="destructionOfCorpses" aria-label="Destruction of corpses">
+      <mat-radio-button [value]="false">No</mat-radio-button>
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+    </mat-radio-group>
+
+    <ng-container *ngIf="corpseDestruction">
+      <mat-form-field class="w-full mt-4">
+        <mat-label>How many corpses were destroyed?</mat-label>
+        <input aria-label="Corpses destroyed" matInput formControlName="corpsesDestroyed"
+          placeholder="Number of corpses destroyed" />
+      </mat-form-field>
+    </ng-container>
+  </div>
+
+  <div class="w-full mb-4">
+    <mat-label>Did you disinfect infected species?</mat-label>
+    <mat-radio-group class="flex" formControlName="disinfection" aria-label="Disinfection">
+      <mat-radio-button [value]="false">No</mat-radio-button>
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="w-full mb-4">
+    <mat-label>Did you observe infected species?</mat-label>
+    <mat-radio-group class="flex" formControlName="observation" aria-label="Observation">
+      <mat-radio-button [value]="false">No</mat-radio-button>
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+    </mat-radio-group>
+
+    <ng-container *ngIf="wasObservation">
+      <mat-form-field class="w-full mt-4">
+        <mat-label>For how long?</mat-label>
+        <input aria-label="Observation duration" matInput formControlName="observationDuration" placeholder="7 days" />
+      </mat-form-field>
+    </ng-container>
+  </div>
+
+  <div class="w-full mb-4">
+    <mat-label>Did you quarantine infected species?</mat-label>
+    <mat-radio-group class="flex" formControlName="quarantine" aria-label="Quarantine">
+      <mat-radio-button [value]="false">No</mat-radio-button>
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+    </mat-radio-group>
+
+    <ng-container *ngIf="wasQuarantined">
+      <mat-form-field class="w-full mt-4">
+        <mat-label>For how long?</mat-label>
+        <input aria-label="Quarantine duration" matInput formControlName="quarantineDuration" placeholder="10 days" />
+      </mat-form-field>
+    </ng-container>
+  </div>
+
+  <div class="w-full mb-4">
+    <mat-label>Did you control movement?</mat-label>
+    <mat-radio-group class="flex" formControlName="movementControl" aria-label="Movement control">
+      <mat-radio-button [value]="false">No</mat-radio-button>
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+    </mat-radio-group>
+
+    <ng-container *ngIf="movementControlled">
+      <mat-form-field class="w-full mt-4">
+        <mat-label>How?</mat-label>
+        <textarea aria-label="Movement control measures" matInput formControlName="movementControlMeasures"
+          placeholder="Measures taken to control movement"></textarea>
+      </mat-form-field>
+    </ng-container>
+  </div>
+
+  <div class="w-full mb-4">
+    <mat-label>Did you administer medication?</mat-label>
+    <mat-radio-group class="flex" formControlName="treatment" aria-label="Treatment">
+      <mat-radio-button [value]="false">No</mat-radio-button>
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+    </mat-radio-group>
+
+    <ng-container *ngIf="administeredMeds">
+      <div class="w-full mt-4">
+        <h4 class="text-2xl mb-4">Medications</h4>
+        <ng-container *ngIf="formData.medications?.length">
+          <div class="mb-4">
+            <table mat-table [dataSource]="formData.medications" class="w-full">
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let el"> {{el.name}} </td>
+              </ng-container>
+
+              <!-- Dosage Column -->
+              <ng-container matColumnDef="dosage">
+                <th mat-header-cell *matHeaderCellDef> Dosage </th>
+                <td mat-cell *matCellDef="let el"> {{el.dosage}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+          </div>
+        </ng-container>
+
+        <div>
+          <div>
+            <app-medications (submit)="onMedicationSubmit($event)" class="mb-4"></app-medications>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="flex justify-between my-4">
+    <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
+      Back
+    </button>
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="treatmentInfo.invalid"
+      (click)="onSubmit()">
+      Next
+    </button>
+  </div>
+</form>

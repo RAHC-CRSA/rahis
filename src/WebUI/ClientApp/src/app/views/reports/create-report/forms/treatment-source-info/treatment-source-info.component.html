@@ -1,0 +1,18 @@
+<form [formGroup]="treatmentSourceInfo" class="p-6">
+
+  <mat-form-field class="w-full mt-4">
+    <mat-label>Remarks/Comments</mat-label>
+    <textarea aria-label="Remarks" matInput formControlName="treatmentDetails"
+      placeholder="Remarks/comments"></textarea>
+  </mat-form-field>
+
+  <div class="flex justify-between my-4">
+    <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
+      Back
+    </button>
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="treatmentSourceInfo.invalid"
+      (click)="onSubmit()">
+      Submit
+    </button>
+  </div>
+</form>

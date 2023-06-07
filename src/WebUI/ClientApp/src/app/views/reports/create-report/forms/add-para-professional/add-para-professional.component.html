@@ -1,0 +1,35 @@
+<form [formGroup]="professionalForm">
+  <mat-form-field class="w-full mb-4">
+    <mat-label>What is the name of the test?</mat-label>
+    <input aria-label="Test name" formControlName="name" matInput placeholder="Test name" />
+  </mat-form-field>
+
+  <mat-form-field class="w-full mb-4">
+    <mat-label>How many subjects were the test carried out on?</mat-label>
+    <input aria-label="Number tested" formControlName="numberTested" matInput placeholder="Number tested" />
+  </mat-form-field>
+
+  <mat-form-field class="w-full">
+    <mat-label>Which institution does the para-professional belong to?</mat-label>
+    <input type="text" aria-label="Institution" matInput [formControl]="institutionControl"
+      [matAutocomplete]="institutionAutocomplete" placeholder="Select institution">
+    <mat-autocomplete #institutionAutocomplete="matAutocomplete" [displayWith]="displayInstitutionFn"
+      (optionSelected)="updateSelectedInstitution($event)">
+      <mat-option *ngFor="let institution of filteredInstitutions | async" [value]="institution">
+        {{ institution.name }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-hint>Select 'Other' to add a new institution</mat-hint>
+  </mat-form-field>
+
+  <ng-container *ngIf="newInstitution">
+    <app-add-institution (submit)="onSubmitInstitution($event)"></app-add-institution>
+  </ng-container>
+
+  <div class="flex justify-end mb-4">
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onSubmit()"
+      [disabled]="professionalForm.invalid">
+      Add Para-Professional
+    </button>
+  </div>
+</form>
