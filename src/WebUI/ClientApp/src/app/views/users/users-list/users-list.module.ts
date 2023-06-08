@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersListComponent } from './users-list.component';
 import { Route, RouterModule } from '@angular/router';
+import { UsersModule } from 'app/modules/users/users.module';
+import { SharedModule } from 'app/shared/shared.module';
 
 export const routes: Route[] = [
     {
@@ -12,6 +14,6 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [UsersListComponent],
-    imports: [CommonModule, RouterModule.forChild(routes)],
+    imports: [UsersModule, SharedModule, RouterModule.forChild(routes)],
 })
 export class UsersListModule {}

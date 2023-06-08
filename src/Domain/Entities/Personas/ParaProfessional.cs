@@ -30,7 +30,7 @@ public class ParaProfessional : BaseAuditableEntity<long>
         Guard.IsNotNullOrEmpty(phone, nameof(phone));
         Guard.IsNotNullOrEmpty(position, nameof(position));
 
-        return new ParaProfessional(name, name, email, position, institutionId);
+        return new ParaProfessional(name, email, phone, position, institutionId);
     }
 
     public void Delete()

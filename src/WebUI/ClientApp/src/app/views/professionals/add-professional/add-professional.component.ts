@@ -80,7 +80,7 @@ export class AddProfessionalComponent {
     }
 
     get f() {
-        return this.professionalForm?.value;
+        return this.professionalForm?.controls;
     }
 
     private _filterInstitution(name: string): InstitutionDto[] {
@@ -103,11 +103,11 @@ export class AddProfessionalComponent {
 
     submit() {
         const payload: IAddParaProfessionalCommand = {
-            name: this.f.name,
-            position: this.f.position,
-            email: this.f.email,
-            phone: this.f.phone,
-            institutionId: this.f.institution,
+            name: this.f.name.value,
+            position: this.f.position.value,
+            email: this.f.email.value,
+            phone: this.f.phone.value,
+            institutionId: this.f.institution.value,
         };
 
         this.store.dispatch(addParaProfessional({ payload }));

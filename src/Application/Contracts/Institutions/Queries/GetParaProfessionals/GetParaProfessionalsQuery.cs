@@ -29,8 +29,8 @@ public class GetParaProfessionalsQueryHandler : IRequestHandler<GetParaProfessio
         try
         {
             var data = await _context.ParaProfessionals
-                //.Include(e => e.Institution)
-                //.Where(x => !x.IsDeleted && (request.InstitutionId != null ? x.InstitutionId == request.InstitutionId : true))
+                .Include(e => e.Institution)
+                .Where(x => !x.IsDeleted && (request.InstitutionId != null ? x.InstitutionId == request.InstitutionId : true))
                 .Where(x => !x.IsDeleted)
                 .Select(ParaProfessionalSelectorExpression())
                 .ToListAsync();
@@ -53,8 +53,8 @@ public class GetParaProfessionalsQueryHandler : IRequestHandler<GetParaProfessio
             Position = e.Position,
             Email = e.Email,
             Phone = e.Phone,
-            //InstitutionId = e.InstitutionId,
-            //InstitutionName = e.Institution.Name ?? null
+            InstitutionId = e.InstitutionId,
+            InstitutionName = e.Institution.Name ?? null
         };
     }
 }
