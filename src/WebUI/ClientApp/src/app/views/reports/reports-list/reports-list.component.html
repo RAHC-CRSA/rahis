@@ -9,6 +9,10 @@
         <div>
           <a class="whitespace-nowrap text-primary-500">Reports</a>
         </div>
+        <div class="flex items-center ml-1 whitespace-nowrap">
+          <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+          <a class="ml-1 text-primary-500">Reports List</a>
+        </div>
       </div>
       <!-- Title -->
       <div class="mt-2">
@@ -92,7 +96,7 @@
         </tr>
       </table>
 
-      <mat-paginator [pageSizeOptions]="[15, 25, 100]" aria-label="Select page of diseases"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[15, 25, 100]" aria-label="Select page of reports"></mat-paginator>
     </div>
   </div>
 </div>
