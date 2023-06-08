@@ -315,7 +315,7 @@ public class ApplicationDbContextInitialiser
                     var regions = new List<Region>
                     {
                         Region.Create(country.Id, "South East", "SE"),
-                        Region.Create(country.Id, "South Wesr", "SW"),
+                        Region.Create(country.Id, "South West", "SW"),
                         Region.Create(country.Id, "South South", "SS"),
                         Region.Create(country.Id, "North East", "NE"),
                         Region.Create(country.Id, "North West", "NW"),
