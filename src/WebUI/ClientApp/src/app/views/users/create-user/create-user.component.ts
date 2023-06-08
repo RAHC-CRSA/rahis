@@ -7,9 +7,9 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { PasswordValidator } from 'app/common/validators';
-import { getRoles } from 'app/core/auth/store/selectors';
 import { UserState } from 'app/modules/users/store';
 import { createUser, loadRoles } from 'app/modules/users/store/actions';
+import { getRoles } from 'app/modules/users/store/selectors';
 import { ICreateUserCommand } from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
