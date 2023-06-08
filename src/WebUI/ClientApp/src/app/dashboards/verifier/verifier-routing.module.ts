@@ -20,6 +20,13 @@ const routes: Routes = [
                         pathMatch: 'full',
                     },
                     {
+                        path: 'list',
+                        loadChildren: () =>
+                            import(
+                                'app/views/reports/reports-list/reports-list.module'
+                            ).then((m) => m.ReportsListModule),
+                    },
+                    {
                         path: 'verify',
                         loadChildren: () =>
                             import(
