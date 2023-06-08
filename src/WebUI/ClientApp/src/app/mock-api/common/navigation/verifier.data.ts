@@ -7,7 +7,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'Dashboard',
         type: 'basic',
         icon: 'heroicons_outline:home',
-        link: '/dashboard/home',
+        link: '/dashboard',
     },
     {
         id: 'reports',
@@ -30,7 +30,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'Dashboard',
         type: 'basic',
         icon: 'heroicons_outline:home',
-        link: '/dashboard/home',
+        link: '/dashboard',
     },
     {
         id: 'reports',
@@ -53,7 +53,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         title: 'Dashboard',
         type: 'basic',
         icon: 'heroicons_outline:home',
-        link: '/dashboard/home',
+        link: '/dashboard',
     },
     {
         id: 'reports',
@@ -69,7 +69,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         title: 'Dashboard',
         type: 'basic',
         icon: 'heroicons_outline:home',
-        link: '/dashboard/home',
+        link: '/dashboard',
     },
     {
         id: 'reports',

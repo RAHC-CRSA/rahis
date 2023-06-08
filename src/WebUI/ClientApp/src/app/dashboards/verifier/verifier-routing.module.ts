@@ -12,11 +12,18 @@ const routes: Routes = [
         },
         children: [
             {
+                path: '',
+                loadChildren: () =>
+                    import(
+                        'app/views/dashboards/verifier/verifier.module'
+                    ).then((m) => m.VerifierModule),
+            },
+            {
                 path: 'reports',
                 children: [
                     {
                         path: '',
-                        redirectTo: 'verify',
+                        redirectTo: 'list',
                         pathMatch: 'full',
                     },
                     {

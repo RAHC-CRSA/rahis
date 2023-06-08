@@ -12,6 +12,13 @@ const routes: Routes = [
         },
         children: [
             {
+                path: '',
+                loadChildren: () =>
+                    import('app/views/dashboards/admin/admin.module').then(
+                        (m) => m.AdminModule
+                    ),
+            },
+            {
                 path: 'reports',
                 children: [
                     {

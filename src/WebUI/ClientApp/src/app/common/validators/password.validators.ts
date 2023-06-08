@@ -1,9 +1,4 @@
-import {
-    AbstractControl,
-    FormGroup,
-    ValidationErrors,
-    Validators,
-} from '@angular/forms';
+import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 
 export class PasswordValidator implements Validators {
     public static PasswordMatch(

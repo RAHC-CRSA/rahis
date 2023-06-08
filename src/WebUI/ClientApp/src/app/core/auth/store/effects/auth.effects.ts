@@ -125,4 +125,12 @@ export class AuthEffects {
             })
         )
     );
+
+    private getRedirectUrl(roles: string[]) {
+        if (roles.includes('Super Admin')) return 'super-admin';
+        else if (roles.includes('Admin')) return 'admin';
+        else if (roles.includes('Reporter')) return 'reporter';
+        else if (roles.includes('Verifier')) return 'verifier';
+        else return 'sign-in';
+    }
 }
