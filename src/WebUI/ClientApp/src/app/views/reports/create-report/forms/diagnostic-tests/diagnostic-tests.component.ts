@@ -173,6 +173,8 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
 
         this.testForm.reset();
         this.professionalControl.reset();
+
+        this.testsInfo.controls.tests?.clearValidators();
         this.testsInfo.controls.tests?.updateValueAndValidity();
     }
 

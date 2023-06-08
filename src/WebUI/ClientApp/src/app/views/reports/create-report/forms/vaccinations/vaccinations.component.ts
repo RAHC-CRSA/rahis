@@ -174,6 +174,8 @@ export class VaccinationsComponent implements OnInit, AfterContentChecked {
 
         this.vaccinationForm.reset();
         this.professionalControl.reset();
+
+        this.vaccinationsInfo.controls.vaccinations?.clearValidators();
         this.vaccinationsInfo.controls.vaccinations?.updateValueAndValidity();
     }
 
