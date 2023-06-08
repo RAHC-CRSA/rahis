@@ -25,7 +25,7 @@ export class RegionsEffects {
                         })
                     ),
                     catchError((error) =>
-                        of(RegionsActions.loadCountriesFail({ payload: error }))
+                        of(RegionsActions.setFeedback({ payload: error }))
                     )
                 )
             )
@@ -41,7 +41,7 @@ export class RegionsEffects {
                         RegionsActions.loadRegionsSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(RegionsActions.loadRegionsFail({ payload: error }))
+                        of(RegionsActions.setFeedback({ payload: error }))
                     )
                 )
             )
@@ -57,7 +57,7 @@ export class RegionsEffects {
                         RegionsActions.addRegionSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(RegionsActions.addRegionFail({ payload: error }))
+                        of(RegionsActions.setFeedback({ payload: error }))
                     )
                 )
             )
@@ -69,7 +69,7 @@ export class RegionsEffects {
             this.actions$.pipe(
                 ofType(RegionsActions.addRegionSuccess),
                 tap((action) => {
-                    this.router.navigateByUrl('/regions');
+                    this.router.navigateByUrl('/dashboard/regions');
                 })
             ),
         { dispatch: false }
