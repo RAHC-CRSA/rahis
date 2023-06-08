@@ -1,15 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-    catchError,
-    exhaustMap,
-    map,
-    mergeMap,
-    of,
-    switchMap,
-    tap,
-} from 'rxjs';
+import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../../auth.service';
 import * as AuthActions from '../actions/auth.actions';
 import { ServerResponse } from 'app/web-api-client';
@@ -53,7 +45,7 @@ export class AuthEffects {
                 }
                 return of(AuthActions.setFeedback({ payload }));
             }),
-            tap(() => this.router.navigateByUrl('auth/login'))
+            tap(() => this.router.navigateByUrl('sign-in'))
         )
     );
 

@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
     styleUrls: ['./users-list.component.scss'],
 })
 export class UsersListComponent {
-    displayedColumns: string[] = ['name', 'roles', 'email', 'created'];
+    displayedColumns: string[] = ['name', 'roles', 'email'];
     dataSource: MatTableDataSource<UserListDto>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;

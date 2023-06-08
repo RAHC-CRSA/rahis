@@ -83,6 +83,15 @@ export class NavigationService implements OnInit {
             case 'Super Admin':
                 userNav = superAdminNav;
                 break;
+            case 'Admin':
+                userNav = adminNav;
+                break;
+            case 'Reporter':
+                userNav = reporterNav;
+                break;
+            case 'Verifier':
+                userNav = verifierNav;
+                break;
             default:
                 break;
         }

@@ -3,7 +3,9 @@ import {
     ActivatedRouteSnapshot,
     CanActivate,
     CanActivateChild,
+    CanMatch,
     RouterStateSnapshot,
+    UrlSegment,
     UrlTree,
 } from '@angular/router';
 import { Observable, map } from 'rxjs';
@@ -14,14 +16,14 @@ import { getRoles } from '../store/selectors';
 @Injectable({
     providedIn: 'root',
 })
-export class RoleGuard implements CanActivate, CanActivateChild {
+export class RoleGuard implements CanMatch {
     userRoles$: Observable<string[] | null | undefined>;
 
     constructor(private _store: Store<AuthState>) {}
 
-    canActivate(
+    canMatch(
         route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
+        segments: UrlSegment[]
     ):
         | Observable<boolean | UrlTree>
         | Promise<boolean | UrlTree>
@@ -39,16 +41,5 @@ export class RoleGuard implements CanActivate, CanActivateChild {
                 return true;
             })
         );
-    }
-
-    canActivateChild(
-        childRoute: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ):
-        | boolean
-        | UrlTree
-        | Observable<boolean | UrlTree>
-        | Promise<boolean | UrlTree> {
-        return this.canActivate(childRoute, state);
     }
 }

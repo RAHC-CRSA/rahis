@@ -3546,6 +3546,8 @@ export interface IAddDiseaseCommand {
 
 export class AuthResponseDto implements IAuthResponseDto {
     appUserId?: string;
+    firstName?: string;
+    lastName?: string;
     username?: string;
     email?: string;
     authToken?: string;
@@ -3564,6 +3566,8 @@ export class AuthResponseDto implements IAuthResponseDto {
     init(_data?: any) {
         if (_data) {
             this.appUserId = _data["appUserId"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
             this.username = _data["username"];
             this.email = _data["email"];
             this.authToken = _data["authToken"];
@@ -3586,6 +3590,8 @@ export class AuthResponseDto implements IAuthResponseDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["appUserId"] = this.appUserId;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
         data["username"] = this.username;
         data["email"] = this.email;
         data["authToken"] = this.authToken;
@@ -3601,6 +3607,8 @@ export class AuthResponseDto implements IAuthResponseDto {
 
 export interface IAuthResponseDto {
     appUserId?: string;
+    firstName?: string;
+    lastName?: string;
     username?: string;
     email?: string;
     authToken?: string;

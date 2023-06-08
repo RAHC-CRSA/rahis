@@ -110,7 +110,7 @@ export const appRoutes: Route[] = [
         ],
     },
 
-    // Admin routes
+    // Dashboard routes
     {
         path: '',
         canMatch: [AuthGuard],
@@ -119,16 +119,9 @@ export const appRoutes: Route[] = [
             initialData: InitialDataResolver,
         },
         children: [
-            // {
-            //     path: 'dashboard',
-            //     loadChildren: () =>
-            //         import('app/modules/admin/example/example.module').then(
-            //             (m) => m.ExampleModule
-            //         ),
-            // },
             {
                 path: 'dashboard',
-                canActivate: [RoleGuard],
+                canMatch: [RoleGuard],
                 data: {
                     roles: ['Super Admin'],
                 },
@@ -139,7 +132,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'dashboard',
-                canActivate: [RoleGuard],
+                canMatch: [RoleGuard],
                 data: {
                     roles: ['Admin'],
                 },
@@ -150,7 +143,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'dashboard',
-                canActivate: [RoleGuard],
+                canMatch: [RoleGuard],
                 data: {
                     roles: ['Reporter'],
                 },
@@ -161,7 +154,7 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'dashboard',
-                canActivate: [RoleGuard],
+                canMatch: [RoleGuard],
                 data: {
                     roles: ['Verifier'],
                 },
@@ -170,55 +163,6 @@ export const appRoutes: Route[] = [
                         (m) => m.VerifierModule
                     ),
             },
-            {
-                path: 'diseases',
-                loadChildren: () =>
-                    import('app/modules/diseases/diseases.module').then(
-                        (m) => m.DiseasesModule
-                    ),
-            },
-            // {
-            //     path: 'institutions',
-            //     loadChildren: () =>
-            //         import('app/modules/institutions/institutions.module').then(
-            //             (m) => m.InstitutionsModule
-            //         ),
-            // },
-            // {
-            //     path: 'para-professionals',
-            //     loadChildren: () =>
-            //         import(
-            //             'app/modules/professionals/professionals.module'
-            //         ).then((m) => m.ProfessionalsModule),
-            // },
-            // {
-            //     path: 'regions',
-            //     loadChildren: () =>
-            //         import('app/modules/regions/regions.module').then(
-            //             (m) => m.RegionsModule
-            //         ),
-            // },
-            // {
-            //     path: 'reports',
-            //     loadChildren: () =>
-            //         import('app/modules/reports/reports.module').then(
-            //             (m) => m.ReportsModule
-            //         ),
-            // },
-            // {
-            //     path: 'species',
-            //     loadChildren: () =>
-            //         import('app/modules/species/species.module').then(
-            //             (m) => m.SpeciesModule
-            //         ),
-            // },
-            // {
-            //     path: 'users',
-            //     loadChildren: () =>
-            //         import('app/modules/users/users.module').then(
-            //             (m) => m.UsersModule
-            //         ),
-            // },
         ],
     },
 ];

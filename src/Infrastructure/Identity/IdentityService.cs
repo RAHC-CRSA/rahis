@@ -134,6 +134,8 @@ public class IdentityService : IIdentityService
         return new AuthResponseDto()
         {
             Username = user.UserName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
             Email = user.Email,
             AppUserId = user.Id,
             AuthToken = tokenHandler.WriteToken(token),
