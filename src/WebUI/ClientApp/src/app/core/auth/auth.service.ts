@@ -251,6 +251,8 @@ export class AuthService {
                     appUserId: user.appUserId,
                     authToken: user.authToken,
                     username: user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                     roles: user.roles,
                 })
             );
