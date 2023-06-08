@@ -35,14 +35,27 @@
         <div>
           <form [formGroup]="vaccinationForm">
             <mat-form-field class="w-full mb-4">
-              <mat-label>Vaccine Name</mat-label>
+              <mat-label>What is the name of the vaccine?</mat-label>
               <input aria-label="Vaccine name" formControlName="name" matInput placeholder="Vaccine name" />
             </mat-form-field>
 
             <mat-form-field class="w-full mb-4">
-              <mat-label>Number Vaccinated</mat-label>
+              <mat-label>How many were vaccinated?</mat-label>
               <input aria-label="Number vaccinated" formControlName="numberVaccinated" matInput
                 placeholder="Number vaccinated" />
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+              <mat-label>Which para-professional administered the vaccinations?</mat-label>
+              <input type="text" aria-label="ParaProfessional" matInput [formControl]="professionalControl"
+                [matAutocomplete]="professionalAutocomplete" placeholder="Select para-professional">
+              <mat-autocomplete #professionalAutocomplete="matAutocomplete" [displayWith]="displayProfessionalFn"
+                (optionSelected)="updateSelectedProfessional($event)">
+                <mat-option *ngFor="let professional of filteredProfessionals | async" [value]="professional">
+                  {{ professional.name }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-hint>Select 'Other' to create a new Para-Professional</mat-hint>
             </mat-form-field>
 
             <div class="flex justify-end mb-4">
