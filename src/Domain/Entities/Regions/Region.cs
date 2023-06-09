@@ -8,7 +8,7 @@ public class Region : BaseAuditableEntity<long>, IAggregateRoot
     public long CountryId { get; private set; }
     public virtual Country Country { get; private set; }
 
-    private Region()
+    private Region() : base()
     {
     }
 

@@ -44,7 +44,7 @@ public class Report : BaseAuditableEntity<long>
     private readonly List<Vaccination> _vaccinations = new();
     public virtual IReadOnlyCollection<Vaccination> Vaccinations => _vaccinations.AsReadOnly();
 
-    private Report()
+    private Report() : base()
     {
     }
 

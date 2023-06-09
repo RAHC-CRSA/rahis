@@ -13,7 +13,7 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
     private readonly List<Report> _reports = new();
     public virtual IReadOnlyCollection<Report> Reports => _reports.AsReadOnly();
 
-    private Occurrence()
+    private Occurrence() : base()
     {
     }
 

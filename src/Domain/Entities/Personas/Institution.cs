@@ -11,7 +11,7 @@ public class Institution : BaseAuditableEntity<long>, IAggregateRoot
     private readonly List<ParaProfessional> _paraProfessionals = new();
     public IReadOnlyCollection<ParaProfessional> ParaProfessionals => _paraProfessionals.AsReadOnly();
 
-    private Institution()
+    private Institution() : base()
     {
     }
 

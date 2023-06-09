@@ -10,7 +10,7 @@ public class ParaProfessional : BaseAuditableEntity<long>
     public long? InstitutionId { get; private set; }
     public virtual Institution Institution { get; set; }
 
-    private ParaProfessional()
+    private ParaProfessional() : base()
     {
     }
 

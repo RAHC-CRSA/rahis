@@ -10,7 +10,7 @@ public class Disease : BaseAuditableEntity<long>
     public string Classification { get; private set; }
 
 
-    private Disease()
+    private Disease() : base()
     {
     }
 

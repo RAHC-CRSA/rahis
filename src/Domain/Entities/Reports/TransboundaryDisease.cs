@@ -8,7 +8,7 @@ public class TransboundaryDisease : BaseAuditableEntity<long>
     public long SpeciesId { get; private set; }
     public virtual Species Species { get; private set; }
 
-    private TransboundaryDisease()
+    private TransboundaryDisease() : base()
     {
     }
 

@@ -5,7 +5,7 @@ namespace RegionalAnimalHealth.Domain.Entities.Reports;
 public class Species : BaseAuditableEntity<long> {
     public string Name { get; private set; }
 
-    private Species()
+    private Species() : base() 
     {
     }
 

@@ -8,7 +8,7 @@ public class Medication : BaseAuditableEntity<long>
     public long ReportId { get; private set; }
     public virtual Report Report { get; private set; }
 
-    private Medication()
+    private Medication() : base()
     {
     }
 
