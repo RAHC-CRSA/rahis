@@ -10,7 +10,7 @@ public class Country : BaseAuditableEntity<long>, IAggregateRoot
     private readonly List<Region> _regions = new ();
     public virtual IReadOnlyCollection<Region> Regions => _regions.AsReadOnly();
 
-    private Country()
+    private Country() : base()
     {
     }
 

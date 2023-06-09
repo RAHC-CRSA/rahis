@@ -11,7 +11,7 @@ public class DiagnosticTest : BaseAuditableEntity<long>
     public long ProfessionalId { get; private set; }
     public virtual ParaProfessional Professional { get; private set; }
 
-    private DiagnosticTest()
+    private DiagnosticTest() : base()
     {
     }
 

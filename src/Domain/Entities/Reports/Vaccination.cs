@@ -12,7 +12,7 @@ public class Vaccination : BaseAuditableEntity<long> {
     public long? ProfessionalId { get; private set; }
     public virtual ParaProfessional Professional { get; private set; }
 
-    private Vaccination()
+    private Vaccination() : base()
     {
     }
 

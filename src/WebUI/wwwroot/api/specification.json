@@ -412,7 +412,8 @@
             "JWT": [
               "Super Admin",
               " Admin",
-              " Reporter"
+              " Reporter",
+              " Verifier"
             ]
           }
         ]
@@ -465,8 +466,7 @@
           {
             "JWT": [
               "Super Admin",
-              " Admin",
-              " Reporter"
+              " Admin"
             ]
           }
         ]
@@ -529,7 +529,8 @@
             "JWT": [
               "Super Admin",
               " Admin",
-              " Reporter"
+              " Reporter",
+              " Verifier"
             ]
           }
         ]

@@ -2,6 +2,11 @@
 
 public abstract class BaseAuditableEntity<T> : BaseEntity<T>
 {
+    public BaseAuditableEntity()
+    {
+        RefId = Guid.NewGuid();
+    }
+
     public DateTime Created { get; set; }
 
     public string? CreatedBy { get; set; }
