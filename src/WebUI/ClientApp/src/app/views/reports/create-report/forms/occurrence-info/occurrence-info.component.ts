@@ -13,8 +13,9 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
-import { ReportsState } from 'app/modules/reports/store';
+import { ReportState } from 'app/modules/reports/store';
 import { loadOccurrences } from 'app/modules/reports/store/actions';
 import { getOccurrences } from 'app/modules/reports/store/selectors';
 import { OccurrenceDto } from 'app/web-api-client';
@@ -24,6 +25,7 @@ import { Observable, map, startWith } from 'rxjs';
     selector: 'app-occurrence-info',
     templateUrl: './occurrence-info.component.html',
     styleUrls: ['./occurrence-info.component.scss'],
+    animations: fuseAnimations,
 })
 export class OccurrenceInfoComponent implements OnInit, AfterContentChecked {
     @Input() formData: any;
@@ -46,7 +48,7 @@ export class OccurrenceInfoComponent implements OnInit, AfterContentChecked {
     constructor(
         private formBuilder: FormBuilder,
         private changeDetector: ChangeDetectorRef,
-        private store: Store<ReportsState>
+        private store: Store<ReportState>
     ) {}
 
     ngOnInit() {

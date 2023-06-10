@@ -15,7 +15,17 @@ export const getParaProfessionalsLoading = createSelector(
     (state: ParaProfessionalsState) => state.loading
 );
 
+export const getParaProfessionalsLoaded = createSelector(
+    professionalsState,
+    (state: ParaProfessionalsState) => state.loaded
+);
+
 export const getInstitutions = createSelector(
     professionalsState,
     (state: ParaProfessionalsState) => state.institutions
+);
+
+export const getFeedback = createSelector(
+    professionalsState,
+    (state: ParaProfessionalsState) => state.feedback
 );

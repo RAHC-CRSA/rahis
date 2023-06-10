@@ -1,21 +1,34 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
+import { ConfirmDialogComponent } from 'app/common/components/confirm-dialog/confirm-dialog.component';
 import { ParaProfessionalsState } from 'app/modules/professionals/store';
-import { loadParaProfessionals } from 'app/modules/professionals/store/actions';
 import {
+    deleteParaProfessional,
+    loadParaProfessionals,
+} from 'app/modules/professionals/store/actions';
+import {
+    getFeedback,
     getParaProfessionals,
+    getParaProfessionalsLoaded,
     getParaProfessionalsLoading,
 } from 'app/modules/professionals/store/selectors';
-import { ParaProfessionalDto } from 'app/web-api-client';
+import {
+    IDeleteParaProfessionalCommand,
+    ParaProfessionalDto,
+    ServerResponse,
+} from 'app/web-api-client';
 import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-professionals-list',
     templateUrl: './professionals-list.component.html',
     styleUrls: ['./professionals-list.component.scss'],
+    animations: fuseAnimations,
 })
 export class ProfessionalsListComponent {
     displayedColumns: string[] = [
@@ -25,6 +38,7 @@ export class ProfessionalsListComponent {
         'institutionName',
         'phone',
         'email',
+        'actions',
     ];
     dataSource: MatTableDataSource<ParaProfessionalDto>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -32,11 +46,15 @@ export class ProfessionalsListComponent {
 
     professionals$: Observable<ParaProfessionalDto[] | null | undefined>;
     loading$: Observable<boolean>;
+    loaded$: Observable<boolean>;
+    feedback$: Observable<ServerResponse | null | undefined>;
 
-    constructor(private store: Store<ParaProfessionalsState>) {}
+    constructor(
+        private store: Store<ParaProfessionalsState>,
+        private dialog: MatDialog
+    ) {}
 
     ngOnInit() {
-        this.store.dispatch(loadParaProfessionals({ payload: undefined }));
         this.professionals$ = this.store.select(getParaProfessionals);
         this.professionals$.subscribe((items) => {
             this.dataSource = new MatTableDataSource(items);
@@ -44,7 +62,16 @@ export class ProfessionalsListComponent {
             this.dataSource.sort = this.sort;
         });
 
+        this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getParaProfessionalsLoading);
+        this.loaded$ = this.store.select(getParaProfessionalsLoaded);
+        this.loaded$.subscribe((loaded) => {
+            if (!loaded) {
+                this.store.dispatch(
+                    loadParaProfessionals({ payload: undefined })
+                );
+            }
+        });
     }
 
     applyFilter(event: Event) {
@@ -54,5 +81,16 @@ export class ProfessionalsListComponent {
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
         }
+    }
+
+    onDelete(id: number) {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent);
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (!!result) {
+                const payload: IDeleteParaProfessionalCommand = { id };
+                this.store.dispatch(deleteParaProfessional({ payload }));
+            }
+        });
     }
 }

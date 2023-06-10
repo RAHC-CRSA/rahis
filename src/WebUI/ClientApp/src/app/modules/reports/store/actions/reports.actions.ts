@@ -16,6 +16,8 @@ import {
     IAddDiseaseCommand,
     SpeciesDto,
     IAddSpeciesCommand,
+    IDeleteReportCommand,
+    IDeleteOccurrenceCommand,
 } from '../../../../web-api-client';
 
 // Create report
@@ -30,6 +32,20 @@ export const createReport = createAction(
 export const createReportSuccess = createAction(
     CREATE_REPORT_SUCCESS,
     props<{ payload: ReportDto }>()
+);
+
+// Delete report
+export const DELETE_REPORT = `[Reports] Delete Report`;
+export const DELETE_REPORT_SUCCESS = `[Reports] Delete Report Success`;
+
+export const deleteReport = createAction(
+    DELETE_REPORT,
+    props<{ payload: IDeleteReportCommand }>()
+);
+
+export const deleteReportSuccess = createAction(
+    DELETE_REPORT_SUCCESS,
+    props<{ payload: number }>()
 );
 
 // Load report
@@ -122,6 +138,20 @@ export const loadOccurrences = createAction(LOAD_OCCURRENCES);
 export const loadOccurrencesSuccess = createAction(
     LOAD_OCCURRENCES_SUCCESS,
     props<{ payload: OccurrenceDto[] }>()
+);
+
+// Delete report
+export const DELETE_OCCURRENCE = `[Reports] Delete Occurrence`;
+export const DELETE_OCCURRENCE_SUCCESS = `[Reports] Delete Occurrence Success`;
+
+export const deleteOccurrence = createAction(
+    DELETE_OCCURRENCE,
+    props<{ payload: IDeleteOccurrenceCommand }>()
+);
+
+export const deleteOccurrenceSuccess = createAction(
+    DELETE_OCCURRENCE_SUCCESS,
+    props<{ payload: number }>()
 );
 
 // Get countries

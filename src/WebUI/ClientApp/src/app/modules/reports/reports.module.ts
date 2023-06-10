@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { reducer } from './store';
+import { reducer } from './store/reducers';
 import { featureKey } from './store/actions';
 import { effects } from './store/effects';
 

@@ -15,13 +15,13 @@
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
 
-    <ng-container *ngIf="corpseDestruction">
+    <div *ngIf="corpseDestruction" @expandCollapse>
       <mat-form-field class="w-full mt-4">
         <mat-label>How many corpses were destroyed?</mat-label>
         <input aria-label="Corpses destroyed" matInput formControlName="corpsesDestroyed"
           placeholder="Number of corpses destroyed" />
       </mat-form-field>
-    </ng-container>
+    </div>
   </div>
 
   <div class="w-full mb-4">
@@ -39,12 +39,12 @@
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
 
-    <ng-container *ngIf="wasObservation">
+    <div *ngIf="wasObservation" @expandCollapse>
       <mat-form-field class="w-full mt-4">
         <mat-label>For how long?</mat-label>
         <input aria-label="Observation duration" matInput formControlName="observationDuration" placeholder="7 days" />
       </mat-form-field>
-    </ng-container>
+    </div>
   </div>
 
   <div class="w-full mb-4">
@@ -54,12 +54,12 @@
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
 
-    <ng-container *ngIf="wasQuarantined">
+    <div *ngIf="wasQuarantined" @expandCollapse>
       <mat-form-field class="w-full mt-4">
         <mat-label>For how long?</mat-label>
         <input aria-label="Quarantine duration" matInput formControlName="quarantineDuration" placeholder="10 days" />
       </mat-form-field>
-    </ng-container>
+    </div>
   </div>
 
   <div class="w-full mb-4">
@@ -69,13 +69,13 @@
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
 
-    <ng-container *ngIf="movementControlled">
+    <div *ngIf="movementControlled" @expandCollapse>
       <mat-form-field class="w-full mt-4">
         <mat-label>How?</mat-label>
         <textarea aria-label="Movement control measures" matInput formControlName="movementControlMeasures"
           placeholder="Measures taken to control movement"></textarea>
       </mat-form-field>
-    </ng-container>
+    </div>
   </div>
 
   <div class="w-full mb-4">
@@ -85,10 +85,10 @@
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
 
-    <ng-container *ngIf="administeredMeds">
+    <div *ngIf="administeredMeds" @expandCollapse>
       <div class="w-full mt-4">
         <h4 class="text-2xl mb-4">Medications</h4>
-        <ng-container *ngIf="formData.medications?.length">
+        <div *ngIf="formData.medications?.length" @expandCollapse>
           <div class="mb-4">
             <table mat-table [dataSource]="formData.medications" class="w-full">
 
@@ -109,7 +109,7 @@
 
             </table>
           </div>
-        </ng-container>
+        </div>
 
         <div>
           <div>
@@ -117,7 +117,7 @@
           </div>
         </div>
       </div>
-    </ng-container>
+    </div>
   </div>
 
   <div class="flex justify-between my-4">

@@ -3,8 +3,11 @@ import { Injectable } from '@angular/core';
 import {
     AddDiseaseClient,
     AddDiseaseCommand,
+    DeleteDiseaseClient,
+    DeleteDiseaseCommand,
     GetDiseasesClient,
     IAddDiseaseCommand,
+    IDeleteDiseaseCommand,
 } from '../web-api-client';
 
 @Injectable({
@@ -12,16 +15,18 @@ import {
 })
 export class DiseaseService {
     // Clients
-    getDiseases: GetDiseasesClient;
+    getDiseasesClient: GetDiseasesClient;
     addDiseaseClient: AddDiseaseClient;
+    deleteDiseaseClient: DeleteDiseaseClient;
 
-    constructor(private http: HttpClient) {
-        this.getDiseases = new GetDiseasesClient(http);
+    constructor(http: HttpClient) {
+        this.getDiseasesClient = new GetDiseasesClient(http);
         this.addDiseaseClient = new AddDiseaseClient(http);
+        this.deleteDiseaseClient = new DeleteDiseaseClient(http);
     }
 
     getAllDiseases() {
-        return this.getDiseases.handle();
+        return this.getDiseasesClient.handle();
     }
 
     addDisease(payload: IAddDiseaseCommand) {
@@ -33,5 +38,11 @@ export class DiseaseService {
         });
 
         return this.addDiseaseClient.handle(request);
+    }
+
+    deleteDisease(payload: IDeleteDiseaseCommand) {
+        return this.deleteDiseaseClient.handle(
+            new DeleteDiseaseCommand(payload)
+        );
     }
 }

@@ -3,11 +3,12 @@ using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Personas;
+using RegionalAnimalHealth.Application.Contracts.Users.Queries.GetUsers;
 using RegionalAnimalHealth.Domain.Exceptions;
 using RegionalAnimalHealth.Domain.Models.Messaging;
 
 namespace RegionalAnimalHealth.Application.Contracts.Users.Commands.CreateUser;
-public class CreateUserCommand : IRequest<(Result, UserDto?)>
+public class CreateUserCommand : IRequest<(Result, UserListDto?)>
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -17,7 +18,7 @@ public class CreateUserCommand : IRequest<(Result, UserDto?)>
     public List<string> Roles { get; set; }
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, (Result, UserDto?)>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, (Result, UserListDto?)>
 {
     private readonly IIdentityService _identityService;
     private readonly IEmailService _emailService;
@@ -30,7 +31,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, (Resu
         _logger = logger;
     }
 
-    public async Task<(Result, UserDto?)> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<(Result, UserListDto?)> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -53,12 +54,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, (Resu
 
             var emailResult = await _emailService.SendEmailAsync(message, EmailNotification.TemplateId);
 
-            var user = new UserDto
+            var user = new UserListDto
             {
                 Id = userId,
                 Name = $"{request.FirstName} {request.LastName}",
                 Email = request.Email,
-                UserName = request.Username,
+                Roles = string.Join(", ", request.Roles)
             };
 
             return (result, user);

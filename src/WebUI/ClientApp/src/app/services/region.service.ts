@@ -1,45 +1,54 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
-  AddRegionClient,
-  AddRegionCommand,
-  GetCountriesClient,
-  GetRegionsClient,
-  IAddRegionCommand,
-  RegionDto,
+    AddRegionClient,
+    AddRegionCommand,
+    DeleteRegionClient,
+    DeleteRegionCommand,
+    GetCountriesClient,
+    GetRegionsClient,
+    IAddRegionCommand,
+    IDeleteRegionCommand,
+    RegionDto,
 } from '../web-api-client';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class RegionService {
-  // Clients
-  getRegions: GetRegionsClient;
-  getCountries: GetCountriesClient;
-  addRegionClient: AddRegionClient;
+    // Clients
+    getRegionsClient: GetRegionsClient;
+    getCountriesClient: GetCountriesClient;
+    addRegionClient: AddRegionClient;
+    deleteRegionClient: DeleteRegionClient;
 
-  constructor(private http: HttpClient) {
-    this.getRegions = new GetRegionsClient(http);
-    this.getCountries = new GetCountriesClient(http);
-    this.addRegionClient = new AddRegionClient(http);
-  }
+    constructor(http: HttpClient) {
+        this.getRegionsClient = new GetRegionsClient(http);
+        this.getCountriesClient = new GetCountriesClient(http);
+        this.addRegionClient = new AddRegionClient(http);
+        this.deleteRegionClient = new DeleteRegionClient(http);
+    }
 
-  getAllRegions(countryId: number | undefined) {
-    return this.getRegions.handle(countryId);
-  }
+    getAllRegions(countryId: number | undefined) {
+        return this.getRegionsClient.handle(countryId);
+    }
 
-  addRegion(payload: IAddRegionCommand): Observable<RegionDto> {
-    const request = new AddRegionCommand({
-      name: payload.name,
-      code: payload.code,
-      countryId: payload.countryId,
-    });
+    addRegion(payload: IAddRegionCommand): Observable<RegionDto> {
+        const request = new AddRegionCommand({
+            name: payload.name,
+            code: payload.code,
+            countryId: payload.countryId,
+        });
 
-    return this.addRegionClient.handle(request);
-  }
+        return this.addRegionClient.handle(request);
+    }
 
-  getAllCountries() {
-    return this.getCountries.handle();
-  }
+    deleteRegion(payload: IDeleteRegionCommand) {
+        return this.deleteRegionClient.handle(new DeleteRegionCommand(payload));
+    }
+
+    getAllCountries() {
+        return this.getCountriesClient.handle();
+    }
 }

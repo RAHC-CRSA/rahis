@@ -1,1 +1,104 @@
-<p>add-region works!</p>
+<div class="flex flex-col flex-auto min-w-0">
+
+  <!-- Header -->
+  <div
+    class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div class="flex-1 min-w-0">
+      <!-- Breadcrumbs -->
+      <div class="flex flex-wrap items-center font-medium">
+        <div>
+          <a class="whitespace-nowrap text-primary-500">Regions</a>
+        </div>
+        <div class="flex items-center ml-1 whitespace-nowrap">
+          <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+          <a class="ml-1 text-primary-500">Add a Region</a>
+        </div>
+      </div>
+      <!-- Title -->
+      <div class="mt-2">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+          Add a Region
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="flex-auto p-6 sm:p-10">
+
+    <div class="w-full">
+
+      <div class="p-4 bg-card shadow rounded overflow-hidden">
+        <!-- Alert -->
+        <ng-container *ngIf="( feedback$ | async)">
+          <fuse-alert class="my-4" [appearance]="'outline'" [showIcon]="false"
+            [type]="((feedback$ | async)?.isError ? 'error' : 'success' )" [@shake]="((feedback$ | async)?.isError)">
+            <p *ngIf="(feedback$ | async)?.errors?.length == 1" class="text-red">{{ (feedback$ | async)?.summary
+              }}</p>
+
+            <ul *ngIf="(feedback$ | async)?.errors?.length != 1">
+              <li *ngFor="let error of (feedback$ | async)?.errors">{{ error }}</li>
+            </ul>
+          </fuse-alert>
+        </ng-container>
+
+        <form [formGroup]="regionForm">
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Name</mat-label>
+              <input aria-label="Region name" matInput formControlName="name" placeholder="Region name" />
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Region name is required', control: regionForm.controls['name']}"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'minlength', message: 'Region name should have at least 3 characters', control: regionForm.controls['name']}"></ng-container>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Code</mat-label>
+              <input aria-label="Region code" matInput formControlName="code" placeholder="Region code" />
+            </mat-form-field>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Country</mat-label>
+              <input type="text" aria-label="Country" matInput [formControl]="countryControl"
+                [matAutocomplete]="countryAutocomplete">
+              <mat-autocomplete #countryAutocomplete="matAutocomplete" [displayWith]="displayCountryFn"
+                (optionSelected)="updateSelectedCountry($event)">
+                <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                  <img [src]="country.flag" class="w-6 m-1 inline-block">
+                  {{ country.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Country is required', control: regionForm.controls['country']}"></ng-container>
+          </div>
+
+          <div class="flex justify-between my-4">
+            <a [routerLink]="['/dashboard/regions']" class="px-8" mat-flat-button [color]="'secondary'">
+              Cancel
+            </a>
+            <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="regionForm.invalid"
+              (click)="submit()">
+              <span *ngIf="!( loading$ | async )">
+                Add Region
+              </span>
+              <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

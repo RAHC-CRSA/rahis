@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { AuthState } from 'app/core/auth/store';
 import { getUser } from 'app/core/auth/store/selectors';
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
     selector: 'app-reporter',
     templateUrl: './reporter.component.html',
     styleUrls: ['./reporter.component.scss'],
+    animations: fuseAnimations,
 })
 export class ReporterComponent {
     user$: Observable<AuthResponseDto | null | undefined>;

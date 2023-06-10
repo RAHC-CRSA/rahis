@@ -5,12 +5,14 @@ import { of } from 'rxjs';
 import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
 import { DiseaseService } from '../../../../services';
 import * as DiseaseActions from '../actions/diseases.actions';
+import { FeedbackService } from 'app/common/helpers/feedback.service';
 
 @Injectable()
 export class DiseaseEffects {
     constructor(
         private actions$: Actions,
         private diseaseService: DiseaseService,
+        private feedbackService: FeedbackService,
         private router: Router
     ) {}
 
@@ -23,7 +25,12 @@ export class DiseaseEffects {
                         DiseaseActions.loadDiseasesSuccess({ payload: payload })
                     ),
                     catchError((error) =>
-                        of(DiseaseActions.setFeedback({ payload: error }))
+                        of(
+                            DiseaseActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -39,7 +46,12 @@ export class DiseaseEffects {
                         DiseaseActions.addDiseaseSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(DiseaseActions.setFeedback({ payload: error }))
+                        of(
+                            DiseaseActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -55,5 +67,26 @@ export class DiseaseEffects {
                 })
             ),
         { dispatch: false }
+    );
+
+    deleteDisease$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(DiseaseActions.deleteDisease),
+            exhaustMap((action) =>
+                this.diseaseService.deleteDisease(action.payload).pipe(
+                    map((data) =>
+                        DiseaseActions.deleteDiseaseSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            DiseaseActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
     );
 }

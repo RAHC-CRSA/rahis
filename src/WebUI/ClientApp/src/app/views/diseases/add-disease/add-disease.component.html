@@ -29,24 +29,44 @@
     <div class="w-full">
 
       <div class="p-4 bg-card shadow rounded overflow-hidden">
+        <!-- Alert -->
+        <ng-container *ngIf="( feedback$ | async)">
+          <fuse-alert class="my-4" [appearance]="'outline'" [showIcon]="false"
+            [type]="((feedback$ | async)?.isError ? 'error' : 'success' )" [@shake]="((feedback$ | async)?.isError)">
+            <p *ngIf="(feedback$ | async)?.errors?.length == 1" class="text-red">{{ (feedback$ | async)?.summary
+              }}</p>
+
+            <ul *ngIf="(feedback$ | async)?.errors?.length != 1">
+              <li *ngFor="let error of (feedback$ | async)?.errors">{{ error }}</li>
+            </ul>
+          </fuse-alert>
+        </ng-container>
         <form [formGroup]="diseaseForm">
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Name</mat-label>
-            <input aria-label="Disease name" matInput formControlName="name" placeholder="Disease name" />
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Name</mat-label>
+              <input aria-label="Disease name" matInput formControlName="name" placeholder="Disease name" />
+            </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Disease name is required', control: diseaseForm.controls['name']}"></ng-container>
-          </mat-form-field>
+          </div>
 
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Code</mat-label>
-            <input aria-label="Disease code" matInput formControlName="code" placeholder="Disease code" />
-          </mat-form-field>
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Code</mat-label>
+              <input aria-label="Disease code" matInput formControlName="code" placeholder="Disease code" />
+            </mat-form-field>
+          </div>
 
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Classification</mat-label>
-            <input aria-label="Disease classification" matInput formControlName="classification"
-              placeholder="Disease classification" />
-          </mat-form-field>
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Classification</mat-label>
+              <input aria-label="Disease classification" matInput formControlName="classification"
+                placeholder="Disease classification" />
+            </mat-form-field>
+          </div>
+
 
           <div class="w-full mb-4">
             <label>Is this a zoonotic disease?</label>
@@ -54,12 +74,21 @@
               <mat-radio-button [value]="false">No</mat-radio-button>
               <mat-radio-button [value]="true">Yes</mat-radio-button>
             </mat-radio-group>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'zoonotic is required', control: diseaseForm.controls['zoonotic']}"></ng-container>
           </div>
 
-          <div class="flex justify-end my-4">
+          <div class="flex justify-between my-4">
+            <a [routerLink]="['/dashboard/diseases']" class="px-8" mat-flat-button [color]="'secondary'">
+              Cancel
+            </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="diseaseForm.invalid"
               (click)="submit()">
-              Add Disease
+              <span *ngIf="!( loading$ | async )">
+                Add Disease
+              </span>
+              <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                [mode]="'indeterminate'"></mat-progress-spinner>
             </button>
           </div>
         </form>

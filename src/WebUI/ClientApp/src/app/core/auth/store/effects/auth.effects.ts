@@ -5,12 +5,14 @@ import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../../auth.service';
 import * as AuthActions from '../actions/auth.actions';
 import { ServerResponse } from 'app/web-api-client';
+import { FeedbackService } from 'app/common/helpers/feedback.service';
 
 @Injectable()
 export class AuthEffects {
     constructor(
         private actions$: Actions,
         private authService: AuthService,
+        private feedbackService: FeedbackService,
         private router: Router
     ) {}
 
@@ -36,14 +38,13 @@ export class AuthEffects {
         this.actions$.pipe(
             ofType(AuthActions.loginFail),
             switchMap((action) => {
-                let payload = new ServerResponse(action.payload);
-
-                if (action.payload.isSwaggerException) {
-                    payload.isError = true;
-                    payload.summary = action.payload.message;
-                    payload.errors = [action.payload.message];
-                }
-                return of(AuthActions.setFeedback({ payload }));
+                return of(
+                    AuthActions.setFeedback({
+                        payload: this.feedbackService.processResponse(
+                            action.payload
+                        ),
+                    })
+                );
             }),
             tap(() => this.router.navigateByUrl('sign-in'))
         )
@@ -125,12 +126,4 @@ export class AuthEffects {
             })
         )
     );
-
-    private getRedirectUrl(roles: string[]) {
-        if (roles.includes('Super Admin')) return 'super-admin';
-        else if (roles.includes('Admin')) return 'admin';
-        else if (roles.includes('Reporter')) return 'reporter';
-        else if (roles.includes('Verifier')) return 'verifier';
-        else return 'sign-in';
-    }
 }

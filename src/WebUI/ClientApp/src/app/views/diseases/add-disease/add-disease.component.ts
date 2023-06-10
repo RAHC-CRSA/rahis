@@ -1,17 +1,26 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { DiseaseState } from 'app/modules/diseases/store';
 import { addDisease } from 'app/modules/diseases/store/actions';
-import { IAddDiseaseCommand } from 'app/web-api-client';
+import {
+    getDiseasesLoading,
+    getFeedback,
+} from 'app/modules/diseases/store/selectors';
+import { IAddDiseaseCommand, ServerResponse } from 'app/web-api-client';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-add-disease',
     templateUrl: './add-disease.component.html',
     styleUrls: ['./add-disease.component.scss'],
+    animations: fuseAnimations,
 })
 export class AddDiseaseComponent {
     diseaseForm: FormGroup;
+    loading$: Observable<boolean>;
+    feedback$: Observable<ServerResponse | null | undefined>;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -24,6 +33,12 @@ export class AddDiseaseComponent {
 
     ngOnInit() {
         this.initForm();
+        this.initData();
+    }
+
+    initData() {
+        this.loading$ = this.store.select(getDiseasesLoading);
+        this.feedback$ = this.store.select(getFeedback);
     }
 
     initForm() {

@@ -1,10 +1,5 @@
-import * as ReportActionTypes from '../actions/reports.actions';
-import {
-    createReducer,
-    on,
-    createFeatureSelector,
-    createSelector,
-} from '@ngrx/store';
+import * as actions from '../actions/reports.actions';
+import { createReducer, on } from '@ngrx/store';
 import {
     CountryDto,
     DiseaseDto,
@@ -17,12 +12,10 @@ import {
     ServerResponse,
     SpeciesDto,
 } from '../../../../web-api-client';
-import { featureKey } from '../actions';
-import { ReportsState } from '..';
 
 export interface ReportState {
-    data: ReportDto | null;
-    reports: ReportListDto[] | null;
+    data?: ReportListDto[] | null;
+    entry?: ReportDto | null;
     regions?: RegionDto[] | null;
     countries?: CountryDto[] | null;
     occurrences?: OccurrenceDto[] | null;
@@ -36,8 +29,8 @@ export interface ReportState {
 }
 
 export const initialState: ReportState = {
-    data: null,
-    reports: [],
+    data: [],
+    entry: null,
     regions: [],
     countries: [],
     occurrences: [],
@@ -50,136 +43,216 @@ export const initialState: ReportState = {
     feedback: null,
 };
 
-export const reportsReducer = createReducer(
+export const reducer = createReducer(
     initialState,
-    on(ReportActionTypes.createReport, (state) => ({
+    on(actions.createReport, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(ReportActionTypes.createReportSuccess, (state, { payload }) => ({
+    on(actions.createReportSuccess, (state, { payload }) => ({
         ...state,
         loading: false,
-        error: null,
-        data: payload,
+        feedback: null,
+        data: [...state.data, payload],
     })),
-    on(ReportActionTypes.loadReport, (state) => ({ ...state, loading: true })),
-    on(ReportActionTypes.loadReportSuccess, (state, { payload }) => ({
+    on(actions.deleteReport, (state) => ({
         ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.deleteReportSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
         loading: false,
-        data: payload,
+        data: state.data.filter((e) => e.id != payload),
     })),
-    on(ReportActionTypes.loadReports, (state) => ({ ...state, loading: true })),
-    on(ReportActionTypes.loadReportsSuccess, (state, { payload }) => ({
+    on(actions.loadReport, (state) => ({
         ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadReportSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        report: payload,
+    })),
+    on(actions.loadReports, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadReportsSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
         loading: false,
         reports: payload,
     })),
-    on(ReportActionTypes.loadRegions, (state) => ({ ...state, loading: true })),
-    on(ReportActionTypes.loadRegionsSuccess, (state, { payload }) => ({
+    on(actions.loadRegions, (state) => ({
         ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadRegionsSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
         loading: false,
         regions: payload,
     })),
-    on(ReportActionTypes.addRegion, (state) => ({ ...state, loading: true })),
-    on(ReportActionTypes.addRegionSuccess, (state, { payload }) => ({
+    on(actions.addRegion, (state) => ({
         ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.addRegionSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
         loading: false,
         regions: [...state.regions, payload],
     })),
-    on(ReportActionTypes.loadCountries, (state) => ({
+    on(actions.loadCountries, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(ReportActionTypes.loadCountriesSuccess, (state, { payload }) => ({
+    on(actions.loadCountriesSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
         loading: false,
         loaded: true,
         countries: payload,
     })),
-    on(ReportActionTypes.loadOccurrences, (state) => ({
+    on(actions.loadOccurrences, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(ReportActionTypes.loadOccurrencesSuccess, (state, { payload }) => ({
+    on(actions.loadOccurrencesSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
         loading: false,
         loaded: true,
         occurrences: payload,
     })),
-    on(ReportActionTypes.loadParaProfessionals, (state) => ({
+    on(actions.deleteOccurrence, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(
-        ReportActionTypes.loadParaProfessionalsSuccess,
-        (state, { payload }) => ({
-            ...state,
-            loading: false,
-            loaded: true,
-            professionals: payload,
-        })
-    ),
-    on(ReportActionTypes.addParaProfessional, (state) => ({
+    on(actions.deleteOccurrenceSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
+        loading: false,
+        occurrences: state.occurrences.filter((e) => e.id != payload),
+    })),
+    on(actions.loadParaProfessionals, (state) => ({
+        ...state,
+        feedback: null,
         loading: true,
     })),
-    on(ReportActionTypes.addParaProfessionalSuccess, (state, { payload }) => ({
+    on(actions.loadParaProfessionalsSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
+        loading: false,
+        loaded: true,
+        professionals: payload,
+    })),
+    on(actions.addParaProfessional, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.addParaProfessionalSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
         loading: false,
         professionals: [...state.professionals, payload],
     })),
-    on(ReportActionTypes.loadInstitutions, (state) => ({
+    on(actions.loadInstitutions, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(ReportActionTypes.loadInstitutionsSuccess, (state, { payload }) => ({
+    on(actions.loadInstitutionsSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
         loading: false,
         institutions: payload,
     })),
-    on(ReportActionTypes.addInstitution, (state) => ({
+    on(actions.addInstitution, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(ReportActionTypes.addInstitutionSuccess, (state, { payload }) => ({
+    on(actions.addInstitutionSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
         loading: false,
         institutions: [...state.institutions, payload],
     })),
-    on(ReportActionTypes.loadDiseases, (state) => ({
+    on(actions.loadDiseases, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(ReportActionTypes.loadDiseasesSuccess, (state, { payload }) => ({
+    on(actions.loadDiseasesSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
         loading: false,
         diseases: payload,
     })),
-    on(ReportActionTypes.addDisease, (state) => ({ ...state, loading: true })),
-    on(ReportActionTypes.addDiseaseSuccess, (state, { payload }) => ({
+    on(actions.addDisease, (state) => ({
         ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.addDiseaseSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
         loading: false,
         diseases: [...state.diseases, payload],
     })),
-    on(ReportActionTypes.loadSpecies, (state) => ({ ...state, loading: true })),
-    on(ReportActionTypes.loadSpeciesSuccess, (state, { payload }) => ({
+    on(actions.loadSpecies, (state) => ({
         ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadSpeciesSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
         loading: false,
         species: payload,
     })),
-    on(ReportActionTypes.addSpecies, (state) => ({ ...state, loading: true })),
-    on(ReportActionTypes.addSpeciesSuccess, (state, { payload }) => ({
+    on(actions.addSpecies, (state) => ({
         ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.addSpeciesSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
         loading: false,
         species: [...state.species, payload],
     })),
-    on(ReportActionTypes.setFeedback, (state, { payload }) => ({
+    on(actions.deleteReport, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.deleteReportSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        data: state.data.filter((e) => e.id != payload),
+    })),
+    on(actions.setFeedback, (state, { payload }) => ({
         ...state,
         loading: false,
         loaded: !payload.isError,
         feedback: payload,
     })),
-    on(ReportActionTypes.clearFeedback, (state) => ({
+    on(actions.clearFeedback, (state) => ({
         ...state,
         feedback: null,
     }))

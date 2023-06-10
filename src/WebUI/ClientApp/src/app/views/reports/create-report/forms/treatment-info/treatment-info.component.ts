@@ -8,11 +8,13 @@ import {
     Output,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 
 @Component({
     selector: 'app-treatment-info',
     templateUrl: './treatment-info.component.html',
     styleUrls: ['./treatment-info.component.scss'],
+    animations: fuseAnimations,
 })
 export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
     corpseDestruction: boolean;

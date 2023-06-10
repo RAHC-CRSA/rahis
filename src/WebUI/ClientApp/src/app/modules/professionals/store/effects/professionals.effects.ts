@@ -5,13 +5,15 @@ import { of } from 'rxjs';
 import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
 import { InstitutionService } from '../../../../services';
 import * as ProfessionalsActions from '../actions/professionals.actions';
+import { FeedbackService } from 'app/common/helpers/feedback.service';
 
 @Injectable()
 export class ProfessionalsEffects {
     constructor(
         private actions$: Actions,
         private router: Router,
-        private institutionService: InstitutionService
+        private institutionService: InstitutionService,
+        private feedbackService: FeedbackService
     ) {}
 
     loadInstitutions$ = createEffect(() =>
@@ -25,7 +27,12 @@ export class ProfessionalsEffects {
                         })
                     ),
                     catchError((error) =>
-                        of(ProfessionalsActions.setFeedback({ payload: error }))
+                        of(
+                            ProfessionalsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -47,7 +54,10 @@ export class ProfessionalsEffects {
                         catchError((error) =>
                             of(
                                 ProfessionalsActions.setFeedback({
-                                    payload: error,
+                                    payload:
+                                        this.feedbackService.processResponse(
+                                            error
+                                        ),
                                 })
                             )
                         )
@@ -71,7 +81,10 @@ export class ProfessionalsEffects {
                         catchError((error) =>
                             of(
                                 ProfessionalsActions.setFeedback({
-                                    payload: error,
+                                    payload:
+                                        this.feedbackService.processResponse(
+                                            error
+                                        ),
                                 })
                             )
                         )
@@ -84,10 +97,37 @@ export class ProfessionalsEffects {
         () =>
             this.actions$.pipe(
                 ofType(ProfessionalsActions.addParaProfessionalSuccess),
-                tap((action) => {
+                tap(() => {
                     this.router.navigateByUrl('/dashboard/para-professionals');
                 })
             ),
         { dispatch: false }
+    );
+
+    deleteParaProfessional$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ProfessionalsActions.deleteParaProfessional),
+            exhaustMap((action) =>
+                this.institutionService
+                    .deleteParaProfessional(action.payload)
+                    .pipe(
+                        map((data) =>
+                            ProfessionalsActions.deleteParaProfessionalSuccess({
+                                payload: data,
+                            })
+                        ),
+                        catchError((error) =>
+                            of(
+                                ProfessionalsActions.setFeedback({
+                                    payload:
+                                        this.feedbackService.processResponse(
+                                            error
+                                        ),
+                                })
+                            )
+                        )
+                    )
+            )
+        )
     );
 }

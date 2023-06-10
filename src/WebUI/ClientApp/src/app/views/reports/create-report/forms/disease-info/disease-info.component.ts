@@ -6,7 +6,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ReportsState } from 'app/modules/reports/store';
+import { ReportState } from 'app/modules/reports/store';
 import { loadDiseases, loadSpecies } from 'app/modules/reports/store/actions';
 import { getDiseases, getSpecies } from 'app/modules/reports/store/selectors';
 import { DiseaseDto, SpeciesDto } from 'app/web-api-client';
@@ -41,7 +41,7 @@ export class DiseaseInfoComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private store: Store<ReportsState>
+        private store: Store<ReportState>
     ) {}
 
     ngOnInit(): void {

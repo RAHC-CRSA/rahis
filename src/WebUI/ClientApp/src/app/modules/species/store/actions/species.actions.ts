@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import {
     IAddSpeciesCommand,
+    IDeleteSpeciesCommand,
     IUpdateSpeciesCommand,
     ServerResponse,
     SpeciesDto,
@@ -39,9 +40,15 @@ export const updateSpeciesSuccess = createAction(
 );
 
 export const DELETE_SPECIES = `[Species] Delete Species`;
+export const DELETE_SPECIES_SUCCESS = `[Species] Delete Species Success`;
 
 export const deleteSpecies = createAction(
     DELETE_SPECIES,
+    props<{ payload: IDeleteSpeciesCommand }>()
+);
+
+export const deleteSpeciesSuccess = createAction(
+    DELETE_SPECIES_SUCCESS,
     props<{ payload: number }>()
 );
 
@@ -53,8 +60,8 @@ export const loadSpeciesSuccess = createAction(
 );
 
 // Set feedback
-export const SET_FEEDBACK = '[Institutions] Set Feedback';
-export const CLEAR_FEEDBACK = '[Institutions] Clear Feedback';
+export const SET_FEEDBACK = '[Species] Set Feedback';
+export const CLEAR_FEEDBACK = '[Species] Clear Feedback';
 
 export const setFeedback = createAction(
     SET_FEEDBACK,

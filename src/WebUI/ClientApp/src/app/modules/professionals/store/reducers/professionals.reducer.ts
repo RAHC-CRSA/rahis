@@ -1,4 +1,4 @@
-import * as ProfessionalActionTypes from '../actions/professionals.actions';
+import * as actions from '../actions/professionals.actions';
 import { createReducer, on } from '@ngrx/store';
 import {
     InstitutionDto,
@@ -8,14 +8,16 @@ import {
 
 export interface ParaProfessionalsState {
     data?: ParaProfessionalDto[] | null;
+    entry?: ParaProfessionalDto | null;
     institutions?: InstitutionDto[] | null;
     loaded: boolean;
     loading: boolean;
-    feedback: ServerResponse | null;
+    feedback?: ServerResponse | null;
 }
 
 export const initialState: ParaProfessionalsState = {
     data: [],
+    entry: null,
     institutions: [],
     loaded: false,
     loading: false,
@@ -24,50 +26,47 @@ export const initialState: ParaProfessionalsState = {
 
 export const reducer = createReducer(
     initialState,
-    on(ProfessionalActionTypes.addParaProfessional, (state) => ({
+    on(actions.addParaProfessional, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(
-        ProfessionalActionTypes.addParaProfessionalSuccess,
-        (state, { payload }) => ({
-            ...state,
-            loading: false,
-            data: [...state.data, payload],
-        })
-    ),
-    on(ProfessionalActionTypes.loadParaProfessionals, (state) => ({
+    on(actions.addParaProfessionalSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
+        loading: false,
+        data: [...state.data, payload],
+    })),
+    on(actions.loadParaProfessionals, (state) => ({
+        ...state,
+        feedback: null,
         loading: true,
     })),
-    on(
-        ProfessionalActionTypes.loadParaProfessionalsSuccess,
-        (state, { payload }) => ({
-            ...state,
-            loading: false,
-            data: payload,
-        })
-    ),
-    on(ProfessionalActionTypes.loadInstitutions, (state) => ({
+    on(actions.loadParaProfessionalsSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
+        loading: false,
+        data: payload,
+    })),
+    on(actions.loadInstitutions, (state) => ({
+        ...state,
+        feedback: null,
         loading: true,
     })),
-    on(
-        ProfessionalActionTypes.loadInstitutionsSuccess,
-        (state, { payload }) => ({
-            ...state,
-            loading: false,
-            loaded: true,
-            institutions: payload,
-        })
-    ),
-    on(ProfessionalActionTypes.setFeedback, (state, { payload }) => ({
+    on(actions.loadInstitutionsSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        loaded: true,
+        institutions: payload,
+    })),
+    on(actions.setFeedback, (state, { payload }) => ({
         ...state,
         loading: false,
         loaded: !payload.isError,
         feedback: payload,
     })),
-    on(ProfessionalActionTypes.clearFeedback, (state) => ({
+    on(actions.clearFeedback, (state) => ({
         ...state,
         feedback: null,
     }))

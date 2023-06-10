@@ -5,16 +5,22 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ParaProfessionalsState } from 'app/modules/professionals/store';
 import {
     addParaProfessional,
     loadInstitutions,
 } from 'app/modules/professionals/store/actions';
-import { getInstitutions } from 'app/modules/professionals/store/selectors';
+import {
+    getFeedback,
+    getInstitutions,
+    getParaProfessionalsLoading,
+} from 'app/modules/professionals/store/selectors';
 import {
     IAddParaProfessionalCommand,
     InstitutionDto,
+    ServerResponse,
 } from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
@@ -22,11 +28,12 @@ import { Observable, map, startWith } from 'rxjs';
     selector: 'app-add-professional',
     templateUrl: './add-professional.component.html',
     styleUrls: ['./add-professional.component.scss'],
+    animations: fuseAnimations,
 })
 export class AddProfessionalComponent {
     professionalForm: FormGroup;
-    hasError: boolean = false;
-    hasFeedback: boolean = false;
+    loading$: Observable<boolean>;
+    feedback$: Observable<ServerResponse | null | undefined>;
 
     institutionControl = new FormControl();
 
@@ -77,6 +84,9 @@ export class AddProfessionalComponent {
                     )
                 );
         });
+
+        this.loading$ = this.store.select(getParaProfessionalsLoading);
+        this.feedback$ = this.store.select(getFeedback);
     }
 
     get f() {

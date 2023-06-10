@@ -5,12 +5,14 @@ import { of } from 'rxjs';
 import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
 import { SpeciesService } from '../../../../services';
 import * as SpeciesActions from '../actions/species.actions';
+import { FeedbackService } from 'app/common/helpers/feedback.service';
 
 @Injectable()
 export class SpeciesEffects {
     constructor(
         private actions$: Actions,
         private speciesService: SpeciesService,
+        private feedbackService: FeedbackService,
         private router: Router
     ) {}
 
@@ -23,7 +25,12 @@ export class SpeciesEffects {
                         SpeciesActions.loadSpeciesSuccess({ payload: payload })
                     ),
                     catchError((error) =>
-                        of(SpeciesActions.setFeedback({ payload: error }))
+                        of(
+                            SpeciesActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -39,7 +46,12 @@ export class SpeciesEffects {
                         SpeciesActions.addSpeciesSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(SpeciesActions.setFeedback({ payload: error }))
+                        of(
+                            SpeciesActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -66,7 +78,33 @@ export class SpeciesEffects {
                         SpeciesActions.updateSpeciesSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(SpeciesActions.setFeedback({ payload: error }))
+                        of(
+                            SpeciesActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    deleteSpecies$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(SpeciesActions.deleteSpecies),
+            exhaustMap((action) =>
+                this.speciesService.deleteSpecies(action.payload).pipe(
+                    map((data) =>
+                        SpeciesActions.deleteSpeciesSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            SpeciesActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )

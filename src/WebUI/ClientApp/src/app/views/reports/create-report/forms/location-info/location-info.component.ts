@@ -6,7 +6,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ReportsState } from 'app/modules/reports/store';
+import { ReportState } from 'app/modules/reports/store';
 import { loadCountries, loadRegions } from 'app/modules/reports/store/actions';
 import { getCountries, getRegions } from 'app/modules/reports/store/selectors';
 import { CountryDto, RegionDto } from 'app/web-api-client';
@@ -41,7 +41,7 @@ export class LocationInfoComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        private store: Store<ReportsState>
+        private store: Store<ReportState>
     ) {}
 
     ngOnInit() {

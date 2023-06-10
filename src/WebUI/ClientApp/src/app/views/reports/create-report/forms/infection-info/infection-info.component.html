@@ -32,7 +32,7 @@
           </mat-radio-group>
         </div>
 
-        <ng-container *ngIf="humanInfection">
+        <div *ngIf="humanInfection" @expandCollapse>
           <h4 class="text-2xl mb-4">Humans</h4>
           <mat-form-field class="w-full mb-4">
             <mat-label>How many humans were exposed?</mat-label>
@@ -55,7 +55,7 @@
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Humans mortality is required', control: infectionInfo.controls['humansMortality']}"></ng-container>
           </mat-form-field>
-        </ng-container>
+        </div>
 
         <div class="flex justify-between my-4">
           <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">

@@ -6,11 +6,13 @@ import {
     Output,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 
 @Component({
     selector: 'app-infection-info',
     templateUrl: './infection-info.component.html',
     styleUrls: ['./infection-info.component.scss'],
+    animations: fuseAnimations,
 })
 export class InfectionInfoComponent {
     humanInfection: boolean;

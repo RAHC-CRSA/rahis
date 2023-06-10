@@ -2,17 +2,18 @@ import { createAction, props } from '@ngrx/store';
 import {
     DiseaseDto,
     IAddDiseaseCommand,
+    IDeleteDiseaseCommand,
     ServerResponse,
 } from '../../../../../app/web-api-client';
 
 export const featureKey = 'disease';
 // Load diseases
-export const LOAD_DISEASES = `[Disease] Load Diseases`;
-export const LOAD_DISEASES_SUCCESS = `[Disease] Load Diseases Success`;
+export const LOAD_DISEASES = `[Diseases] Load Diseases`;
+export const LOAD_DISEASES_SUCCESS = `[Diseases] Load Diseases Success`;
 
-/// Add disease
-export const ADD_DISEASE = `[Disease] Add Disease`;
-export const ADD_DISEASE_SUCCESS = `[Disease] Add Disease Success`;
+// Add disease
+export const ADD_DISEASE = `[Diseases] Add Disease`;
+export const ADD_DISEASE_SUCCESS = `[Diseases] Add Disease Success`;
 
 export const addDisease = createAction(
     ADD_DISEASE,
@@ -24,16 +25,24 @@ export const addDiseaseSuccess = createAction(
     props<{ payload: DiseaseDto }>()
 );
 
-export const UPDATE_DISEASE = `[Disease] Update Disease`;
-export const DELETE_DISEASE = `[Disease] Delete Disease`;
-
+// Update disease
+export const UPDATE_DISEASE = `[Diseases] Update Disease`;
 export const updateDisease = createAction(
     UPDATE_DISEASE,
     props<{ payload: DiseaseDto }>()
 );
 
+// Delete disease
+export const DELETE_DISEASE = `[Diseases] Delete Disease`;
+export const DELETE_DISEASE_SUCCESS = `[Diseases] Delete Disease Success`;
+
 export const deleteDisease = createAction(
     DELETE_DISEASE,
+    props<{ payload: IDeleteDiseaseCommand }>()
+);
+
+export const deleteDiseaseSuccess = createAction(
+    DELETE_DISEASE_SUCCESS,
     props<{ payload: number }>()
 );
 
@@ -44,8 +53,8 @@ export const loadDiseasesSuccess = createAction(
     props<{ payload: DiseaseDto[] }>()
 );
 
-export const SET_FEEDBACK = `[Disease] Set Feedback`;
-export const CLEAR_FEEDBACK = `[Disease] Clear Feedback`;
+export const SET_FEEDBACK = `[Diseases] Set Feedback`;
+export const CLEAR_FEEDBACK = `[Diseases] Clear Feedback`;
 
 export const setFeedback = createAction(
     SET_FEEDBACK,

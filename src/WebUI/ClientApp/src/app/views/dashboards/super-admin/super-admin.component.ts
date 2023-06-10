@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { AuthState } from 'app/core/auth/store';
 import { getUser } from 'app/core/auth/store/selectors';
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
     selector: 'app-super-admin',
     templateUrl: './super-admin.component.html',
     styleUrls: ['./super-admin.component.scss'],
+    animations: fuseAnimations,
 })
 export class SuperAdminComponent implements OnInit {
     user$: Observable<AuthResponseDto | null | undefined>;

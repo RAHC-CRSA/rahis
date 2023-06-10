@@ -1,15 +1,15 @@
 import { createAction, props } from '@ngrx/store';
 import {
     ICreateUserCommand,
+    IDeleteUserCommand,
     ServerResponse,
-    UserDto,
     UserListDto,
 } from '../../../../web-api-client';
 
 export const featureKey = 'user';
 // Load users
-export const LOAD_USERS = `[User] Load Users`;
-export const LOAD_USERS_SUCCESS = `[User] Load Users Success`;
+export const LOAD_USERS = `[Users] Load Users`;
+export const LOAD_USERS_SUCCESS = `[Users] Load Users Success`;
 
 export const loadUsers = createAction(LOAD_USERS);
 export const loadUsersSuccess = createAction(
@@ -17,8 +17,8 @@ export const loadUsersSuccess = createAction(
     props<{ payload: UserListDto[] }>()
 );
 
-export const CREATE_USER = `[User] Create User`;
-export const CREATE_USER_SUCCESS = `[User] Create User Success`;
+export const CREATE_USER = `[Users] Create User`;
+export const CREATE_USER_SUCCESS = `[Users] Create User Success`;
 
 export const createUser = createAction(
     CREATE_USER,
@@ -26,14 +26,27 @@ export const createUser = createAction(
 );
 export const createUserSuccess = createAction(
     CREATE_USER_SUCCESS,
-    props<{ payload: UserDto }>()
+    props<{ payload: UserListDto }>()
 );
 
-export const UPDATE_USER = `[User] Update User`;
-export const DELETE_USER = `[User] Delete User`;
+// Update user
+export const UPDATE_USER = `[Users] Update User`;
 
-export const LOAD_ROLES = `[User] Load Roles`;
-export const LOAD_ROLES_SUCCESS = `[User] Load Roles Success`;
+// Delete user
+export const DELETE_USER = `[Users] Delete User`;
+export const DELETE_USER_SUCCESS = `[Users] Delete User Success`;
+
+export const deleteUser = createAction(
+    DELETE_USER,
+    props<{ payload: IDeleteUserCommand }>()
+);
+export const deleteUserSuccess = createAction(
+    DELETE_USER_SUCCESS,
+    props<{ payload: string }>()
+);
+
+export const LOAD_ROLES = `[Users] Load Roles`;
+export const LOAD_ROLES_SUCCESS = `[Users] Load Roles Success`;
 
 export const loadRoles = createAction(LOAD_ROLES);
 export const loadRolesSuccess = createAction(
@@ -42,8 +55,8 @@ export const loadRolesSuccess = createAction(
 );
 
 // Set feedback
-export const SET_FEEDBACK = '[Institutions] Set Feedback';
-export const CLEAR_FEEDBACK = '[Institutions] Clear Feedback';
+export const SET_FEEDBACK = '[Users] Set Feedback';
+export const CLEAR_FEEDBACK = '[Users] Clear Feedback';
 
 export const setFeedback = createAction(
     SET_FEEDBACK,

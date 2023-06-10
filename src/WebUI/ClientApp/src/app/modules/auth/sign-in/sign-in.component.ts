@@ -31,7 +31,7 @@ export class AuthSignInComponent implements OnInit {
     };
     hasFeedback: boolean;
     redirectUrl: string;
-    isLoading$: Observable<boolean>;
+    loading$: Observable<boolean>;
     feedback$: Observable<ServerResponse | null | undefined>;
 
     /**
@@ -55,7 +55,7 @@ export class AuthSignInComponent implements OnInit {
     ngOnInit(): void {
         this.initForm();
 
-        this.isLoading$ = this._store.select(getUserLoading);
+        this.loading$ = this._store.select(getUserLoading);
         this.feedback$ = this._store.select(getFeedback);
         this.feedback$.pipe(
             map((feedback) => {

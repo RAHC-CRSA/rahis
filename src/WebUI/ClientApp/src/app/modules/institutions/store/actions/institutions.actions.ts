@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import {
     IAddInstitutionCommand,
+    IDeleteInstitutionCommand,
     InstitutionDto,
     ServerResponse,
 } from '../../../../web-api-client';
@@ -34,6 +35,20 @@ export const addInstitution = createAction(
 export const addInstitutionSuccess = createAction(
     ADD_INSTITUTION_SUCCESS,
     props<{ payload: InstitutionDto }>()
+);
+
+// Delete institution
+export const DELETE_INSTITUTION = `[Institutions] Delete Institution`;
+export const DELETE_INSTITUTION_SUCCESS = `[Institutions] Delete Institution Success`;
+
+export const deleteInstitution = createAction(
+    DELETE_INSTITUTION,
+    props<{ payload: IDeleteInstitutionCommand }>()
+);
+
+export const deleteInstitutionSuccess = createAction(
+    DELETE_INSTITUTION_SUCCESS,
+    props<{ payload: number }>()
 );
 
 // Set feedback

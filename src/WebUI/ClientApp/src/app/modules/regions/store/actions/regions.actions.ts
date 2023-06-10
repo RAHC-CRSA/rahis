@@ -3,6 +3,7 @@ import {
     AddRegionCommand,
     CountryDto,
     IAddRegionCommand,
+    IDeleteRegionCommand,
     RegionDto,
     ServerResponse,
 } from '../../../../web-api-client';
@@ -19,7 +20,7 @@ export const loadRegions = createAction(
 );
 export const loadRegionsSuccess = createAction(
     LOAD_REGIONS_SUCCESS,
-    props<{ payload: RegionDto[] }>()
+    props<{ payload?: RegionDto[] }>()
 );
 
 // Add region
@@ -35,6 +36,20 @@ export const addRegionSuccess = createAction(
     props<{ payload: RegionDto }>()
 );
 
+// Delete region
+export const DELETE_REGION = `[Regions] Delete Region`;
+export const DELETE_REGION_SUCCESS = `[Regions] Delete Region Success`;
+
+export const deleteRegion = createAction(
+    DELETE_REGION,
+    props<{ payload: IDeleteRegionCommand }>()
+);
+
+export const deleteRegionSuccess = createAction(
+    DELETE_REGION_SUCCESS,
+    props<{ payload: number }>()
+);
+
 // Get countries
 export const LOAD_COUNTRIES = `[Regions] Load Countries`;
 export const LOAD_COUNTRIES_SUCCESS = `[Regions] Load Countries Success`;
@@ -46,8 +61,8 @@ export const loadCountriesSuccess = createAction(
 );
 
 // Set feedback
-export const SET_FEEDBACK = '[ParaProfessionals] Set Feedback';
-export const CLEAR_FEEDBACK = '[ParaProfessionals] Clear Feedback';
+export const SET_FEEDBACK = '[Regions] Set Feedback';
+export const CLEAR_FEEDBACK = '[Regions] Clear Feedback';
 
 export const setFeedback = createAction(
     SET_FEEDBACK,

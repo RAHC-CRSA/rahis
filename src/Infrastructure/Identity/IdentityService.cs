@@ -151,7 +151,7 @@ public class IdentityService : IIdentityService
 
     public async Task<List<string>> GetAvailableRolesAsync()
     {
-        return (await _roleManager.Roles.ToListAsync()).Select(r => r.Name).ToList();
+        return (await _roleManager.Roles.ToListAsync())?.Select(r => r.Name).ToList();
     }
 
     public async Task<Result> AddUserToRoles(string userId, List<string> roles)
