@@ -1,56 +1,82 @@
-import * as RegionActionTypes from '../actions/regions.actions';
+import * as actions from '../actions/regions.actions';
 import { createReducer, on } from '@ngrx/store';
-import { CountryDto, RegionDto } from '../../../../web-api-client';
+import {
+    CountryDto,
+    RegionDto,
+    ServerResponse,
+} from '../../../../web-api-client';
 
 export interface RegionsState {
     data?: RegionDto[] | null;
+    entry?: RegionDto | null;
     countries?: CountryDto[] | null;
     loaded: boolean;
     loading: boolean;
-    error: string | null;
+    feedback?: ServerResponse | null;
 }
 
 export const initialState: RegionsState = {
     data: null,
+    entry: null,
     countries: [],
     loaded: false,
     loading: false,
-    error: null,
+    feedback: null,
 };
 
 export const reducer = createReducer(
     initialState,
-    on(RegionActionTypes.addRegion, (state) => ({
+    on(actions.addRegion, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(RegionActionTypes.addRegionSuccess, (state) => ({
+    on(actions.addRegionSuccess, (state) => ({
         ...state,
+        feedback: null,
         loading: false,
     })),
-    on(RegionActionTypes.loadRegions, (state) => ({ ...state, loading: true })),
-    on(RegionActionTypes.loadRegionsSuccess, (state, { payload }) => ({
+    on(actions.deleteRegion, (state) => ({
         ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.deleteRegionSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        data: state.data.filter((e) => e.id != payload),
+    })),
+    on(actions.loadRegions, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadRegionsSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
         loading: false,
         data: payload,
     })),
-    on(RegionActionTypes.loadCountries, (state) => ({
+    on(actions.loadCountries, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(RegionActionTypes.loadCountriesSuccess, (state, { payload }) => ({
+    on(actions.loadCountriesSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
         loading: false,
         loaded: true,
         countries: payload,
     })),
-    on(RegionActionTypes.setFeedback, (state, { payload }) => ({
+    on(actions.setFeedback, (state, { payload }) => ({
         ...state,
         loading: false,
         loaded: !payload.isError,
         feedback: payload,
     })),
-    on(RegionActionTypes.clearFeedback, (state) => ({
+    on(actions.clearFeedback, (state) => ({
         ...state,
         feedback: null,
     }))

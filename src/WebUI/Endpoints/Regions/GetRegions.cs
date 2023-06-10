@@ -30,7 +30,7 @@ public class GetRegions : EndpointBaseAsync.WithRequest<long?>.WithActionResult<
         ]
     [ProducesResponseType(typeof(List<RegionDto>), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-    [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ServerResponse), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<List<RegionDto>>> HandleAsync(long? countryId, CancellationToken cancellationToken = default)
     {
         var (result, data) = await _mediator.Send(new GetRegionsQuery { CountryId = countryId });

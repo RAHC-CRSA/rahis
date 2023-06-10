@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ReportsState } from 'app/modules/reports/store';
+import { ReportState } from 'app/modules/reports/store';
 import { addInstitution } from 'app/modules/reports/store/actions';
 import { IAddInstitutionCommand } from 'app/web-api-client';
 
@@ -15,7 +15,7 @@ export class AddInstitutionComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private store: Store<ReportsState>
+        private store: Store<ReportState>
     ) {}
 
     ngOnInit(): void {

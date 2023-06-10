@@ -5,23 +5,29 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { PasswordValidator } from 'app/common/validators';
 import { UserState } from 'app/modules/users/store';
 import { createUser, loadRoles } from 'app/modules/users/store/actions';
-import { getRoles } from 'app/modules/users/store/selectors';
-import { ICreateUserCommand } from 'app/web-api-client';
+import {
+    getFeedback,
+    getRoles,
+    getUsersLoading,
+} from 'app/modules/users/store/selectors';
+import { ICreateUserCommand, ServerResponse } from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
 @Component({
     selector: 'app-create-user',
     templateUrl: './create-user.component.html',
     styleUrls: ['./create-user.component.scss'],
+    animations: fuseAnimations,
 })
 export class CreateUserComponent {
     userForm: FormGroup;
-    hasError: boolean;
-    isLoading$: Observable<boolean>;
+    loading$: Observable<boolean>;
+    feedback$: Observable<ServerResponse | null | undefined>;
 
     roleControl = new FormControl();
 
@@ -56,6 +62,8 @@ export class CreateUserComponent {
                 map((role) => this._filterRole(role || ''))
             );
         });
+        this.loading$ = this.store.select(getUsersLoading);
+        this.feedback$ = this.store.select(getFeedback);
     }
 
     initForm() {

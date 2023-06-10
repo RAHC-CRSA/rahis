@@ -13,3 +13,13 @@ export const getInstitutionsLoading = createSelector(
     institutionsState,
     (state: InstitutionsState) => state.loading
 );
+
+export const getInstitutionsLoaded = createSelector(
+    institutionsState,
+    (state: InstitutionsState) => state.loaded
+);
+
+export const getFeedback = createSelector(
+    institutionsState,
+    (state: InstitutionsState) => state.feedback
+);

@@ -1,55 +1,76 @@
 import { createReducer, on } from '@ngrx/store';
-import {
-    addSpecies,
-    loadSpeciesSuccess,
-    addSpeciesSuccess,
-    loadSpecies,
-    setFeedback,
-    clearFeedback,
-} from '../actions/species.actions';
-import { SpeciesDto } from 'app/web-api-client';
+import * as actions from '../actions/species.actions';
+import { ServerResponse, SpeciesDto } from 'app/web-api-client';
 
 export interface SpeciesState {
-    data: SpeciesDto[];
+    data?: SpeciesDto[];
+    entry?: SpeciesDto | null;
     loading: boolean;
     loaded: boolean;
-    error: string | null;
+    feedback?: ServerResponse | null;
 }
 
 const initialState: SpeciesState = {
     data: [],
+    entry: null,
     loading: false,
     loaded: false,
-    error: null,
+    feedback: null,
 };
 
 export const reducer = createReducer(
     initialState,
-    on(addSpecies, (state) => ({
+    on(actions.addSpecies, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(addSpeciesSuccess, (state, { payload }) => ({
+    on(actions.addSpeciesSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
         data: [...state.data, payload],
         loading: false,
     })),
-    on(loadSpecies, (state) => ({
+    on(actions.deleteSpecies, (state) => ({
         ...state,
+        feedback: null,
         loading: true,
     })),
-    on(loadSpeciesSuccess, (state, { payload }) => ({
+    on(actions.deleteSpeciesSuccess, (state, { payload }) => ({
         ...state,
         loading: false,
+        feedback: null,
+        data: state.data.filter((e) => e.id != payload),
+    })),
+    on(actions.loadSpecies, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadSpeciesSuccess, (state, { payload }) => ({
+        ...state,
+        loading: false,
+        feedback: null,
         data: payload,
     })),
-    on(setFeedback, (state, { payload }) => ({
+    on(actions.deleteSpecies, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.deleteSpeciesSuccess, (state, { payload }) => ({
+        ...state,
+        loading: false,
+        feedback: null,
+        data: state.data.filter((e) => e.id != payload),
+    })),
+    on(actions.setFeedback, (state, { payload }) => ({
         ...state,
         loading: false,
         loaded: !payload.isError,
         feedback: payload,
     })),
-    on(clearFeedback, (state) => ({
+    on(actions.clearFeedback, (state) => ({
         ...state,
         feedback: null,
     }))

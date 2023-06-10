@@ -13,9 +13,10 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <div *ngIf="newOccurrence || !occurrences.length">
+    <div *ngIf="newOccurrence || !occurrences.length" @expandCollapse>
       <div *ngIf="occurrences.length">
-        <button mat-button color="primary" (click)="onCheckOccurrence(false)">Select an existing occurrence
+        <button mat-button color="primary" type="button" (click)="onCheckOccurrence(false)">Select an existing
+          occurrence
           instead</button>
       </div>
     </div>

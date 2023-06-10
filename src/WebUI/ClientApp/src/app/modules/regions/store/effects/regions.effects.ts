@@ -5,13 +5,15 @@ import { of } from 'rxjs';
 import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
 import { RegionService } from '../../../../services';
 import * as RegionsActions from '../actions/regions.actions';
+import { FeedbackService } from 'app/common/helpers/feedback.service';
 
 @Injectable()
 export class RegionsEffects {
     constructor(
         private actions$: Actions,
         private router: Router,
-        private regionsService: RegionService
+        private regionsService: RegionService,
+        private feedbackService: FeedbackService
     ) {}
 
     loadCountries$ = createEffect(() =>
@@ -25,7 +27,12 @@ export class RegionsEffects {
                         })
                     ),
                     catchError((error) =>
-                        of(RegionsActions.setFeedback({ payload: error }))
+                        of(
+                            RegionsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -41,7 +48,12 @@ export class RegionsEffects {
                         RegionsActions.loadRegionsSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(RegionsActions.setFeedback({ payload: error }))
+                        of(
+                            RegionsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -57,7 +69,12 @@ export class RegionsEffects {
                         RegionsActions.addRegionSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(RegionsActions.setFeedback({ payload: error }))
+                        of(
+                            RegionsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -73,5 +90,26 @@ export class RegionsEffects {
                 })
             ),
         { dispatch: false }
+    );
+
+    deleteRegion$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(RegionsActions.deleteRegion),
+            exhaustMap((action) =>
+                this.regionsService.deleteRegion(action.payload).pipe(
+                    map((data) =>
+                        RegionsActions.deleteRegionSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            RegionsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
     );
 }

@@ -29,22 +29,39 @@
     <div class="w-full">
 
       <div class="p-4 bg-card shadow rounded overflow-hidden">
+        <!-- Alert -->
+        <ng-container *ngIf="( feedback$ | async)">
+          <fuse-alert class="my-4" [appearance]="'outline'" [showIcon]="false"
+            [type]="((feedback$ | async)?.isError ? 'error' : 'success' )" [@shake]="((feedback$ | async)?.isError)">
+            <p *ngIf="(feedback$ | async)?.errors?.length == 1" class="text-red">{{ (feedback$ | async)?.summary
+              }}</p>
+
+            <ul *ngIf="(feedback$ | async)?.errors?.length != 1">
+              <li *ngFor="let error of (feedback$ | async)?.errors">{{ error }}</li>
+            </ul>
+          </fuse-alert>
+        </ng-container>
+
         <form [formGroup]="institutionForm">
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Name</mat-label>
-            <input aria-label="Institution name" matInput formControlName="name" placeholder="Institution name" />
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Name</mat-label>
+              <input aria-label="Institution name" matInput formControlName="name" placeholder="Institution name" />
+            </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Institution name is required', control: institutionForm.controls['name']}"></ng-container>
-          </mat-form-field>
+          </div>
 
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Type</mat-label>
-            <input aria-label="Institution type" matInput formControlName="type" placeholder="Institution type" />
+          <div class="mb-4">
+            <mat-form-field class="w-full mb-4">
+              <mat-label>Type</mat-label>
+              <input aria-label="Institution type" matInput formControlName="type" placeholder="Institution type" />
+            </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Institution type is required', control: institutionForm.controls['type']}"></ng-container>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'minlength', message: 'Institution type should have at least 3 characters', control: institutionForm.controls['type']}"></ng-container>
-          </mat-form-field>
+          </div>
 
           <div class="w-full mb-4">
             <label>Is this a public sector institution?</label>
@@ -52,12 +69,21 @@
               <mat-radio-button [value]="false">No</mat-radio-button>
               <mat-radio-button [value]="true">Yes</mat-radio-button>
             </mat-radio-group>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Public sector is required', control: institutionForm.controls['publicSector']}"></ng-container>
           </div>
 
-          <div class="flex justify-end my-4">
+          <div class="flex justify-between my-4">
+            <a [routerLink]="['/dashboard/institutions']" class="px-8" mat-flat-button [color]="'secondary'">
+              Cancel
+            </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="institutionForm.invalid"
               (click)="submit()">
-              Add Institution
+              <span *ngIf="!( loading$ | async )">
+                Add Institution
+              </span>
+              <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                [mode]="'indeterminate'"></mat-progress-spinner>
             </button>
           </div>
         </form>

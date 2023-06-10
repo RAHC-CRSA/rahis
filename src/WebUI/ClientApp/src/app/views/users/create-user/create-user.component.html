@@ -29,88 +29,121 @@
     <div class="w-full">
 
       <div class="p-4 bg-card shadow rounded overflow-hidden">
+
+        <!-- Alert -->
+        <ng-container *ngIf="( feedback$ | async)">
+          <fuse-alert class="my-4" [appearance]="'outline'" [showIcon]="false"
+            [type]="((feedback$ | async)?.isError ? 'error' : 'success' )" [@shake]="((feedback$ | async)?.isError)">
+            <p *ngIf="(feedback$ | async)?.errors?.length == 1" class="text-red">{{ (feedback$ | async)?.summary
+              }}</p>
+
+            <ul *ngIf="(feedback$ | async)?.errors?.length != 1">
+              <li *ngFor="let error of (feedback$ | async)?.errors">{{ error }}</li>
+            </ul>
+          </fuse-alert>
+        </ng-container>
+
         <form [formGroup]="userForm">
-          <mat-form-field class="w-full mb-4">
-            <mat-label>First Name</mat-label>
-            <input aria-label="First name" matInput formControlName="firstName" placeholder="First name" />
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>First Name</mat-label>
+              <input aria-label="First name" matInput formControlName="firstName" placeholder="First name" />
+            </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'First name is required', control: userForm.controls['firstName']}"></ng-container>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'minlength', message: 'First name should have at least 3 characters', control: userForm.controls['firstName']}"></ng-container>
-          </mat-form-field>
+          </div>
 
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Last Name</mat-label>
-            <input aria-label="Last Name" matInput formControlName="lastName" placeholder="Last name" />
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Last Name</mat-label>
+              <input aria-label="Last Name" matInput formControlName="lastName" placeholder="Last name" />
+            </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Last name is required', control: userForm.controls['lastName']}"></ng-container>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'minlength', message: 'Last name should have at least 3 characters', control: userForm.controls['lastName']}"></ng-container>
-          </mat-form-field>
+          </div>
 
-          <mat-form-field class="w-full">
-            <mat-label>Role</mat-label>
-            <input type="text" aria-label="Role" matInput [formControl]="roleControl"
-              [matAutocomplete]="roleAutocomplete">
-            <mat-autocomplete #roleAutocomplete="matAutocomplete" [displayWith]="displayRoleFn"
-              (optionSelected)="updateSelectedRole($event)">
-              <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
-                {{ role }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Role</mat-label>
+              <input type="text" aria-label="Role" matInput [formControl]="roleControl"
+                [matAutocomplete]="roleAutocomplete">
+              <mat-autocomplete #roleAutocomplete="matAutocomplete" [displayWith]="displayRoleFn"
+                (optionSelected)="updateSelectedRole($event)">
+                <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
+                  {{ role }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
 
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Email</mat-label>
-            <input type="email" aria-label="Email address" matInput formControlName="email"
-              placeholder="Email address" />
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Email</mat-label>
+              <input type="email" aria-label="Email address" matInput formControlName="email"
+                placeholder="Email address" />
+            </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                validation: 'required',
-                message: 'Email is required',
-                control: userForm.controls['email']
-              }"></ng-container>
+            validation: 'required',
+            message: 'Email is required',
+            control: userForm.controls['email']
+          }"></ng-container>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                validation: 'email',
-                message: 'Email is invalid',
-                control: userForm.controls['email']
-              }"></ng-container>
+            validation: 'email',
+            message: 'Email is invalid',
+            control: userForm.controls['email']
+          }"></ng-container>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                validation: 'minlength',
-                message: 'Email should have at least 3 characters',
-                control: userForm.controls['email']
-              }"></ng-container>
+            validation: 'minlength',
+            message: 'Email should have at least 3 characters',
+            control: userForm.controls['email']
+          }"></ng-container>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                validation: 'maxlength',
-                message: 'Email should have maximum 360 symbols',
-                control: userForm.controls['email']
-              }"></ng-container>
-          </mat-form-field>
+            validation: 'maxlength',
+            message: 'Email should have maximum 360 symbols',
+            control: userForm.controls['email']
+          }"></ng-container>
+          </div>
 
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Password</mat-label>
-            <input type="password" aria-label="Password" matInput formControlName="password" placeholder="Password" />
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Password</mat-label>
+              <input type="password" aria-label="Password" matInput formControlName="password" placeholder="Password" />
+            </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Password is required', control: userForm.controls['password']}"></ng-container>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'minlength', message: 'Password should have at least 8 characters', control: userForm.controls['password']}"></ng-container>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'passwordRule', message: 'Password should have at least one uppercase character, one lowercase character, and one symbol', control: userForm.controls['password']}"></ng-container>
-          </mat-form-field>
+          </div>
 
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Confirm Password</mat-label>
-            <input type="password" aria-label="Confirm password" matInput formControlName="confirmPassword"
-              placeholder="Confirm password" />
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Confirm Password</mat-label>
+              <input type="password" aria-label="Confirm password" matInput formControlName="confirmPassword"
+                placeholder="Confirm password" />
+            </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Password confirmation is required', control: userForm.controls['confirmPassword']}"></ng-container>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'passwordMatch', message: 'Passwords must match', control: userForm.controls['confirmPassword']}"></ng-container>
-          </mat-form-field>
+          </div>
 
-          <div class="flex justify-end my-4">
+          <div class="flex justify-between my-4">
+            <a [routerLink]="['/dashboard/users']" class="px-8" mat-flat-button [color]="'secondary'">
+              Cancel
+            </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="userForm.invalid"
               (click)="submit()">
-              Add User
+              <span *ngIf="!( loading$ | async )">
+                Add User
+              </span>
+              <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                [mode]="'indeterminate'"></mat-progress-spinner>
             </button>
           </div>
         </form>

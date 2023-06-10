@@ -5,13 +5,15 @@ import { of } from 'rxjs';
 import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
 import { InstitutionService } from '../../../../services';
 import * as InstitutionsActions from '../actions';
+import { FeedbackService } from 'app/common/helpers/feedback.service';
 
 @Injectable()
 export class InstitutionsEffects {
     constructor(
         private actions$: Actions,
         private router: Router,
-        private institutionService: InstitutionService
+        private institutionService: InstitutionService,
+        private feedbackService: FeedbackService
     ) {}
 
     loadInstitutions$ = createEffect(() =>
@@ -25,7 +27,12 @@ export class InstitutionsEffects {
                         })
                     ),
                     catchError((error) =>
-                        of(InstitutionsActions.setFeedback({ payload: error }))
+                        of(
+                            InstitutionsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -45,7 +52,8 @@ export class InstitutionsEffects {
                     catchError((error) =>
                         of(
                             InstitutionsActions.setFeedback({
-                                payload: error,
+                                payload:
+                                    this.feedbackService.processResponse(error),
                             })
                         )
                     )
@@ -63,5 +71,28 @@ export class InstitutionsEffects {
                 })
             ),
         { dispatch: false }
+    );
+
+    deleteInstitution$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(InstitutionsActions.deleteInstitution),
+            exhaustMap((action) =>
+                this.institutionService.deleteInstitution(action.payload).pipe(
+                    map((data) =>
+                        InstitutionsActions.deleteInstitutionSuccess({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            InstitutionsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
     );
 }

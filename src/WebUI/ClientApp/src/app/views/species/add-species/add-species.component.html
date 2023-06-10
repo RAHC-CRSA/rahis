@@ -29,18 +29,41 @@
     <div class="w-full">
 
       <div class="p-4 bg-card shadow rounded overflow-hidden">
+
+        <!-- Alert -->
+        <ng-container *ngIf="( feedback$ | async)">
+          <fuse-alert class="my-4" [appearance]="'outline'" [showIcon]="false"
+            [type]="((feedback$ | async)?.isError ? 'error' : 'success' )" [@shake]="((feedback$ | async)?.isError)">
+            <p *ngIf="(feedback$ | async)?.errors?.length == 1" class="text-red">{{ (feedback$ | async)?.summary
+              }}</p>
+
+            <ul *ngIf="(feedback$ | async)?.errors?.length != 1">
+              <li *ngFor="let error of (feedback$ | async)?.errors">{{ error }}</li>
+            </ul>
+          </fuse-alert>
+        </ng-container>
+
         <form [formGroup]="speciesForm">
-          <mat-form-field class="w-full mb-4">
-            <mat-label>Name</mat-label>
-            <input aria-label="Disease name" matInput formControlName="name" placeholder="Species name" />
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Name</mat-label>
+              <input aria-label="Disease name" matInput formControlName="name" placeholder="Species name" />
+            </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Species name is required', control: speciesForm.controls['name']}"></ng-container>
-          </mat-form-field>
+          </div>
 
-          <div class="flex justify-end my-4">
+          <div class="flex justify-between my-4">
+            <a [routerLink]="['/dashboard/species']" class="px-8" mat-flat-button [color]="'secondary'">
+              Cancel
+            </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="speciesForm.invalid"
               (click)="submit()">
-              Add Species
+              <span *ngIf="!( loading$ | async )">
+                Add Species
+              </span>
+              <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                [mode]="'indeterminate'"></mat-progress-spinner>
             </button>
           </div>
         </form>

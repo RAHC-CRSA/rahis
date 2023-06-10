@@ -7,6 +7,65 @@
   },
   "paths": {
     "/api/users": {
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Deletes a user",
+        "description": "Deletes a user from the system",
+        "operationId": "DeleteUser_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin"
+            ]
+          }
+        ]
+      },
       "get": {
         "tags": [
           "Users"
@@ -106,6 +165,47 @@
               "Super Admin",
               " Admin",
               " Reporter"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Species"
+        ],
+        "summary": "Deletes a species",
+        "description": "Deletes a species from the system",
+        "operationId": "DeleteSpecies_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteSpeciesCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
             ]
           }
         ]
@@ -365,6 +465,47 @@
           }
         ]
       },
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Deletes a report",
+        "description": "Deletes a report from the system",
+        "operationId": "DeleteReport_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteReportCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
       "get": {
         "tags": [
           "Reports"
@@ -420,6 +561,47 @@
       }
     },
     "/api/reports/occurrences": {
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Deletes an occurrence",
+        "description": "Deletes an occurrence from the system",
+        "operationId": "DeleteOccurrence_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteOccurrenceCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
       "get": {
         "tags": [
           "Reports"
@@ -692,6 +874,47 @@
           }
         ]
       },
+      "delete": {
+        "tags": [
+          "Regions"
+        ],
+        "summary": "Deletes a region",
+        "description": "Deletes a region from the system",
+        "operationId": "DeleteRegion_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteRegionCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
       "get": {
         "tags": [
           "Regions"
@@ -740,7 +963,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ServerResponse"
                 }
               }
             }
@@ -805,6 +1028,47 @@
               "Super Admin",
               " Admin",
               " Reporter"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Institutions"
+        ],
+        "summary": "Deletes an institution",
+        "description": "Deletes an institution from the system",
+        "operationId": "DeleteInstitution_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteInstitutionCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
             ]
           }
         ]
@@ -900,6 +1164,47 @@
               "Super Admin",
               " Admin",
               " Reporter"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "ParaProfessionals"
+        ],
+        "summary": "Deletes a para-professional",
+        "description": "Deletes a para-professional from the system",
+        "operationId": "DeleteParaProfessional_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteParaProfessionalCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
             ]
           }
         ]
@@ -1007,6 +1312,47 @@
               "Super Admin",
               " Admin",
               " Reporter"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Diseases"
+        ],
+        "summary": "Deletes a disease",
+        "description": "Deletes a disease from the system",
+        "operationId": "DeleteDisease_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteDiseaseCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
             ]
           }
         ]
@@ -1166,7 +1512,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDto"
+                  "$ref": "#/components/schemas/UserListDto"
                 }
               }
             }
@@ -1194,24 +1540,6 @@
   },
   "components": {
     "schemas": {
-      "UserListDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "roles": {
-            "type": "string"
-          }
-        }
-      },
       "ProblemDetails": {
         "type": "object",
         "additionalProperties": {
@@ -1241,6 +1569,33 @@
           }
         }
       },
+      "DeleteUserCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "UserListDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "string"
+          }
+        }
+      },
       "SpeciesDto": {
         "type": "object",
         "additionalProperties": false,
@@ -1260,6 +1615,16 @@
         "properties": {
           "name": {
             "type": "string"
+          }
+        }
+      },
+      "DeleteSpeciesCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -1685,6 +2050,26 @@
           1
         ]
       },
+      "DeleteOccurrenceCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "DeleteReportCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
       "OccurrenceDto": {
         "type": "object",
         "additionalProperties": false,
@@ -1798,7 +2183,10 @@
           "code": {
             "type": "string"
           },
-          "country": {
+          "countryName": {
+            "type": "string"
+          },
+          "countryFlag": {
             "type": "string"
           },
           "countryId": {
@@ -1820,6 +2208,16 @@
           },
           "code": {
             "type": "string"
+          }
+        }
+      },
+      "DeleteRegionCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -1919,6 +2317,26 @@
           }
         }
       },
+      "DeleteInstitutionCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "DeleteParaProfessionalCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
       "DiseaseDto": {
         "type": "object",
         "additionalProperties": false,
@@ -1956,6 +2374,16 @@
           },
           "zoonotic": {
             "type": "boolean"
+          }
+        }
+      },
+      "DeleteDiseaseCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -2001,30 +2429,6 @@
           },
           "password": {
             "type": "string"
-          }
-        }
-      },
-      "UserDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "userName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           }
         }
       },

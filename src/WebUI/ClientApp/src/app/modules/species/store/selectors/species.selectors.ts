@@ -10,6 +10,16 @@ export const getSpecies = createSelector(
 );
 
 export const getSpeciesLoading = createSelector(
-  speciesState,
-  (state: SpeciesState) => state.loading
+    speciesState,
+    (state: SpeciesState) => state.loading
+);
+
+export const getSpeciesLoaded = createSelector(
+    speciesState,
+    (state: SpeciesState) => state.loaded
+);
+
+export const getFeedback = createSelector(
+    speciesState,
+    (state: SpeciesState) => state.feedback
 );

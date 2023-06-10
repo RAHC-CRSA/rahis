@@ -1,33 +1,51 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
-import { ReportsState } from 'app/modules/reports/store';
+import { ReportState } from 'app/modules/reports/store';
 import { createReport } from 'app/modules/reports/store/actions';
+import {
+    getFeedback,
+    getReportsLoading,
+} from 'app/modules/reports/store/selectors';
 import {
     DiagnosticTestDto,
     ICreateReportCommand,
     MedicationDto,
+    ServerResponse,
     VaccinationDto,
 } from 'app/web-api-client';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-create-report',
     templateUrl: './create-report.component.html',
     styleUrls: ['./create-report.component.scss'],
+    animations: fuseAnimations,
 })
-export class CreateReportComponent {
+export class CreateReportComponent implements OnInit {
+    loading$: Observable<boolean>;
+    feedback$: Observable<ServerResponse | null | undefined>;
+
     @ViewChild('reportFormStepper') private reportFormStepper: MatStepper;
 
     formStep: number = 1;
     formValues = this._getFormValues();
 
-    constructor(private router: Router, private store: Store<ReportsState>) {}
+    constructor(private router: Router, private store: Store<ReportState>) {}
+
+    ngOnInit() {
+        this.initData();
+    }
+
+    initData() {
+        this.loading$ = this.store.select(getReportsLoading);
+        this.feedback$ = this.store.select(getFeedback);
+    }
 
     next(formData: any) {
         if (this.formStep == 9) return;
-
-        console.log({ formData, currentValues: this.formValues });
 
         if (this.formStep == 1) {
             this.formValues.reportType = formData.reportType;

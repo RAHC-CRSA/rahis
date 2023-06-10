@@ -13,3 +13,13 @@ export const getDiseasesLoading = createSelector(
     diseaseState,
     (state: DiseaseState) => state.loading
 );
+
+export const getDiseasesLoaded = createSelector(
+    diseaseState,
+    (state: DiseaseState) => state.loaded
+);
+
+export const getFeedback = createSelector(
+    diseaseState,
+    (state: DiseaseState) => state.feedback
+);

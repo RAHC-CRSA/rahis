@@ -4,20 +4,25 @@ import { Observable, of } from 'rxjs';
 import {
     CreateUserClient,
     CreateUserCommand,
+    DeleteUserClient,
+    DeleteUserCommand,
     GetSystemRolesClient,
     GetUsersClient,
     ICreateUserCommand,
+    IDeleteUserCommand,
 } from '../web-api-client';
 
 @Injectable({
     providedIn: 'root',
 })
 export class UserService {
+    deleteUserClient: DeleteUserClient;
     getUsers: GetUsersClient;
     getSystemRoles: GetSystemRolesClient;
     createUserCommand: CreateUserClient;
 
-    constructor(private http: HttpClient) {
+    constructor(http: HttpClient) {
+        this.deleteUserClient = new DeleteUserClient(http);
         this.getUsers = new GetUsersClient(http);
         this.getSystemRoles = new GetSystemRolesClient(http);
         this.createUserCommand = new CreateUserClient(http);
@@ -47,5 +52,9 @@ export class UserService {
         });
 
         return this.createUserCommand.handle(request);
+    }
+
+    deleteUser(payload: IDeleteUserCommand) {
+        return this.deleteUserClient.handle(new DeleteUserCommand(payload));
     }
 }

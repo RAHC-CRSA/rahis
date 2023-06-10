@@ -70,10 +70,10 @@
                 <!-- Submit button -->
                 <button type="submit" class="fuse-mat-button-large w-full mt-6" mat-flat-button [color]="'primary'"
                     [disabled]="signInForm.invalid">
-                    <span *ngIf="!( isLoading$ | async )">
+                    <span *ngIf="!( loading$ | async )">
                         Sign in
                     </span>
-                    <mat-progress-spinner *ngIf="( isLoading$ | async )" [diameter]="24"
+                    <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                         [mode]="'indeterminate'"></mat-progress-spinner>
                 </button>
 

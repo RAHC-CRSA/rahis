@@ -33,8 +33,9 @@ public class GetRegionsQueryHandler : IRequestHandler<GetRegionsQuery, (Result, 
                 .Include(c => c.Regions.Where(x => !x.IsDeleted && x.CountryId == request.CountryId))
                 .Where(x => !x.IsDeleted && (request.CountryId != null ? x.Id == request.CountryId : true))
                 .SelectMany(e => e.Regions)
+                .Where(x => !x.IsDeleted)
                 .Select(RegionSelectorExpression())
-                .OrderBy(x => x.Country)
+                .OrderBy(x => x.CountryName)
                 .ToListAsync();
 
             return (Result.Success(), regions);
@@ -53,7 +54,8 @@ public class GetRegionsQueryHandler : IRequestHandler<GetRegionsQuery, (Result, 
             Id = e.Id,
             Name = e.Name,
             Code = e.Code,
-            Country = e.Country.Name,
+            CountryName = e.Country.Name,
+            CountryFlag = e.Country.Flag,
             CountryId = e.CountryId
         };
     }

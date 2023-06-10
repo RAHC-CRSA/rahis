@@ -18,3 +18,13 @@ export const getUsersLoading = createSelector(
     usersState,
     (state: UserState) => state.loading
 );
+
+export const getUsersLoaded = createSelector(
+    usersState,
+    (state: UserState) => state.loaded
+);
+
+export const getFeedback = createSelector(
+    usersState,
+    (state: UserState) => state.feedback
+);

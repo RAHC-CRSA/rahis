@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
+import { FuseAlertModule } from '@fuse/components/alert';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule],
@@ -34,6 +35,7 @@ import { MatStepperModule } from '@angular/material/stepper';
         MatStepperModule,
         FormsModule,
         ReactiveFormsModule,
+        FuseAlertModule,
     ],
 })
 export class SharedModule {}

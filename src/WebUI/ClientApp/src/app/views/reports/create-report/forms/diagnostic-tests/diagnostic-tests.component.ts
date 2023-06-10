@@ -14,7 +14,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ReportsState } from 'app/modules/reports/store';
+import { ReportState } from 'app/modules/reports/store';
 import {
     addParaProfessional,
     loadParaProfessionals,
@@ -55,7 +55,7 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
 
     constructor(
         private formBuilder: FormBuilder,
-        private store: Store<ReportsState>,
+        private store: Store<ReportState>,
         private changeDetector: ChangeDetectorRef
     ) {}
 

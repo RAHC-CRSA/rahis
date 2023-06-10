@@ -10,6 +10,7 @@ import {
     SpeciesService,
 } from '../../../../services';
 import * as ReportsActions from '../actions/reports.actions';
+import { FeedbackService } from 'app/common/helpers/feedback.service';
 
 @Injectable()
 export class ReportsEffects {
@@ -19,7 +20,8 @@ export class ReportsEffects {
         private reportsService: ReportService,
         private speciesService: SpeciesService,
         private diseaseService: DiseaseService,
-        private institutionsService: InstitutionService
+        private institutionsService: InstitutionService,
+        private feedbackService: FeedbackService
     ) {}
 
     createReport$ = createEffect(() =>
@@ -31,7 +33,33 @@ export class ReportsEffects {
                         ReportsActions.createReportSuccess({ payload: payload })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    deleteReport$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.deleteReport),
+            exhaustMap((action) =>
+                this.reportsService.deleteReport(action.payload).pipe(
+                    map((data) =>
+                        ReportsActions.deleteReportSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -49,7 +77,12 @@ export class ReportsEffects {
                         })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -65,7 +98,12 @@ export class ReportsEffects {
                         ReportsActions.loadRegionsSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -81,7 +119,12 @@ export class ReportsEffects {
                         ReportsActions.addRegionSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -99,7 +142,31 @@ export class ReportsEffects {
                     catchError((error) =>
                         of(
                             ReportsActions.setFeedback({
-                                payload: error,
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    deleteOccurrence$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.deleteOccurrence),
+            exhaustMap((action) =>
+                this.reportsService.deleteOccurrence(action.payload).pipe(
+                    map((data) =>
+                        ReportsActions.deleteOccurrenceSuccess({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
                             })
                         )
                     )
@@ -117,7 +184,12 @@ export class ReportsEffects {
                         ReportsActions.loadReportsSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -133,7 +205,12 @@ export class ReportsEffects {
                         ReportsActions.loadReportSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -155,7 +232,10 @@ export class ReportsEffects {
                         catchError((error) =>
                             of(
                                 ReportsActions.setFeedback({
-                                    payload: error,
+                                    payload:
+                                        this.feedbackService.processResponse(
+                                            error
+                                        ),
                                 })
                             )
                         )
@@ -177,7 +257,14 @@ export class ReportsEffects {
                             })
                         ),
                         catchError((error) =>
-                            of(ReportsActions.setFeedback({ payload: error }))
+                            of(
+                                ReportsActions.setFeedback({
+                                    payload:
+                                        this.feedbackService.processResponse(
+                                            error
+                                        ),
+                                })
+                            )
                         )
                     )
             )
@@ -195,7 +282,12 @@ export class ReportsEffects {
                         })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -211,7 +303,12 @@ export class ReportsEffects {
                         ReportsActions.addInstitutionSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -227,7 +324,12 @@ export class ReportsEffects {
                         ReportsActions.loadSpeciesSuccess({ payload: payload })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -243,7 +345,12 @@ export class ReportsEffects {
                         ReportsActions.addSpeciesSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -259,7 +366,12 @@ export class ReportsEffects {
                         ReportsActions.loadDiseasesSuccess({ payload: payload })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -275,7 +387,12 @@ export class ReportsEffects {
                         ReportsActions.addDiseaseSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(ReportsActions.setFeedback({ payload: error }))
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )

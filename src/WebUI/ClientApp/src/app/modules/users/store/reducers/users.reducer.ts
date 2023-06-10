@@ -1,29 +1,21 @@
-import {
-    createFeatureSelector,
-    createReducer,
-    createSelector,
-    on,
-} from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import {
     clearFeedback,
     createUser,
     createUserSuccess,
-    featureKey,
+    deleteUser,
+    deleteUserSuccess,
     loadRoles,
     loadRolesSuccess,
     loadUsers,
     loadUsersSuccess,
     setFeedback,
 } from '../actions';
-import {
-    ServerResponse,
-    UserDto,
-    UserListDto,
-} from '../../../../web-api-client';
+import { ServerResponse, UserListDto } from '../../../../web-api-client';
 
 export interface UserState {
     data?: UserListDto[] | null;
-    user?: UserDto | null;
+    entry?: UserListDto | null;
     roles?: string[] | null;
     loaded: boolean;
     loading: boolean;
@@ -31,8 +23,8 @@ export interface UserState {
 }
 
 export const initialState: UserState = {
-    data: null,
-    user: null,
+    data: [],
+    entry: null,
     roles: null,
     loaded: false,
     loading: false,
@@ -44,18 +36,34 @@ export const usersReducer = createReducer(
     on(createUser, (state) => ({
         ...state,
         loading: true,
+        feedback: null,
     })),
     on(createUserSuccess, (state, { payload }) => ({
         ...state,
         loading: false,
-        user: payload,
+        feedback: null,
+        data: [...state.data, payload],
     })),
-    on(loadUsers, (state) => ({ ...state, loading: true })),
-    on(loadUsersSuccess, (state, { payload }) => ({ ...state, data: payload })),
-    on(loadRoles, (state) => ({ ...state, loading: true })),
+    on(loadUsers, (state) => ({ ...state, feedback: null, loading: true })),
+    on(loadUsersSuccess, (state, { payload }) => ({
+        ...state,
+        loaded: true,
+        feedback: null,
+        data: payload,
+    })),
+    on(loadRoles, (state) => ({ ...state, feedback: null, loading: true })),
     on(loadRolesSuccess, (state, { payload }) => ({
         ...state,
+        feedback: null,
+        loading: false,
         roles: payload,
+    })),
+    on(deleteUser, (state) => ({ ...state, feedback: null, loading: true })),
+    on(deleteUserSuccess, (state, { payload }) => ({
+        ...state,
+        loading: false,
+        feedback: null,
+        data: state.data.filter((e) => e.id != payload),
     })),
     on(setFeedback, (state, { payload }) => ({
         ...state,

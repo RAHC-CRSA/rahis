@@ -7,11 +7,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { environment } from '../environments/environment';
-import { reducers, CustomSerializer } from './core/config/store.config';
-import {
-    StoreRouterConnectingModule,
-    RouterStateSerializer,
-} from '@ngrx/router-store';
+import { reducers } from './core/config/store.config';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { FuseModule } from '@fuse';

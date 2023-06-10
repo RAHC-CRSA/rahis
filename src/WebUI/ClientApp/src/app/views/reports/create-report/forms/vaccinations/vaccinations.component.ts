@@ -13,8 +13,9 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
-import { ReportsState } from 'app/modules/reports/store';
+import { ReportState } from 'app/modules/reports/store';
 import {
     addParaProfessional,
     loadParaProfessionals,
@@ -30,6 +31,7 @@ import { Observable, map, startWith } from 'rxjs';
     selector: 'app-vaccinations',
     templateUrl: './vaccinations.component.html',
     styleUrls: ['./vaccinations.component.scss'],
+    animations: fuseAnimations,
 })
 export class VaccinationsComponent implements OnInit, AfterContentChecked {
     @Input() formData: any;
@@ -55,7 +57,7 @@ export class VaccinationsComponent implements OnInit, AfterContentChecked {
 
     constructor(
         private formBuilder: FormBuilder,
-        private store: Store<ReportsState>,
+        private store: Store<ReportState>,
         private changeDetector: ChangeDetectorRef
     ) {}
 

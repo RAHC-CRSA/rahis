@@ -1,18 +1,26 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { InstitutionsState } from 'app/modules/institutions/store';
 import { addInstitution } from 'app/modules/institutions/store/actions';
-import { IAddInstitutionCommand } from 'app/web-api-client';
+import {
+    getFeedback,
+    getInstitutionsLoading,
+} from 'app/modules/institutions/store/selectors';
+import { IAddInstitutionCommand, ServerResponse } from 'app/web-api-client';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-add-institution',
     templateUrl: './add-institution.component.html',
     styleUrls: ['./add-institution.component.scss'],
+    animations: fuseAnimations,
 })
 export class AddInstitutionComponent {
     institutionForm: FormGroup;
-    hasError: boolean = false;
+    loading$: Observable<boolean>;
+    feedback$: Observable<ServerResponse | null | undefined>;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -21,6 +29,12 @@ export class AddInstitutionComponent {
 
     ngOnInit(): void {
         this.initForm();
+        this.initData();
+    }
+
+    initData() {
+        this.loading$ = this.store.select(getInstitutionsLoading);
+        this.feedback$ = this.store.select(getFeedback);
     }
 
     initForm() {

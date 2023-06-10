@@ -1,18 +1,12 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ReportsState } from '..';
 import { featureKey } from '../actions';
 import { ReportState } from '../reducers';
 
-const reportsState = createFeatureSelector<ReportsState>(featureKey);
-
-const reportState = createSelector(
-    reportsState,
-    (state: ReportsState) => state.information
-);
+const reportState = createFeatureSelector<ReportState>(featureKey);
 
 export const getReports = createSelector(
     reportState,
-    (state: ReportState) => state.reports
+    (state: ReportState) => state.data
 );
 
 export const getRegions = createSelector(
@@ -53,4 +47,19 @@ export const getDiseases = createSelector(
 export const getSpecies = createSelector(
     reportState,
     (state: ReportState) => state.species
+);
+
+export const getReportsLoading = createSelector(
+    reportState,
+    (state: ReportState) => state.loading
+);
+
+export const getReportsLoaded = createSelector(
+    reportState,
+    (state: ReportState) => state.loaded
+);
+
+export const getFeedback = createSelector(
+    reportState,
+    (state: ReportState) => state.feedback
 );

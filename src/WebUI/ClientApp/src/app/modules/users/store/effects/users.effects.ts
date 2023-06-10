@@ -5,13 +5,15 @@ import { of } from 'rxjs';
 import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
 import { UserService } from '../../../../services';
 import * as UserActions from '../actions/users.actions';
+import { FeedbackService } from 'app/common/helpers/feedback.service';
 
 @Injectable()
 export class UsersEffects {
     constructor(
         private actions$: Actions,
         private router: Router,
-        private userService: UserService
+        private userService: UserService,
+        private feedbackService: FeedbackService
     ) {}
 
     loadUsers$ = createEffect(() =>
@@ -23,7 +25,12 @@ export class UsersEffects {
                         UserActions.loadUsersSuccess({ payload: payload })
                     ),
                     catchError((error) =>
-                        of(UserActions.setFeedback({ payload: error }))
+                        of(
+                            UserActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -39,7 +46,12 @@ export class UsersEffects {
                         UserActions.loadRolesSuccess({ payload: payload })
                     ),
                     catchError((error) =>
-                        of(UserActions.setFeedback({ payload: error }))
+                        of(
+                            UserActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -55,7 +67,12 @@ export class UsersEffects {
                         UserActions.createUserSuccess({ payload: data })
                     ),
                     catchError((error) =>
-                        of(UserActions.setFeedback({ payload: error }))
+                        of(
+                            UserActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
                     )
                 )
             )
@@ -71,5 +88,26 @@ export class UsersEffects {
                 })
             ),
         { dispatch: false }
+    );
+
+    deleteUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(UserActions.deleteUser),
+            exhaustMap((action) =>
+                this.userService.deleteUser(action.payload).pipe(
+                    map((data) =>
+                        UserActions.deleteUserSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            UserActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
     );
 }
