@@ -6,31 +6,45 @@ import {
     Output,
     ChangeDetectorRef,
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
 import {
-    addInstitution,
+    addParaProfessional,
     loadInstitutions,
 } from 'app/modules/reports/store/actions';
-import { getInstitutions } from 'app/modules/reports/store/selectors';
-import { IAddInstitutionCommand, InstitutionDto } from 'app/web-api-client';
+import {
+    getInstitutions,
+    getReportsLoading,
+} from 'app/modules/reports/store/selectors';
+import {
+    IAddParaProfessionalCommand,
+    InstitutionDto,
+} from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
 @Component({
     selector: 'app-add-para-professional',
     templateUrl: './add-para-professional.component.html',
     styleUrls: ['./add-para-professional.component.scss'],
+    animations: fuseAnimations,
 })
 export class AddParaProfessionalComponent
     implements OnInit, AfterContentChecked
 {
-    @Output() submit = new EventEmitter();
+    @Output() close = new EventEmitter();
 
-    otherOption: string = 'Other (add a new professional)';
+    otherOption: string = 'Other';
     newInstitution: boolean = false;
 
     institutionControl = new FormControl();
+
     selectedInstitution: InstitutionDto;
 
     institutions$: Observable<InstitutionDto[] | null | undefined>;
@@ -39,18 +53,31 @@ export class AddParaProfessionalComponent
 
     professionalForm: FormGroup;
 
+    loading$: Observable<boolean>;
+
     constructor(
         private formBuilder: FormBuilder,
         private store: Store<ReportState>,
         private changeDetector: ChangeDetectorRef
     ) {}
 
+    ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
+
     ngOnInit() {
+        this.initForm();
         this.initData();
     }
 
     initForm() {
-        this.professionalForm = this.formBuilder.group({});
+        this.professionalForm = this.formBuilder.group({
+            name: ['', [Validators.required]],
+            position: ['', [Validators.required]],
+            email: ['', [Validators.required]],
+            phone: ['', [Validators.required]],
+            institution: ['', [Validators.required]],
+        });
     }
 
     initData() {
@@ -65,10 +92,10 @@ export class AddParaProfessionalComponent
             this.filteredInstitutions =
                 this.institutionControl.valueChanges.pipe(
                     startWith({} as InstitutionDto),
-                    map((professional) =>
-                        professional && typeof professional === 'object'
-                            ? professional.name
-                            : professional
+                    map((institution) =>
+                        institution && typeof institution === 'object'
+                            ? institution.name
+                            : institution
                     ),
                     map((name: string) =>
                         name
@@ -77,6 +104,11 @@ export class AddParaProfessionalComponent
                     )
                 );
         });
+        this.loading$ = this.store.select(getReportsLoading);
+    }
+
+    get f() {
+        return this.professionalForm.controls;
     }
 
     private _filterInstitution(name: string): InstitutionDto[] {
@@ -97,20 +129,43 @@ export class AddParaProfessionalComponent
         this.newInstitution =
             institution.name.toLowerCase() === this.otherOption.toLowerCase();
 
-        this.professionalForm.patchValue({ institutionId: institution.id });
+        this.professionalForm.patchValue({ institution: institution.id });
 
         if (this.newInstitution) this.institutionControl.disable();
     }
 
-    onSubmitInstitution(institution: IAddInstitutionCommand) {
-        this.store.dispatch(addInstitution({ payload: institution }));
+    onCheckInstitution(isNew: boolean) {
+        this.newInstitution = isNew;
 
-        this.institutionControl.enable();
+        if (!this.newInstitution) {
+            this.institutionControl.enable();
+        }
     }
 
-    ngAfterContentChecked(): void {
-        this.changeDetector.detectChanges();
+    onAddInstitutionClosed() {
+        this.onCheckInstitution(false);
+        this.institutionControl.setValue('', { emitEvent: true });
+        this.professionalForm.patchValue(
+            { institution: '' },
+            { emitEvent: true }
+        );
     }
 
-    onSubmit() {}
+    onCancel() {
+        this.professionalForm.reset();
+        this.close.emit();
+    }
+
+    onSubmit() {
+        const payload: IAddParaProfessionalCommand = {
+            name: this.f.name.value,
+            position: this.f.position.value,
+            email: this.f.email.value,
+            phone: this.f.phone.value,
+            institutionId: this.f.institution.value,
+        };
+
+        this.store.dispatch(addParaProfessional({ payload }));
+        this.close.emit();
+    }
 }

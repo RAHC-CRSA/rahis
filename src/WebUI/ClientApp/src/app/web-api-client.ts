@@ -3461,6 +3461,7 @@ export class CreateReportCommand implements ICreateReportCommand {
     movementControl?: boolean;
     movementControlMeasures?: string | undefined;
     treatment?: boolean;
+    treatmentDetails?: string | undefined;
     occurenceDate?: Date;
     diagnosticTests?: DiagnosticTestDto[];
     medications?: MedicationDto[];
@@ -3504,6 +3505,7 @@ export class CreateReportCommand implements ICreateReportCommand {
             this.movementControl = _data["movementControl"];
             this.movementControlMeasures = _data["movementControlMeasures"];
             this.treatment = _data["treatment"];
+            this.treatmentDetails = _data["treatmentDetails"];
             this.occurenceDate = _data["occurenceDate"] ? new Date(_data["occurenceDate"].toString()) : <any>undefined;
             if (Array.isArray(_data["diagnosticTests"])) {
                 this.diagnosticTests = [] as any;
@@ -3559,6 +3561,7 @@ export class CreateReportCommand implements ICreateReportCommand {
         data["movementControl"] = this.movementControl;
         data["movementControlMeasures"] = this.movementControlMeasures;
         data["treatment"] = this.treatment;
+        data["treatmentDetails"] = this.treatmentDetails;
         data["occurenceDate"] = this.occurenceDate ? formatDate(this.occurenceDate) : <any>undefined;
         if (Array.isArray(this.diagnosticTests)) {
             data["diagnosticTests"] = [];
@@ -3607,6 +3610,7 @@ export interface ICreateReportCommand {
     movementControl?: boolean;
     movementControlMeasures?: string | undefined;
     treatment?: boolean;
+    treatmentDetails?: string | undefined;
     occurenceDate?: Date;
     diagnosticTests?: DiagnosticTestDto[];
     medications?: MedicationDto[];
@@ -4336,6 +4340,7 @@ export class DiseaseDto implements IDiseaseDto {
     zoonotic?: boolean;
     code?: string;
     classification?: string;
+    speciesId?: number;
 
     constructor(data?: IDiseaseDto) {
         if (data) {
@@ -4353,6 +4358,7 @@ export class DiseaseDto implements IDiseaseDto {
             this.zoonotic = _data["zoonotic"];
             this.code = _data["code"];
             this.classification = _data["classification"];
+            this.speciesId = _data["speciesId"];
         }
     }
 
@@ -4370,6 +4376,7 @@ export class DiseaseDto implements IDiseaseDto {
         data["zoonotic"] = this.zoonotic;
         data["code"] = this.code;
         data["classification"] = this.classification;
+        data["speciesId"] = this.speciesId;
         return data;
     }
 }
@@ -4380,6 +4387,7 @@ export interface IDiseaseDto {
     zoonotic?: boolean;
     code?: string;
     classification?: string;
+    speciesId?: number;
 }
 
 export class AddDiseaseCommand implements IAddDiseaseCommand {
@@ -4387,6 +4395,7 @@ export class AddDiseaseCommand implements IAddDiseaseCommand {
     code?: string;
     classification?: string;
     zoonotic?: boolean;
+    speciesId?: number;
 
     constructor(data?: IAddDiseaseCommand) {
         if (data) {
@@ -4403,6 +4412,7 @@ export class AddDiseaseCommand implements IAddDiseaseCommand {
             this.code = _data["code"];
             this.classification = _data["classification"];
             this.zoonotic = _data["zoonotic"];
+            this.speciesId = _data["speciesId"];
         }
     }
 
@@ -4419,6 +4429,7 @@ export class AddDiseaseCommand implements IAddDiseaseCommand {
         data["code"] = this.code;
         data["classification"] = this.classification;
         data["zoonotic"] = this.zoonotic;
+        data["speciesId"] = this.speciesId;
         return data;
     }
 }
@@ -4428,6 +4439,7 @@ export interface IAddDiseaseCommand {
     code?: string;
     classification?: string;
     zoonotic?: boolean;
+    speciesId?: number;
 }
 
 export class DeleteDiseaseCommand implements IDeleteDiseaseCommand {

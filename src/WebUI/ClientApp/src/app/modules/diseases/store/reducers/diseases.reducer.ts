@@ -1,10 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import * as actions from '../actions/diseases.actions';
-import { DiseaseDto, ServerResponse } from 'app/web-api-client';
+import { DiseaseDto, ServerResponse, SpeciesDto } from 'app/web-api-client';
 
 export interface DiseaseState {
     data?: DiseaseDto[] | null;
     entry?: DiseaseDto | null;
+    species?: SpeciesDto[] | null;
     loading: boolean;
     loaded: boolean;
     feedback?: ServerResponse | any | null;
@@ -13,6 +14,7 @@ export interface DiseaseState {
 const initialState: DiseaseState = {
     data: [],
     entry: null,
+    species: [],
     loading: false,
     loaded: false,
     feedback: null,
@@ -40,10 +42,27 @@ export const diseaseReducer = createReducer(
         feedback: null,
         data: state.data.filter((e) => e.id !== payload),
     })),
+    on(actions.loadDiseases, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
     on(actions.loadDiseasesSuccess, (state, { payload }) => ({
         ...state,
         feedback: null,
+        loading: false,
         data: payload,
+    })),
+    on(actions.loadSpecies, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadSpeciesSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        species: payload,
     })),
     on(actions.setFeedback, (state, { payload }) => ({
         ...state,

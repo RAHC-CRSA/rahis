@@ -29,18 +29,10 @@
     <div class="w-full">
 
       <div class="p-4 bg-card shadow rounded overflow-hidden">
-        <!-- Alert -->
-        <ng-container *ngIf="( feedback$ | async)">
-          <fuse-alert class="my-4" [appearance]="'outline'" [showIcon]="false"
-            [type]="((feedback$ | async)?.isError ? 'error' : 'success' )" [@shake]="((feedback$ | async)?.isError)">
-            <p *ngIf="(feedback$ | async)?.errors?.length == 1" class="text-red">{{ (feedback$ | async)?.summary
-              }}</p>
 
-            <ul *ngIf="(feedback$ | async)?.errors?.length != 1">
-              <li *ngFor="let error of (feedback$ | async)?.errors">{{ error }}</li>
-            </ul>
-          </fuse-alert>
-        </ng-container>
+        <!-- Alert -->
+        <app-feedback-display [feedback]="feedback$"></app-feedback-display>
+
         <form [formGroup]="diseaseForm">
 
           <div class="mb-4">
@@ -67,9 +59,24 @@
             </mat-form-field>
           </div>
 
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Associated Species</mat-label>
+              <input type="text" aria-label="Associated species" matInput [formControl]="speciesControl"
+                [matAutocomplete]="speciesAutocomplete">
+              <mat-autocomplete #speciesAutocomplete="matAutocomplete" [displayWith]="displaySpeciesFn"
+                (optionSelected)="updateSelectedSpecies($event)">
+                <mat-option *ngFor="let species of filteredSpecies | async" [value]="species">
+                  {{ species.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Associated species is required', control: diseaseForm.controls['species']}"></ng-container>
+          </div>
 
           <div class="w-full mb-4">
-            <label>Is this a zoonotic disease?</label>
+            <mat-label>Is this a zoonotic disease?</mat-label>
             <mat-radio-group class="flex" formControlName="zoonotic" aria-label="zoonotic">
               <mat-radio-button [value]="false">No</mat-radio-button>
               <mat-radio-button [value]="true">Yes</mat-radio-button>

@@ -16,7 +16,6 @@ export class ReportTypeComponent implements OnInit {
     constructor(private formBuilder: FormBuilder) {}
 
     ngOnInit() {
-        console.log(this.formData);
         this.reportTypeForm = this.formBuilder.group({
             reportType: [this.formData.reportType, [Validators.required]],
         });

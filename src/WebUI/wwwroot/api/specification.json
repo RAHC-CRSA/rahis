@@ -2014,6 +2014,10 @@
           "treatment": {
             "type": "boolean"
           },
+          "treatmentDetails": {
+            "type": "string",
+            "nullable": true
+          },
           "occurenceDate": {
             "type": "string",
             "format": "date"
@@ -2356,6 +2360,10 @@
           },
           "classification": {
             "type": "string"
+          },
+          "speciesId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -2374,6 +2382,10 @@
           },
           "zoonotic": {
             "type": "boolean"
+          },
+          "speciesId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },

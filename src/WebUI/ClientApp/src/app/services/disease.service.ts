@@ -30,12 +30,7 @@ export class DiseaseService {
     }
 
     addDisease(payload: IAddDiseaseCommand) {
-        const request = new AddDiseaseCommand({
-            name: payload.name,
-            code: payload.code,
-            classification: payload.classification,
-            zoonotic: payload.zoonotic,
-        });
+        const request = new AddDiseaseCommand(payload);
 
         return this.addDiseaseClient.handle(request);
     }

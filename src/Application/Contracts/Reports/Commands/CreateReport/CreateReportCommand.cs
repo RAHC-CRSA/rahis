@@ -37,6 +37,7 @@ public class CreateReportCommand : IRequest<(Result, ReportDto?)>
     public bool MovementControl { get; set; }
     public string? MovementControlMeasures { get; set; }
     public bool Treatment { get; set; }
+    public string? TreatmentDetails { get; set; }
     public DateOnly OccurenceDate { get; set; }
 
     public List<DiagnosticTestDto> DiagnosticTests { get; set; }
@@ -86,21 +87,25 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             var report = Report.Create(occurrence.Id, request.DiseaseId, request.SpeciesId, DateOnly.FromDateTime(DateTime.UtcNow));
 
             // Update infection info
-            report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Mortality, request.HumanInfection, 
+            report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Mortality, request.HumanInfection,
                 request.HumansExposed, request.HumansInfected, request.HumansMortality);
 
             // Update treatment info
-            report.UpdateTreatmentInfo(request.StampingOut, request.DestructionOfCorpses, request.CorpsesDestroyed, request.Disinfection, 
-                request.Observation, request.ObservationDuration, request.Quarantine, request.QuarantineDuration, request.MovementControl, 
+            report.UpdateTreatmentInfo(request.StampingOut, request.DestructionOfCorpses, request.CorpsesDestroyed, request.Disinfection,
+                request.Observation, request.ObservationDuration, request.Quarantine, request.QuarantineDuration, request.MovementControl,
                 request.MovementControlMeasures, request.Treatment);
 
 
             // TODO: Add treatments, tests and vaccinations
-            if (request.Treatment && request.Medications.Any())
+            if (request.Treatment)
             {
-                foreach (var item in request.Medications)
+                report.UpdateTreatmentDetails(request.TreatmentDetails);
+                if (request.Medications.Any())
                 {
-                    report.AddMedication(item.Name, item.Dosage);
+                    foreach (var item in request.Medications)
+                    {
+                        report.AddMedication(item.Name, item.Dosage);
+                    }
                 }
             }
 
@@ -120,9 +125,8 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
                 }
             }
 
-
+            // Save report
             await _context.Reports.AddAsync(report);
-
             await _context.SaveChangesAsync(cancellationToken);
 
             var data = new ReportDto

@@ -7,10 +7,10 @@
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
 
-    <ng-container *ngIf="hasVaccinations" @expandCollapse>
+    <div *ngIf="hasVaccinations" @expandCollapse>
       <div class="w-full mt-4">
         <h4 class="text-2xl mb-4">Vaccinations</h4>
-        <ng-container *ngIf="formData.vaccinations?.length">
+        <div *ngIf="formData.vaccinations?.length" @expandCollapse>
           <div class="mb-4">
             <table mat-table [dataSource]="formData.vaccinations" class="w-full">
               <!-- Name Column -->
@@ -25,12 +25,21 @@
                 <td mat-cell *matCellDef="let el"> {{el.numberVaccinated}} </td>
               </ng-container>
 
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let row; let i = index"> <button type="button" mat-icon-button
+                    (click)="onDeleteVaccination(i)">
+                    <mat-icon color="warn" svgIcon="heroicons_outline:trash"></mat-icon>
+                  </button> </td>
+              </ng-container>
+
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
             </table>
           </div>
-        </ng-container>
+        </div>
 
         <div>
           <form [formGroup]="vaccinationForm">
@@ -55,8 +64,13 @@
                   {{ professional.name }}
                 </mat-option>
               </mat-autocomplete>
-              <mat-hint>Select 'Other' to create a new Para-Professional</mat-hint>
+              <mat-hint>Select <strong>{{ otherOption }}</strong>> to add a new Para-Professional</mat-hint>
             </mat-form-field>
+
+            <div *ngIf="newProfessional" @expandCollapse>
+              <app-add-para-professional (close)="onAddProfessionalClosed()"></app-add-para-professional>
+              <hr>
+            </div>
 
             <div class="flex justify-end mb-4">
               <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onVaccinationSubmitted()"
@@ -67,7 +81,7 @@
           </form>
         </div>
       </div>
-    </ng-container>
+    </div>
   </div>
 
   <div class="flex justify-between my-4">

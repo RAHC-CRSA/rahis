@@ -31,17 +31,7 @@
       <div class="p-4 bg-card shadow rounded overflow-hidden">
 
         <!-- Alert -->
-        <ng-container *ngIf="( feedback$ | async)">
-          <fuse-alert class="my-4" [appearance]="'outline'" [showIcon]="false"
-            [type]="((feedback$ | async)?.isError ? 'error' : 'success' )" [@shake]="((feedback$ | async)?.isError)">
-            <p *ngIf="(feedback$ | async)?.errors?.length == 1" class="text-red">{{ (feedback$ | async)?.summary
-              }}</p>
-
-            <ul *ngIf="(feedback$ | async)?.errors?.length != 1">
-              <li *ngFor="let error of (feedback$ | async)?.errors">{{ error }}</li>
-            </ul>
-          </fuse-alert>
-        </ng-container>
+        <app-feedback-display [feedback]="feedback$"></app-feedback-display>
 
         <mat-horizontal-stepper [linear]="true" #reportFormStepper>
 
@@ -98,13 +88,6 @@
 
             <app-vaccinations [formData]="formValues" (previous)="previous()"
               (submit)="next($event)"></app-vaccinations>
-          </mat-step>
-
-          <mat-step #reportFormTreatmentSourceInfo>
-            <ng-template matStepLabel>Treatment Source Info</ng-template>
-
-            <app-treatment-source-info [formData]="formValues" (previous)="previous()"
-              (submit)="submit($event)"></app-treatment-source-info>
           </mat-step>
 
         </mat-horizontal-stepper>

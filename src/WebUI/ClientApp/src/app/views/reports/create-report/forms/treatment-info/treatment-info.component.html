@@ -104,6 +104,15 @@
                 <td mat-cell *matCellDef="let el"> {{el.dosage}} </td>
               </ng-container>
 
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let row; let i = index"> <button type="button" mat-icon-button
+                    (click)="onDeleteMedication(i)">
+                    <mat-icon color="warn" svgIcon="heroicons_outline:trash"></mat-icon>
+                  </button> </td>
+              </ng-container>
+
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
@@ -116,6 +125,13 @@
             <app-medications (submit)="onMedicationSubmit($event)" class="mb-4"></app-medications>
           </div>
         </div>
+
+        <h4 class="text-2xl mb-4">Treatment Details</h4>
+        <mat-form-field class="w-full mt-4">
+          <mat-label>Any additional details of the treatment?</mat-label>
+          <textarea aria-label="Treatment Details" matInput formControlName="treatmentDetails"
+            placeholder="Treatment details"></textarea>
+        </mat-form-field>
       </div>
     </div>
   </div>

@@ -67,6 +67,13 @@ public class Report : BaseAuditableEntity<long>
         return new Report(occurrenceId, diseaseId, speciesId, occurenceDate);
     }
 
+    public void UpdateTreatmentDetails(string details)
+    {
+        Guard.IsNotNullOrEmpty(details, nameof(details));
+
+        TreatmentDetails = details;
+    }
+
     public void AddMedication(string name, string dosage)
     {
         var medication = Medication.Create(Id, name, dosage);
@@ -96,6 +103,32 @@ public class Report : BaseAuditableEntity<long>
         TreatmentDetails = treatmentDetails;
     }
 
+    public void UpdateInfectionInfo(int numberExposed, int numberInfected, int mortality, bool humanInfection, int? humansExposed, int? humansInfected, int? humansMortality)
+    {
+        NumberExposed = numberExposed;
+        NumberInfected = numberInfected;
+        Mortality = mortality;
+        HumanInfection = humanInfection;
+        HumansExposed = humansExposed;
+        HumansInfected = humansInfected;
+        HumansMortality = humansMortality;
+    }
+
+    public void UpdateTreatmentInfo(bool stampingOut, bool destructionOfCorpses, int? corpsesDestroyed, bool disinfection, bool observation, string? observationDuration, bool quarantine, string? quarantineDuration, bool movementControl, string? movementControlMeasures, bool treatment)
+    {
+        StampingOut = stampingOut;
+        DestructionOfCorpses = destructionOfCorpses;
+        CorpsesDestroyed = corpsesDestroyed;
+        Disinfection = disinfection;
+        Observation = observation;
+        ObservationDuration = observationDuration;
+        Quarantine = quarantine;
+        QuarantineDuration = quarantineDuration;
+        MovementControl = movementControl;
+        MovementControlMeasures = movementControlMeasures;
+        Treatment = treatment;
+    }
+
     public void Delete()
     {
         DeleteMedications();
@@ -122,31 +155,5 @@ public class Report : BaseAuditableEntity<long>
     {
         foreach (var vacc in _vaccinations)
             vacc.Delete();
-    }
-
-    public void UpdateInfectionInfo(int numberExposed, int numberInfected, int mortality, bool humanInfection, int? humansExposed, int? humansInfected, int? humansMortality)
-    {
-        NumberExposed = numberExposed;
-        NumberInfected = numberInfected;
-        Mortality = mortality;
-        HumanInfection = humanInfection;
-        HumansExposed = humansExposed;
-        HumansInfected = humansInfected;
-        HumansMortality = humansMortality;
-    }
-
-    public void UpdateTreatmentInfo(bool stampingOut, bool destructionOfCorpses, int? corpsesDestroyed, bool disinfection, bool observation, string? observationDuration, bool quarantine, string? quarantineDuration, bool movementControl, string? movementControlMeasures, bool treatment)
-    {
-        StampingOut = stampingOut;
-        DestructionOfCorpses = destructionOfCorpses;
-        CorpsesDestroyed = corpsesDestroyed;
-        Disinfection = disinfection;
-        Observation = observation;
-        ObservationDuration = observationDuration;
-        Quarantine = quarantine;
-        QuarantineDuration = quarantineDuration;
-        MovementControl = movementControl;
-        MovementControlMeasures = movementControlMeasures;
-        Treatment = treatment;
     }
 }

@@ -1,24 +1,37 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+    AfterContentChecked,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+} from '@angular/core';
 import {
     FormBuilder,
     FormControl,
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
 import { loadCountries, loadRegions } from 'app/modules/reports/store/actions';
 import { getCountries, getRegions } from 'app/modules/reports/store/selectors';
-import { CountryDto, RegionDto } from 'app/web-api-client';
+import { CountryDto, IAddRegionCommand, RegionDto } from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
 @Component({
     selector: 'app-location-info',
     templateUrl: './location-info.component.html',
     styleUrls: ['./location-info.component.scss'],
+    animations: fuseAnimations,
 })
-export class LocationInfoComponent {
+export class LocationInfoComponent implements OnInit, AfterContentChecked {
     @Input() formData: any;
+
+    otherOption: string = 'Other';
+    newRegion: boolean = false;
 
     countryControl = new FormControl();
     regionControl = new FormControl();
@@ -41,8 +54,13 @@ export class LocationInfoComponent {
 
     constructor(
         private formBuilder: FormBuilder,
+        private changeDetector: ChangeDetectorRef,
         private store: Store<ReportState>
     ) {}
+
+    ngAfterContentChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 
     ngOnInit() {
         this.initForm();
@@ -78,7 +96,10 @@ export class LocationInfoComponent {
 
         this.regions$ = this.store.select(getRegions);
         this.regions$.subscribe((regions) => {
-            this.regions = regions;
+            this.regions = [
+                ...regions,
+                new RegionDto({ id: null, name: this.otherOption }),
+            ];
 
             this.filteredRegions = this.regionControl.valueChanges.pipe(
                 startWith({} as RegionDto),
@@ -131,7 +152,26 @@ export class LocationInfoComponent {
         this.selectedRegion = event.option.value;
         const region: RegionDto = event.option.value;
 
+        this.newRegion =
+            region.name.toLowerCase() === this.otherOption.toLowerCase();
+
         this.locationInfo.patchValue({ region: region.id });
+
+        if (this.newRegion) this.regionControl.disable();
+    }
+
+    onCheckRegion(isNew: boolean) {
+        this.newRegion = isNew;
+
+        if (!this.newRegion) {
+            this.regionControl.enable();
+        }
+    }
+
+    onAddRegionClosed() {
+        this.onCheckRegion(false);
+        this.regionControl.setValue('', { emitEvent: true });
+        this.locationInfo.patchValue({ region: '' }, { emitEvent: true });
     }
 
     onPrevious() {

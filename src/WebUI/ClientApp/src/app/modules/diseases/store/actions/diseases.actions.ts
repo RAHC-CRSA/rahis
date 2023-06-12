@@ -4,12 +4,21 @@ import {
     IAddDiseaseCommand,
     IDeleteDiseaseCommand,
     ServerResponse,
+    SpeciesDto,
 } from '../../../../../app/web-api-client';
 
 export const featureKey = 'disease';
+
 // Load diseases
 export const LOAD_DISEASES = `[Diseases] Load Diseases`;
 export const LOAD_DISEASES_SUCCESS = `[Diseases] Load Diseases Success`;
+
+export const loadDiseases = createAction(LOAD_DISEASES);
+
+export const loadDiseasesSuccess = createAction(
+    LOAD_DISEASES_SUCCESS,
+    props<{ payload: DiseaseDto[] }>()
+);
 
 // Add disease
 export const ADD_DISEASE = `[Diseases] Add Disease`;
@@ -46,11 +55,15 @@ export const deleteDiseaseSuccess = createAction(
     props<{ payload: number }>()
 );
 
-export const loadDiseases = createAction(LOAD_DISEASES);
+// Load diseases
+export const LOAD_SPECIES = `[Diseases] Load Species`;
+export const LOAD_SPECIES_SUCCESS = `[Diseases] Load Species Success`;
 
-export const loadDiseasesSuccess = createAction(
-    LOAD_DISEASES_SUCCESS,
-    props<{ payload: DiseaseDto[] }>()
+export const loadSpecies = createAction(LOAD_SPECIES);
+
+export const loadSpeciesSuccess = createAction(
+    LOAD_SPECIES_SUCCESS,
+    props<{ payload: SpeciesDto[] }>()
 );
 
 export const SET_FEEDBACK = `[Diseases] Set Feedback`;

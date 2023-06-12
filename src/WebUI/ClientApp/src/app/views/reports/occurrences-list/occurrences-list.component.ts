@@ -56,6 +56,8 @@ export class OccurrencesListComponent {
     }
 
     initData() {
+        this.store.dispatch(loadOccurrences());
+
         this.occurrences$ = this.store.select(getOccurrences);
         this.occurrences$.subscribe((items) => {
             this.dataSource = new MatTableDataSource(items);
@@ -66,11 +68,6 @@ export class OccurrencesListComponent {
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getReportsLoading);
         this.loaded$ = this.store.select(getReportsLoaded);
-        this.loaded$.subscribe((loaded) => {
-            if (!loaded) {
-                this.store.dispatch(loadOccurrences());
-            }
-        });
     }
 
     applyFilter(event: Event) {

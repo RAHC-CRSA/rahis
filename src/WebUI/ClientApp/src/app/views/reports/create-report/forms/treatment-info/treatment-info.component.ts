@@ -23,7 +23,7 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
     movementControlled: boolean;
     administeredMeds: boolean;
 
-    displayedColumns: string[] = ['name', 'dosage'];
+    displayedColumns: string[] = ['name', 'dosage', 'actions'];
 
     @Input() formData: any;
 
@@ -72,6 +72,7 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             ],
             movementControlMeasures: [this.formData.movementControlMeasures],
             treatment: [this.formData.treatment, Validators.required],
+            treatmentDetails: [this.formData.treatmentDetails],
             medications: [
                 this.formData.medications?.length
                     ? this.formData.medications
@@ -160,6 +161,16 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             medications: this.formData.medications,
         });
         this.treatmentInfo.controls.medications?.updateValueAndValidity();
+    }
+
+    onDeleteMedication(idx: number) {
+        this.formData.medications = this.formData.medications.filter((e, i) => {
+            if (i != idx) return e;
+        });
+
+        this.treatmentInfo.patchValue({
+            medications: this.formData.medications,
+        });
     }
 
     onPrevious() {

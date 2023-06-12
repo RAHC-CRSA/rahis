@@ -36,7 +36,7 @@ import { Observable, map, startWith } from 'rxjs';
 export class VaccinationsComponent implements OnInit, AfterContentChecked {
     @Input() formData: any;
 
-    otherOption: string = 'Other (add a new professional)';
+    otherOption: string = 'Other';
     newProfessional: boolean = false;
 
     professionalControl = new FormControl();
@@ -50,7 +50,7 @@ export class VaccinationsComponent implements OnInit, AfterContentChecked {
     @Output() submit = new EventEmitter();
 
     hasVaccinations: boolean;
-    displayedColumns: string[] = ['name', 'numberVaccinated'];
+    displayedColumns: string[] = ['name', 'numberVaccinated', 'actions'];
 
     vaccinationsInfo: FormGroup;
     vaccinationForm: FormGroup;
@@ -82,9 +82,9 @@ export class VaccinationsComponent implements OnInit, AfterContentChecked {
         });
 
         this.vaccinationForm = this.formBuilder.group({
-            name: ['', Validators.required],
-            numberVaccinated: ['', Validators.required],
-            professionalId: ['', Validators.required],
+            name: ['', [Validators.required]],
+            numberVaccinated: ['', [Validators.required]],
+            professionalId: ['', [Validators.required]],
         });
     }
 
@@ -92,7 +92,10 @@ export class VaccinationsComponent implements OnInit, AfterContentChecked {
         this.store.dispatch(loadParaProfessionals({ payload: undefined }));
         this.professionals$ = this.store.select(getParaProfessionals);
         this.professionals$.subscribe((professionals) => {
-            this.professionals = professionals;
+            this.professionals = [
+                ...professionals,
+                new ParaProfessionalDto({ id: null, name: this.otherOption }),
+            ];
 
             this.filteredProfessionals =
                 this.professionalControl.valueChanges.pipe(
@@ -165,6 +168,23 @@ export class VaccinationsComponent implements OnInit, AfterContentChecked {
             });
     }
 
+    onCheckProfessional(isNew: boolean) {
+        this.newProfessional = isNew;
+
+        if (!this.newProfessional) {
+            this.professionalControl.enable();
+        }
+    }
+
+    onAddProfessionalClosed() {
+        this.onCheckProfessional(false);
+        this.professionalControl.setValue('', { emitEvent: true });
+        this.vaccinationForm.patchValue(
+            { professionalId: '' },
+            { emitEvent: true }
+        );
+    }
+
     onVaccinationSubmitted() {
         this.formData.vaccinations = [
             ...this.formData.vaccinations,
@@ -179,6 +199,18 @@ export class VaccinationsComponent implements OnInit, AfterContentChecked {
 
         this.vaccinationsInfo.controls.vaccinations?.clearValidators();
         this.vaccinationsInfo.controls.vaccinations?.updateValueAndValidity();
+    }
+
+    onDeleteVaccination(idx: number) {
+        this.formData.vaccinations = this.formData.vaccinations.filter(
+            (e, i) => {
+                if (i != idx) return e;
+            }
+        );
+
+        this.vaccinationsInfo.patchValue({
+            vaccinations: this.formData.vaccinations,
+        });
     }
 
     onPrevious() {

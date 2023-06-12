@@ -5,6 +5,7 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
 import { loadDiseases, loadSpecies } from 'app/modules/reports/store/actions';
@@ -16,9 +17,14 @@ import { Observable, map, startWith } from 'rxjs';
     selector: 'app-disease-info',
     templateUrl: './disease-info.component.html',
     styleUrls: ['./disease-info.component.scss'],
+    animations: fuseAnimations,
 })
 export class DiseaseInfoComponent implements OnInit {
     @Input() formData: any;
+
+    otherOption: string = 'Other';
+    newSpecies: boolean = false;
+    newDisease: boolean = false;
 
     diseaseControl = new FormControl();
     speciesControl = new FormControl();
@@ -61,7 +67,10 @@ export class DiseaseInfoComponent implements OnInit {
 
         this.diseases$ = this.store.select(getDiseases);
         this.diseases$.subscribe((diseases) => {
-            this.diseases = diseases;
+            this.diseases = [
+                ...diseases,
+                new DiseaseDto({ id: null, name: this.otherOption }),
+            ];
 
             this.filteredDiseases = this.diseaseControl.valueChanges.pipe(
                 startWith({} as DiseaseDto),
@@ -80,7 +89,10 @@ export class DiseaseInfoComponent implements OnInit {
 
         this.species$ = this.store.select(getSpecies);
         this.species$.subscribe((species) => {
-            this.species = species;
+            this.species = [
+                ...species,
+                new SpeciesDto({ id: null, name: this.otherOption }),
+            ];
 
             this.filteredSpecies = this.speciesControl.valueChanges.pipe(
                 startWith({} as SpeciesDto),
@@ -111,7 +123,26 @@ export class DiseaseInfoComponent implements OnInit {
         this.selectedDisease = event.option.value;
         const disease: DiseaseDto = event.option.value;
 
+        this.newDisease =
+            disease.name.toLowerCase() == this.otherOption.toLowerCase();
+
         this.diseaseInfo.patchValue({ disease: disease.id });
+
+        if (this.newDisease) this.diseaseControl.disable();
+    }
+
+    onCheckDisease(isNew: boolean) {
+        this.newDisease = isNew;
+
+        if (!this.newDisease) {
+            this.diseaseControl.enable();
+        }
+    }
+
+    onAddDiseaseClosed() {
+        this.onCheckDisease(false);
+        this.diseaseControl.setValue('', { emitEvent: true });
+        this.diseaseInfo.patchValue({ disease: '' }, { emitEvent: true });
     }
 
     private _filterSpecies(name: string): SpeciesDto[] {
@@ -129,7 +160,26 @@ export class DiseaseInfoComponent implements OnInit {
         this.selectedSpecies = event.option.value;
         const species: SpeciesDto = event.option.value;
 
+        this.newSpecies =
+            species.name.toLowerCase() == this.otherOption.toLowerCase();
+
         this.diseaseInfo.patchValue({ species: species.id });
+
+        if (this.newSpecies) this.speciesControl.disable();
+    }
+
+    onCheckSpecies(isNew: boolean) {
+        this.newSpecies = isNew;
+
+        if (!this.newSpecies) {
+            this.speciesControl.enable();
+        }
+    }
+
+    onAddSpeciesClosed() {
+        this.onCheckSpecies(false);
+        this.speciesControl.setValue('', { emitEvent: true });
+        this.diseaseInfo.patchValue({ species: '' }, { emitEvent: true });
     }
 
     onPrevious() {

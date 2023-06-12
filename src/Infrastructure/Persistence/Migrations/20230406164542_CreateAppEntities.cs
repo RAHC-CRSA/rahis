@@ -234,7 +234,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OccurenceDate = table.Column<DateTime>(type: "date", nullable: false),
+                    OccurrenceDate = table.Column<DateTime>(type: "date", nullable: false),
                     NumberAffected = table.Column<long>(type: "bigint", nullable: false),
                     NumberExposed = table.Column<long>(type: "bigint", nullable: false),
                     DateStarted = table.Column<DateTime>(type: "date", nullable: false),
@@ -254,11 +254,10 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                     TreatmentDetails = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     VaccinationId = table.Column<long>(type: "bigint", nullable: false),
                     DiagnosticTestId = table.Column<long>(type: "bigint", nullable: false),
-                    OccurenceId = table.Column<long>(type: "bigint", nullable: false),
+                    OccurrenceId = table.Column<long>(type: "bigint", nullable: false),
                     DiseaseId = table.Column<long>(type: "bigint", nullable: false),
                     SpeciesId = table.Column<long>(type: "bigint", nullable: false),
                     RegionId = table.Column<long>(type: "bigint", nullable: false),
-                    OccurrenceId = table.Column<long>(type: "bigint", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),

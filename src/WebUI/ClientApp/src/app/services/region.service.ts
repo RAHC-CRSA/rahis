@@ -35,11 +35,7 @@ export class RegionService {
     }
 
     addRegion(payload: IAddRegionCommand): Observable<RegionDto> {
-        const request = new AddRegionCommand({
-            name: payload.name,
-            code: payload.code,
-            countryId: payload.countryId,
-        });
+        const request = new AddRegionCommand(payload);
 
         return this.addRegionClient.handle(request);
     }

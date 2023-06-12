@@ -36,22 +36,8 @@ export class UserService {
         return this.getSystemRoles.handle();
     }
 
-    createUser(command: ICreateUserCommand): Observable<any> {
-        const notFoundError = new Error('Not Found');
-        if (!command) {
-            return of(notFoundError);
-        }
-
-        const request: CreateUserCommand = new CreateUserCommand({
-            firstName: command.firstName,
-            lastName: command.lastName,
-            email: command.email,
-            username: command.username,
-            password: command.password,
-            roles: command.roles,
-        });
-
-        return this.createUserCommand.handle(request);
+    createUser(payload: ICreateUserCommand): Observable<any> {
+        return this.createUserCommand.handle(new CreateUserCommand(payload));
     }
 
     deleteUser(payload: IDeleteUserCommand) {

@@ -19,6 +19,11 @@ export const getDiseasesLoaded = createSelector(
     (state: DiseaseState) => state.loaded
 );
 
+export const getSpecies = createSelector(
+    diseaseState,
+    (state: DiseaseState) => state.species
+);
+
 export const getFeedback = createSelector(
     diseaseState,
     (state: DiseaseState) => state.feedback

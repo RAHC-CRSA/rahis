@@ -9,6 +9,9 @@ public class Disease : BaseAuditableEntity<long>
     public string Code { get; private set; }
     public string Classification { get; private set; }
 
+    private readonly List<TransboundaryDisease> _transboundaryDiseases = new();
+    public IReadOnlyCollection<TransboundaryDisease> TransboundaryDiseases => _transboundaryDiseases.AsReadOnly();
+
 
     private Disease() : base()
     {
@@ -27,6 +30,12 @@ public class Disease : BaseAuditableEntity<long>
         Guard.IsNotNullOrEmpty(name, nameof(name));
 
         return new Disease(name, code, classification, zoonotic);
+    }
+
+    public void SetTransboundarySpecies(Species species)
+    {
+        var entry = TransboundaryDisease.Create(Id, species.Id);
+        _transboundaryDiseases.Add(entry);
     }
 
     public void Delete()

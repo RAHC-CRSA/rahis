@@ -1,19 +1,7 @@
 <form [formGroup]="diseaseInfo" class="p-6">
   <div class="flex flex-col g-3 my-4">
 
-    <mat-form-field class="w-full">
-      <mat-label>What is the name of the disease?</mat-label>
-      <input type="text" aria-label="Disease" matInput [formControl]="diseaseControl"
-        [matAutocomplete]="diseaseAutocomplete">
-      <mat-autocomplete #diseaseAutocomplete="matAutocomplete" [displayWith]="displayDiseaseFn"
-        (optionSelected)="updateSelectedDisease($event)">
-        <mat-option *ngFor="let disease of filteredDiseases | async" [value]="disease">
-          {{ disease.name }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-
-    <mat-form-field class="w-full">
+    <mat-form-field class="w-full mb-4">
       <mat-label>What is the affected species?</mat-label>
       <input type="text" aria-label="Species" matInput [formControl]="speciesControl"
         [matAutocomplete]="speciesAutocomplete">
@@ -23,7 +11,31 @@
           {{ species.name }}
         </mat-option>
       </mat-autocomplete>
+      <mat-hint *ngIf="!newSpecies">Select <strong>'{{ otherOption }}'</strong> to add a new species.</mat-hint>
     </mat-form-field>
+
+    <div *ngIf="newSpecies || !species.length" @expandCollapse>
+      <app-add-species (close)="onAddSpeciesClosed()"></app-add-species>
+      <hr>
+    </div>
+
+    <mat-form-field class="w-full mb-4">
+      <mat-label>What is the name of the disease?</mat-label>
+      <input type="text" aria-label="Disease" matInput [formControl]="diseaseControl"
+        [matAutocomplete]="diseaseAutocomplete">
+      <mat-autocomplete #diseaseAutocomplete="matAutocomplete" [displayWith]="displayDiseaseFn"
+        (optionSelected)="updateSelectedDisease($event)">
+        <mat-option *ngFor="let disease of filteredDiseases | async" [value]="disease">
+          {{ disease.name }}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-hint *ngIf="!newDisease">Select <strong>'{{ otherOption }}'</strong> to add a new disease.</mat-hint>
+    </mat-form-field>
+
+    <div *ngIf="newDisease || !diseases.length" @expandCollapse>
+      <app-add-disease [species]="selectedSpecies.id" (close)="onAddDiseaseClosed()"></app-add-disease>
+      <hr>
+    </div>
   </div>
 
   <div class="flex justify-between my-4">

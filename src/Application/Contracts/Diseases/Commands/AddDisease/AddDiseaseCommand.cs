@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
@@ -12,6 +13,7 @@ public class AddDiseaseCommand : IRequest<(Result, DiseaseDto?)>
     public string Code { get; set; }
     public string Classification { get; set; }
     public bool Zoonotic { get; set; }
+    public long SpeciesId { get; set; }
 }
 
 public class AddDiseaseCommandHandler : IRequestHandler<AddDiseaseCommand, (Result, DiseaseDto?)>
@@ -29,7 +31,13 @@ public class AddDiseaseCommandHandler : IRequestHandler<AddDiseaseCommand, (Resu
     {
         try
         {
+            var species = await _context.Species.FirstOrDefaultAsync(x => !x.IsDeleted && x.Id == request.SpeciesId);
+            if (species == null)
+                return (Result.Failure(new List<string> { "Associated species was not found." }), null);
+
             var disease = Disease.Create(request.Name, request.Code, request.Classification, request.Zoonotic);
+            disease.SetTransboundarySpecies(species);
+
             await _context.Diseases.AddAsync(disease);
             await _context.SaveChangesAsync(cancellationToken);
 
@@ -39,6 +47,7 @@ public class AddDiseaseCommandHandler : IRequestHandler<AddDiseaseCommand, (Resu
                 Name = disease.Name,
                 Classification = disease.Classification,
                 Zoonotic = disease.Zoonotic,
+                SpeciesId = request.SpeciesId,
             };
 
             return (Result.Success(), diseaseDto);

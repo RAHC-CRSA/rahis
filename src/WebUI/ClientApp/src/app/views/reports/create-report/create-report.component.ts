@@ -89,8 +89,6 @@ export class CreateReportComponent implements OnInit {
                     ? undefined
                     : formData.occurrence;
 
-            console.log('Current Value', { current: this.formValues });
-
             this.formStep++;
 
             this.reportFormStepper.selected.completed = true;
@@ -130,6 +128,7 @@ export class CreateReportComponent implements OnInit {
             this.formValues.movementControlMeasures =
                 formData.movementControlMeasures;
             this.formValues.treatment = formData.treatment;
+            this.formValues.treatmentDetails = formData.treatmentDetails;
             this.formValues.medications = formData.medications;
 
             this.formStep++;
@@ -152,11 +151,7 @@ export class CreateReportComponent implements OnInit {
         if (this.formStep == 8) {
             this.formValues.vaccinations = formData.vaccinations;
 
-            this.formStep++;
-
-            this.reportFormStepper.selected.completed = true;
-            this.reportFormStepper.next();
-            return;
+            this.submit();
         }
     }
 
@@ -171,8 +166,8 @@ export class CreateReportComponent implements OnInit {
         this.router.navigateByUrl('/dashboard/reports');
     }
 
-    submit(formData: any) {
-        console.log({ formData, currentValues: this.formValues });
+    submit() {
+        console.log({ currentValues: this.formValues });
 
         const medications = this.formValues.medications?.map(
             (e) => new MedicationDto(e)
@@ -211,15 +206,15 @@ export class CreateReportComponent implements OnInit {
             movementControl: this.formValues.movementControl,
             movementControlMeasures: this.formValues.movementControlMeasures,
             treatment: this.formValues.treatment,
+            treatmentDetails: this.formValues.treatmentDetails,
             medications: medications,
             vaccinations: vaccinations,
             diagnosticTests: diagnosticTests,
         };
 
-        console.log('Submitting', { payload });
+        console.log({ payload });
 
         this.store.dispatch(createReport({ payload }));
-
         this.router.navigateByUrl('/dashboard/reports/create-confirmation');
     }
 
@@ -251,6 +246,7 @@ export class CreateReportComponent implements OnInit {
             movementControl: false,
             movementControlMeasures: '',
             treatment: false,
+            treatmentDetails: '',
             medications: [],
             vaccinations: [],
             diagnosticTests: [],

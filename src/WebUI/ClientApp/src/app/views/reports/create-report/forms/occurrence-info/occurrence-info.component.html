@@ -2,7 +2,7 @@
   <div class="flex flex-col g-3 my-4">
 
     <mat-form-field class="w-full">
-      <mat-label>Select an existing occurrence or 'Other' to create a new one</mat-label>
+      <mat-label>Select an occurrence</mat-label>
       <input type="text" aria-label="Occurrence" matInput [formControl]="occurrenceControl"
         [matAutocomplete]="occurrenceAutocomplete" placeholder="Select occurrence">
       <mat-autocomplete #occurrenceAutocomplete="matAutocomplete" [displayWith]="displayOccurrenceFn"
@@ -11,6 +11,8 @@
           {{ occurrence.title }}
         </mat-option>
       </mat-autocomplete>
+      <mat-hint *ngIf="!newOccurrence">Select <strong>'{{ otherOption }}'</strong> to add this report as a new
+        occurrence.</mat-hint>
     </mat-form-field>
 
     <div *ngIf="newOccurrence || !occurrences.length" @expandCollapse>
@@ -20,11 +22,6 @@
           instead</button>
       </div>
     </div>
-
-    <!-- <mat-form-field class="w-full">
-      <mat-label>In what region?</mat-label>
-
-    </mat-form-field> -->
   </div>
 
   <div class="flex justify-between my-4">

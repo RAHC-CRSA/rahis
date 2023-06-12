@@ -144,7 +144,13 @@ export class OccurrenceInfoComponent implements OnInit, AfterContentChecked {
         });
 
         if (!this.newOccurrence) {
+            this.selectedOccurrence = null;
+            this.occurrenceControl.setValue('', { emitEvent: true });
             this.occurrenceControl.enable();
+            this.occurrenceInfo.patchValue(
+                { occurrence: '' },
+                { emitEvent: true }
+            );
         }
     }
 

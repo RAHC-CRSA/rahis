@@ -6,4 +6,5 @@ public class DiseaseDto
     public bool Zoonotic { get; set; }
     public string Code { get; set; }
     public string Classification { get; set; }
+    public long SpeciesId { get; set; }
 }

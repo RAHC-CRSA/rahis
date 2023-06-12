@@ -87,7 +87,7 @@ export const reducer = createReducer(
         ...state,
         feedback: null,
         loading: false,
-        reports: payload,
+        data: payload,
     })),
     on(actions.loadRegions, (state) => ({
         ...state,
