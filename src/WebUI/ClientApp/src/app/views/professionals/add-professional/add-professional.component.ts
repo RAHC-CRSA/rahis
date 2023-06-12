@@ -55,11 +55,11 @@ export class AddProfessionalComponent {
 
     initForm() {
         this.professionalForm = this.formBuilder.group({
-            name: ['', Validators.required],
-            position: ['', Validators.required],
-            email: ['', Validators.required],
-            phone: ['', Validators.required],
-            institution: ['', Validators.required],
+            name: ['', [Validators.required]],
+            position: ['', [Validators.required]],
+            email: ['', [Validators.required]],
+            phone: ['', [Validators.required]],
+            institution: ['', [Validators.required]],
         });
     }
 

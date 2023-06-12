@@ -41,9 +41,7 @@ export class ReportService {
     }
 
     createReport(payload: ICreateReportCommand) {
-        const request = new CreateReportCommand(payload);
-
-        return this.createReportClient.handle(request);
+        return this.createReportClient.handle(new CreateReportCommand(payload));
     }
 
     getAllReports() {

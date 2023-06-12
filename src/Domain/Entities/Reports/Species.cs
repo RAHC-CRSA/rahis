@@ -5,6 +5,9 @@ namespace RegionalAnimalHealth.Domain.Entities.Reports;
 public class Species : BaseAuditableEntity<long> {
     public string Name { get; private set; }
 
+    private readonly List<TransboundaryDisease> _transboundaryDiseases = new();
+    public IReadOnlyCollection<TransboundaryDisease> TransboundaryDiseases => _transboundaryDiseases.AsReadOnly();
+
     private Species() : base() 
     {
     }
@@ -27,8 +30,22 @@ public class Species : BaseAuditableEntity<long> {
         Name = name;
     }
 
+    public void AddTransboundaryDisease(Disease disease)
+    {
+        var entry = TransboundaryDisease.Create(disease.Id, Id);
+        _transboundaryDiseases.Add(entry);
+    }
+
+    public void DeleteTransboundaryDiseases()
+    {
+        foreach(var disease in _transboundaryDiseases)
+            disease.Delete();
+    }
+
     public void Delete()
     {
+        DeleteTransboundaryDiseases();
+
         IsDeleted = true;
         LastModified = DateTime.UtcNow;
     }

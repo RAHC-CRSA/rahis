@@ -13,6 +13,7 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
+import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
 import {
@@ -30,11 +31,12 @@ import { Observable, map, startWith } from 'rxjs';
     selector: 'app-diagnostic-tests',
     templateUrl: './diagnostic-tests.component.html',
     styleUrls: ['./diagnostic-tests.component.scss'],
+    animations: fuseAnimations,
 })
 export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
     @Input() formData: any;
 
-    otherOption: string = 'Other (add a new professional)';
+    otherOption: string = 'Other';
     newProfessional: boolean = false;
 
     professionalControl = new FormControl();
@@ -48,7 +50,7 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
     @Output() submit = new EventEmitter();
 
     hasTests: boolean;
-    displayedColumns: string[] = ['name', 'numberTested'];
+    displayedColumns: string[] = ['name', 'numberTested', 'actions'];
 
     testsInfo: FormGroup;
     testForm: FormGroup;
@@ -78,9 +80,9 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
         });
 
         this.testForm = this.formBuilder.group({
-            name: ['', Validators.required],
-            numberTested: ['', Validators.required],
-            professionalId: ['', Validators.required],
+            name: ['', [Validators.required]],
+            numberTested: ['', [Validators.required]],
+            professionalId: ['', [Validators.required]],
         });
     }
 
@@ -162,6 +164,20 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
         });
     }
 
+    onCheckProfessional(isNew: boolean) {
+        this.newProfessional = isNew;
+
+        if (!this.newProfessional) {
+            this.professionalControl.enable();
+        }
+    }
+
+    onAddProfessionalClosed() {
+        this.onCheckProfessional(false);
+        this.professionalControl.setValue('', { emitEvent: true });
+        this.testForm.patchValue({ professionalId: '' }, { emitEvent: true });
+    }
+
     onTestSubmitted() {
         this.formData.diagnosticTests = [
             ...this.formData.diagnosticTests,
@@ -172,10 +188,21 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
         });
 
         this.testForm.reset();
-        this.professionalControl.reset();
 
         this.testsInfo.controls.tests?.clearValidators();
         this.testsInfo.controls.tests?.updateValueAndValidity();
+    }
+
+    onDeleteTest(idx: number) {
+        this.formData.diagnosticTests = this.formData.diagnosticTests.filter(
+            (e, i) => {
+                if (i != idx) return e;
+            }
+        );
+
+        this.testsInfo.patchValue({
+            diagnosticTests: this.formData.diagnosticTests,
+        });
     }
 
     onPrevious() {

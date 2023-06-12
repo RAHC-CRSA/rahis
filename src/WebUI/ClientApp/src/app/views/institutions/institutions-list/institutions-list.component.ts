@@ -53,6 +53,7 @@ export class InstitutionsListComponent {
     ) {}
 
     ngOnInit() {
+        this.store.dispatch(loadInstitutions());
         this.institutions$ = this.store.select(getInstitutions);
         this.institutions$.subscribe((items) => {
             this.dataSource = new MatTableDataSource(items);
@@ -63,11 +64,6 @@ export class InstitutionsListComponent {
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getInstitutionsLoading);
         this.loaded$ = this.store.select(getInstitutionsLoaded);
-        this.loaded$.subscribe((loaded) => {
-            if (!loaded) {
-                this.store.dispatch(loadInstitutions());
-            }
-        });
     }
 
     applyFilter(event: Event) {

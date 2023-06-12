@@ -55,6 +55,7 @@ export class ReportsListComponent {
     }
 
     initData() {
+        this.store.dispatch(loadReports());
         this.reports$ = this.store.select(getReports);
         this.reports$.subscribe((items) => {
             this.dataSource = new MatTableDataSource(items);
@@ -65,11 +66,6 @@ export class ReportsListComponent {
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getReportsLoading);
         this.loaded$ = this.store.select(getReportsLoaded);
-        this.loaded$.subscribe((loaded) => {
-            if (!loaded) {
-                this.store.dispatch(loadReports());
-            }
-        });
     }
 
     applyFilter(event: Event) {

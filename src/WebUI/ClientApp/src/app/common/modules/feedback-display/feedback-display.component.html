@@ -1,0 +1,12 @@
+<ng-container *ngIf="( feedback$ | async)">
+  <fuse-alert class="my-4 mx-4 p-4" [appearance]="'outline'" [showIcon]="false"
+    [type]="((feedback$ | async)?.isError ? 'error' : 'success' )" [@shake]="((feedback$ | async)?.isError)">
+    <p *ngIf="(feedback$ | async)?.errors?.length == 1" class="text-red font-bold text-xl mb-6">{{ (feedback$ |
+      async)?.summary
+      }}</p>
+
+    <ul *ngIf="(feedback$ | async)?.errors?.length">
+      <li *ngFor="let error of (feedback$ | async)?.errors">{{ error }}</li>
+    </ul>
+  </fuse-alert>
+</ng-container>

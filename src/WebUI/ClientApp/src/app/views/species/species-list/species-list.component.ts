@@ -48,6 +48,7 @@ export class SpeciesListComponent {
     }
 
     initData() {
+        this.store.dispatch(loadSpecies());
         this.species$ = this.store.select(getSpecies);
         this.species$.subscribe((items) => {
             this.dataSource = new MatTableDataSource(items);
@@ -58,11 +59,6 @@ export class SpeciesListComponent {
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getSpeciesLoading);
         this.loaded$ = this.store.select(getSpeciesLoaded);
-        this.loaded$.subscribe((loaded) => {
-            if (!loaded) {
-                this.store.dispatch(loadSpecies());
-            }
-        });
     }
 
     applyFilter(event: Event) {

@@ -1,1 +1,56 @@
-<p>add-disease works!</p>
+<form [formGroup]="diseaseForm">
+
+  <div class="mb-4">
+    <mat-form-field class="w-full">
+      <mat-label>Name</mat-label>
+      <input aria-label="Disease name" matInput formControlName="name" placeholder="Disease name" />
+    </mat-form-field>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Disease name is required', control: diseaseForm.controls['name']}"></ng-container>
+  </div>
+
+  <div class="mb-4">
+    <mat-form-field class="w-full">
+      <mat-label>Code</mat-label>
+      <input aria-label="Disease code" matInput formControlName="code" placeholder="Disease code" />
+    </mat-form-field>
+  </div>
+
+  <div class="mb-4">
+    <mat-form-field class="w-full">
+      <mat-label>Classification</mat-label>
+      <input aria-label="Disease classification" matInput formControlName="classification"
+        placeholder="Disease classification" />
+    </mat-form-field>
+  </div>
+
+  <div class="w-full mb-4">
+    <label>Is this a zoonotic disease?</label>
+    <mat-radio-group class="flex" formControlName="zoonotic" aria-label="zoonotic">
+      <mat-radio-button [value]="false">No</mat-radio-button>
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+    </mat-radio-group>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'zoonotic is required', control: diseaseForm.controls['zoonotic']}"></ng-container>
+  </div>
+
+  <div class="flex justify-between my-4">
+    <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onCancel()">
+      Cancel
+    </button>
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="diseaseForm.invalid"
+      (click)="onSubmit()">
+      <span *ngIf="!( loading$ | async )">
+        Add Disease
+      </span>
+      <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+        [mode]="'indeterminate'"></mat-progress-spinner>
+    </button>
+  </div>
+</form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

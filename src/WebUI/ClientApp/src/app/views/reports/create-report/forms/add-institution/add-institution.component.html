@@ -1,1 +1,51 @@
-<form [formGroup]="institutionForm"></form>
+<form [formGroup]="institutionForm">
+  <div class="mb-4">
+    <mat-form-field class="w-full">
+      <mat-label>Name</mat-label>
+      <input aria-label="Institution name" matInput formControlName="name" placeholder="Institution name" />
+    </mat-form-field>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Institution name is required', control: institutionForm.controls['name']}"></ng-container>
+  </div>
+
+  <div class="mb-4">
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Type</mat-label>
+      <input aria-label="Institution type" matInput formControlName="type" placeholder="Institution type" />
+    </mat-form-field>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Institution type is required', control: institutionForm.controls['type']}"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'minlength', message: 'Institution type should have at least 3 characters', control: institutionForm.controls['type']}"></ng-container>
+  </div>
+
+  <div class="w-full mb-4">
+    <label>Is this a public sector institution?</label>
+    <mat-radio-group class="flex" formControlName="publicSector" aria-label="publicSector">
+      <mat-radio-button [value]="false">No</mat-radio-button>
+      <mat-radio-button [value]="true">Yes</mat-radio-button>
+    </mat-radio-group>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Public sector is required', control: institutionForm.controls['publicSector']}"></ng-container>
+  </div>
+
+  <div class="flex justify-between my-4">
+    <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onCancel()">
+      Cancel
+    </button>
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="institutionForm.invalid"
+      (click)="onSubmit()">
+      <span *ngIf="!( loading$ | async )">
+        Add Institution
+      </span>
+      <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+        [mode]="'indeterminate'"></mat-progress-spinner>
+    </button>
+  </div>
+</form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

@@ -54,6 +54,7 @@ export class DiseasesListComponent {
     ) {}
 
     ngOnInit() {
+        this.store.dispatch(loadDiseases());
         this.diseases$ = this.store.select(getDiseases);
         this.diseases$.subscribe((items) => {
             this.dataSource = new MatTableDataSource(items);
@@ -64,11 +65,6 @@ export class DiseasesListComponent {
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getDiseasesLoading);
         this.loaded$ = this.store.select(getDiseasesLoaded);
-        this.loaded$.subscribe((loaded) => {
-            if (!loaded) {
-                this.store.dispatch(loadDiseases());
-            }
-        });
     }
 
     applyFilter(event: Event) {

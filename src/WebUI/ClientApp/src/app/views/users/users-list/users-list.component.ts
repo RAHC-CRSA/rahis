@@ -53,6 +53,7 @@ export class UsersListComponent {
     }
 
     initData() {
+        this.store.dispatch(loadUsers());
         this.feedback$ = this.store.select(getFeedback);
         this.user$ = this.authStore.select(getUser);
         this.users$ = this.store.select(getUsers);
@@ -64,11 +65,6 @@ export class UsersListComponent {
 
         this.loading$ = this.store.select(getUsersLoading);
         this.loaded$ = this.store.select(getUsersLoaded);
-        this.loaded$.subscribe((loaded) => {
-            if (!loaded) {
-                this.store.dispatch(loadUsers());
-            }
-        });
     }
 
     applyFilter(event: Event) {

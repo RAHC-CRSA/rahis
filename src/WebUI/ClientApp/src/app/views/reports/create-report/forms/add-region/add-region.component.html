@@ -1,1 +1,39 @@
-<p>region works!</p>
+<form [formGroup]="regionForm">
+  <div class="mb-4">
+    <mat-form-field class="w-full" subscriptSizing="fixed">
+      <mat-label>Name</mat-label>
+      <input aria-label="Region name" matInput formControlName="name" placeholder="Region name" />
+    </mat-form-field>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Region name is required', control: regionForm.controls['name']}"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'minlength', message: 'Region name should have at least 3 characters', control: regionForm.controls['name']}"></ng-container>
+  </div>
+
+  <div class="mb-4">
+    <mat-form-field class="w-full">
+      <mat-label>Code</mat-label>
+      <input aria-label="Region code" matInput formControlName="code" placeholder="Region code" />
+    </mat-form-field>
+  </div>
+
+  <div class="flex justify-between my-4">
+    <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onCancel()">
+      Cancel
+    </button>
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="regionForm.invalid"
+      (click)="onSubmit()">
+      <span *ngIf="!( loading$ | async )">
+        Add Region
+      </span>
+      <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+        [mode]="'indeterminate'"></mat-progress-spinner>
+    </button>
+  </div>
+</form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

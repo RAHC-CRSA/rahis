@@ -16,9 +16,15 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { FuseAlertModule } from '@fuse/components/alert';
+import { FeedbackDisplayModule } from 'app/common/modules/feedback-display/feedback-display.module';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        FeedbackDisplayModule,
+    ],
     exports: [
         CommonModule,
         MatTableModule,
@@ -36,6 +42,7 @@ import { FuseAlertModule } from '@fuse/components/alert';
         FormsModule,
         ReactiveFormsModule,
         FuseAlertModule,
+        FeedbackDisplayModule,
     ],
 })
 export class SharedModule {}

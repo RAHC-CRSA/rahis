@@ -35,19 +35,13 @@ export class SpeciesService {
     }
 
     addSpecies(payload: IAddSpeciesCommand) {
-        var request = new AddSpeciesCommand({
-            name: payload.name,
-        });
-        return this.addSpeciesClient.handle(request);
+        return this.addSpeciesClient.handle(new AddSpeciesCommand(payload));
     }
 
     updateSpecies(payload: IUpdateSpeciesCommand) {
-        var request = new UpdateSpeciesCommand({
-            id: payload.id,
-            name: payload.name,
-        });
-
-        return this.updaeSpeciesClient.handle(request);
+        return this.updaeSpeciesClient.handle(
+            new UpdateSpeciesCommand(payload)
+        );
     }
 
     deleteSpecies(payload: IDeleteSpeciesCommand) {

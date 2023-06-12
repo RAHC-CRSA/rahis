@@ -55,6 +55,7 @@ export class ProfessionalsListComponent {
     ) {}
 
     ngOnInit() {
+        this.store.dispatch(loadParaProfessionals({ payload: undefined }));
         this.professionals$ = this.store.select(getParaProfessionals);
         this.professionals$.subscribe((items) => {
             this.dataSource = new MatTableDataSource(items);
@@ -65,13 +66,6 @@ export class ProfessionalsListComponent {
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getParaProfessionalsLoading);
         this.loaded$ = this.store.select(getParaProfessionalsLoaded);
-        this.loaded$.subscribe((loaded) => {
-            if (!loaded) {
-                this.store.dispatch(
-                    loadParaProfessionals({ payload: undefined })
-                );
-            }
-        });
     }
 
     applyFilter(event: Event) {

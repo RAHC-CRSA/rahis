@@ -44,6 +44,7 @@ export class RegionsListComponent {
     ) {}
 
     ngOnInit() {
+        this.store.dispatch(loadRegions({ payload: undefined }));
         this.regions$ = this.store.select(getRegions);
         this.regions$.subscribe((items) => {
             this.dataSource = new MatTableDataSource(items);
@@ -54,11 +55,6 @@ export class RegionsListComponent {
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getRegionsLoading);
         this.loaded$ = this.store.select(getRegionsLoaded);
-        this.loaded$.subscribe((loaded) => {
-            if (!loaded) {
-                this.store.dispatch(loadRegions({ payload: undefined }));
-            }
-        });
     }
 
     applyFilter(event: Event) {

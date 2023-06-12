@@ -14,13 +14,28 @@ export class FeedbackService {
             feedback.summary = response.message;
             feedback.errors = [response.message];
         } else {
-            feedback.isError = response.isError;
-            feedback.summary = response.summary;
-            feedback.errors = response.errors;
+            const errors = this._processErrors(response.errors);
+            feedback.isError = response.isError ?? true;
+            feedback.summary =
+                response.summary ?? 'Oops! Something went wrong.';
+            feedback.errors = errors;
         }
 
         console.log({ response, feedback });
 
         return feedback;
+    }
+
+    private _processErrors(responseErrors: any) {
+        let errors = [];
+        for (let error in responseErrors) {
+            let err = `${responseErrors[error].map(
+                (e, i) =>
+                    `${e}${i < responseErrors[error].length - 1 ? ', ' : ''}`
+            )}`;
+            errors.push(err);
+        }
+
+        return errors;
     }
 }

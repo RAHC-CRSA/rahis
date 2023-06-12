@@ -13,7 +13,6 @@ import {
     IAddInstitutionCommand,
     IAddParaProfessionalCommand,
     IDeleteInstitutionCommand,
-    IDeleteParaProfessionalClient,
     IDeleteParaProfessionalCommand,
     InstitutionDto,
     ParaProfessionalDto,

@@ -7,6 +7,9 @@ public class AddDiseaseCommandValidator : AbstractValidator<AddDiseaseCommand>
     public AddDiseaseCommandValidator()
     {
         RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Disease name is required.");
+            .NotEmpty().WithMessage("Disease name is required");
+
+        RuleFor(x => x.SpeciesId)
+            .NotEmpty().WithMessage("Species id is required");
     }
 }

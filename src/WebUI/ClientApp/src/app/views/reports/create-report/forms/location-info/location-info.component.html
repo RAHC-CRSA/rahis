@@ -14,7 +14,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field class="w-full">
+    <mat-form-field class="flex-auto w-full">
       <mat-label>In what region?</mat-label>
       <input type="text" aria-label="Region" matInput [formControl]="regionControl"
         [matAutocomplete]="regionAutocomplete" placeholder="Select occurrence region">
@@ -24,7 +24,13 @@
           {{ region.name }}
         </mat-option>
       </mat-autocomplete>
+      <mat-hint *ngIf="!newRegion">Select <strong>'{{ otherOption }}'</strong> to add a new region.</mat-hint>
     </mat-form-field>
+
+    <div *ngIf="newRegion || !regions.length" @expandCollapse>
+      <app-add-region [country]="selectedCountry.id" (close)="onAddRegionClosed()"></app-add-region>
+      <hr>
+    </div>
   </div>
 
   <div class="flex justify-between my-4">

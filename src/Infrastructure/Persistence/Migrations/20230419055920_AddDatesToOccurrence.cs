@@ -59,14 +59,6 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
-            migrationBuilder.AlterColumn<long>(
-                name: "OccurenceId",
-                table: "Reports",
-                type: "bigint",
-                nullable: true,
-                oldClrType: typeof(long),
-                oldType: "bigint");
-
             migrationBuilder.AlterColumn<decimal>(
                 name: "Longitude",
                 table: "Reports",
@@ -343,7 +335,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                 table: "Countries");
 
             migrationBuilder.AlterColumn<long>(
-                name: "OccurenceId",
+                name: "OccurrenceId",
                 table: "Reports",
                 type: "bigint",
                 nullable: false,
