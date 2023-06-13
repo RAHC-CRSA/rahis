@@ -3,7 +3,7 @@
 namespace RegionalAnimalHealth.Domain.Entities.Reports;
 public class Report : BaseAuditableEntity<long>
 {
-    public DateOnly OccurenceDate { get; private set; }
+    public DateOnly OccurrenceDate { get; private set; }
     public int NumberInfected { get; private set; }
     public int NumberExposed { get; private set; }
     public int Mortality { get; private set; }
@@ -48,23 +48,23 @@ public class Report : BaseAuditableEntity<long>
     {
     }
 
-    private Report(long occurrenceId, long diseaseId, long speciesId, DateOnly occurenceDate) : this()
+    private Report(long occurrenceId, long diseaseId, long speciesId, DateOnly occurrenceDate) : this()
     {
         OccurrenceId = occurrenceId;
         DiseaseId = diseaseId;
         SpeciesId = speciesId;
-        OccurenceDate = occurenceDate;
+        OccurrenceDate = occurrenceDate;
         IsOngoing = true;
     }
 
-    public static Report Create(long occurrenceId, long diseaseId, long speciesId, DateOnly occurenceDate)
+    public static Report Create(long occurrenceId, long diseaseId, long speciesId, DateOnly occurrenceDate)
     {
         Guard.IsNotNull(occurrenceId, nameof(occurrenceId));
         Guard.IsNotNull(diseaseId, nameof(diseaseId));
         Guard.IsNotNull(speciesId, nameof(speciesId));
-        Guard.IsNotNull(occurenceDate, nameof(occurenceDate));
+        Guard.IsNotNull(occurrenceDate, nameof(occurrenceDate));
 
-        return new Report(occurrenceId, diseaseId, speciesId, occurenceDate);
+        return new Report(occurrenceId, diseaseId, speciesId, occurrenceDate);
     }
 
     public void UpdateTreatmentDetails(string details)
