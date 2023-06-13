@@ -17,6 +17,14 @@ import { TranslocoHttpLoader } from 'app/core/transloco/transloco.http-loader';
                         label: 'English'
                     },
                     {
+                        id   : 'fr',
+                        label: 'French'
+                    },
+                    {
+                        id   : 'pg',
+                        label: 'Portuguese'
+                    },
+                    {
                         id   : 'tr',
                         label: 'Turkish'
                     }
