@@ -6,6 +6,7 @@ using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Domain.Entities.Reports;
 using RegionalAnimalHealth.Domain.Enums;
+using RegionalAnimalHealth.Domain.Models.Messaging;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.CreateReport;
 public class CreateReportCommand : IRequest<(Result, ReportDto?)>
@@ -49,11 +50,17 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
 {
     private readonly IApplicationDbContext _context;
     private readonly ILogger<CreateReportCommand> _logger;
+    private readonly IIdentityService _identityService;
+    private readonly ICurrentUserService _currentUserService;
+    private readonly IEmailService _emailService;
 
-    public CreateReportCommandHandler(IApplicationDbContext context, ILogger<CreateReportCommand> logger)
+    public CreateReportCommandHandler(IApplicationDbContext context, IIdentityService identityService, ICurrentUserService currentUserService, IEmailService emailService, ILogger<CreateReportCommand> logger)
     {
         _context = context;
         _logger = logger;
+        _identityService = identityService;
+        _currentUserService = currentUserService;
+        _emailService = emailService;
     }
 
     public async Task<(Result, ReportDto?)> Handle(CreateReportCommand request, CancellationToken cancellationToken)
@@ -76,9 +83,9 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
 
             if (occurrence == null)
             {
-                var message = "Failed to create or find occurrence.";
-                _logger.LogDebug(message, request.OccurrenceId);
-                return (Result.Failure(new List<string> { message }), null);
+                var msg = "Failed to create or find occurrence.";
+                _logger.LogDebug(msg, request.OccurrenceId);
+                return (Result.Failure(new List<string> { msg }), null);
             }
 
             // TODO: Get occurrence date from request
@@ -128,6 +135,15 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             // Save report
             await _context.Reports.AddAsync(report);
             await _context.SaveChangesAsync(cancellationToken);
+
+            // Notify reporter
+            var (_, user) = await  _identityService.GetUserAsync(_currentUserService?.UserId);
+
+            var subject = $"Report Submitted";
+            var content = $"You have successfully submitted a report.";
+            var message = EmailNotification.Create(content, user.Email, subject, user.FirstName);
+
+            var emailResult = await _emailService.SendEmailAsync(message, EmailNotification.TemplateId);
 
             var data = new ReportDto
             {

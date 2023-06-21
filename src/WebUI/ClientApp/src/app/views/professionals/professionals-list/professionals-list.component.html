@@ -33,7 +33,7 @@
       </div>
 
       <!-- Alert -->
-      <app-feedback-display [feedback]="feedback$"></app-feedback-display>
+      <app-feedback-display *ngIf="feedback$ | async" [feedback]="feedback$"></app-feedback-display>
 
       <div class="flex justify-end my-4">
         <a [routerLink]="['/dashboard/para-professionals/create']" class="px-8" mat-flat-button [color]="'primary'">

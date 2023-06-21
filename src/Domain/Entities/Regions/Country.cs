@@ -24,7 +24,6 @@ public class Country : BaseAuditableEntity<long>, IAggregateRoot
     public static Country Create(string name, string code, string flag)
     {
         Guard.IsNotNullOrEmpty(name, nameof(name));
-        Guard.IsNotNullOrEmpty(code, nameof(code));
 
         return new Country(name, code, flag);
     }
