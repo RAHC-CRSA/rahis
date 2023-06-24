@@ -2387,6 +2387,20 @@
           },
           "regionId": {
             "type": "integer",
+            "format": "int64"
+          },
+          "communityId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "districtId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "municipalityId": {
+            "type": "integer",
             "format": "int64",
             "nullable": true
           },

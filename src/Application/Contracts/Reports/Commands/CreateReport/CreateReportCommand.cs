@@ -12,7 +12,10 @@ namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.CreateRepo
 public class CreateReportCommand : IRequest<(Result, ReportDto?)>
 {
     public long? OccurrenceId { get; set; }
-    public long? RegionId { get; set; }
+    public long RegionId { get; set; }
+    public long? CommunityId { get; set; }
+    public long? DistrictId { get; set; }
+    public long? MunicipalityId { get; set; }
     public long DiseaseId { get; set; }
     public long SpeciesId { get; set; }
     public int NumberExposed { get; set; }
@@ -67,13 +70,22 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
     {
         try
         {
+            int notifiablePoints = 0;
             Occurrence? occurrence;
             if (request.OccurrenceId == null)
             {
                 // TODO: Get occurrence date from request
-                occurrence = Occurrence.Create((long)request.RegionId, DateOnly.FromDateTime(DateTime.UtcNow));
+                occurrence = Occurrence.Create(request.RegionId, request.MunicipalityId, request.DistrictId, request.CommunityId, DateOnly.FromDateTime(DateTime.UtcNow));
                 await _context.Occurrences.AddAsync(occurrence);
                 await _context.SaveChangesAsync(cancellationToken);
+
+                // Add 2 pts if notifiable
+
+                // Add 2 pts if monitored
+
+                // Check transboundary disease
+
+                // If not found in transboundary
             }
             else
             {

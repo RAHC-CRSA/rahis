@@ -18,6 +18,9 @@ import {
     IAddSpeciesCommand,
     IDeleteReportCommand,
     IDeleteOccurrenceCommand,
+    MunicipalityDto,
+    DistrictDto,
+    CommunityDto,
 } from '../../../../web-api-client';
 
 // Create report
@@ -224,6 +227,45 @@ export const addSpecies = createAction(
 export const addSpeciesSuccess = createAction(
     ADD_SPECIES_SUCCESS,
     props<{ payload: SpeciesDto }>()
+);
+
+// Get municipalities
+export const LOAD_MUNICIPALITIES = `[Reports] Load Municipalities`;
+export const LOAD_MUNICIPALITIES_SUCCESS = `[Reports] Load Municipalities Success`;
+
+export const loadMunicipalities = createAction(
+    LOAD_MUNICIPALITIES,
+    props<{ payload?: number | undefined }>()
+);
+export const loadMunicipalitiesSuccess = createAction(
+    LOAD_MUNICIPALITIES_SUCCESS,
+    props<{ payload?: MunicipalityDto[] }>()
+);
+
+// Get districts
+export const LOAD_DISTRICTS = `[Reports] Load Districts`;
+export const LOAD_DISTRICTS_SUCCESS = `[Reports] Load Districts Success`;
+
+export const loadDistricts = createAction(
+    LOAD_DISTRICTS,
+    props<{ payload?: number | undefined }>()
+);
+export const loadDistrictsSuccess = createAction(
+    LOAD_DISTRICTS_SUCCESS,
+    props<{ payload?: DistrictDto[] }>()
+);
+
+// Get communities
+export const LOAD_COMMUNITIES = `[Reports] Load Communities`;
+export const LOAD_COMMUNITIES_SUCCESS = `[Reports] Load Communities Success`;
+
+export const loadCommunities = createAction(
+    LOAD_COMMUNITIES,
+    props<{ payload?: number | undefined }>()
+);
+export const loadCommunitiesSuccess = createAction(
+    LOAD_COMMUNITIES_SUCCESS,
+    props<{ payload?: CommunityDto[] }>()
 );
 
 // Set feedback

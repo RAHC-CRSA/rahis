@@ -4206,7 +4206,10 @@ export interface IDiagnosticTestDto {
 
 export class CreateReportCommand implements ICreateReportCommand {
     occurrenceId?: number | undefined;
-    regionId?: number | undefined;
+    regionId?: number;
+    communityId?: number | undefined;
+    districtId?: number | undefined;
+    municipalityId?: number | undefined;
     diseaseId?: number;
     speciesId?: number;
     numberExposed?: number;
@@ -4251,6 +4254,9 @@ export class CreateReportCommand implements ICreateReportCommand {
         if (_data) {
             this.occurrenceId = _data["occurrenceId"];
             this.regionId = _data["regionId"];
+            this.communityId = _data["communityId"];
+            this.districtId = _data["districtId"];
+            this.municipalityId = _data["municipalityId"];
             this.diseaseId = _data["diseaseId"];
             this.speciesId = _data["speciesId"];
             this.numberExposed = _data["numberExposed"];
@@ -4307,6 +4313,9 @@ export class CreateReportCommand implements ICreateReportCommand {
         data = typeof data === 'object' ? data : {};
         data["occurrenceId"] = this.occurrenceId;
         data["regionId"] = this.regionId;
+        data["communityId"] = this.communityId;
+        data["districtId"] = this.districtId;
+        data["municipalityId"] = this.municipalityId;
         data["diseaseId"] = this.diseaseId;
         data["speciesId"] = this.speciesId;
         data["numberExposed"] = this.numberExposed;
@@ -4355,7 +4364,10 @@ export class CreateReportCommand implements ICreateReportCommand {
 
 export interface ICreateReportCommand {
     occurrenceId?: number | undefined;
-    regionId?: number | undefined;
+    regionId?: number;
+    communityId?: number | undefined;
+    districtId?: number | undefined;
+    municipalityId?: number | undefined;
     diseaseId?: number;
     speciesId?: number;
     numberExposed?: number;

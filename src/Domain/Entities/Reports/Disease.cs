@@ -9,6 +9,9 @@ public class Disease : BaseAuditableEntity<long>
     public string Code { get; private set; }
     public string Classification { get; private set; }
 
+    public bool IsNotifiableDisease { get; set; }
+    public bool IsMonitoredDisease { get; set; }
+
     private readonly List<TransboundaryDisease> _transboundaryDiseases = new();
     public IReadOnlyCollection<TransboundaryDisease> TransboundaryDiseases => _transboundaryDiseases.AsReadOnly();
 

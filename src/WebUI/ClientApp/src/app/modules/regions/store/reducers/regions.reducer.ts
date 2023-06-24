@@ -109,7 +109,6 @@ export const reducer = createReducer(
         ...state,
         feedback: null,
         loading: false,
-        loaded: true,
         countries: payload,
     })),
     on(actions.setFeedback, (state, { payload }) => ({

@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ConfirmDialogComponent } from 'app/common/components/confirm-dialog/confirm-dialog.component';
+import { getRoles } from 'app/core/auth/store/selectors';
 import { ReportState } from 'app/modules/reports/store';
 import { deleteReport, loadReports } from 'app/modules/reports/store/actions';
 import {
@@ -43,6 +44,7 @@ export class ReportsListComponent {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
+    roles: string[];
     reports$: Observable<ReportListDto[] | null | undefined>;
     loading$: Observable<boolean>;
     loaded$: Observable<boolean>;
@@ -63,6 +65,7 @@ export class ReportsListComponent {
             this.dataSource.sort = this.sort;
         });
 
+        this.store.select(getRoles).subscribe((roles) => (this.roles = roles));
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getReportsLoading);
         this.loaded$ = this.store.select(getReportsLoaded);
