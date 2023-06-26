@@ -23,7 +23,7 @@ jobs:
           include-prerelease: true
 
       - name: Go to folder
-        run: cd src/webui
+        run: cd ${{env.DOTNET_ROOT}}/myapp/src/webui
         
       - name: Build with dotnet
         run: dotnet build --configuration Release
