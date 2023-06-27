@@ -21,6 +21,7 @@ import {
     MunicipalityDto,
     DistrictDto,
     CommunityDto,
+    IVerifyReportCommand,
 } from '../../../../web-api-client';
 
 // Create report
@@ -64,11 +65,28 @@ export const loadReportSuccess = createAction(
     props<{ payload: ReportDto }>()
 );
 
+// Verify report
+export const VERIFY_REPORT = `[Reports] Verify Report`;
+export const VERIFY_REPORT_SUCCESS = `[Reports] Verify Report Success`;
+
+export const verifyReport = createAction(
+    VERIFY_REPORT,
+    props<{ payload: IVerifyReportCommand }>()
+);
+
+export const verifyReportSuccess = createAction(
+    VERIFY_REPORT_SUCCESS,
+    props<{ payload: number }>()
+);
+
 // Load reports
 export const LOAD_REPORTS = `[Reports] Load Reports`;
 export const LOAD_REPORTS_SUCCESS = `[Reports] Load Reports Success`;
 
-export const loadReports = createAction(LOAD_REPORTS);
+export const loadReports = createAction(
+    LOAD_REPORTS,
+    props<{ payload: boolean | null | undefined }>()
+);
 export const loadReportsSuccess = createAction(
     LOAD_REPORTS_SUCCESS,
     props<{ payload: ReportListDto[] }>()

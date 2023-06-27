@@ -41,7 +41,7 @@ export const getOccurrences = createSelector(
 
 export const getReport = createSelector(
     reportState,
-    (state: ReportState) => state.data
+    (state: ReportState) => state.entry
 );
 
 export const getInstitutions = createSelector(

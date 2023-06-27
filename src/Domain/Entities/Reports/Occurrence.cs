@@ -19,6 +19,9 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
     public long? MunicipalityId { get; set; }
     public Municipality Municipality { get; set; }
 
+    public long? TransboundaryDiseaseId { get; set; }
+    public TransboundaryDisease TransboundaryDisease { get; set; }
+
     private readonly List<Report> _reports = new();
     public virtual IReadOnlyCollection<Report> Reports => _reports.AsReadOnly();
 

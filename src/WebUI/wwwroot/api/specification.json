@@ -718,6 +718,48 @@
         ]
       }
     },
+    "/api/reports/verify": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Verifies a report",
+        "description": "Verifies a report in the system",
+        "operationId": "VerifyReport_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyReportCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Verifier"
+            ]
+          }
+        ]
+      }
+    },
     "/api/communities": {
       "post": {
         "tags": [
@@ -2617,6 +2659,16 @@
           },
           "created": {
             "type": "string"
+          }
+        }
+      },
+      "VerifyReportCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },

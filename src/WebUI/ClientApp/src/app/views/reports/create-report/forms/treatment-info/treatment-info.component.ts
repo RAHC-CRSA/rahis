@@ -25,6 +25,8 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
 
     displayedColumns: string[] = ['name', 'dosage', 'actions'];
 
+    durations: string[] = ['hours', 'days', 'weeks', 'months'];
+
     @Input() formData: any;
 
     @Output() previous = new EventEmitter();
@@ -64,8 +66,12 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             disinfection: [this.formData.disinfection, Validators.required],
             observation: [this.formData.observation, Validators.required],
             observationDuration: [this.formData.observationDuration],
+            observationDurationSuffix: [
+                this.formData.observationDurationSuffix,
+            ],
             quarantine: [this.formData.quarantine, Validators.required],
             quarantineDuration: [this.formData.quarantineDuration],
+            quarantineDurationSuffix: [this.formData.quarantineDurationSuffix],
             movementControl: [
                 this.formData.movementControl,
                 Validators.required,
@@ -104,11 +110,16 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                     this.treatmentInfo
                         .get('observationDuration')
                         ?.setValidators([Validators.required]);
+                    this.treatmentInfo
+                        .get('observationDurationSuffix')
+                        ?.setValidators([Validators.required]);
                 } else {
                     this.treatmentInfo.controls.observationDuration?.clearValidators();
+                    this.treatmentInfo.controls.observationDurationSuffix?.clearValidators();
                 }
 
                 this.treatmentInfo.controls.observationDuration?.updateValueAndValidity();
+                this.treatmentInfo.controls.observationDurationSuffix?.updateValueAndValidity();
                 this.wasObservation = value;
             });
 
@@ -119,10 +130,15 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                     this.treatmentInfo
                         .get('quarantineDuration')
                         ?.setValidators([Validators.required]);
+                    this.treatmentInfo
+                        .get('quarantineDurationSuffix')
+                        ?.setValidators([Validators.required]);
                 } else {
                     this.treatmentInfo.controls.quarantineDuration?.clearValidators();
+                    this.treatmentInfo.controls.quarantineDurationSuffix?.clearValidators();
                 }
                 this.treatmentInfo.controls.quarantineDuration?.updateValueAndValidity();
+                this.treatmentInfo.controls.quarantineDurationSuffix?.updateValueAndValidity();
                 this.wasQuarantined = value;
             });
 
@@ -155,11 +171,18 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
         });
     }
 
+    get f() {
+        return this.treatmentInfo.controls;
+    }
+
     onMedicationSubmit(medication: any) {
         this.formData.medications = [...this.formData.medications, medication];
-        this.treatmentInfo.patchValue({
-            medications: this.formData.medications,
-        });
+        this.treatmentInfo.patchValue(
+            {
+                medications: this.formData.medications,
+            },
+            { emitEvent: true }
+        );
         this.treatmentInfo.controls.medications?.updateValueAndValidity();
     }
 
@@ -178,6 +201,21 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
     }
 
     onSubmit() {
+        if (this.f.observationDuration.value != '')
+            this.treatmentInfo.patchValue(
+                {
+                    observationDuration: `${this.f.observationDuration.value} ${this.f.observationDurationSuffix.value}`,
+                },
+                { emitEvent: true }
+            );
+
+        if (this.f.quarantineDuration.value != '')
+            this.treatmentInfo.patchValue(
+                {
+                    quarantineDuration: `${this.f.quarantineDuration.value} ${this.f.quarantineDurationSuffix.value}`,
+                },
+                { emitEvent: true }
+            );
         this.submit.emit(this.treatmentInfo.value);
     }
 }

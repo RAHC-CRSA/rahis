@@ -231,6 +231,10 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
 
         this.locationInfo.patchValue({ country: country.id });
 
+        this.regionControl.setValue('', { emitEvent: true });
+        this.districtControl.setValue('', { emitEvent: true });
+        this.communityControl.setValue('', { emitEvent: true });
+
         this.store.dispatch(loadRegions({ payload: country.id }));
     }
 

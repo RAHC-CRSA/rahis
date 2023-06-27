@@ -2,11 +2,15 @@
   <mat-form-field class="w-full mb-4">
     <mat-label>Name</mat-label>
     <input aria-label="Medication name" formControlName="name" matInput placeholder="Medication name" />
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Medication name is required', control: medicationForm.controls['name']}"></ng-container>
   </mat-form-field>
 
   <mat-form-field class="w-full mb-4">
     <mat-label>Dosage</mat-label>
     <input aria-label="Medication dosage" formControlName="dosage" matInput placeholder="Medication dosage" />
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Medication dosage is required', control: medicationForm.controls['dosage']}"></ng-container>
   </mat-form-field>
 
   <div class="flex justify-end mb-4">
@@ -16,3 +20,9 @@
     </button>
   </div>
 </form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

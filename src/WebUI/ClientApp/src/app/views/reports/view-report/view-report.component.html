@@ -1,1 +1,56 @@
-<p>view-report works!</p>
+<div class="flex flex-col flex-auto min-w-0">
+
+  <!-- Header -->
+  <div
+    class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div class="flex-1 min-w-0">
+      <!-- Breadcrumbs -->
+      <div class="flex flex-wrap items-center font-medium">
+        <div>
+          <a class="whitespace-nowrap text-primary-500">Reports</a>
+        </div>
+        <div class="flex items-center ml-1 whitespace-nowrap">
+          <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+          <a class="ml-1 text-primary-500">Reports List</a>
+        </div>
+      </div>
+      <!-- Title -->
+      <div class="mt-2">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+          Reports List
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="flex-auto p-6 sm:p-10">
+
+    <div class="max-w-full prose prose-sm">
+
+      <div class="spinner-container" *ngIf="loading$ | async">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <!-- Alert -->
+      <app-feedback-display *ngIf="feedback$ | async" [feedback]="feedback$"></app-feedback-display>
+
+      <div>
+
+        <div class="flex justify-between my-4">
+          <a [routerLink]="['/dashboard/reports']" class="px-8" mat-flat-button [color]="'accent'">
+            Back
+          </a>
+          <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="!canVerify"
+            (click)="verify()">
+            <span *ngIf="!( loading$ | async )">
+              Verify Report
+            </span>
+            <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+              [mode]="'indeterminate'"></mat-progress-spinner>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>

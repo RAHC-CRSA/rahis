@@ -13,6 +13,9 @@ import {
     ICreateReportCommand,
     IDeleteOccurrenceCommand,
     IDeleteReportCommand,
+    IVerifyReportCommand,
+    VerifyReportClient,
+    VerifyReportCommand,
 } from '../web-api-client';
 
 @Injectable({
@@ -24,6 +27,7 @@ export class ReportService {
     createReportClient: CreateReportClient;
     getReportsClient: GetReportsClient;
     getReportClient: GetReportClient;
+    verifyReportClient: VerifyReportClient;
     deleteReportClient: DeleteReportClient;
     deleteOccurrenceClient: DeleteOccurrenceClient;
 
@@ -32,6 +36,7 @@ export class ReportService {
         this.createReportClient = new CreateReportClient(http);
         this.getReportsClient = new GetReportsClient(http);
         this.getReportClient = new GetReportClient(http);
+        this.verifyReportClient = new VerifyReportClient(http);
         this.deleteReportClient = new DeleteReportClient(http);
         this.deleteOccurrenceClient = new DeleteOccurrenceClient(http);
     }
@@ -50,6 +55,10 @@ export class ReportService {
 
     getReport(id: number) {
         return this.getReportClient.handle(id);
+    }
+
+    verifyReport(payload: IVerifyReportCommand) {
+        return this.verifyReportClient.handle(new VerifyReportCommand(payload));
     }
 
     deleteReport(payload: IDeleteReportCommand) {

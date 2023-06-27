@@ -79,13 +79,14 @@ export const reducer = createReducer(
     on(actions.loadReport, (state) => ({
         ...state,
         feedback: null,
+        entry: null,
         loading: true,
     })),
     on(actions.loadReportSuccess, (state, { payload }) => ({
         ...state,
         feedback: null,
         loading: false,
-        report: payload,
+        entry: payload,
     })),
     on(actions.loadReports, (state) => ({
         ...state,
@@ -244,6 +245,21 @@ export const reducer = createReducer(
         loading: false,
         species: [...state.species, payload],
     })),
+    on(actions.verifyReport, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.verifyReportSuccess, (state, { payload }) => {
+        let report = state.data.find((e) => e.id == payload);
+        report.isVerified = true;
+        return {
+            ...state,
+            feedback: null,
+            loading: false,
+            data: state.data.map((e) => (e.id != payload ? e : report)),
+        };
+    }),
     on(actions.deleteReport, (state) => ({
         ...state,
         feedback: null,
