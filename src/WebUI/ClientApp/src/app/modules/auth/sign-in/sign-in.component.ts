@@ -1,19 +1,13 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseAlertType } from '@fuse/components/alert';
 import { Store } from '@ngrx/store';
-import { AuthService } from 'app/core/auth/auth.service';
 import { AuthState } from 'app/core/auth/store';
-import {
-    clearFeedback,
-    loadUser,
-    login,
-} from 'app/core/auth/store/actions/auth.actions';
+import { clearFeedback, login } from 'app/core/auth/store/actions/auth.actions';
 import { getFeedback, getUserLoading } from 'app/core/auth/store/selectors';
 import { ICreateAuthTokenCommand, ServerResponse } from 'app/web-api-client';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Component({
     selector: 'auth-sign-in',
@@ -39,9 +33,7 @@ export class AuthSignInComponent implements OnInit {
      */
     constructor(
         private _activatedRoute: ActivatedRoute,
-        private _authService: AuthService,
         private _formBuilder: FormBuilder,
-        private _router: Router,
         private _store: Store<AuthState>
     ) {}
 

@@ -7,7 +7,7 @@ public class Report : BaseAuditableEntity<long>
     public int NumberInfected { get; private set; }
     public int NumberExposed { get; private set; }
     public int Mortality { get; private set; }
-    public bool HumanInfection { get; set; }
+    public bool HumanInfection { get; private set; }
     public int? HumansInfected { get; private set; }
     public int? HumansExposed { get; private set; }
     public int? HumansMortality { get; private set; }
@@ -16,9 +16,9 @@ public class Report : BaseAuditableEntity<long>
     public ReportType ReportType { get; private set; }
     public decimal? Longitude { get; private set; }
     public decimal? Latitude { get; private set; }
-    public bool StampingOut { get; set; }
+    public bool StampingOut { get; private set; }
     public bool DestructionOfCorpses { get; private set; }
-    public int? CorpsesDestroyed { get; set; }
+    public int? CorpsesDestroyed { get; private set; }
     public bool Disinfection { get; private set; }
     public bool Observation { get; private set; }
     public string? ObservationDuration { get; private set; }
@@ -30,10 +30,12 @@ public class Report : BaseAuditableEntity<long>
     public string? TreatmentDetails { get; private set; }
 
     public long OccurrenceId { get; private set; }
-    public Occurrence Occurrence { get; set; }
+    public Occurrence Occurrence { get; private set; }
     public long DiseaseId { get; private set; }
     public Disease Disease { get; private set; }
     public long SpeciesId { get; private set; }
+
+    public int NotifiabilityPoints { get; private set; }
 
     private readonly List<Medication> _medications = new List<Medication>();
     public virtual IReadOnlyCollection<Medication> Medications => _medications.AsReadOnly();
@@ -127,6 +129,12 @@ public class Report : BaseAuditableEntity<long>
         MovementControl = movementControl;
         MovementControlMeasures = movementControlMeasures;
         Treatment = treatment;
+    }
+
+    public void Verify()
+    {
+        IsVerified = true;
+        LastModified = DateTime.UtcNow;
     }
 
     public void Delete()

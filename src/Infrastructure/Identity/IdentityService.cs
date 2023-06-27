@@ -173,6 +173,8 @@ public class IdentityService : IIdentityService
 
         var userDto = new UserDto
         {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
             Name = $"{user.FirstName} {user.LastName}",
             Email = user.Email,
             UserName = user.UserName,

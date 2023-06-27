@@ -1,7 +1,10 @@
 import * as actions from '../actions/regions.actions';
 import { createReducer, on } from '@ngrx/store';
 import {
+    CommunityDto,
     CountryDto,
+    DistrictDto,
+    MunicipalityDto,
     RegionDto,
     ServerResponse,
 } from '../../../../web-api-client';
@@ -9,6 +12,9 @@ import {
 export interface RegionsState {
     data?: RegionDto[] | null;
     entry?: RegionDto | null;
+    communities?: CommunityDto[] | null;
+    districts?: DistrictDto[] | null;
+    municipalities?: MunicipalityDto[] | null;
     countries?: CountryDto[] | null;
     loaded: boolean;
     loading: boolean;
@@ -18,6 +24,9 @@ export interface RegionsState {
 export const initialState: RegionsState = {
     data: null,
     entry: null,
+    communities: [],
+    districts: [],
+    municipalities: [],
     countries: [],
     loaded: false,
     loading: false,
@@ -58,6 +67,39 @@ export const reducer = createReducer(
         loading: false,
         data: payload,
     })),
+    on(actions.loadCommunities, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadCommunitiesSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        communities: payload,
+    })),
+    on(actions.loadDistricts, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadDistrictsSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        districts: payload,
+    })),
+    on(actions.loadMunicipalities, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadMunicipalitiesSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        municipalities: payload,
+    })),
     on(actions.loadCountries, (state) => ({
         ...state,
         feedback: null,
@@ -67,7 +109,6 @@ export const reducer = createReducer(
         ...state,
         feedback: null,
         loading: false,
-        loaded: true,
         countries: payload,
     })),
     on(actions.setFeedback, (state, { payload }) => ({

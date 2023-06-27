@@ -11,6 +11,7 @@ using RegionalAnimalHealth.Domain.Exceptions;
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReports;
 public class GetReportsQuery : IRequest<(Result, List<ReportListDto>?)>
 {
+    public bool? IsVerified { get; set; }
 }
 
 public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, List<ReportListDto>?)>
@@ -36,7 +37,7 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, 
                     .ThenInclude(o => o.Region)
                         .ThenInclude(e => e.Country)
                 .Include(x => x.Disease)
-                .Where(x => !x.IsDeleted)
+                .Where(x => !x.IsDeleted && (request.IsVerified != null ? x.IsVerified == request.IsVerified : true))
                 .Select(ReportSelectorExpression())
                 .ToListAsync();
 

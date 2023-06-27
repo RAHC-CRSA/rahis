@@ -32,11 +32,14 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     }
 
+    public DbSet<Community> Communities => Set<Community>();
     public DbSet<Country> Countries => Set<Country>();
+    public DbSet<District> Districts => Set<District>();
     public DbSet<DiagnosticTest> DiagnosticTests => Set<DiagnosticTest>();
     public DbSet<Disease> Diseases => Set<Disease>();
     public DbSet<Institution> Institutions => Set<Institution>();
     public DbSet<Medication> Medications => Set<Medication>();
+    public DbSet<Municipality> Municipalities => Set<Municipality>();
     public DbSet<Occurrence> Occurrences => Set<Occurrence>();
     public DbSet<ParaProfessional> ParaProfessionals => Set<ParaProfessional>();
     public DbSet<Region> Regions => Set<Region>();

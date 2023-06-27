@@ -5,7 +5,10 @@ import {
     AddRegionCommand,
     DeleteRegionClient,
     DeleteRegionCommand,
+    GetCommunitiesClient,
     GetCountriesClient,
+    GetDistrictsClient,
+    GetMunicipalitiesClient,
     GetRegionsClient,
     IAddRegionCommand,
     IDeleteRegionCommand,
@@ -18,16 +21,34 @@ import { Observable, of } from 'rxjs';
 })
 export class RegionService {
     // Clients
+    getCommunitiesClient: GetCommunitiesClient;
+    getDistrictsClient: GetDistrictsClient;
+    getMunicipalitiesClient: GetMunicipalitiesClient;
     getRegionsClient: GetRegionsClient;
     getCountriesClient: GetCountriesClient;
     addRegionClient: AddRegionClient;
     deleteRegionClient: DeleteRegionClient;
 
     constructor(http: HttpClient) {
+        this.getCommunitiesClient = new GetCommunitiesClient(http);
+        this.getDistrictsClient = new GetDistrictsClient(http);
+        this.getMunicipalitiesClient = new GetMunicipalitiesClient(http);
         this.getRegionsClient = new GetRegionsClient(http);
         this.getCountriesClient = new GetCountriesClient(http);
         this.addRegionClient = new AddRegionClient(http);
         this.deleteRegionClient = new DeleteRegionClient(http);
+    }
+
+    getAllCommunities(districtId: number | undefined) {
+        return this.getCommunitiesClient.handle(districtId);
+    }
+
+    getAllDistricts(municipalityId: number | undefined) {
+        return this.getDistrictsClient.handle(municipalityId);
+    }
+
+    getAllMunicipalities(regionId: number | undefined) {
+        return this.getMunicipalitiesClient.handle(regionId);
     }
 
     getAllRegions(countryId: number | undefined) {

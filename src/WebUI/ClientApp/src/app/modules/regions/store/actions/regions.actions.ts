@@ -1,9 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import {
-    AddRegionCommand,
+    CommunityDto,
     CountryDto,
+    DistrictDto,
     IAddRegionCommand,
     IDeleteRegionCommand,
+    MunicipalityDto,
     RegionDto,
     ServerResponse,
 } from '../../../../web-api-client';
@@ -58,6 +60,45 @@ export const loadCountries = createAction(LOAD_COUNTRIES);
 export const loadCountriesSuccess = createAction(
     LOAD_COUNTRIES_SUCCESS,
     props<{ payload: CountryDto[] }>()
+);
+
+// Get municipalities
+export const LOAD_MUNICIPALITIES = `[Regions] Load Municipalities`;
+export const LOAD_MUNICIPALITIES_SUCCESS = `[Regions] Load Municipalities Success`;
+
+export const loadMunicipalities = createAction(
+    LOAD_MUNICIPALITIES,
+    props<{ payload?: number | undefined }>()
+);
+export const loadMunicipalitiesSuccess = createAction(
+    LOAD_MUNICIPALITIES_SUCCESS,
+    props<{ payload?: MunicipalityDto[] }>()
+);
+
+// Get districts
+export const LOAD_DISTRICTS = `[Regions] Load Districts`;
+export const LOAD_DISTRICTS_SUCCESS = `[Regions] Load Districts Success`;
+
+export const loadDistricts = createAction(
+    LOAD_DISTRICTS,
+    props<{ payload?: number | undefined }>()
+);
+export const loadDistrictsSuccess = createAction(
+    LOAD_DISTRICTS_SUCCESS,
+    props<{ payload?: DistrictDto[] }>()
+);
+
+// Get communities
+export const LOAD_COMMUNITIES = `[Regions] Load Communities`;
+export const LOAD_COMMUNITIES_SUCCESS = `[Regions] Load Communities Success`;
+
+export const loadCommunities = createAction(
+    LOAD_COMMUNITIES,
+    props<{ payload?: number | undefined }>()
+);
+export const loadCommunitiesSuccess = createAction(
+    LOAD_COMMUNITIES_SUCCESS,
+    props<{ payload?: CommunityDto[] }>()
 );
 
 // Set feedback

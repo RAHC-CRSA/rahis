@@ -9,6 +9,21 @@ export const getReports = createSelector(
     (state: ReportState) => state.data
 );
 
+export const getCommunities = createSelector(
+    reportState,
+    (state: ReportState) => state.communities
+);
+
+export const getDistricts = createSelector(
+    reportState,
+    (state: ReportState) => state.districts
+);
+
+export const getMunicipalities = createSelector(
+    reportState,
+    (state: ReportState) => state.municipalities
+);
+
 export const getRegions = createSelector(
     reportState,
     (state: ReportState) => state.regions
@@ -26,7 +41,7 @@ export const getOccurrences = createSelector(
 
 export const getReport = createSelector(
     reportState,
-    (state: ReportState) => state.data
+    (state: ReportState) => state.entry
 );
 
 export const getInstitutions = createSelector(

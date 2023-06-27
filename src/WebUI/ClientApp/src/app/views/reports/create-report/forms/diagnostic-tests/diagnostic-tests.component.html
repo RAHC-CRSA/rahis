@@ -46,11 +46,16 @@
             <mat-label>What is the name of the test?</mat-label>
             <input aria-label="Test name" formControlName="name" matInput placeholder="Test name" />
           </mat-form-field>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Test name is required', control: testForm.controls['name']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
             <mat-label>How many subjects were the test carried out on?</mat-label>
-            <input aria-label="Number tested" formControlName="numberTested" matInput placeholder="Number tested" />
+            <input type="number" aria-label="Number tested" formControlName="numberTested" matInput
+              placeholder="Number tested" />
           </mat-form-field>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested is required', control: testForm.controls['numberTested']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
             <mat-label>Which para-professional carried out the tests?</mat-label>
@@ -64,6 +69,8 @@
             </mat-autocomplete>
             <mat-hint>Select <strong>'{{ otherOption }}'</strong> to add a new Para-Professional</mat-hint>
           </mat-form-field>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Para-professional is required', control: testForm.controls['professionalId']}"></ng-container>
 
           <div *ngIf="newProfessional" @expandCollapse>
             <app-add-para-professional (close)="onAddProfessionalClosed()"></app-add-para-professional>
@@ -92,3 +99,9 @@
     </button>
   </div>
 </form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

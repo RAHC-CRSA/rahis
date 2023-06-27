@@ -34,11 +34,11 @@ const routes: Routes = [
                             ).then((m) => m.ReportsListModule),
                     },
                     {
-                        path: 'verify',
+                        path: 'view/:id',
                         loadChildren: () =>
                             import(
-                                'app/views/reports/verify-report/verify-report.module'
-                            ).then((m) => m.VerifyReportModule),
+                                'app/views/reports/view-report/view-report.module'
+                            ).then((m) => m.ViewReportModule),
                     },
                 ],
             },

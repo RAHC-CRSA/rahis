@@ -31,7 +31,7 @@
       <div class="p-4 bg-card shadow rounded overflow-hidden">
 
         <!-- Alert -->
-        <app-feedback-display [feedback]="feedback$"></app-feedback-display>
+        <app-feedback-display *ngIf="feedback$ | async" [feedback]="feedback$"></app-feedback-display>
 
         <form [formGroup]="institutionForm">
           <div class="mb-4">

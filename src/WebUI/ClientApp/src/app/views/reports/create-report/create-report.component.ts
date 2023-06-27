@@ -61,6 +61,9 @@ export class CreateReportComponent implements OnInit {
             // Capture form values
             this.formValues.country = formData.country;
             this.formValues.region = formData.region;
+            this.formValues.municipality = formData.municipality;
+            this.formValues.district = formData.district;
+            this.formValues.community = formData.community;
 
             this.formStep++;
 
@@ -181,6 +184,9 @@ export class CreateReportComponent implements OnInit {
 
         const payload: ICreateReportCommand = {
             regionId: parseInt(this.formValues.region),
+            municipalityId: parseInt(this.formValues.municipality),
+            districtId: parseInt(this.formValues.district),
+            communityId: parseInt(this.formValues.community),
             diseaseId: parseInt(this.formValues.disease),
             speciesId: parseInt(this.formValues.species),
             occurrenceId: this.formValues.occurrence
@@ -224,6 +230,9 @@ export class CreateReportComponent implements OnInit {
             reportType: '',
             country: '',
             region: '',
+            municipality: '',
+            district: '',
+            community: '',
             disease: '',
             species: '',
             newOccurrence: false,

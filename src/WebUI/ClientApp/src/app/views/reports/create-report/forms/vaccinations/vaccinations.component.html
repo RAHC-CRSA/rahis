@@ -6,6 +6,8 @@
       <mat-radio-button [value]="false">No</mat-radio-button>
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Vaccinated is required', control: vaccinationsInfo.controls['vaccinated']}"></ng-container>
 
     <div *ngIf="hasVaccinations" @expandCollapse>
       <div class="w-full mt-4">
@@ -47,12 +49,16 @@
               <mat-label>What is the name of the vaccine?</mat-label>
               <input aria-label="Vaccine name" formControlName="name" matInput placeholder="Vaccine name" />
             </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Vaccine name is required', control: vaccinationForm.controls['name']}"></ng-container>
 
             <mat-form-field class="w-full mb-4">
               <mat-label>How many were vaccinated?</mat-label>
               <input aria-label="Number vaccinated" formControlName="numberVaccinated" matInput
                 placeholder="Number vaccinated" />
             </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Number vaccinated is required', control: vaccinationForm.controls['numberVaccinated']}"></ng-container>
 
             <mat-form-field class="w-full">
               <mat-label>Which para-professional administered the vaccinations?</mat-label>
@@ -66,6 +72,8 @@
               </mat-autocomplete>
               <mat-hint>Select <strong>{{ otherOption }}</strong>> to add a new Para-Professional</mat-hint>
             </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Para-professional is required', control: vaccinationForm.controls['professionalId']}"></ng-container>
 
             <div *ngIf="newProfessional" @expandCollapse>
               <app-add-para-professional (close)="onAddProfessionalClosed()"></app-add-para-professional>
@@ -94,3 +102,9 @@
     </button>
   </div>
 </form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

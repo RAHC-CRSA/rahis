@@ -12,11 +12,9 @@ import { LocationInfoComponent } from './forms/location-info/location-info.compo
 import { MedicationsComponent } from './forms/medications/medications.component';
 import { OccurrenceInfoComponent } from './forms/occurrence-info/occurrence-info.component';
 import { TreatmentInfoComponent } from './forms/treatment-info/treatment-info.component';
-import { TreatmentSourceInfoComponent } from './forms/treatment-source-info/treatment-source-info.component';
 import { VaccinationsComponent } from './forms/vaccinations/vaccinations.component';
 import { ReportTypeComponent } from './forms/report-type/report-type.component';
 
-import { RemarksComponent } from './forms/remarks/remarks.component';
 import { AddParaProfessionalComponent } from './forms/add-para-professional/add-para-professional.component';
 import { AddRegionComponent } from './forms/add-region/add-region.component';
 import { AddInstitutionComponent } from './forms/add-institution/add-institution.component';
@@ -41,10 +39,8 @@ export const routes: Route[] = [
         MedicationsComponent,
         OccurrenceInfoComponent,
         TreatmentInfoComponent,
-        TreatmentSourceInfoComponent,
         VaccinationsComponent,
         ReportTypeComponent,
-        RemarksComponent,
         AddParaProfessionalComponent,
         AddRegionComponent,
         AddInstitutionComponent,

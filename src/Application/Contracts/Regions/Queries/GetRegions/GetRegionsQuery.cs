@@ -6,7 +6,6 @@ using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Regions;
 using RegionalAnimalHealth.Domain.Entities.Regions;
-using RegionalAnimalHealth.Domain.Exceptions;
 
 namespace RegionalAnimalHealth.Application.Contracts.Regions.Queries.GetRegions;
 public class GetRegionsQuery : IRequest<(Result, List<RegionDto>?)>
@@ -29,11 +28,9 @@ public class GetRegionsQueryHandler : IRequestHandler<GetRegionsQuery, (Result, 
     {
         try
         {
-            var regions = await _context.Countries
-                .Include(c => c.Regions.Where(x => !x.IsDeleted && x.CountryId == request.CountryId))
-                .Where(x => !x.IsDeleted && (request.CountryId != null ? x.Id == request.CountryId : true))
-                .SelectMany(e => e.Regions)
-                .Where(x => !x.IsDeleted)
+            var regions = await _context.Regions
+                .Include(c => c.Country)
+                .Where(x => !x.IsDeleted && (request.CountryId != null ? x.CountryId == request.CountryId : true))
                 .Select(RegionSelectorExpression())
                 .OrderBy(x => x.CountryName)
                 .ToListAsync();

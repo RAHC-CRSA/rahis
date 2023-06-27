@@ -5,24 +5,29 @@
         <h4 class="text-2xl mb-4">Animals</h4>
         <mat-form-field class="w-full mb-4">
           <mat-label>How many animals were exposed?</mat-label>
-          <input aria-label="Number infected" matInput formControlName="numberExposed" placeholder="Number exposed" />
-          <ng-container [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{validation: 'required', message: 'Number exposed is required', control: infectionInfo.controls['numberExposed']}"></ng-container>
+          <input type="number" aria-label="Number infected" matInput formControlName="numberExposed"
+            placeholder="Number exposed" />
         </mat-form-field>
+        <ng-container [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{validation: 'required', message: 'Number exposed is required', control: infectionInfo.controls['numberExposed']}"></ng-container>
+
 
         <mat-form-field class="w-full mb-4">
           <mat-label>How many animals were infected?</mat-label>
-          <input aria-label="Number infected" matInput formControlName="numberInfected" placeholder="Number infected" />
-          <ng-container [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{validation: 'required', message: 'Number infected is required', control: infectionInfo.controls['numberInfected']}"></ng-container>
+          <input type="number" aria-label="Number infected" matInput formControlName="numberInfected"
+            placeholder="Number infected" />
         </mat-form-field>
+        <ng-container [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{validation: 'required', message: 'Number infected is required', control: infectionInfo.controls['numberInfected']}"></ng-container>
+
 
         <mat-form-field class="w-full mb-4">
           <mat-label>What is the mortality rate?</mat-label>
-          <input aria-label="Mortality" matInput formControlName="mortality" placeholder="Mortality" />
-          <ng-container [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{validation: 'required', message: 'Mortality is required', control: infectionInfo.controls['mortality']}"></ng-container>
+          <input type="number" aria-label="Mortality" matInput formControlName="mortality" placeholder="Mortality" />
         </mat-form-field>
+        <ng-container [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{validation: 'required', message: 'Mortality is required', control: infectionInfo.controls['mortality']}"></ng-container>
+
 
         <div class="w-full mb-4">
           <mat-label>Were any humans infected?</mat-label>
@@ -30,31 +35,36 @@
             <mat-radio-button [value]="false" (change)="onHumanInfectionChange(false)">No</mat-radio-button>
             <mat-radio-button [value]="true" (change)="onHumanInfectionChange(true)">Yes</mat-radio-button>
           </mat-radio-group>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Human infection is required', control: infectionInfo.controls['humanInfection']}"></ng-container>
         </div>
 
         <div *ngIf="humanInfection" @expandCollapse>
           <h4 class="text-2xl mb-4">Humans</h4>
           <mat-form-field class="w-full mb-4">
             <mat-label>How many humans were exposed?</mat-label>
-            <input aria-label="Humans exposed" matInput formControlName="humansExposed" placeholder="Number exposed" />
-            <ng-container [ngTemplateOutlet]="formError"
-              [ngTemplateOutletContext]="{validation: 'required', message: 'Humans exposed is required', control: infectionInfo.controls['humansExposed']}"></ng-container>
+            <input type="number" aria-label="Humans exposed" matInput formControlName="humansExposed"
+              placeholder="Number exposed" />
           </mat-form-field>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Humans exposed is required', control: infectionInfo.controls['humansExposed']}"></ng-container>
+
 
           <mat-form-field class="w-full mb-4">
             <mat-label>How many humans were infected?</mat-label>
-            <input aria-label="Humans infected" matInput formControlName="humansInfected"
+            <input type="number" aria-label="Humans infected" matInput formControlName="humansInfected"
               placeholder="Humans infected" />
-            <ng-container [ngTemplateOutlet]="formError"
-              [ngTemplateOutletContext]="{validation: 'required', message: 'Humans infected is required', control: infectionInfo.controls['humansInfected']}"></ng-container>
           </mat-form-field>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Humans infected is required', control: infectionInfo.controls['humansInfected']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
             <mat-label>What is the human mortality rate?</mat-label>
-            <input aria-label="Mortality" matInput formControlName="humansMortality" placeholder="Mortality" />
-            <ng-container [ngTemplateOutlet]="formError"
-              [ngTemplateOutletContext]="{validation: 'required', message: 'Humans mortality is required', control: infectionInfo.controls['humansMortality']}"></ng-container>
+            <input type="number" aria-label="Mortality" matInput formControlName="humansMortality"
+              placeholder="Mortality" />
           </mat-form-field>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Humans mortality is required', control: infectionInfo.controls['humansMortality']}"></ng-container>
         </div>
 
         <div class="flex justify-between my-4">

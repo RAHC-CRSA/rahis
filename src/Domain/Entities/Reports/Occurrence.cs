@@ -10,6 +10,18 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
     public long RegionId { get; private set; }
     public virtual Region Region { get; private set; }
 
+    public long? CommunityId { get; set; }
+    public Community Commnunity { get; set; }
+
+    public long? DistrictId { get; set; }
+    public District District { get; set; }
+
+    public long? MunicipalityId { get; set; }
+    public Municipality Municipality { get; set; }
+
+    public long? TransboundaryDiseaseId { get; set; }
+    public TransboundaryDisease TransboundaryDisease { get; set; }
+
     private readonly List<Report> _reports = new();
     public virtual IReadOnlyCollection<Report> Reports => _reports.AsReadOnly();
 
@@ -17,18 +29,21 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
     {
     }
 
-    private Occurrence(long regionId, DateOnly dateStarted) : this()
+    private Occurrence(long regionId, long? municipalityId, long? districtId, long? communityId, DateOnly dateStarted) : this()
     {
         RegionId = regionId;
+        MunicipalityId = municipalityId;
+        DistrictId = districtId;
+        CommunityId = communityId;
         DateStarted = dateStarted;
     }
 
-    public static Occurrence Create(long regionId, DateOnly dateStarted)
+    public static Occurrence Create(long? regionId, long? municipalityId, long? districtId, long? communityId, DateOnly dateStarted)
     {
         Guard.IsNotNull(regionId, nameof(regionId));
         Guard.IsNotNull(dateStarted, nameof(dateStarted));
 
-        return new Occurrence(regionId, dateStarted);
+        return new Occurrence((long) regionId, municipalityId, districtId, communityId, dateStarted);
     }
 
     public void AddReport(long diseaseId, long speciesId, int numberExposed, int numberInfected, int mortality, DateOnly occurrenceDate)

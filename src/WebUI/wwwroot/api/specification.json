@@ -718,6 +718,205 @@
         ]
       }
     },
+    "/api/reports/verify": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Verifies a report",
+        "description": "Verifies a report in the system",
+        "operationId": "VerifyReport_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyReportCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Verifier"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/communities": {
+      "post": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Adds a community",
+        "description": "Adds a community to the system",
+        "operationId": "AddCommunity_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCommunityCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunityDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Deletes a community",
+        "description": "Deletes a community from the system",
+        "operationId": "DeleteCommunity_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteCommunityCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Gets the list of communities",
+        "description": "Gets the list of communities in the system",
+        "operationId": "GetCommunities_Handle",
+        "parameters": [
+          {
+            "name": "districtId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CommunityDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
+          }
+        ]
+      }
+    },
     "/api/countries": {
       "post": {
         "tags": [
@@ -785,6 +984,320 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/CountryDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/districts": {
+      "post": {
+        "tags": [
+          "Districts"
+        ],
+        "summary": "Adds a district",
+        "description": "Adds a district to the system",
+        "operationId": "AddDistrict_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDistrictCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Districts"
+        ],
+        "summary": "Deletes a district",
+        "description": "Deletes a district from the system",
+        "operationId": "DeleteDistrict_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteDistrictCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Districts"
+        ],
+        "summary": "Gets the list of districts",
+        "description": "Gets the list of districts in the system",
+        "operationId": "GetDistricts_Handle",
+        "parameters": [
+          {
+            "name": "municipalityId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DistrictDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/municipalities": {
+      "post": {
+        "tags": [
+          "Municipalities"
+        ],
+        "summary": "Adds a municipality",
+        "description": "Adds a municipality to the system",
+        "operationId": "AddMunicipality_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddMunicipalityCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MunicipalityDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Municipalities"
+        ],
+        "summary": "Deletes a municipality",
+        "description": "Deletes a municipality from the system",
+        "operationId": "DeleteMunicipality_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteMunicipalityCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Municipalities"
+        ],
+        "summary": "Gets the list of municipalities",
+        "description": "Gets the list of municipalities in the system",
+        "operationId": "GetMunicipalities_Handle",
+        "parameters": [
+          {
+            "name": "regionId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MunicipalityDto"
                   }
                 }
               }
@@ -1916,6 +2429,20 @@
           },
           "regionId": {
             "type": "integer",
+            "format": "int64"
+          },
+          "communityId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "districtId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "municipalityId": {
+            "type": "integer",
             "format": "int64",
             "nullable": true
           },
@@ -2135,6 +2662,49 @@
           }
         }
       },
+      "VerifyReportCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "CommunityDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "districtId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "districtName": {
+            "type": "string"
+          }
+        }
+      },
+      "AddCommunityCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "districtId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
       "CountryDto": {
         "type": "object",
         "additionalProperties": false,
@@ -2169,6 +2739,72 @@
             "type": "string"
           },
           "code": {
+            "type": "string"
+          }
+        }
+      },
+      "DistrictDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "municipalityId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "municipalityName": {
+            "type": "string"
+          }
+        }
+      },
+      "AddDistrictCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "municipalityId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "MunicipalityDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "regionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "regionName": {
+            "type": "string"
+          }
+        }
+      },
+      "AddMunicipalityCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "regionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
             "type": "string"
           }
         }
@@ -2212,6 +2848,36 @@
           },
           "code": {
             "type": "string"
+          }
+        }
+      },
+      "DeleteCommunityCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "DeleteDistrictCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "DeleteMunicipalityCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -2497,7 +3163,16 @@
       "name": "Reports"
     },
     {
+      "name": "Communities"
+    },
+    {
       "name": "Countries"
+    },
+    {
+      "name": "Districts"
+    },
+    {
+      "name": "Municipalities"
     },
     {
       "name": "Regions"

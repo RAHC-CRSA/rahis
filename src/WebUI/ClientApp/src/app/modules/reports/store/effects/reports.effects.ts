@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
+import { mergeMap, map, catchError, exhaustMap } from 'rxjs/operators';
 import {
     DiseaseService,
     InstitutionService,
@@ -52,6 +52,27 @@ export class ReportsEffects {
                 this.reportsService.deleteReport(action.payload).pipe(
                     map((data) =>
                         ReportsActions.deleteReportSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    verifyReport$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.verifyReport),
+            exhaustMap((action) =>
+                this.reportsService.verifyReport(action.payload).pipe(
+                    map((data) =>
+                        ReportsActions.verifyReportSuccess({ payload: data })
                     ),
                     catchError((error) =>
                         of(
@@ -385,6 +406,71 @@ export class ReportsEffects {
                 this.diseaseService.addDisease(action.payload).pipe(
                     map((data) =>
                         ReportsActions.addDiseaseSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    loadMunicipalities$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.loadMunicipalities),
+            mergeMap((action) =>
+                this.regionsService.getAllMunicipalities(action.payload).pipe(
+                    map((data) =>
+                        ReportsActions.loadMunicipalitiesSuccess({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    loadDistricts$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.loadDistricts),
+            mergeMap((action) =>
+                this.regionsService.getAllDistricts(action.payload).pipe(
+                    map((data) =>
+                        ReportsActions.loadDistrictsSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    loadCommunities$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.loadCommunities),
+            mergeMap((action) =>
+                this.regionsService.getAllCommunities(action.payload).pipe(
+                    map((data) =>
+                        ReportsActions.loadCommunitiesSuccess({ payload: data })
                     ),
                     catchError((error) =>
                         of(
