@@ -22,6 +22,9 @@ jobs:
           dotnet-version: '7.x'
           include-prerelease: true
 
+      - name: Migrage db
+        run: dotnet ef database update
+        
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
