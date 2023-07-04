@@ -183,9 +183,12 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
             ...this.formData.diagnosticTests,
             this.testForm.value,
         ];
-        this.testsInfo.patchValue({
-            diagnosticTests: this.formData.diagnosticTests,
-        });
+        this.testsInfo.patchValue(
+            {
+                tests: this.formData.diagnosticTests,
+            },
+            { emitEvent: true }
+        );
 
         this.testForm.reset();
 
@@ -200,9 +203,12 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
             }
         );
 
-        this.testsInfo.patchValue({
-            diagnosticTests: this.formData.diagnosticTests,
-        });
+        this.testsInfo.patchValue(
+            {
+                tests: this.formData.diagnosticTests,
+            },
+            { emitEvent: true }
+        );
     }
 
     onPrevious() {

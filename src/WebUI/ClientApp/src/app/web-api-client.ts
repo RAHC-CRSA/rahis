@@ -3901,6 +3901,7 @@ export class VaccinationDto implements IVaccinationDto {
     isHuman?: boolean;
     isAnimal?: boolean;
     professionalId?: number | undefined;
+    professionalName?: string;
 
     constructor(data?: IVaccinationDto) {
         if (data) {
@@ -3920,6 +3921,7 @@ export class VaccinationDto implements IVaccinationDto {
             this.isHuman = _data["isHuman"];
             this.isAnimal = _data["isAnimal"];
             this.professionalId = _data["professionalId"];
+            this.professionalName = _data["professionalName"];
         }
     }
 
@@ -3939,6 +3941,7 @@ export class VaccinationDto implements IVaccinationDto {
         data["isHuman"] = this.isHuman;
         data["isAnimal"] = this.isAnimal;
         data["professionalId"] = this.professionalId;
+        data["professionalName"] = this.professionalName;
         return data;
     }
 }
@@ -3951,6 +3954,7 @@ export interface IVaccinationDto {
     isHuman?: boolean;
     isAnimal?: boolean;
     professionalId?: number | undefined;
+    professionalName?: string;
 }
 
 export class AddVaccinationCommand implements IAddVaccinationCommand {
@@ -4235,6 +4239,7 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
     reportId?: number;
     numberTested?: number;
     professionalId?: number;
+    professionalName?: string;
 
     constructor(data?: IDiagnosticTestDto) {
         if (data) {
@@ -4252,6 +4257,7 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
             this.reportId = _data["reportId"];
             this.numberTested = _data["numberTested"];
             this.professionalId = _data["professionalId"];
+            this.professionalName = _data["professionalName"];
         }
     }
 
@@ -4269,6 +4275,7 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
         data["reportId"] = this.reportId;
         data["numberTested"] = this.numberTested;
         data["professionalId"] = this.professionalId;
+        data["professionalName"] = this.professionalName;
         return data;
     }
 }
@@ -4279,6 +4286,7 @@ export interface IDiagnosticTestDto {
     reportId?: number;
     numberTested?: number;
     professionalId?: number;
+    professionalName?: string;
 }
 
 export class CreateReportCommand implements ICreateReportCommand {
