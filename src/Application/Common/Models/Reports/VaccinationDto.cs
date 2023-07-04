@@ -8,4 +8,5 @@ public class VaccinationDto
     public bool IsHuman { get; set; }
     public bool IsAnimal { get; set; }
     public long? ProfessionalId { get; set; }
+    public string ProfessionalName { get; set; }
 }

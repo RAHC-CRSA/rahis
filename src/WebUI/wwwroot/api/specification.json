@@ -2222,6 +2222,9 @@
             "type": "integer",
             "format": "int64",
             "nullable": true
+          },
+          "professionalName": {
+            "type": "string"
           }
         }
       },
@@ -2415,6 +2418,9 @@
           "professionalId": {
             "type": "integer",
             "format": "int64"
+          },
+          "professionalName": {
+            "type": "string"
           }
         }
       },

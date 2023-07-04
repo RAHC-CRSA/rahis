@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Linq;
+using System.Linq.Expressions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -36,6 +37,11 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
                     .ThenInclude(o => o.Region)
                         .ThenInclude(e => e.Country)
                 .Include(x => x.Disease)
+                .Include(x => x.DiagnosticTests.Where(t => !t.IsDeleted))
+                    .ThenInclude(t => t.Professional)
+                .Include(x => x.Medications.Where(m => !m.IsDeleted))
+                .Include(x => x.Vaccinations.Where(v => !v.IsDeleted))
+                    .ThenInclude(v => v.Professional)
                 .Where(x => !x.IsDeleted && x.Id == request.ReportId)
                 .Select(ReportSelectorExpression())
                 .FirstOrDefaultAsync();
@@ -73,8 +79,45 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
             MovementControlMeasures = e.MovementControlMeasures,
             Treatment = e.Treatment,
             TreatmentDetails = e.TreatmentDetails,
+            DiagnosticTests = e.DiagnosticTests.AsQueryable().Select(DiagnosticTestSelectorExpression()).ToList(),
+            Medications = e.Medications.AsQueryable().Select(MedicationSelectorExpression()).ToList(),
+            Vaccinations = e.Vaccinations.AsQueryable().Select(VaccinationSelectorExpression()).ToList(),
             Location = $"{e.Occurrence.Region.Name}, {e.Occurrence.Region.Country.Name}",
             Created = DateOnly.FromDateTime(e.Created).ToString("MMMM dd, yyyy")
+        };
+    }
+
+    private Expression<Func<DiagnosticTest, DiagnosticTestDto>> DiagnosticTestSelectorExpression()
+    {
+        return e => new DiagnosticTestDto
+        {
+            Id = e.Id,
+            Name = e.Name,
+            NumberTested = e.NumberTested,
+            ProfessionalName = e.Professional.Name
+        };
+    }
+
+    private Expression<Func<Medication, MedicationDto>> MedicationSelectorExpression()
+    {
+        return e => new MedicationDto
+        {
+            Id = e.Id,
+            Name = e.Name,
+            Dosage = e.Dosage,
+        };
+    }
+
+    private Expression<Func<Vaccination, VaccinationDto>> VaccinationSelectorExpression()
+    {
+        return e => new VaccinationDto
+        {
+            Id = e.Id,
+            Name = e.Name,
+            NumberVaccinated = e.NumberVaccinated,
+            IsAnimal = e.IsAnimal,
+            IsHuman = e.IsHuman,
+            ProfessionalName = e.Professional.Name
         };
     }
 }

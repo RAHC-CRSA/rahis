@@ -76,6 +76,11 @@ public class Report : BaseAuditableEntity<long>
         TreatmentDetails = details;
     }
 
+    public void SetNotifiabilityPoints(int points)
+    {
+        NotifiabilityPoints = points;
+    }
+
     public void AddMedication(string name, string dosage)
     {
         var medication = Medication.Create(Id, name, dosage);
