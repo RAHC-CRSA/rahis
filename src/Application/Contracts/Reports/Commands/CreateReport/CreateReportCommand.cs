@@ -76,7 +76,7 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             // Get transboundary disease if any
             TransboundaryDisease? transboundaryDisease = await _context.TransboundaryDiseases
                 .Where(x => !x.IsDeleted && x.SpeciesId == request.SpeciesId && x.DiseaseId == request.DiseaseId)
-                .FirstOrDefaultAsync(); ;
+                .FirstOrDefaultAsync();
 
             int notifiabilityPoints = 0;
             Occurrence? occurrence;
@@ -176,11 +176,13 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
                 notifiabilityPoints += request.HumansMortality > latestReport.HumansMortality ? request.HumansMortality > (latestReport.HumansMortality / 2) ? 2 : 1 : 0;
 
                 // Animal mortality points
-                notifiabilityPoints += request.HumansMortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
+                notifiabilityPoints += request.Mortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
             }
 
             // Set notifiable points for report
             report.SetNotifiabilityPoints(notifiabilityPoints);
+
+            // TODO: Send email notifications
 
             // Add report to occurrence
             occurrence.AddReport(report);

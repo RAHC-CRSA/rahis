@@ -38,7 +38,245 @@
         </div>
 
         <div class="w-full">
-          <h3 class="text-3xl">{{ (report$ | async)?.occurrenceTitle }}</h3>
+          <div class="flex gap-3">
+            <div class="w-24 p-2" *ngIf="(report$ | async)?.occurrenceCountryFlag">
+              <img [src]="( report$ | async)?.occurrenceCountryFlag" alt="" class="w-auto">
+            </div>
+            <div class="w-full">
+              <h3 class="text-3xl">{{ (report$ | async)?.occurrenceTitle }}</h3>
+              <h4 class="text-2xl">{{ (report$ | async)?.occurrenceRegion }}</h4>
+            </div>
+          </div>
+
+          <!-- Notifiability display -->
+          <div class="w-full my-4">
+            <fuse-alert *ngIf="(report$ | async)?.notifiabilityPoints >= 7" [type]="'error'" [appearance]="'outline'">
+              <span fuseAlertTitle>Notification Recommended</span>
+              We recommend an immediate notification click the button to send email notifications to relevant parties.
+              <div class="my-3">
+                <button *ngIf="canVerify" class="px-8" mat-flat-button [color]="'error'" type="button">
+                  <span *ngIf="!( loading$ | async )">
+                    Send Notification
+                  </span>
+                  <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                    [mode]="'indeterminate'"></mat-progress-spinner>
+                </button>
+              </div>
+            </fuse-alert>
+
+            <fuse-alert
+              *ngIf="(report$ | async)?.notifiabilityPoints >= 4 && (report$ | async)?.notifiabilityPoints < 7"
+              [type]="'warning'" [appearance]="'outline'">
+              <span fuseAlertTitle>Notification Optional</span>
+              You can optionally send a notification to all relevant parties.
+              <div class="my-3">
+                <button *ngIf="canVerify" class="px-8" mat-flat-button [color]="'warn'" type="button">
+                  <span *ngIf="!( loading$ | async )">
+                    Send Notification
+                  </span>
+                  <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                    [mode]="'indeterminate'"></mat-progress-spinner>
+                </button>
+              </div>
+            </fuse-alert>
+
+            <fuse-alert *ngIf="(report$ | async)?.notifiabilityPoints < 4" [type]="'success'" [appearance]="'outline'">
+              <span fuseAlertTitle>Notification Optional</span>
+              <ng-container *ngIf="!(report$ | async)?.isDiseaseNotifiable && !(report$ | async)?.isDiseaseMonitored">
+                Non-threatening report, no notifications necessary.</ng-container>
+              <ng-container *ngIf="(report$ | async)?.isDiseaseNotifiable || (report$ | async)?.isDiseaseMonitored">This
+                is a
+                monitorable/notifiable disease, would you like to notify?</ng-container>
+              <div class="my-3">
+                <button class="px-4" mat-flat-button [color]="'primary'" type="button">
+                  <span *ngIf="!( loading$ | async )">
+                    Send Notification
+                  </span>
+                  <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                    [mode]="'indeterminate'"></mat-progress-spinner>
+                </button>
+              </div>
+            </fuse-alert>
+          </div>
+          <!-- /Notifiability display -->
+
+          <hr>
+
+          <div class="mb-8">
+            <table mat-table [dataSource]="(actionsInfoData$ | async)" class="w-full">
+              <!-- Stamping-out Column -->
+              <ng-container matColumnDef="stampingOut">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Stamping-out </th>
+                <td mat-cell *matCellDef="let el" class="text-center">
+                  <mat-icon *ngIf="el.stampingOut" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+                </td>
+              </ng-container>
+
+              <!-- Destruction of corpses Column -->
+              <ng-container matColumnDef="destructionOfCorpses">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Destruction of Corpses </th>
+                <td mat-cell *matCellDef="let el" class="text-center">
+                  <mat-icon *ngIf="el.destructionOfCorpses" color="primary"
+                    svgIcon="heroicons_solid:check-circle"></mat-icon>
+              </ng-container>
+
+              <!-- Treatment Column -->
+              <ng-container matColumnDef="treatment">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Treatment </th>
+                <td mat-cell *matCellDef="let el" class="text-center">
+                  <mat-icon *ngIf="el.treatment" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+              </ng-container>
+
+              <!-- Disinfection Column -->
+              <ng-container matColumnDef="disinfection">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Disinfection </th>
+                <td mat-cell *matCellDef="let el" class="text-center">
+                  <mat-icon *ngIf="el.disinfection" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+              </ng-container>
+
+              <!-- Quarantine Column -->
+              <ng-container matColumnDef="quarantine">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Quarantine </th>
+                <td mat-cell *matCellDef="let el" class="text-center">
+                  <mat-icon *ngIf="el.quarantine" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+              </ng-container>
+
+              <!-- Vaccination Column -->
+              <ng-container matColumnDef="vaccination">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Vaccination </th>
+                <td mat-cell *matCellDef="let el" class="text-center">
+                  <mat-icon *ngIf="el.vaccination" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+              </ng-container>
+
+              <!-- Movement control Column -->
+              <ng-container matColumnDef="movementControl">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Movement Control </th>
+                <td mat-cell *matCellDef="let el" class="text-center">
+                  <mat-icon *ngIf="el.movementControl" color="primary"
+                    svgIcon="heroicons_solid:check-circle"></mat-icon>
+              </ng-container>
+
+              <!-- Observation Column -->
+              <ng-container matColumnDef="observation">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Observation (in case of bite) </th>
+                <td mat-cell *matCellDef="let el" class="text-center">
+                  <mat-icon *ngIf="el.observation" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="actionsInfoColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: actionsInfoColumns;"></tr>
+
+            </table>
+          </div>
+
+          <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab *ngIf="(report$ | async)?.diagnosticTests?.length" label="Diagnostic Tests">
+              <div class="mb-4">
+                <table mat-table [dataSource]="(report$ | async)?.diagnosticTests" class="w-full">
+                  <!-- Id Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let el"> {{el.id}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="testName">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let el"> {{el.name}} </td>
+                  </ng-container>
+
+                  <!-- Munber Tested Column -->
+                  <ng-container matColumnDef="numberTested">
+                    <th mat-header-cell *matHeaderCellDef> Number Tested </th>
+                    <td mat-cell *matCellDef="let el"> {{el.numberTested}} </td>
+                  </ng-container>
+
+                  <!-- Professional Name Column -->
+                  <ng-container matColumnDef="professionalName">
+                    <th mat-header-cell *matHeaderCellDef> Tested by </th>
+                    <td mat-cell *matCellDef="let el"> {{el.professionalName}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="diagnosticTestColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: diagnosticTestColumns;"></tr>
+
+                </table>
+              </div>
+            </mat-tab>
+            <mat-tab *ngIf="(report$ | async)?.medications?.length" label="Medications">
+              <div class="mb-4">
+                <table mat-table [dataSource]="(report$ | async)?.medications" class="w-full">
+                  <!-- Id Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let el"> {{el.id}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let el"> {{el.name}} </td>
+                  </ng-container>
+
+                  <!-- Dosage Column -->
+                  <ng-container matColumnDef="dosage">
+                    <th mat-header-cell *matHeaderCellDef> Dosage </th>
+                    <td mat-cell *matCellDef="let el"> {{el.dosage}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="medicationColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: medicationColumns;"></tr>
+
+                </table>
+              </div>
+            </mat-tab>
+            <mat-tab *ngIf="(report$ | async)?.vaccinations?.length" label="Vaccinations">
+              <div class="mb-4">
+                <table mat-table [dataSource]="(report$ | async)?.vaccinations" class="w-full">
+                  <!-- Id Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let el"> {{el.id}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="vaccineName">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let el"> {{el.name}} </td>
+                  </ng-container>
+
+                  <!-- Munber Vaccinated Column -->
+                  <ng-container matColumnDef="numberVaccinated">
+                    <th mat-header-cell *matHeaderCellDef> Number Vaccinated </th>
+                    <td mat-cell *matCellDef="let el"> {{el.numberVaccinated}} </td>
+                  </ng-container>
+
+                  <!-- Munber Vaccinated Column -->
+                  <ng-container matColumnDef="humansVaccinated">
+                    <th mat-header-cell *matHeaderCellDef> Humans Vaccinated </th>
+                    <td mat-cell *matCellDef="let el"> {{el.isHuman ? "Yes" : "No"}} </td>
+                  </ng-container>
+
+                  <!-- Munber Vaccinated Column -->
+                  <ng-container matColumnDef="animalsVaccinated">
+                    <th mat-header-cell *matHeaderCellDef> Animals Vaccinated </th>
+                    <td mat-cell *matCellDef="let el"> {{el.isAnimal ? "Yes" : "No"}} </td>
+                  </ng-container>
+
+                  <!-- Professional Name Column -->
+                  <ng-container matColumnDef="professionalName">
+                    <th mat-header-cell *matHeaderCellDef> Vaccinated by </th>
+                    <td mat-cell *matCellDef="let el"> {{el.professionalName}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="vaccinationColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: vaccinationColumns;"></tr>
+
+                </table>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+
         </div>
 
         <div class="flex justify-between my-4">

@@ -34,6 +34,7 @@ public class Report : BaseAuditableEntity<long>
     public long DiseaseId { get; private set; }
     public Disease Disease { get; private set; }
     public long SpeciesId { get; private set; }
+    public Species Species { get; private set; }
 
     public int NotifiabilityPoints { get; private set; }
 

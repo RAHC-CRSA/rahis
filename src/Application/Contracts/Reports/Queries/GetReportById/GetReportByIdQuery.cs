@@ -37,6 +37,7 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
                     .ThenInclude(o => o.Region)
                         .ThenInclude(e => e.Country)
                 .Include(x => x.Disease)
+                .Include(x => x.Species)
                 .Include(x => x.DiagnosticTests.Where(t => !t.IsDeleted))
                     .ThenInclude(t => t.Professional)
                 .Include(x => x.Medications.Where(m => !m.IsDeleted))
@@ -59,7 +60,17 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
     {
         return e => new ReportDto { 
             Id = e.Id,
+            OccurrenceId = e.OccurrenceId,
             OccurrenceTitle = $"{e.Occurrence.Reports.OrderBy(x => x.Id).Take(1).FirstOrDefault().Disease.Name ?? "Unidentified Disease"} / {e.Occurrence.DateStarted.ToString("MMMM dd, yyyy")}",
+            OccurrenceRegion = $"{(e.Occurrence.Community != null ? $"{e.Occurrence.Community.Name}, " : string.Empty)}{(e.Occurrence.District != null ? $"{e.Occurrence.District.Name}, " : string.Empty)}{(e.Occurrence.Municipality != null ? $"{e.Occurrence.Municipality.Name}, " : string.Empty)}{e.Occurrence.Region.Name}, {e.Occurrence.Region.Country.Name}",
+            OccurrenceCountryFlag = e.Occurrence.Region.Country.Flag,
+            DiseaseName = e.Disease.Name,
+            DiseaseId = e.DiseaseId,
+            SpeciesName = e.Species.Name,
+            SpeciesId = e.SpeciesId,
+            NotifiabilityPoints = e.NotifiabilityPoints,
+            IsDiseaseMonitored = e.Disease.IsMonitored,
+            IsDiseaseNotifiable = e.Disease.IsNotifiable,
             Exposed = e.NumberExposed,
             Infected = e.NumberInfected,
             Mortality = e.Mortality,

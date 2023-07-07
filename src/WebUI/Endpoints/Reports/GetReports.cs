@@ -13,7 +13,7 @@ namespace WebUI.Endpoints.Reports;
 
 [OpenApiTag("Reports")]
 [Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}, {SecurityRoles.Verifier}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class GetReports : EndpointBaseAsync.WithoutRequest.WithActionResult<List<ReportListDto>>
+public class GetReports : EndpointBaseAsync.WithRequest<GetReportsQuery>.WithActionResult<List<ReportListDto>>
 {
     private readonly IMediator _mediator;
 
@@ -30,9 +30,9 @@ public class GetReports : EndpointBaseAsync.WithoutRequest.WithActionResult<List
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult<List<ReportListDto>>> HandleAsync(CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<List<ReportListDto>>> HandleAsync([FromQuery] GetReportsQuery request, CancellationToken cancellationToken = default)
     {
-        var (result, data) = await _mediator.Send(new GetReportsQuery(), cancellationToken);
+        var (result, data) = await _mediator.Send(request, cancellationToken);
         if (result.Succeeded)
             return Ok(data);
 
