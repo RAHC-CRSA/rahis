@@ -27,7 +27,7 @@ export class AuthEffects {
                         return AuthActions.loginSuccess({ payload: data });
                     }),
                     catchError((error) =>
-                        of(AuthActions.loginFail({ payload: error }))
+                        of(AuthActions.setFeedback({ payload: error }))
                     )
                 )
             )

@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatTabsModule } from '@angular/material/tabs';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { FeedbackDisplayModule } from 'app/common/modules/feedback-display/feedback-display.module';
 
@@ -39,6 +40,7 @@ import { FeedbackDisplayModule } from 'app/common/modules/feedback-display/feedb
         MatRadioModule,
         MatSelectModule,
         MatStepperModule,
+        MatTabsModule,
         FormsModule,
         ReactiveFormsModule,
         FuseAlertModule,

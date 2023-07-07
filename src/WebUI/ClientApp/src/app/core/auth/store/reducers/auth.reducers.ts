@@ -6,7 +6,6 @@ import {
     loadUser,
     setFeedback,
     clearFeedback,
-    loginFail,
 } from '../actions/auth.actions';
 import { createReducer, on } from '@ngrx/store';
 import { AuthResponseDto } from 'app/web-api-client';

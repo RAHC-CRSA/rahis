@@ -30,6 +30,7 @@ public class VerifyReportCommandHandler : IRequestHandler<VerifyReportCommand, R
                 return Result.Failure(new List<string> { "Report not found." });
 
             report.Verify();
+            _context.Reports.Update(report);
             await _context.SaveChangesAsync(cancellationToken);
 
             return Result.Success();

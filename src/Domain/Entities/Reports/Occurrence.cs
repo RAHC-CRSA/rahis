@@ -11,7 +11,7 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
     public virtual Region Region { get; private set; }
 
     public long? CommunityId { get; set; }
-    public Community Commnunity { get; set; }
+    public Community Community { get; set; }
 
     public long? DistrictId { get; set; }
     public District District { get; set; }
