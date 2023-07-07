@@ -357,13 +357,14 @@ public class ApplicationDbContextInitialiser
                 // Parse json into data class
                 var fileName = "countryRegions.json";
                 var _filePath = Path.Combine(GetRootPath(), "Infrastructure\\Persistence\\SeedData", fileName);
+                // For when you need to seed directly from your pc
+                // var dataText = File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/countryRegions.json");
                 var dataText = File.ReadAllText(_filePath);
                 var regionSeedData = JsonConvert.DeserializeObject<List<RegionData>>(dataText);
 
                 foreach (var country in regionSeedData)
                 {
                     await SeedCountryAsync(country);
-
                 }
             }
             catch (Exception ex)
