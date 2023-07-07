@@ -41,12 +41,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type: 'collapsable',
         icon: 'heroicons_outline:location-marker',
         children: [
-            {
-                id: 'regions.create',
-                title: 'Add Region',
-                type: 'basic',
-                link: '/dashboard/regions/create',
-            },
+            // {
+            //     id: 'regions.create',
+            //     title: 'Add Region',
+            //     type: 'basic',
+            //     link: '/dashboard/regions/create',
+            // },
             {
                 id: 'regions.list',
                 title: 'View all',
@@ -176,12 +176,12 @@ export const compactNavigation: FuseNavigationItem[] = [
         type: 'collapsable',
         icon: 'heroicons_outline:location-marker',
         children: [
-            {
-                id: 'regions.create',
-                title: 'Add Region',
-                type: 'basic',
-                link: '/dashboard/regions/create',
-            },
+            // {
+            //     id: 'regions.create',
+            //     title: 'Add Region',
+            //     type: 'basic',
+            //     link: '/dashboard/regions/create',
+            // },
             {
                 id: 'regions.list',
                 title: 'View all',
