@@ -70,27 +70,36 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
     {
         try
         {
-            int notifiablePoints = 0;
+            // Get latest report if any
+            Report? latestReport = request.OccurrenceId != null ? await _context.Reports.Where(x => !x.IsDeleted && x.OccurrenceId == request.OccurrenceId).OrderByDescending(r => r.Created).FirstOrDefaultAsync() : null;
+
+            // Get transboundary disease if any
+            TransboundaryDisease? transboundaryDisease = await _context.TransboundaryDiseases
+                .Where(x => !x.IsDeleted && x.SpeciesId == request.SpeciesId && x.DiseaseId == request.DiseaseId)
+                .FirstOrDefaultAsync();
+
+            int notifiabilityPoints = 0;
             Occurrence? occurrence;
+            
             if (request.OccurrenceId == null)
             {
+               
                 // TODO: Get occurrence date from request
                 occurrence = Occurrence.Create(request.RegionId, request.MunicipalityId, request.DistrictId, request.CommunityId, DateOnly.FromDateTime(DateTime.UtcNow));
+
+                if (transboundaryDisease != null)
+                {
+                    occurrence.SetTransboundaryDisease(transboundaryDisease.Id);
+                }
+
                 await _context.Occurrences.AddAsync(occurrence);
-                await _context.SaveChangesAsync(cancellationToken);
-
-                // Add 2 pts if notifiable
-
-                // Add 2 pts if monitored
-
-                // Check transboundary disease
-
-                // If not found in transboundary
             }
             else
             {
-                occurrence = await _context.Occurrences.Where(x => !x.IsDeleted && x.Id == request.OccurrenceId).FirstOrDefaultAsync();
-
+                occurrence = await _context.Occurrences
+                    .Include(o => o.Reports.Where(r => !r.IsDeleted))
+                    .Where(x => !x.IsDeleted && x.Id == request.OccurrenceId)
+                    .FirstOrDefaultAsync();
             }
 
             if (occurrence == null)
@@ -144,9 +153,42 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
                 }
             }
 
-            // Save report
-            await _context.Reports.AddAsync(report);
-            await _context.SaveChangesAsync(cancellationToken);
+            // Calculate notifiable points
+            // Get report disease
+            var disease = await _context.Diseases.Where(x => !x.IsDeleted && x.Id == request.DiseaseId).FirstOrDefaultAsync();
+
+            // Immediate notification points
+            notifiabilityPoints += request.ReportType == ReportType.Immediate ? 1 : 0;
+
+            // Notifiable disease points
+            notifiabilityPoints += disease != null && disease.IsNotifiable ? 2 : 0;
+
+            // Monitored disease points
+            notifiabilityPoints += disease != null && disease.IsMonitored ? 1 : 0;
+
+            // Transboundary disease points
+            notifiabilityPoints += transboundaryDisease == null ? 2 : 0;
+
+            // Mortality points
+            if (latestReport != null)
+            {
+                // Human mortality points
+                notifiabilityPoints += request.HumansMortality > latestReport.HumansMortality ? request.HumansMortality > (latestReport.HumansMortality / 2) ? 2 : 1 : 0;
+
+                // Animal mortality points
+                notifiabilityPoints += request.Mortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
+            }
+
+            // Set notifiable points for report
+            report.SetNotifiabilityPoints(notifiabilityPoints);
+
+            // TODO: Send email notifications
+
+            // Add report to occurrence
+            occurrence.AddReport(report);
+
+            // Save changes
+            await _context.SaveChangesAsync(cancellationToken); 
 
             // Notify reporter
             var (_, user) = await  _identityService.GetUserAsync(_currentUserService?.UserId);

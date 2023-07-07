@@ -11,7 +11,7 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
     public virtual Region Region { get; private set; }
 
     public long? CommunityId { get; set; }
-    public Community Commnunity { get; set; }
+    public Community Community { get; set; }
 
     public long? DistrictId { get; set; }
     public District District { get; set; }
@@ -46,10 +46,9 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
         return new Occurrence((long) regionId, municipalityId, districtId, communityId, dateStarted);
     }
 
-    public void AddReport(long diseaseId, long speciesId, int numberExposed, int numberInfected, int mortality, DateOnly occurrenceDate)
+    public void SetTransboundaryDisease(long id)
     {
-        var report = Report.Create(Id, diseaseId, speciesId, occurrenceDate);
-        _reports.Add(report);
+        TransboundaryDiseaseId = id;
     }
 
     public void Delete()
@@ -66,5 +65,10 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
         {
             report.Delete();
         }
+    }
+
+    public void AddReport(Report report)
+    {
+        _reports.Add(report);
     }
 }
