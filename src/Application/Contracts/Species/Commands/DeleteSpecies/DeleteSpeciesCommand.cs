@@ -38,8 +38,6 @@ public class DeleteSpeciesCommandHandler : IRequestHandler<DeleteSpeciesCommand,
         {
             _logger.LogError(ex, ex.Message);
             return Result.Failure(new List<string> { ex.Message });
-
-            throw;
         }
     }
 }

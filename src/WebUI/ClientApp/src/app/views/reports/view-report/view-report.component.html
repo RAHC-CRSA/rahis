@@ -277,6 +277,12 @@
             </mat-tab>
           </mat-tab-group>
 
+          <pre>
+            {{ (report$ | async) | json }}
+          </pre>
+
+
+
         </div>
 
         <div class="flex justify-between my-4">
