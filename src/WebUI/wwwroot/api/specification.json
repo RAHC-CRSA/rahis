@@ -513,6 +513,17 @@
         "summary": "Gets the list of reports",
         "description": "Gets the list of reports in the system",
         "operationId": "GetReports_Handle",
+        "parameters": [
+          {
+            "name": "IsVerified",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -2222,6 +2233,9 @@
             "type": "integer",
             "format": "int64",
             "nullable": true
+          },
+          "professionalName": {
+            "type": "string"
           }
         }
       },
@@ -2269,13 +2283,35 @@
           "occurrenceTitle": {
             "type": "string"
           },
+          "occurrenceRegion": {
+            "type": "string"
+          },
+          "occurrenceCountryFlag": {
+            "type": "string"
+          },
           "diseaseId": {
             "type": "integer",
             "format": "int64"
           },
+          "diseaseName": {
+            "type": "string"
+          },
           "speciesId": {
             "type": "integer",
             "format": "int64"
+          },
+          "speciesName": {
+            "type": "string"
+          },
+          "notifiabilityPoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isDiseaseMonitored": {
+            "type": "boolean"
+          },
+          "isDiseaseNotifiable": {
+            "type": "boolean"
           },
           "location": {
             "type": "string"
@@ -2415,6 +2451,9 @@
           "professionalId": {
             "type": "integer",
             "format": "int64"
+          },
+          "professionalName": {
+            "type": "string"
           }
         }
       },

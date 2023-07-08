@@ -34,6 +34,7 @@ public class Report : BaseAuditableEntity<long>
     public long DiseaseId { get; private set; }
     public Disease Disease { get; private set; }
     public long SpeciesId { get; private set; }
+    public Species Species { get; private set; }
 
     public int NotifiabilityPoints { get; private set; }
 
@@ -74,6 +75,11 @@ public class Report : BaseAuditableEntity<long>
         Guard.IsNotNullOrEmpty(details, nameof(details));
 
         TreatmentDetails = details;
+    }
+
+    public void SetNotifiabilityPoints(int points)
+    {
+        NotifiabilityPoints = points;
     }
 
     public void AddMedication(string name, string dosage)

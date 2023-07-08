@@ -174,9 +174,12 @@
 
         <h4 class="text-2xl mb-4">Treatment Details</h4>
         <mat-form-field class="w-full mt-4">
-          <mat-label>Any additional details of the treatment?</mat-label>
+          <mat-label>Provide details of the treatment</mat-label>
           <textarea aria-label="Treatment Details" matInput formControlName="treatmentDetails"
             placeholder="Treatment details"></textarea>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Treatment details is required', control: treatmentInfo.controls['treatmentDetails']}"></ng-container>
+
         </mat-form-field>
       </div>
     </div>

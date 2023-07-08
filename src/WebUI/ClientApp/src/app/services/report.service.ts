@@ -49,8 +49,8 @@ export class ReportService {
         return this.createReportClient.handle(new CreateReportCommand(payload));
     }
 
-    getAllReports() {
-        return this.getReportsClient.handle();
+    getAllReports(verified: boolean) {
+        return this.getReportsClient.handle(verified);
     }
 
     getReport(id: number) {

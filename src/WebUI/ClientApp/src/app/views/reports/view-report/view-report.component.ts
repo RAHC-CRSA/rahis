@@ -17,7 +17,7 @@ import {
     ReportDto,
     ServerResponse,
 } from 'app/web-api-client';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
     selector: 'app-view-report',
@@ -31,6 +31,36 @@ export class ViewReportComponent implements OnInit {
     feedback$: Observable<ServerResponse | null | undefined>;
     loading$: Observable<boolean>;
     loaded$: Observable<boolean>;
+    actionsInfoData$: Observable<any[] | null | undefined>;
+
+    diagnosticTestColumns: string[] = [
+        'id',
+        'testName',
+        'numberTested',
+        'professionalName',
+    ];
+
+    medicationColumns: string[] = ['id', 'name', 'dosage'];
+
+    vaccinationColumns: string[] = [
+        'id',
+        'vaccineName',
+        'numberVaccinated',
+        'humansVaccinated',
+        'animalsVaccinated',
+        'professionalName',
+    ];
+
+    actionsInfoColumns: string[] = [
+        'stampingOut',
+        'destructionOfCorpses',
+        'treatment',
+        'disinfection',
+        'quarantine',
+        'vaccination',
+        'movementControl',
+        'observation',
+    ];
 
     constructor(
         private store: Store<ReportState>,
@@ -56,6 +86,23 @@ export class ViewReportComponent implements OnInit {
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getReportsLoading);
         this.loaded$ = this.store.select(getReportsLoaded);
+
+        this.report$.subscribe((data) => {
+            if (data) {
+                this.actionsInfoData$ = of([
+                    {
+                        stampingOut: data.stampingOut,
+                        destructionOfCorpses: data.destructionOfCorpses,
+                        treatment: data.treatment,
+                        disinfection: data.disinfection,
+                        quarantine: data.quarantine,
+                        vaccination: data.vaccinations,
+                        movementControl: data.movementControl,
+                        observation: data.observation,
+                    },
+                ]);
+            }
+        });
     }
 
     verify() {

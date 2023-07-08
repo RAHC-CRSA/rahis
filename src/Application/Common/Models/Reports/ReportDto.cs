@@ -5,8 +5,15 @@ public class ReportDto
 
     public long OccurrenceId { get; set; }
     public string OccurrenceTitle { get; set; }
+    public string OccurrenceRegion { get; set; }
+    public string OccurrenceCountryFlag { get; set; }
     public long DiseaseId { get; set; }
+    public string DiseaseName { get; set; }
     public long SpeciesId { get; set; }
+    public string SpeciesName { get; set; }
+    public int NotifiabilityPoints { get; set; }
+    public bool IsDiseaseMonitored { get; set; }
+    public bool IsDiseaseNotifiable { get; set; }
 
     public string Location { get; set; }
     public string Created { get; set; }

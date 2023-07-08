@@ -28,7 +28,7 @@ public class GetReport : EndpointBaseAsync.WithRequest<GetReportByIdQuery>.WithA
             "Gets a report by id",
             "Gets a report by id")
         ]
-    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ReportDto), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<ReportDto>> HandleAsync([FromRoute] GetReportByIdQuery request, CancellationToken cancellationToken = default)

@@ -866,8 +866,9 @@ export class DeleteReportClient implements IDeleteReportClient {
 export interface IGetReportsClient {
     /**
      * Gets the list of reports
+     * @param isVerified (optional) 
      */
-    handle(): Observable<ReportListDto[]>;
+    handle(isVerified: boolean | null | undefined): Observable<ReportListDto[]>;
 }
 
 @Injectable({
@@ -885,9 +886,12 @@ export class GetReportsClient implements IGetReportsClient {
 
     /**
      * Gets the list of reports
+     * @param isVerified (optional) 
      */
-    handle(): Observable<ReportListDto[]> {
-        let url_ = this.baseUrl + "/api/reports";
+    handle(isVerified: boolean | null | undefined): Observable<ReportListDto[]> {
+        let url_ = this.baseUrl + "/api/reports?";
+        if (isVerified !== undefined && isVerified !== null)
+            url_ += "IsVerified=" + encodeURIComponent("" + isVerified) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -3901,6 +3905,7 @@ export class VaccinationDto implements IVaccinationDto {
     isHuman?: boolean;
     isAnimal?: boolean;
     professionalId?: number | undefined;
+    professionalName?: string;
 
     constructor(data?: IVaccinationDto) {
         if (data) {
@@ -3920,6 +3925,7 @@ export class VaccinationDto implements IVaccinationDto {
             this.isHuman = _data["isHuman"];
             this.isAnimal = _data["isAnimal"];
             this.professionalId = _data["professionalId"];
+            this.professionalName = _data["professionalName"];
         }
     }
 
@@ -3939,6 +3945,7 @@ export class VaccinationDto implements IVaccinationDto {
         data["isHuman"] = this.isHuman;
         data["isAnimal"] = this.isAnimal;
         data["professionalId"] = this.professionalId;
+        data["professionalName"] = this.professionalName;
         return data;
     }
 }
@@ -3951,6 +3958,7 @@ export interface IVaccinationDto {
     isHuman?: boolean;
     isAnimal?: boolean;
     professionalId?: number | undefined;
+    professionalName?: string;
 }
 
 export class AddVaccinationCommand implements IAddVaccinationCommand {
@@ -4013,8 +4021,15 @@ export class ReportDto implements IReportDto {
     id?: number | undefined;
     occurrenceId?: number;
     occurrenceTitle?: string;
+    occurrenceRegion?: string;
+    occurrenceCountryFlag?: string;
     diseaseId?: number;
+    diseaseName?: string;
     speciesId?: number;
+    speciesName?: string;
+    notifiabilityPoints?: number;
+    isDiseaseMonitored?: boolean;
+    isDiseaseNotifiable?: boolean;
     location?: string;
     created?: string;
     infected?: number;
@@ -4054,8 +4069,15 @@ export class ReportDto implements IReportDto {
             this.id = _data["id"];
             this.occurrenceId = _data["occurrenceId"];
             this.occurrenceTitle = _data["occurrenceTitle"];
+            this.occurrenceRegion = _data["occurrenceRegion"];
+            this.occurrenceCountryFlag = _data["occurrenceCountryFlag"];
             this.diseaseId = _data["diseaseId"];
+            this.diseaseName = _data["diseaseName"];
             this.speciesId = _data["speciesId"];
+            this.speciesName = _data["speciesName"];
+            this.notifiabilityPoints = _data["notifiabilityPoints"];
+            this.isDiseaseMonitored = _data["isDiseaseMonitored"];
+            this.isDiseaseNotifiable = _data["isDiseaseNotifiable"];
             this.location = _data["location"];
             this.created = _data["created"];
             this.infected = _data["infected"];
@@ -4107,8 +4129,15 @@ export class ReportDto implements IReportDto {
         data["id"] = this.id;
         data["occurrenceId"] = this.occurrenceId;
         data["occurrenceTitle"] = this.occurrenceTitle;
+        data["occurrenceRegion"] = this.occurrenceRegion;
+        data["occurrenceCountryFlag"] = this.occurrenceCountryFlag;
         data["diseaseId"] = this.diseaseId;
+        data["diseaseName"] = this.diseaseName;
         data["speciesId"] = this.speciesId;
+        data["speciesName"] = this.speciesName;
+        data["notifiabilityPoints"] = this.notifiabilityPoints;
+        data["isDiseaseMonitored"] = this.isDiseaseMonitored;
+        data["isDiseaseNotifiable"] = this.isDiseaseNotifiable;
         data["location"] = this.location;
         data["created"] = this.created;
         data["infected"] = this.infected;
@@ -4153,8 +4182,15 @@ export interface IReportDto {
     id?: number | undefined;
     occurrenceId?: number;
     occurrenceTitle?: string;
+    occurrenceRegion?: string;
+    occurrenceCountryFlag?: string;
     diseaseId?: number;
+    diseaseName?: string;
     speciesId?: number;
+    speciesName?: string;
+    notifiabilityPoints?: number;
+    isDiseaseMonitored?: boolean;
+    isDiseaseNotifiable?: boolean;
     location?: string;
     created?: string;
     infected?: number;
@@ -4235,6 +4271,7 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
     reportId?: number;
     numberTested?: number;
     professionalId?: number;
+    professionalName?: string;
 
     constructor(data?: IDiagnosticTestDto) {
         if (data) {
@@ -4252,6 +4289,7 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
             this.reportId = _data["reportId"];
             this.numberTested = _data["numberTested"];
             this.professionalId = _data["professionalId"];
+            this.professionalName = _data["professionalName"];
         }
     }
 
@@ -4269,6 +4307,7 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
         data["reportId"] = this.reportId;
         data["numberTested"] = this.numberTested;
         data["professionalId"] = this.professionalId;
+        data["professionalName"] = this.professionalName;
         return data;
     }
 }
@@ -4279,6 +4318,7 @@ export interface IDiagnosticTestDto {
     reportId?: number;
     numberTested?: number;
     professionalId?: number;
+    professionalName?: string;
 }
 
 export class CreateReportCommand implements ICreateReportCommand {

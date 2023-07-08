@@ -41,6 +41,13 @@ const routes: Routes = [
                             ).then((m) => m.ReportsListModule),
                     },
                     {
+                        path: 'view/:id',
+                        loadChildren: () =>
+                            import(
+                                'app/views/reports/view-report/view-report.module'
+                            ).then((m) => m.ViewReportModule),
+                    },
+                    {
                         path: 'occurrences',
                         loadChildren: () =>
                             import(
