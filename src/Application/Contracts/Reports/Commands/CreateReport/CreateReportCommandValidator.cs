@@ -6,7 +6,7 @@ public class CreateReportCommandValidator : AbstractValidator<CreateReportComman
     public CreateReportCommandValidator()
     {
         RuleFor(x => x.RegionId)
-            .NotNull().When(x => x.OccurrenceId == null).WithMessage("Region id must be specified when occurrence id is not provided.");
+            .NotEmpty().When(x => x.OccurrenceId == null).WithMessage("Region id must be specified when occurrence id is not provided.");
 
         RuleFor(x => x.DiseaseId)
             .NotEmpty().WithMessage("Disease id must be specified.");

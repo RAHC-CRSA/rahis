@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="IBM437"?>
+<!--
+============================================================================================================================================
+c:\source\repos\ConsoleApp9\ConsoleApp9\ConsoleApp9.csproj
+============================================================================================================================================
+-->
+<Project DefaultTargets="Build">
+  <!--
+============================================================================================================================================
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk">
+  This import was added implicitly because the Project element's Sdk attribute specified "Microsoft.NET.Sdk".
+
+C:\Program Files\dotnet\sdk\7.0.200-preview.22628.1\Sdks\Microsoft.NET.Sdk\Sdk\Sdk.props
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Sdk.props
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (c) .NET Foundation. All rights reserved.
+***********************************************************************************************
+-->
+  <PropertyGroup xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!--
+      Indicate to other targets that Microsoft.NET.Sdk is being used.
+
+      This must be set here (as early as possible, before Microsoft.Common.props)
+      so that everything that follows can depend on it.
+
+      In particular, Directory.Build.props and nuget package props need to be able
+      to use this flag and they are imported by Microsoft.Common.props.
+    -->
+    <UsingMicrosoftNETSdk>true</UsingMicrosoftNETSdk>
+    <!--
+      Indicate whether the set of SDK defaults that makes SDK style project concise are being used.
+      For example: globbing, importing msbuild common targets.
+
+      Similar to the property above, it must be set here.
+    -->
+    <UsingNETSdkDefaults>true</UsingNETSdkDefaults>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(MSBuildProjectFullPath)' == '$(ProjectToOverrideProjectExtensionsPath)'" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <MSBuildProjectExtensionsPath>$(ProjectExtensionsPathForSpecifiedProject)</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+  <!--<Import Project="$(AlternateCommonProps)" Condition="'$(AlternateCommonProps)' != ''" />-->
+  <!--
+============================================================================================================================================
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="'$(AlternateCommonProps)' == ''">
+
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Microsoft.Common.props
+============================================================================================================================================
+-->
+  <!--
+***********************************************************************************************
+Microsoft.Common.props
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+***********************************************************************************************
+-->
+  <PropertyGroup>
+    <ImportByWildcardBeforeMicrosoftCommonProps Condition="'$(ImportByWildcardBeforeMicrosoftCommonProps)' == ''">true</ImportByWildcardBeforeMicrosoftCommonProps>
+    <ImportByWildcardAfterMicrosoftCommonProps Condition="'$(ImportByWildcardAfterMicrosoftCommonProps)' == ''">true</ImportByWildcardAfterMicrosoftCommonProps>
+    <ImportUserLocationsByWildcardBeforeMicrosoftCommonProps Condition="'$(ImportUserLocationsByWildcardBeforeMicrosoftCommonProps)' == ''">true</ImportUserLocationsByWildcardBeforeMicrosoftCommonProps>
+    <ImportUserLocationsByWildcardAfterMicrosoftCommonProps Condition="'$(ImportUserLocationsByWildcardAfterMicrosoftCommonProps)' == ''">true</ImportUserLocationsByWildcardAfterMicrosoftCommonProps>
+    <ImportDirectoryBuildProps Condition="'$(ImportDirectoryBuildProps)' == ''">true</ImportDirectoryBuildProps>
+  </PropertyGroup>
+  <!--
+      Determine the path to the directory build props file if the user did not disable $(ImportDirectoryBuildProps) and
+      they did not already specify an absolute path to use via $(DirectoryBuildPropsPath)
+  -->
+  <PropertyGroup Condition="'$(ImportDirectoryBuildProps)' == 'true' and '$(DirectoryBuildPropsPath)' == ''">
+    <_DirectoryBuildPropsFile Condition="'$(_DirectoryBuildPropsFile)' == ''">Directory.Build.props</_DirectoryBuildPropsFile>
+    <_DirectoryBuildPropsBasePath Condition="'$(_DirectoryBuildPropsBasePath)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), '$(_DirectoryBuildPropsFile)'))</_DirectoryBuildPropsBasePath>
+    <DirectoryBuildPropsPath Condition="'$(_DirectoryBuildPropsBasePath)' != '' and '$(_DirectoryBuildPropsFile)' != ''">$([System.IO.Path]::Combine('$(_DirectoryBuildPropsBasePath)', '$(_DirectoryBuildPropsFile)'))</DirectoryBuildPropsPath>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  <Import Project="$(DirectoryBuildPropsPath)" Condition="'$(ImportDirectoryBuildProps)' == 'true' and exists('$(DirectoryBuildPropsPath)')">
+
+c:\source\repos\ConsoleApp9\Directory.Build.props
+============================================================================================================================================
+-->
+  <!-- Directory.build.props
+-->
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>myBaseIntermediateOutputPath</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <!--
+============================================================================================================================================
+  </Import>
+
+C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Microsoft.Common.props
+============================================================================================================================================
+-->
+  <!--
+      Prepare to import project extensions which usually come from packages.  Package management systems will create a file at:
+        $(MSBuildProjectExtensionsPath)\$(MSBuildProjectFile).<SomethingUnique>.props
+
+      Each package management system should use a unique moniker to avoid collisions.  It is a wild-card import so the package
+      management system can write out multiple files but the order of the import is alphabetic because MSBuild sorts the list.
+  -->
+  <PropertyGroup>
+    <!--
+        The declaration of $(BaseIntermediateOutputPath) had to be moved up from Microsoft.Common.CurrentVersion.targets
+        in order for the $(MSBuildProjectExtensionsPath) to use it as a default.
+    -->
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">obj\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="!HasTrailingSlash('$(BaseIntermediateOutputPath)')">$(BaseIntermediateOutputPath)\</BaseIntermediateOutputPath>
+    <_InitialBaseIntermediateOutputPath>$(BaseIntermediateOutputPath)</_InitialBaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath Condition="'$(MSBuildProjectExtensionsPath)' == '' ">$(BaseIntermediateOutputPath)</MSBuildProjectExtensionsPath>
+    <!--
+        Import paths that are relative default to be relative to the importing file.  However, since MSBuildExtensionsPath
+        defaults to BaseIntermediateOutputPath we expect it to be relative to the project directory.  So if the path is relative
+        it needs to be made absolute based on the project directory.
+    -->
+    <MSBuildProjectExtensionsPath Condition="'$([System.IO.Path]::IsPathRooted($(MSBuildProjectExtensionsPath)))' == 'false'">$([System.IO.Path]::Combine('$(MSBuildProjectDirectory)', '$(MSBuildProjectExtensionsPath)'))</MSBuildProjectExtensionsPath>
+    <MSBuildProjectExtensionsPath Condition="!HasTrailingSlash('$(MSBuildProjectExtensionsPath)')">$(MSBuildProjectExtensionsPath)\</MSBuildProjectExtensionsPath>
+    <ImportProjectExtensionProps Condition="'$(ImportProjectExtensionProps)' == ''">true</ImportProjectExtensionProps>
+    <_InitialMSBuildProjectExtensionsPath Condition=" '$(ImportProjectExtensionProps)' == 'true' ">$(MSBuildProjectExtensionsPath)</_InitialMSBuildProjectExtensionsPath>
+  </PropertyGroup>
+  ...

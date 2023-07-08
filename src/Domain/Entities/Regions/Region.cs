@@ -8,6 +8,9 @@ public class Region : BaseAuditableEntity<long>, IAggregateRoot
     public long CountryId { get; private set; }
     public virtual Country Country { get; private set; }
 
+    private readonly List<Municipality> _municipalities = new ();
+    public IReadOnlyCollection<Municipality> Municipalities => _municipalities.AsReadOnly();
+
     private Region() : base()
     {
     }
@@ -28,8 +31,21 @@ public class Region : BaseAuditableEntity<long>, IAggregateRoot
         return new Region(countryId, name, code);
     }
 
+    public void AddMunicipality(string name)
+    {
+        _municipalities.Add(Municipality.Create(Id, name));
+    }
+
+    public void DeleteMunicipalities()
+    {
+        foreach (var municipal in _municipalities)
+            municipal.Delete();
+    }
+
     public void Delete()
     {
+        DeleteMunicipalities();
+
         IsDeleted = true;
         LastModified = DateTime.UtcNow;
     }

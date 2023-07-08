@@ -9,6 +9,21 @@ export const getRegions = createSelector(
     (state: RegionsState) => state.data
 );
 
+export const getCommunities = createSelector(
+    regionsState,
+    (state: RegionsState) => state.communities
+);
+
+export const getDistricts = createSelector(
+    regionsState,
+    (state: RegionsState) => state.districts
+);
+
+export const getMunicipalities = createSelector(
+    regionsState,
+    (state: RegionsState) => state.municipalities
+);
+
 export const getCountries = createSelector(
     regionsState,
     (state: RegionsState) => state.countries

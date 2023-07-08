@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Globalization;
+using System.Reflection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RegionalAnimalHealth.Application.Common.Security;
 using RegionalAnimalHealth.Domain.Entities.Regions;
 using RegionalAnimalHealth.Domain.Entities.Reports;
 using RegionalAnimalHealth.Domain.Exceptions;
 using RegionalAnimalHealth.Infrastructure.Identity;
+using RegionalAnimalHealth.Infrastructure.Persistence.SeedData;
 
 namespace RegionalAnimalHealth.Infrastructure.Persistence;
 
@@ -46,7 +50,6 @@ public class ApplicationDbContextInitialiser
         {
             await SeedRolesAsync();
             await SeedAdminsAsync();
-            await SeedCountriesAsync();
             await SeedDiseasesAndSpeciesAsync();
             await SeedRegionsAsync();
         }
@@ -107,42 +110,6 @@ public class ApplicationDbContextInitialiser
                 }
             }
         }
-    }
-
-    public async Task SeedCountriesAsync()
-    {
-        if (!_context.Countries.Any())
-        {
-            try
-            {
-                var countries = new List<Country>
-                {
-                    Country.Create("Benin", "BJ", "https://www.worldometers.info//img/flags/small/tn_bn-flag.gif"),
-                    Country.Create("Burkina Faso", "BF", "https://www.worldometers.info//img/flags/small/tn_uv-flag.gif"),
-                    Country.Create("Cape Verde", "CV", "https://www.worldometers.info//img/flags/small/tn_cv-flag.gif"),
-                    Country.Create("Ivory Coast", "CI", "https://www.worldometers.info//img/flags/small/tn_iv-flag.gif"),
-                    Country.Create("Gambia", "GM", "https://www.worldometers.info//img/flags/small/tn_ga-flag.gif"),
-                    Country.Create("Ghana", "GH", "https://www.worldometers.info//img/flags/small/tn_gh-flag.gif"),
-                    Country.Create("Guniea", "GN", "https://www.worldometers.info//img/flags/small/tn_gv-flag.gif"),
-                    Country.Create("Guniea Bissau", "GW", "https://www.worldometers.info//img/flags/small/tn_pu-flag.gif"),
-                    Country.Create("Liberia", "LR", "https://www.worldometers.info//img/flags/small/tn_li-flag.gif"),
-                    Country.Create("Mali", "ML", "https://www.worldometers.info//img/flags/small/tn_ml-flag.gif"),
-                    Country.Create("Niger", "NE", "https://www.worldometers.info//img/flags/small/tn_ng-flag.gif"),
-                    Country.Create("Nigeria", "NG", "https://www.worldometers.info//img/flags/small/tn_ni-flag.gif"),
-                    Country.Create("Senegal", "SN", "https://www.worldometers.info//img/flags/small/tn_sg-flag.gif"),
-                    Country.Create("Sierra Leone", "SL", "https://www.worldometers.info//img/flags/small/tn_sl-flag.gif"),
-                    Country.Create("Togo", "TG", "https://www.worldometers.info//img/flags/small/tn_to-flag.gif"),
-                };
-
-                await _context.Countries.AddRangeAsync(countries);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new BusinessRuleException("DbInitialiser", ex.Message ?? "Error occured while seeding countries.");
-            }
-        }
-
     }
 
     public async Task SeedDiseasesAndSpeciesAsync()
@@ -387,27 +354,126 @@ public class ApplicationDbContextInitialiser
         {
             try
             {
-                var country = await _context.Countries.Where(x => x.Name == "Nigeria").FirstOrDefaultAsync();
-                if (country != null)
-                {
-                    var regions = new List<Region>
-                    {
-                        Region.Create(country.Id, "South East", "SE"),
-                        Region.Create(country.Id, "South West", "SW"),
-                        Region.Create(country.Id, "South South", "SS"),
-                        Region.Create(country.Id, "North East", "NE"),
-                        Region.Create(country.Id, "North West", "NW"),
-                        Region.Create(country.Id, "North Central", "NC"),
-                    };
+                // Parse json into data class
+                var fileName = "countryRegions.json";
+                var _filePath = Path.Combine(GetRootPath(), "Infrastructure\\Persistence\\SeedData", fileName);
+                // For when you need to seed directly from your pc
+                // var dataText = File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/countryRegions.json");
+                var dataText = File.ReadAllText(_filePath);
+                var regionSeedData = JsonConvert.DeserializeObject<List<RegionData>>(dataText);
 
-                    await _context.Regions.AddRangeAsync(regions);
-                    await _context.SaveChangesAsync();
+                foreach (var country in regionSeedData)
+                {
+                    await SeedCountryAsync(country);
                 }
             }
             catch (Exception ex)
             {
-                throw new BusinessRuleException("DbInitializer", ex.Message ?? "Error occurred while seeding regions.");
+                throw new BusinessRuleException("DbInitializer", ex.Message ?? "Error occured while seeding regions.");
             }
         }
+    }
+
+    private async Task SeedCountryAsync(RegionData country)
+    {
+        var regions = country.Regions;
+        var regionData = country.Regions.DistinctBy(r => r.Region).SelectMany(RegionsSelectorExpression(regions)).ToList();
+
+        var countryEntry = Country.Create(country.Country, country.Code, country.Flag);        
+
+        foreach (var region in regionData)
+        {
+            if (string.IsNullOrEmpty(region.Name)) continue;
+
+            countryEntry.AddRegion(region.Name, region.Name.ToLower());
+            var regionEntry = countryEntry.Regions.Where(r => r.Name == region.Name).FirstOrDefault();
+
+            foreach (var municipality in region.Municipalities)
+            {
+                if (string.IsNullOrEmpty(municipality.Name)) continue;
+
+                regionEntry?.AddMunicipality(municipality.Name);
+                var municipalityEntry = regionEntry?.Municipalities.Where(m => m.Name == municipality.Name).FirstOrDefault();
+
+                foreach (var district in municipality.Districts)
+                {
+                    if (string.IsNullOrEmpty(district.Name)) continue;
+
+                    municipalityEntry?.AddDistrict(district.Name);
+                    var districtEntry = municipalityEntry?.Districts.Where(d => d.Name == district.Name).FirstOrDefault();
+
+                    foreach (var community in district.Communities)
+                    {
+                        if (string.IsNullOrEmpty(community.Name)) continue;
+
+                        districtEntry?.AddCommunity(community.Name);
+                    }
+                }
+            }
+        }
+
+        await _context.Countries.AddAsync(countryEntry);
+        await _context.SaveChangesAsync();
+
+    }
+
+    private Func<RegionItem, List<RegionInsert>> RegionsSelectorExpression(List<RegionItem> regions)
+    {
+        var textInfo = new CultureInfo("en-UK", false).TextInfo;
+        return e => regions
+            .Where(x => x.Region == e.Region)
+            .DistinctBy(x => x.Region)
+            .Select(r => new RegionInsert
+            {
+                Name = !string.IsNullOrEmpty(r.Region) ? textInfo.ToTitleCase(r.Region?.ToLower()) : "",
+                Municipalities = regions?.DistinctBy(r => r.Municipality).SelectMany(MunicipalitiesSelectorExpression(r.Region, regions))?.ToList()
+            })
+            .ToList();
+    }
+
+    private Func<RegionItem, List<MunicipalityInsert>> MunicipalitiesSelectorExpression(string region, List<RegionItem> regions)
+    {
+        var textInfo = new CultureInfo("en-UK", false).TextInfo;
+        return e => regions
+            .Where(m => m.Region == region && m.Municipality == e.Municipality)
+            .DistinctBy(m => m.Municipality)
+            .Select(m => new MunicipalityInsert
+            {
+                Name = !string.IsNullOrEmpty(e.Municipality) ? textInfo.ToTitleCase(e.Municipality?.ToLower()) : "",
+                Districts = regions?.DistinctBy(m => m.District).SelectMany(DistrictsSelectorExpression(e.District, regions))?.ToList()
+            })
+            .ToList();
+    }
+
+    private Func<RegionItem, List<DistrictInsert>> DistrictsSelectorExpression(string municipality, List<RegionItem> regions)
+    {
+        var textInfo = new CultureInfo("en-UK", false).TextInfo;
+        return e => regions
+            .Where(d => d.Municipality == municipality && d.District == e.District)
+            .DistinctBy(d => d.District)
+            .Select(d => new DistrictInsert
+            {
+                Name = !string.IsNullOrEmpty(d.District) ? textInfo.ToTitleCase(d.District?.ToLower()) : "",
+                Communities = regions?.DistinctBy(d => d.Community).SelectMany(CommunitiesSelectorExpression(e.District, regions))?.ToList()
+            })
+            .ToList();
+    }
+
+    private Func<RegionItem, List<CommunityInsert>> CommunitiesSelectorExpression(string district, List<RegionItem> regions)
+    {
+        var textInfo = new CultureInfo("en-UK", false).TextInfo;
+        return e => regions
+            .Where(c => c.District == district && c.Community == e.Community)
+            .DistinctBy(c => c.Community)
+            .Select(c => new CommunityInsert { Name = !string.IsNullOrEmpty(c.Community) ? textInfo.ToTitleCase(c.Community?.ToLower()) : "" })
+            .ToList();
+    }
+
+    private string GetRootPath()
+    {
+        var url = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
+        var rootPath = url.Replace("\\WebUI\\bin\\Debug\\net7.0", "");
+        rootPath = rootPath.Replace("file:\\", "");
+        return rootPath;
     }
 }

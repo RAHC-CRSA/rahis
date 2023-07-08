@@ -14,7 +14,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field class="flex-auto w-full">
+    <mat-form-field *ngIf="(regions$ | async)?.length" class="flex-auto w-full mb-6">
       <mat-label>In what region?</mat-label>
       <input type="text" aria-label="Region" matInput [formControl]="regionControl"
         [matAutocomplete]="regionAutocomplete" placeholder="Select occurrence region">
@@ -31,6 +31,46 @@
       <app-add-region [country]="selectedCountry.id" (close)="onAddRegionClosed()"></app-add-region>
       <hr>
     </div>
+
+    <mat-form-field *ngIf="(regions$ | async)?.length && (municipalities$ | async)?.length" class="flex-auto w-full">
+      <mat-label>In what municipality?</mat-label>
+      <input type="text" aria-label="Municipality" matInput [formControl]="municipalityControl"
+        [matAutocomplete]="municipalityAutocomplete" placeholder="Select occurrence municipality">
+      <mat-autocomplete #municipalityAutocomplete="matAutocomplete" [displayWith]="displayMunicipalityFn"
+        (optionSelected)="updateSelectedMunicipality($event)">
+        <mat-option *ngFor="let municipality of filteredMunicipalities | async" [value]="municipality">
+          {{ municipality.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field
+      *ngIf="(regions$ | async)?.length && (municipalities$ | async)?.length && (districts$ | async)?.length"
+      class="flex-auto w-full">
+      <mat-label>In what district?</mat-label>
+      <input type="text" aria-label="Districts" matInput [formControl]="districtControl"
+        [matAutocomplete]="districtAutocomplete" placeholder="Select occurrence district">
+      <mat-autocomplete #districtAutocomplete="matAutocomplete" [displayWith]="displayDistrictFn"
+        (optionSelected)="updateSelectedDistrict($event)">
+        <mat-option *ngFor="let district of filteredDistricts | async" [value]="district">
+          {{ district.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field
+      *ngIf="(regions$ | async)?.length && (municipalities$ | async)?.length && (districts$ | async)?.length && (communities$ | async)?.length"
+      class="flex-auto w-full">
+      <mat-label>In what community?</mat-label>
+      <input type="text" aria-label="Community" matInput [formControl]="communityControl"
+        [matAutocomplete]="communityAutocomplete" placeholder="Select occurrence community">
+      <mat-autocomplete #communityAutocomplete="matAutocomplete" [displayWith]="displayCommunityFn"
+        (optionSelected)="updateSelectedCommunity($event)">
+        <mat-option *ngFor="let community of filteredCommunities | async" [value]="community">
+          {{ community.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </div>
 
   <div class="flex justify-between my-4">

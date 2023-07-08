@@ -13,6 +13,8 @@
       </mat-autocomplete>
       <mat-hint *ngIf="!newSpecies">Select <strong>'{{ otherOption }}'</strong> to add a new species.</mat-hint>
     </mat-form-field>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Species is required', control: diseaseInfo.controls['species']}"></ng-container>
 
     <div *ngIf="newSpecies || !species.length" @expandCollapse>
       <app-add-species (close)="onAddSpeciesClosed()"></app-add-species>
@@ -31,6 +33,8 @@
       </mat-autocomplete>
       <mat-hint *ngIf="!newDisease">Select <strong>'{{ otherOption }}'</strong> to add a new disease.</mat-hint>
     </mat-form-field>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Disease is required', control: diseaseInfo.controls['disease']}"></ng-container>
 
     <div *ngIf="newDisease || !diseases.length" @expandCollapse>
       <app-add-disease [species]="selectedSpecies.id" (close)="onAddDiseaseClosed()"></app-add-disease>
@@ -48,3 +52,9 @@
     </button>
   </div>
 </form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

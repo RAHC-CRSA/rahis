@@ -18,6 +18,10 @@ import {
     IAddSpeciesCommand,
     IDeleteReportCommand,
     IDeleteOccurrenceCommand,
+    MunicipalityDto,
+    DistrictDto,
+    CommunityDto,
+    IVerifyReportCommand,
 } from '../../../../web-api-client';
 
 // Create report
@@ -61,11 +65,28 @@ export const loadReportSuccess = createAction(
     props<{ payload: ReportDto }>()
 );
 
+// Verify report
+export const VERIFY_REPORT = `[Reports] Verify Report`;
+export const VERIFY_REPORT_SUCCESS = `[Reports] Verify Report Success`;
+
+export const verifyReport = createAction(
+    VERIFY_REPORT,
+    props<{ payload: IVerifyReportCommand }>()
+);
+
+export const verifyReportSuccess = createAction(
+    VERIFY_REPORT_SUCCESS,
+    props<{ payload: number }>()
+);
+
 // Load reports
 export const LOAD_REPORTS = `[Reports] Load Reports`;
 export const LOAD_REPORTS_SUCCESS = `[Reports] Load Reports Success`;
 
-export const loadReports = createAction(LOAD_REPORTS);
+export const loadReports = createAction(
+    LOAD_REPORTS,
+    props<{ payload: boolean | null | undefined }>()
+);
 export const loadReportsSuccess = createAction(
     LOAD_REPORTS_SUCCESS,
     props<{ payload: ReportListDto[] }>()
@@ -224,6 +245,45 @@ export const addSpecies = createAction(
 export const addSpeciesSuccess = createAction(
     ADD_SPECIES_SUCCESS,
     props<{ payload: SpeciesDto }>()
+);
+
+// Get municipalities
+export const LOAD_MUNICIPALITIES = `[Reports] Load Municipalities`;
+export const LOAD_MUNICIPALITIES_SUCCESS = `[Reports] Load Municipalities Success`;
+
+export const loadMunicipalities = createAction(
+    LOAD_MUNICIPALITIES,
+    props<{ payload?: number | undefined }>()
+);
+export const loadMunicipalitiesSuccess = createAction(
+    LOAD_MUNICIPALITIES_SUCCESS,
+    props<{ payload?: MunicipalityDto[] }>()
+);
+
+// Get districts
+export const LOAD_DISTRICTS = `[Reports] Load Districts`;
+export const LOAD_DISTRICTS_SUCCESS = `[Reports] Load Districts Success`;
+
+export const loadDistricts = createAction(
+    LOAD_DISTRICTS,
+    props<{ payload?: number | undefined }>()
+);
+export const loadDistrictsSuccess = createAction(
+    LOAD_DISTRICTS_SUCCESS,
+    props<{ payload?: DistrictDto[] }>()
+);
+
+// Get communities
+export const LOAD_COMMUNITIES = `[Reports] Load Communities`;
+export const LOAD_COMMUNITIES_SUCCESS = `[Reports] Load Communities Success`;
+
+export const loadCommunities = createAction(
+    LOAD_COMMUNITIES,
+    props<{ payload?: number | undefined }>()
+);
+export const loadCommunitiesSuccess = createAction(
+    LOAD_COMMUNITIES_SUCCESS,
+    props<{ payload?: CommunityDto[] }>()
 );
 
 // Set feedback

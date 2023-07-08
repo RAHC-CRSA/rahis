@@ -14,6 +14,8 @@
       <mat-hint *ngIf="!newOccurrence">Select <strong>'{{ otherOption }}'</strong> to add this report as a new
         occurrence.</mat-hint>
     </mat-form-field>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Occurrence is required', control: occurrenceInfo.controls['occurrence']}"></ng-container>
 
     <div *ngIf="newOccurrence || !occurrences.length" @expandCollapse>
       <div *ngIf="occurrences.length">
@@ -34,3 +36,9 @@
     </button>
   </div>
 </form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

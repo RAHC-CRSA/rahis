@@ -16,9 +16,28 @@ import {
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
-import { loadCountries, loadRegions } from 'app/modules/reports/store/actions';
-import { getCountries, getRegions } from 'app/modules/reports/store/selectors';
-import { CountryDto, IAddRegionCommand, RegionDto } from 'app/web-api-client';
+import {
+    loadCommunities,
+    loadCountries,
+    loadDistricts,
+    loadMunicipalities,
+    loadRegions,
+} from 'app/modules/reports/store/actions';
+import {
+    getCommunities,
+    getCountries,
+    getDistricts,
+    getMunicipalities,
+    getRegions,
+} from 'app/modules/reports/store/selectors';
+import {
+    CommunityDto,
+    CountryDto,
+    DistrictDto,
+    IAddRegionCommand,
+    MunicipalityDto,
+    RegionDto,
+} from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
 @Component({
@@ -35,9 +54,15 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
 
     countryControl = new FormControl();
     regionControl = new FormControl();
+    municipalityControl = new FormControl();
+    districtControl = new FormControl();
+    communityControl = new FormControl();
 
     selectedCountry: CountryDto;
     selectedRegion: RegionDto;
+    selectedMunicipality: RegionDto;
+    selectedDistrict: RegionDto;
+    selectedCommunity: RegionDto;
 
     countries$: Observable<CountryDto[] | null | undefined>;
     countries: CountryDto[];
@@ -46,6 +71,18 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
     regions$: Observable<RegionDto[] | null | undefined>;
     regions: RegionDto[];
     filteredRegions: Observable<RegionDto[]>;
+
+    municipalities$: Observable<MunicipalityDto[] | null | undefined>;
+    municipalities: MunicipalityDto[];
+    filteredMunicipalities: Observable<MunicipalityDto[]>;
+
+    districts$: Observable<DistrictDto[] | null | undefined>;
+    districts: DistrictDto[];
+    filteredDistricts: Observable<DistrictDto[]>;
+
+    communities$: Observable<CommunityDto[] | null | undefined>;
+    communities: CommunityDto[];
+    filteredCommunities: Observable<CommunityDto[]>;
 
     @Output() previous = new EventEmitter();
     @Output() submit = new EventEmitter();
@@ -69,8 +106,11 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
 
     initForm() {
         this.locationInfo = this.formBuilder.group({
-            country: [this.formData.country, Validators.required],
-            region: [this.formData.region, Validators.required],
+            country: [this.formData.country, [Validators.required]],
+            region: [this.formData.region, [Validators.required]],
+            municipality: [this.formData.municipality],
+            district: [this.formData.district],
+            community: [this.formData.community],
         });
     }
 
@@ -111,12 +151,69 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
                 )
             );
         });
+
+        this.municipalities$ = this.store.select(getMunicipalities);
+        this.municipalities$.subscribe((municipalities) => {
+            this.municipalities = municipalities;
+
+            this.filteredMunicipalities =
+                this.municipalityControl.valueChanges.pipe(
+                    startWith({} as MunicipalityDto),
+                    map((municipality) =>
+                        municipality && typeof municipality === 'object'
+                            ? municipality.name
+                            : municipality
+                    ),
+                    map((name: string) =>
+                        name
+                            ? this._filterMunicipality(name)
+                            : this.municipalities.slice()
+                    )
+                );
+        });
+
+        this.districts$ = this.store.select(getDistricts);
+        this.districts$.subscribe((districts) => {
+            this.districts = districts;
+
+            this.filteredDistricts = this.districtControl.valueChanges.pipe(
+                startWith({} as DistrictDto),
+                map((district) =>
+                    district && typeof district === 'object'
+                        ? district.name
+                        : district
+                ),
+                map((name: string) =>
+                    name ? this._filterDistrict(name) : this.districts.slice()
+                )
+            );
+        });
+
+        this.communities$ = this.store.select(getCommunities);
+        this.communities$.subscribe((communities) => {
+            this.communities = communities;
+
+            this.filteredCommunities = this.communityControl.valueChanges.pipe(
+                startWith({} as CommunityDto),
+                map((community) =>
+                    community && typeof community === 'object'
+                        ? community.name
+                        : community
+                ),
+                map((name: string) =>
+                    name
+                        ? this._filterCommunity(name)
+                        : this.communities.slice()
+                )
+            );
+        });
     }
 
     get f() {
         return this.locationInfo.value;
     }
 
+    // Country field
     private _filterCountry(name: string): CountryDto[] {
         return this.countries.filter(
             (option) =>
@@ -134,9 +231,80 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
 
         this.locationInfo.patchValue({ country: country.id });
 
+        this.regionControl.setValue('', { emitEvent: true });
+        this.districtControl.setValue('', { emitEvent: true });
+        this.communityControl.setValue('', { emitEvent: true });
+
         this.store.dispatch(loadRegions({ payload: country.id }));
     }
 
+    // Municipality field
+    private _filterMunicipality(name: string): MunicipalityDto[] {
+        return this.municipalities.filter(
+            (option) =>
+                option.name.toLowerCase().indexOf(name.toLowerCase()) === 0
+        );
+    }
+
+    displayMunicipalityFn(municipality: MunicipalityDto): string {
+        return municipality ? municipality.name : '';
+    }
+
+    updateSelectedMunicipality(event: any) {
+        this.selectedMunicipality = event.option.value;
+        const municipality: MunicipalityDto = event.option.value;
+
+        this.locationInfo.patchValue({ municipality: municipality.id });
+
+        this.districtControl.setValue('', { emitEvent: true });
+        this.communityControl.setValue('', { emitEvent: true });
+
+        this.store.dispatch(loadDistricts({ payload: municipality.id }));
+    }
+
+    // District field
+    private _filterDistrict(name: string): CountryDto[] {
+        return this.districts.filter(
+            (option) =>
+                option.name.toLowerCase().indexOf(name.toLowerCase()) === 0
+        );
+    }
+
+    displayDistrictFn(district: DistrictDto): string {
+        return district ? district.name : '';
+    }
+
+    updateSelectedDistrict(event: any) {
+        this.selectedDistrict = event.option.value;
+        const district: DistrictDto = event.option.value;
+
+        this.locationInfo.patchValue({ district: district.id });
+
+        this.communityControl.setValue('', { emitEvent: true });
+
+        this.store.dispatch(loadCommunities({ payload: district.id }));
+    }
+
+    // Community field
+    private _filterCommunity(name: string): CommunityDto[] {
+        return this.communities.filter(
+            (option) =>
+                option.name.toLowerCase().indexOf(name.toLowerCase()) === 0
+        );
+    }
+
+    displayCommunityFn(community: CommunityDto): string {
+        return community ? community.name : '';
+    }
+
+    updateSelectedCommunity(event: any) {
+        this.selectedCommunity = event.option.value;
+        const community: CommunityDto = event.option.value;
+
+        this.locationInfo.patchValue({ community: community.id });
+    }
+
+    // Region field
     private _filterRegion(name: string): RegionDto[] {
         return this.regions.filter(
             (option) =>
@@ -156,6 +324,12 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
             region.name.toLowerCase() === this.otherOption.toLowerCase();
 
         this.locationInfo.patchValue({ region: region.id });
+
+        this.municipalityControl.setValue('', { emitEvent: true });
+        this.districtControl.setValue('', { emitEvent: true });
+        this.communityControl.setValue('', { emitEvent: true });
+
+        this.store.dispatch(loadMunicipalities({ payload: region.id }));
 
         if (this.newRegion) this.regionControl.disable();
     }

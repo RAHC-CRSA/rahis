@@ -6,6 +6,8 @@
       <mat-radio-button [value]="false">No</mat-radio-button>
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Stamping out is required', control: treatmentInfo.controls['stampingOut']}"></ng-container>
   </div>
 
   <div class="w-full mb-4">
@@ -14,13 +16,17 @@
       <mat-radio-button [value]="false">No</mat-radio-button>
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Destruction of corpses is required', control: treatmentInfo.controls['destructionOfCorpses']}"></ng-container>
 
     <div *ngIf="corpseDestruction" @expandCollapse>
       <mat-form-field class="w-full mt-4">
         <mat-label>How many corpses were destroyed?</mat-label>
-        <input aria-label="Corpses destroyed" matInput formControlName="corpsesDestroyed"
+        <input type="number" aria-label="Corpses destroyed" matInput formControlName="corpsesDestroyed"
           placeholder="Number of corpses destroyed" />
       </mat-form-field>
+      <ng-container [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{validation: 'required', message: 'Corpses destroyed is required', control: treatmentInfo.controls['corpsesDestroyed']}"></ng-container>
     </div>
   </div>
 
@@ -30,6 +36,8 @@
       <mat-radio-button [value]="false">No</mat-radio-button>
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Disinfection is required', control: treatmentInfo.controls['disinfection']}"></ng-container>
   </div>
 
   <div class="w-full mb-4">
@@ -38,12 +46,28 @@
       <mat-radio-button [value]="false">No</mat-radio-button>
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Observation is required', control: treatmentInfo.controls['observation']}"></ng-container>
 
     <div *ngIf="wasObservation" @expandCollapse>
-      <mat-form-field class="w-full mt-4">
-        <mat-label>For how long?</mat-label>
-        <input aria-label="Observation duration" matInput formControlName="observationDuration" placeholder="7 days" />
-      </mat-form-field>
+      <mat-label>For how long?</mat-label>
+      <div class="flex flex-row gap-3">
+        <mat-form-field class="w-full">
+          <input type="number" aria-label="Observation duration" matInput formControlName="observationDuration"
+            placeholder="7" />
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-select formControlName="observationDurationSuffix">
+            <mat-option *ngFor="let duration of durations" [value]="duration">
+              {{ duration }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <ng-container [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{validation: 'required', message: 'Observation duration is required', control: treatmentInfo.controls['observationDuration']}"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{validation: 'required', message: 'Observation duration type is required', control: treatmentInfo.controls['observationDurationSuffix']}"></ng-container>
     </div>
   </div>
 
@@ -53,12 +77,28 @@
       <mat-radio-button [value]="false">No</mat-radio-button>
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Quarantine is required', control: treatmentInfo.controls['quarantine']}"></ng-container>
 
     <div *ngIf="wasQuarantined" @expandCollapse>
-      <mat-form-field class="w-full mt-4">
-        <mat-label>For how long?</mat-label>
-        <input aria-label="Quarantine duration" matInput formControlName="quarantineDuration" placeholder="10 days" />
-      </mat-form-field>
+      <mat-label>For how long?</mat-label>
+      <div class="flex flex-row gap-3 w-full">
+        <mat-form-field class="w-full">
+          <input type="number" aria-label="Quarantine duration" matInput formControlName="quarantineDuration"
+            placeholder="7" />
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-select formControlName="quarantineDurationSuffix">
+            <mat-option *ngFor="let duration of durations" [value]="duration">
+              {{ duration }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <ng-container [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{validation: 'required', message: 'Quarantine duration is required', control: treatmentInfo.controls['quarantineDuration']}"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{validation: 'required', message: 'Quarantine duration type is required', control: treatmentInfo.controls['quarantineDurationSuffix']}"></ng-container>
     </div>
   </div>
 
@@ -68,6 +108,8 @@
       <mat-radio-button [value]="false">No</mat-radio-button>
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Movement control is required', control: treatmentInfo.controls['movementControl']}"></ng-container>
 
     <div *ngIf="movementControlled" @expandCollapse>
       <mat-form-field class="w-full mt-4">
@@ -75,6 +117,8 @@
         <textarea aria-label="Movement control measures" matInput formControlName="movementControlMeasures"
           placeholder="Measures taken to control movement"></textarea>
       </mat-form-field>
+      <ng-container [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{validation: 'required', message: 'Movement control measures is required', control: treatmentInfo.controls['movementControlMeasures']}"></ng-container>
     </div>
   </div>
 
@@ -84,6 +128,8 @@
       <mat-radio-button [value]="false">No</mat-radio-button>
       <mat-radio-button [value]="true">Yes</mat-radio-button>
     </mat-radio-group>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Treatment is required', control: treatmentInfo.controls['treatment']}"></ng-container>
 
     <div *ngIf="administeredMeds" @expandCollapse>
       <div class="w-full mt-4">
@@ -146,3 +192,9 @@
     </button>
   </div>
 </form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

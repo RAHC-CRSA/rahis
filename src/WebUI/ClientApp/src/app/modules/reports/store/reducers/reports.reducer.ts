@@ -1,9 +1,12 @@
 import * as actions from '../actions/reports.actions';
 import { createReducer, on } from '@ngrx/store';
 import {
+    CommunityDto,
     CountryDto,
     DiseaseDto,
+    DistrictDto,
     InstitutionDto,
+    MunicipalityDto,
     OccurrenceDto,
     ParaProfessionalDto,
     RegionDto,
@@ -16,6 +19,9 @@ import {
 export interface ReportState {
     data?: ReportListDto[] | null;
     entry?: ReportDto | null;
+    communities?: CommunityDto[] | null;
+    districts?: DistrictDto[] | null;
+    municipalities?: MunicipalityDto[] | null;
     regions?: RegionDto[] | null;
     countries?: CountryDto[] | null;
     occurrences?: OccurrenceDto[] | null;
@@ -31,6 +37,9 @@ export interface ReportState {
 export const initialState: ReportState = {
     data: [],
     entry: null,
+    communities: [],
+    districts: [],
+    municipalities: [],
     regions: [],
     countries: [],
     occurrences: [],
@@ -70,13 +79,14 @@ export const reducer = createReducer(
     on(actions.loadReport, (state) => ({
         ...state,
         feedback: null,
+        entry: null,
         loading: true,
     })),
     on(actions.loadReportSuccess, (state, { payload }) => ({
         ...state,
         feedback: null,
         loading: false,
-        report: payload,
+        entry: payload,
     })),
     on(actions.loadReports, (state) => ({
         ...state,
@@ -235,6 +245,21 @@ export const reducer = createReducer(
         loading: false,
         species: [...state.species, payload],
     })),
+    on(actions.verifyReport, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.verifyReportSuccess, (state, { payload }) => {
+        let report = state.data.find((e) => e.id == payload);
+        report.isVerified = true;
+        return {
+            ...state,
+            feedback: null,
+            loading: false,
+            data: state.data.map((e) => (e.id != payload ? e : report)),
+        };
+    }),
     on(actions.deleteReport, (state) => ({
         ...state,
         feedback: null,
@@ -245,6 +270,39 @@ export const reducer = createReducer(
         feedback: null,
         loading: false,
         data: state.data.filter((e) => e.id != payload),
+    })),
+    on(actions.loadCommunities, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadCommunitiesSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        communities: payload,
+    })),
+    on(actions.loadDistricts, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadDistrictsSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        districts: payload,
+    })),
+    on(actions.loadMunicipalities, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadMunicipalitiesSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        municipalities: payload,
     })),
     on(actions.setFeedback, (state, { payload }) => ({
         ...state,

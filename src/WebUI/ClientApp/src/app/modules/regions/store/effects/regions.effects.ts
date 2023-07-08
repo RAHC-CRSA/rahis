@@ -112,4 +112,69 @@ export class RegionsEffects {
             )
         )
     );
+
+    loadMunicipalities$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(RegionsActions.loadMunicipalities),
+            mergeMap((action) =>
+                this.regionsService.getAllMunicipalities(action.payload).pipe(
+                    map((data) =>
+                        RegionsActions.loadMunicipalitiesSuccess({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            RegionsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    loadDistricts$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(RegionsActions.loadDistricts),
+            mergeMap((action) =>
+                this.regionsService.getAllDistricts(action.payload).pipe(
+                    map((data) =>
+                        RegionsActions.loadDistrictsSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            RegionsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    loadCommunities$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(RegionsActions.loadCommunities),
+            mergeMap((action) =>
+                this.regionsService.getAllCommunities(action.payload).pipe(
+                    map((data) =>
+                        RegionsActions.loadCommunitiesSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            RegionsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
 }
