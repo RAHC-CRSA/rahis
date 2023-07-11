@@ -6,24 +6,23 @@ using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
-using RegionalAnimalHealth.Application.Contracts.Users.Queries.GetUsers;
 using RegionalAnimalHealth.Domain.Entities.Reports;
 using RegionalAnimalHealth.Domain.Models.Messaging;
 using static RegionalAnimalHealth.Domain.Models.Messaging.ReportNotification;
 
-namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.SendNotifications;
-public class SendNotificationsCommand : IRequest<Result>
+namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.SendNotification;
+public class SendNotificationCommand : IRequest<Result>
 {
     public long ReportId { get; set; }
 }
 
-public class SendNotificationsCommandHandler : IRequestHandler<SendNotificationsCommand, Result>
+public class SendNotificationCommandHandler : IRequestHandler<SendNotificationCommand, Result>
 {
     private readonly IApplicationDbContext _context;
     private readonly IEmailService _emailService;
-    private readonly ILogger<SendNotificationsCommand> _logger;
+    private readonly ILogger<SendNotificationCommand> _logger;
 
-    public SendNotificationsCommandHandler(IApplicationDbContext context, IEmailService emailService, ILogger<SendNotificationsCommand> logger)
+    public SendNotificationCommandHandler(IApplicationDbContext context, IEmailService emailService, ILogger<SendNotificationCommand> logger)
     {
         _context = context;
         _emailService = emailService;
@@ -31,7 +30,7 @@ public class SendNotificationsCommandHandler : IRequestHandler<SendNotifications
     }
 
 
-    public async Task<Result> Handle(SendNotificationsCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(SendNotificationCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -63,6 +62,6 @@ public class SendNotificationsCommandHandler : IRequestHandler<SendNotifications
     private Expression<Func<NotificationRecipient, ReportNotification>> EmailRecipientSelector(ReportDto report)
     {
         var reportData = ReportData.Create(report.StampingOut);
-        return e => Create(reportData, "", e.EmailAddress, "New Report", e.FullName);
+        return e => Create(reportData, "A notification report has been sent.", e.EmailAddress, "New Report", e.FullName);
     }
 }

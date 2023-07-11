@@ -184,6 +184,30 @@ const routes: Routes = [
                 ],
             },
             {
+                path: 'notification-recipients',
+                children: [
+                    {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
+                    {
+                        path: 'create',
+                        loadChildren: () =>
+                            import(
+                                'app/views/notification-recipients/add-notification-recipient/add-notification-recipient.module'
+                            ).then((m) => m.AddNotificationRecipientModule),
+                    },
+                    {
+                        path: 'list',
+                        loadChildren: () =>
+                            import(
+                                'app/views/notification-recipients/notification-recipients-list/notification-recipients-list.module'
+                            ).then((m) => m.NotificationRecipientsListModule),
+                    },
+                ],
+            },
+            {
                 path: 'users',
                 children: [
                     {

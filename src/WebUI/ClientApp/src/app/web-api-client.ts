@@ -1222,6 +1222,82 @@ export class GetReportClient implements IGetReportClient {
     }
 }
 
+export interface ISendNotificationClient {
+    /**
+     * Sends a notification
+     */
+    handle(request: SendNotificationCommand): Observable<ServerResponse>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class SendNotificationClient implements ISendNotificationClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Sends a notification
+     */
+    handle(request: SendNotificationCommand): Observable<ServerResponse> {
+        let url_ = this.baseUrl + "/api/reports/send-notification";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ServerResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ServerResponse>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ServerResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ServerResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IVerifyReportClient {
     /**
      * Verifies a report
@@ -2590,7 +2666,7 @@ export interface IDeleteRecipientClient {
     /**
      * Deletes a notification recipient
      */
-    handle(request: DeleteRecipientCommand): Observable<string>;
+    handle(request: DeleteRecipientCommand): Observable<number>;
 }
 
 @Injectable({
@@ -2609,7 +2685,7 @@ export class DeleteRecipientClient implements IDeleteRecipientClient {
     /**
      * Deletes a notification recipient
      */
-    handle(request: DeleteRecipientCommand): Observable<string> {
+    handle(request: DeleteRecipientCommand): Observable<number> {
         let url_ = this.baseUrl + "/api/notification-recipients";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2632,14 +2708,14 @@ export class DeleteRecipientClient implements IDeleteRecipientClient {
                 try {
                     return this.processHandle(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<string>;
+                    return _observableThrow(e) as any as Observable<number>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<string>;
+                return _observableThrow(response_) as any as Observable<number>;
         }));
     }
 
-    protected processHandle(response: HttpResponseBase): Observable<string> {
+    protected processHandle(response: HttpResponseBase): Observable<number> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -4983,6 +5059,42 @@ export interface IReportListDto {
     created?: string;
 }
 
+export class SendNotificationCommand implements ISendNotificationCommand {
+    reportId?: number;
+
+    constructor(data?: ISendNotificationCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.reportId = _data["reportId"];
+        }
+    }
+
+    static fromJS(data: any): SendNotificationCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new SendNotificationCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["reportId"] = this.reportId;
+        return data;
+    }
+}
+
+export interface ISendNotificationCommand {
+    reportId?: number;
+}
+
 export class VerifyReportCommand implements IVerifyReportCommand {
     id?: number;
 
@@ -5679,6 +5791,7 @@ export class AddRecipientCommand implements IAddRecipientCommand {
     name?: string;
     email?: string;
     institution?: string;
+    isEnabled?: boolean;
 
     constructor(data?: IAddRecipientCommand) {
         if (data) {
@@ -5694,6 +5807,7 @@ export class AddRecipientCommand implements IAddRecipientCommand {
             this.name = _data["name"];
             this.email = _data["email"];
             this.institution = _data["institution"];
+            this.isEnabled = _data["isEnabled"];
         }
     }
 
@@ -5709,6 +5823,7 @@ export class AddRecipientCommand implements IAddRecipientCommand {
         data["name"] = this.name;
         data["email"] = this.email;
         data["institution"] = this.institution;
+        data["isEnabled"] = this.isEnabled;
         return data;
     }
 }
@@ -5717,6 +5832,7 @@ export interface IAddRecipientCommand {
     name?: string;
     email?: string;
     institution?: string;
+    isEnabled?: boolean;
 }
 
 export class DeleteRecipientCommand implements IDeleteRecipientCommand {

@@ -9,6 +9,11 @@ export const getReports = createSelector(
     (state: ReportState) => state.data
 );
 
+export const getUnverifiedReports = createSelector(
+    reportState,
+    (state: ReportState) => state.data.filter((e) => !e.isVerified)
+);
+
 export const getCommunities = createSelector(
     reportState,
     (state: ReportState) => state.communities

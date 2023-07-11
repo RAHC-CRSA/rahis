@@ -54,7 +54,8 @@
               <span fuseAlertTitle>Notification Recommended</span>
               We recommend an immediate notification click the button to send email notifications to relevant parties.
               <div class="my-3">
-                <button *ngIf="canVerify" class="px-8" mat-flat-button [color]="'error'" type="button">
+                <button *ngIf="canVerify" class="px-8" mat-flat-button [color]="'error'" type="button"
+                  (click)="sendNotification()">
                   <span *ngIf="!( loading$ | async )">
                     Send Notification
                   </span>
@@ -70,7 +71,8 @@
               <span fuseAlertTitle>Notification Optional</span>
               You can optionally send a notification to all relevant parties.
               <div class="my-3">
-                <button *ngIf="canVerify" class="px-8" mat-flat-button [color]="'warn'" type="button">
+                <button *ngIf="canVerify" class="px-8" mat-flat-button [color]="'warn'" type="button"
+                  (click)="sendNotification()">
                   <span *ngIf="!( loading$ | async )">
                     Send Notification
                   </span>
@@ -88,7 +90,7 @@
                 is a
                 monitorable/notifiable disease, would you like to notify?</ng-container>
               <div class="my-3">
-                <button class="px-4" mat-flat-button [color]="'primary'" type="button">
+                <button class="px-4" mat-flat-button [color]="'primary'" type="button" (click)="sendNotification()">
                   <span *ngIf="!( loading$ | async )">
                     Send Notification
                   </span>
@@ -277,12 +279,9 @@
             </mat-tab>
           </mat-tab-group>
 
-          <pre>
+          <!-- <pre>
             {{ (report$ | async) | json }}
-          </pre>
-
-
-
+          </pre> -->
         </div>
 
         <div class="flex justify-between my-4">

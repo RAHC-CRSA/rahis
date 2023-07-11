@@ -13,7 +13,7 @@ namespace WebUI.Endpoints.NotificationRecipients;
 
 [OpenApiTag("Notification Recipients")]
 [Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class DeleteRecipient : EndpointBaseAsync.WithRequest<DeleteRecipientCommand>.WithActionResult<string>
+public class DeleteRecipient : EndpointBaseAsync.WithRequest<DeleteRecipientCommand>.WithActionResult<long>
 {
     private readonly IMediator _mediator;
 
@@ -27,10 +27,10 @@ public class DeleteRecipient : EndpointBaseAsync.WithRequest<DeleteRecipientComm
             "Deletes a notification recipient",
             "Deletes a notification recipient from the system")
         ]
-    [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(long), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult<string>> HandleAsync(DeleteRecipientCommand request, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<long>> HandleAsync(DeleteRecipientCommand request, CancellationToken cancellationToken = default)
     {
         var result = await _mediator.Send(request, cancellationToken);
         if (result.Succeeded)

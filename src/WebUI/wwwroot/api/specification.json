@@ -729,6 +729,47 @@
         ]
       }
     },
+    "/api/reports/send-notification": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Sends a notification",
+        "description": "Sends a notification for a report in the system",
+        "operationId": "SendNotification_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendNotificationCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Verifier"
+            ]
+          }
+        ]
+      }
+    },
     "/api/reports/verify": {
       "post": {
         "tags": [
@@ -1580,7 +1621,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "integer",
+                  "format": "int64"
                 }
               }
             }
@@ -2864,6 +2906,16 @@
           }
         }
       },
+      "SendNotificationCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reportId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
       "VerifyReportCommand": {
         "type": "object",
         "additionalProperties": false,
@@ -3127,6 +3179,9 @@
           },
           "institution": {
             "type": "string"
+          },
+          "isEnabled": {
+            "type": "boolean"
           }
         }
       },

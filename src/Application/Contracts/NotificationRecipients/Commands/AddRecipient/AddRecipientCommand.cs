@@ -11,6 +11,7 @@ public class AddRecipientCommand : IRequest<(Result, NotificationRecipientDto?)>
     public string Name { get; set; }
     public string Email { get; set; }
     public string Institution { get; set; }
+    public bool IsEnabled { get; set; }
 }
 
 public class AddRecipientCommandHandler : IRequestHandler<AddRecipientCommand, (Result, NotificationRecipientDto?)>
