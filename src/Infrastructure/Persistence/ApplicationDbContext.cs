@@ -40,6 +40,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<Institution> Institutions => Set<Institution>();
     public DbSet<Medication> Medications => Set<Medication>();
     public DbSet<Municipality> Municipalities => Set<Municipality>();
+    public DbSet<NotificationRecipient> NotificationRecipients => Set<NotificationRecipient>();
     public DbSet<Occurrence> Occurrences => Set<Occurrence>();
     public DbSet<ParaProfessional> ParaProfessionals => Set<ParaProfessional>();
     public DbSet<Region> Regions => Set<Region>();

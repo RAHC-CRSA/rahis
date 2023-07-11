@@ -3,79 +3,37 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
-        id: 'dashboard',
-        title: 'Dashboard',
-        type: 'basic',
-        icon: 'heroicons_outline:home',
-        link: '/dashboard',
-    },
-    {
         id: 'reports',
         title: 'Reports',
         type: 'collapsable',
         icon: 'heroicons_outline:clipboard-list',
-        children: [
-            {
-                id: 'reports.list',
-                title: 'View all Reports',
-                type: 'basic',
-                link: '/dashboard/reports/list',
-            },
-        ],
+        link: '/dashboard/reports/list',
     },
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
-        id: 'dashboard',
-        title: 'Dashboard',
-        type: 'basic',
-        icon: 'heroicons_outline:home',
-        link: '/dashboard',
-    },
-    {
         id: 'reports',
         title: 'Reports',
         type: 'collapsable',
         icon: 'heroicons_outline:clipboard-list',
-        children: [
-            {
-                id: 'reports.list',
-                title: 'View all Reports',
-                type: 'basic',
-                link: '/dashboard/reports/list',
-            },
-        ],
+        link: '/dashboard/reports/list',
     },
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
-        id: 'dashboard',
-        title: 'Dashboard',
-        type: 'basic',
-        icon: 'heroicons_outline:home',
-        link: '/dashboard',
-    },
-    {
         id: 'reports',
         title: 'Reports',
         type: 'collapsable',
         icon: 'heroicons_outline:clipboard-list',
-        children: [],
+        link: '/dashboard/reports/list',
     },
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
-        id: 'dashboard',
-        title: 'Dashboard',
-        type: 'basic',
-        icon: 'heroicons_outline:home',
-        link: '/dashboard',
-    },
-    {
         id: 'reports',
         title: 'Reports',
         type: 'collapsable',
         icon: 'heroicons_outline:clipboard-list',
-        children: [],
+        link: '/dashboard/reports/list',
     },
 ];

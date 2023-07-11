@@ -4,7 +4,11 @@ import { Store } from '@ngrx/store';
 import { AuthState } from 'app/core/auth/store';
 import { getRoles } from 'app/core/auth/store/selectors';
 import { ReportState } from 'app/modules/reports/store';
-import { loadReport, verifyReport } from 'app/modules/reports/store/actions';
+import {
+    loadReport,
+    sendNotification,
+    verifyReport,
+} from 'app/modules/reports/store/actions';
 import {
     getFeedback,
     getReport,
@@ -12,6 +16,7 @@ import {
     getReportsLoading,
 } from 'app/modules/reports/store/selectors';
 import {
+    ISendNotificationCommand,
     IVerifyReportClient,
     IVerifyReportCommand,
     ReportDto,
@@ -108,5 +113,10 @@ export class ViewReportComponent implements OnInit {
     verify() {
         const payload: IVerifyReportCommand = { id: this.reportId };
         this.store.dispatch(verifyReport({ payload }));
+    }
+
+    sendNotification() {
+        const payload: ISendNotificationCommand = { reportId: this.reportId };
+        this.store.dispatch(sendNotification({ payload }));
     }
 }

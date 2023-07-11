@@ -13,10 +13,8 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () =>
-                    import(
-                        'app/views/dashboards/reporter/reporter.module'
-                    ).then((m) => m.ReporterModule),
+                redirectTo: 'reports',
+                pathMatch: 'full',
             },
             {
                 path: 'reports',

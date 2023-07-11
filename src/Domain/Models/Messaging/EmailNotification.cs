@@ -13,13 +13,13 @@ public class EmailNotification
     [JsonProperty("to")]
     public string To { get; private set; }
     [JsonProperty("name")]
-    public string? Name { get; set; }
+    public string? Name { get; private set; }
 
     protected EmailNotification()
     {
     }
 
-    protected EmailNotification(string content, string to, string? subject, string? name)
+    protected EmailNotification(string content, string to, string? subject, string? name) : this()
     {
         Content = content;
         To = to;

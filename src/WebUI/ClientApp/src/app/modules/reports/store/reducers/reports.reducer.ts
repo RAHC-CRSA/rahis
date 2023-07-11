@@ -304,6 +304,11 @@ export const reducer = createReducer(
         loading: false,
         municipalities: payload,
     })),
+    on(actions.sendNotification, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
     on(actions.setFeedback, (state, { payload }) => ({
         ...state,
         loading: false,

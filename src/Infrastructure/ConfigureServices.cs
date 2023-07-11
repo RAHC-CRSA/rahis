@@ -54,13 +54,6 @@ public static class ConfigureServices
         services.AddTransient<IEmailService, EmailService>();
         services.AddTransient<IApplicationRawDbContext, ApplicationRawDbContext>();
 
-        // Disable Identity Server
-        //services.AddIdentityServer()
-        //    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-
-        //services.AddAuthentication()
-        //    .AddIdentityServerJwt();
-
         AuthorizationConfiguration jwtConfig = new();
         configuration.Bind(AuthorizationConfiguration.ConfigurationName, jwtConfig);
         services.AddSingleton(sp => jwtConfig);

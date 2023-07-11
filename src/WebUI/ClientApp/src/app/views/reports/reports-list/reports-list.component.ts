@@ -15,6 +15,7 @@ import {
     getReports,
     getReportsLoaded,
     getReportsLoading,
+    getUnverifiedReports,
 } from 'app/modules/reports/store/selectors';
 import {
     IDeleteReportCommand,
@@ -69,8 +70,10 @@ export class ReportsListComponent {
             if (roles.includes('Verifier')) verified = false;
 
             this.store.dispatch(loadReports({ payload: verified }));
+            this.reports$ = roles.includes('Verifier')
+                ? this.store.select(getUnverifiedReports)
+                : this.store.select(getReports);
         });
-        this.reports$ = this.store.select(getReports);
         this.reports$.subscribe((items) => {
             this.dataSource = new MatTableDataSource(items);
             this.dataSource.paginator = this.paginator;
