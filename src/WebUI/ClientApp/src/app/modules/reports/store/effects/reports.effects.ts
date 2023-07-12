@@ -87,6 +87,29 @@ export class ReportsEffects {
         )
     );
 
+    sendNotification$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.sendNotification),
+            exhaustMap((action) =>
+                this.reportsService.sendNotification(action.payload).pipe(
+                    map((data) =>
+                        ReportsActions.setFeedback({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     loadCountries$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ReportsActions.loadCountries),

@@ -22,6 +22,7 @@ import {
     DistrictDto,
     CommunityDto,
     IVerifyReportCommand,
+    ISendNotificationCommand,
 } from '../../../../web-api-client';
 
 // Create report
@@ -284,6 +285,15 @@ export const loadCommunities = createAction(
 export const loadCommunitiesSuccess = createAction(
     LOAD_COMMUNITIES_SUCCESS,
     props<{ payload?: CommunityDto[] }>()
+);
+
+// Send notifications
+export const SEND_NOTIFICATION = `[Reports] Send Notification`;
+export const SEND_NOTIFICATION_SUCCESS = `[Reports] Send Notification Success`;
+
+export const sendNotification = createAction(
+    SEND_NOTIFICATION,
+    props<{ payload: ISendNotificationCommand }>()
 );
 
 // Set feedback

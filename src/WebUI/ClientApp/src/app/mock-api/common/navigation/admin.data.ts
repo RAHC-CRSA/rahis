@@ -135,6 +135,26 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
         ],
     },
+    {
+        id: 'notification-recipients',
+        title: 'Notification Recipients',
+        type: 'collapsable',
+        icon: 'heroicons_outline:mail',
+        children: [
+            {
+                id: 'notification-recipients.create',
+                title: 'Add Notification Recipient',
+                type: 'basic',
+                link: '/dashboard/notification-recipients/create',
+            },
+            {
+                id: 'notification-recipients.list',
+                title: 'View all',
+                type: 'basic',
+                link: '/dashboard/notification-recipients/list',
+            },
+        ],
+    },
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
@@ -270,6 +290,26 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
         ],
     },
+    {
+        id: 'notification-recipients',
+        title: 'Notification Recipients',
+        type: 'collapsable',
+        icon: 'heroicons_outline:mail',
+        children: [
+            {
+                id: 'notification-recipients.create',
+                title: 'Add Notification Recipient',
+                type: 'basic',
+                link: '/dashboard/notification-recipients/create',
+            },
+            {
+                id: 'notification-recipients.list',
+                title: 'View all',
+                type: 'basic',
+                link: '/dashboard/notification-recipients/list',
+            },
+        ],
+    },
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
@@ -321,6 +361,13 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:identification',
         children: [],
     },
+    {
+        id: 'notification-recipients',
+        title: 'Notification Recipients',
+        type: 'collapsable',
+        icon: 'heroicons_outline:mail',
+        children: [],
+    },
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
@@ -370,6 +417,13 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         title: 'Para-Professionals',
         type: 'collapsable',
         icon: 'heroicons_outline:identification',
+        children: [],
+    },
+    {
+        id: 'notification-recipients',
+        title: 'Notification Recipients',
+        type: 'collapsable',
+        icon: 'heroicons_outline:mail',
         children: [],
     },
 ];

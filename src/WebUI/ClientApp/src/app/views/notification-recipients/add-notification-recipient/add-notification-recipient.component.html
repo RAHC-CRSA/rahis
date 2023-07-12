@@ -1,0 +1,114 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+  <!-- Header -->
+  <div
+    class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div class="flex-1 min-w-0">
+      <!-- Breadcrumbs -->
+      <div class="flex flex-wrap items-center font-medium">
+        <div>
+          <a class="whitespace-nowrap text-primary-500">Notification Recipients</a>
+        </div>
+        <div class="flex items-center ml-1 whitespace-nowrap">
+          <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+          <a class="ml-1 text-primary-500">Add a Notification Recipient</a>
+        </div>
+      </div>
+      <!-- Title -->
+      <div class="mt-2">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+          Add a Notification Recipient
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="flex-auto p-6 sm:p-10">
+
+    <div class="w-full">
+
+      <div class="p-4 bg-card shadow rounded overflow-hidden">
+
+        <!-- Alert -->
+        <app-feedback-display *ngIf="feedback$ | async" [feedback]="feedback$"></app-feedback-display>
+
+        <form [formGroup]="notificationRecipientForm">
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Full Name</mat-label>
+              <input aria-label="Full name" matInput formControlName="name" placeholder="Full name" />
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Full name is required', control: notificationRecipientForm.controls['name']}"></ng-container>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Email</mat-label>
+              <input type="email" aria-label="Email address" matInput formControlName="email"
+                placeholder="Email address" />
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'required',
+            message: 'Email is required',
+            control: notificationRecipientForm.controls['email']
+          }"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'email',
+            message: 'Email is invalid',
+            control: notificationRecipientForm.controls['email']
+          }"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'minlength',
+            message: 'Email should have at least 3 characters',
+            control: notificationRecipientForm.controls['email']
+          }"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'maxlength',
+            message: 'Email should have maximum 360 symbols',
+            control: notificationRecipientForm.controls['email']
+          }"></ng-container>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full mb-4">
+              <mat-label>Institution</mat-label>
+              <input aria-label="Institution" matInput formControlName="institution" placeholder="Institution" />
+            </mat-form-field>
+          </div>
+
+          <div class="w-full mb-4">
+            <label>Enable</label>
+            <mat-radio-group class="flex" formControlName="isEnabled" aria-label="publicSector">
+              <mat-radio-button [value]="false">No</mat-radio-button>
+              <mat-radio-button [value]="true">Yes</mat-radio-button>
+            </mat-radio-group>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Enabled is required', control: notificationRecipientForm.controls['isEnabled']}"></ng-container>
+          </div>
+
+          <div class="flex justify-between my-4">
+            <a [routerLink]="['/dashboard/notification-recipients']" class="px-8" mat-flat-button [color]="'secondary'">
+              Cancel
+            </a>
+            <button class="px-8" mat-flat-button [color]="'primary'" type="button"
+              [disabled]="notificationRecipientForm.invalid" (click)="submit()">
+              <span *ngIf="!( loading$ | async )">
+                Add Notification Recipient
+              </span>
+              <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>
