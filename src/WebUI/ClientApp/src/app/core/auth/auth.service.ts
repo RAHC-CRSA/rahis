@@ -254,6 +254,7 @@ export class AuthService {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     roles: user.roles,
+                    countryId: user.countryId,
                 })
             );
             return true;

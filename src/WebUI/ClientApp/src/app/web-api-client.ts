@@ -867,8 +867,9 @@ export interface IGetReportsClient {
     /**
      * Gets the list of reports
      * @param isVerified (optional) 
+     * @param countryId (optional) 
      */
-    handle(isVerified: boolean | null | undefined): Observable<ReportListDto[]>;
+    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined): Observable<ReportListDto[]>;
 }
 
 @Injectable({
@@ -887,11 +888,14 @@ export class GetReportsClient implements IGetReportsClient {
     /**
      * Gets the list of reports
      * @param isVerified (optional) 
+     * @param countryId (optional) 
      */
-    handle(isVerified: boolean | null | undefined): Observable<ReportListDto[]> {
+    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined): Observable<ReportListDto[]> {
         let url_ = this.baseUrl + "/api/reports?";
         if (isVerified !== undefined && isVerified !== null)
             url_ += "IsVerified=" + encodeURIComponent("" + isVerified) + "&";
+        if (countryId !== undefined && countryId !== null)
+            url_ += "CountryId=" + encodeURIComponent("" + countryId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1041,8 +1045,9 @@ export class DeleteOccurrenceClient implements IDeleteOccurrenceClient {
 export interface IGetOccurrencesClient {
     /**
      * Gets the list of occurrences
+     * @param countryId (optional) 
      */
-    handle(): Observable<OccurrenceDto[]>;
+    handle(countryId: number | null | undefined): Observable<OccurrenceDto[]>;
 }
 
 @Injectable({
@@ -1060,9 +1065,12 @@ export class GetOccurrencesClient implements IGetOccurrencesClient {
 
     /**
      * Gets the list of occurrences
+     * @param countryId (optional) 
      */
-    handle(): Observable<OccurrenceDto[]> {
-        let url_ = this.baseUrl + "/api/reports/occurrences";
+    handle(countryId: number | null | undefined): Observable<OccurrenceDto[]> {
+        let url_ = this.baseUrl + "/api/reports/occurrences?";
+        if (countryId !== undefined && countryId !== null)
+            url_ += "CountryId=" + encodeURIComponent("" + countryId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -4676,6 +4684,7 @@ export interface IDiagnosticTestDto {
 
 export class CreateReportCommand implements ICreateReportCommand {
     occurrenceId?: number | undefined;
+    countryId?: number;
     regionId?: number;
     communityId?: number | undefined;
     districtId?: number | undefined;
@@ -4723,6 +4732,7 @@ export class CreateReportCommand implements ICreateReportCommand {
     init(_data?: any) {
         if (_data) {
             this.occurrenceId = _data["occurrenceId"];
+            this.countryId = _data["countryId"];
             this.regionId = _data["regionId"];
             this.communityId = _data["communityId"];
             this.districtId = _data["districtId"];
@@ -4782,6 +4792,7 @@ export class CreateReportCommand implements ICreateReportCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["occurrenceId"] = this.occurrenceId;
+        data["countryId"] = this.countryId;
         data["regionId"] = this.regionId;
         data["communityId"] = this.communityId;
         data["districtId"] = this.districtId;
@@ -4834,6 +4845,7 @@ export class CreateReportCommand implements ICreateReportCommand {
 
 export interface ICreateReportCommand {
     occurrenceId?: number | undefined;
+    countryId?: number;
     regionId?: number;
     communityId?: number | undefined;
     districtId?: number | undefined;
@@ -6317,6 +6329,7 @@ export class AuthResponseDto implements IAuthResponseDto {
     lastName?: string;
     username?: string;
     email?: string;
+    countryId?: number | undefined;
     authToken?: string;
     refreshToken?: string;
     roles?: string[];
@@ -6337,6 +6350,7 @@ export class AuthResponseDto implements IAuthResponseDto {
             this.lastName = _data["lastName"];
             this.username = _data["username"];
             this.email = _data["email"];
+            this.countryId = _data["countryId"];
             this.authToken = _data["authToken"];
             this.refreshToken = _data["refreshToken"];
             if (Array.isArray(_data["roles"])) {
@@ -6361,6 +6375,7 @@ export class AuthResponseDto implements IAuthResponseDto {
         data["lastName"] = this.lastName;
         data["username"] = this.username;
         data["email"] = this.email;
+        data["countryId"] = this.countryId;
         data["authToken"] = this.authToken;
         data["refreshToken"] = this.refreshToken;
         if (Array.isArray(this.roles)) {
@@ -6378,6 +6393,7 @@ export interface IAuthResponseDto {
     lastName?: string;
     username?: string;
     email?: string;
+    countryId?: number | undefined;
     authToken?: string;
     refreshToken?: string;
     roles?: string[];

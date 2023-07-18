@@ -7,6 +7,9 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
     public DateOnly DateStarted { get; private set; }
     public DateOnly? DateEnded { get; private set; }
 
+    public long CountryId { get; private set; }
+    public Country Country { get; private set; }
+
     public long RegionId { get; private set; }
     public virtual Region Region { get; private set; }
 
@@ -29,8 +32,9 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
     {
     }
 
-    private Occurrence(long regionId, long? municipalityId, long? districtId, long? communityId, DateOnly dateStarted) : this()
+    private Occurrence(long countryId, long regionId, long? municipalityId, long? districtId, long? communityId, DateOnly dateStarted) : this()
     {
+        CountryId = countryId;
         RegionId = regionId;
         MunicipalityId = municipalityId;
         DistrictId = districtId;
@@ -38,12 +42,13 @@ public class Occurrence : BaseAuditableEntity<long>, IAggregateRoot
         DateStarted = dateStarted;
     }
 
-    public static Occurrence Create(long? regionId, long? municipalityId, long? districtId, long? communityId, DateOnly dateStarted)
+    public static Occurrence Create(long countryId, long regionId, long? municipalityId, long? districtId, long? communityId, DateOnly dateStarted)
     {
+        Guard.IsNotNull(countryId, nameof(countryId));
         Guard.IsNotNull(regionId, nameof(regionId));
         Guard.IsNotNull(dateStarted, nameof(dateStarted));
 
-        return new Occurrence((long) regionId, municipalityId, districtId, communityId, dateStarted);
+        return new Occurrence(countryId, regionId, municipalityId, districtId, communityId, dateStarted);
     }
 
     public void SetTransboundaryDisease(long id)

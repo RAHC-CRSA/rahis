@@ -24,10 +24,9 @@ public class GetUserQueryHandler : IRequestHandler<GetUsersQuery, (Result, List<
     {
         try
         {
-            var sql = $"SELECT u.Id, concat(u.FirstName, ' ', u.LastName) as Name, u.Email, c.Name as Country, c.Flag as CountryFlag " +
+            var sql = $"SELECT u.Id, concat(u.FirstName, ' ', u.LastName) as Name, u.Email, c.Name as Country, c.Flag as CountryFlag, " +
             $"(SELECT SUBSTRING ((SELECT ',' + r.Name FROM AspNetRoles AS r " +
-            $"LEFT JOIN Countries AS c ON u.CountryId = c.Id " +
-            $"LEFT JOIN AspNetUserRoles AS ur ON ur.RoleId = r.Id WHERE ur.UserId = u.Id FOR XML PATH('')),2,2000)) AS Roles FROM AspNetUsers AS u";
+            $"LEFT JOIN AspNetUserRoles AS ur ON ur.RoleId = r.Id WHERE ur.UserId = u.Id FOR XML PATH('')),2,2000)) AS Roles FROM AspNetUsers AS u LEFT JOIN Countries AS c ON u.CountryId = c.Id";
 
             var result = await _rawContext.QueryAsync<UserListDto>(sql, null, CommandType.Text, null, cancellationToken);
             return (Result.Success(), result.ToList());

@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ConfirmDialogComponent } from 'app/common/components/confirm-dialog/confirm-dialog.component';
+import { AuthState } from 'app/core/auth/store';
+import { getUser } from 'app/core/auth/store/selectors';
 import { ReportState } from 'app/modules/reports/store';
 import {
     deleteOccurrence,
@@ -49,14 +51,30 @@ export class OccurrencesListComponent {
     loaded$: Observable<boolean>;
     feedback$: Observable<ServerResponse | null | undefined>;
 
-    constructor(private store: Store<ReportState>, private dialog: MatDialog) {}
+    constructor(
+        private authStore: Store<AuthState>,
+        private store: Store<ReportState>,
+        private dialog: MatDialog
+    ) {}
 
     ngOnInit() {
         this.initData();
     }
 
     initData() {
-        this.store.dispatch(loadOccurrences());
+        this.authStore.select(getUser).subscribe((user) => {
+            if (user) {
+                let countryId: number | undefined = undefined;
+                if (
+                    user.roles?.includes('Admin') ||
+                    user.roles?.includes('Super Admin')
+                ) {
+                    countryId = user.countryId;
+                }
+
+                this.store.dispatch(loadOccurrences({ payload: countryId }));
+            }
+        });
 
         this.occurrences$ = this.store.select(getOccurrences);
         this.occurrences$.subscribe((items) => {

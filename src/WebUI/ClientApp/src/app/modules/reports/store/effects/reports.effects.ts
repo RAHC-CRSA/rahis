@@ -178,8 +178,8 @@ export class ReportsEffects {
     loadOccurrences$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ReportsActions.loadOccurrences),
-            mergeMap(() =>
-                this.reportsService.getAllOccurrences().pipe(
+            mergeMap((action) =>
+                this.reportsService.getAllOccurrences(action.payload).pipe(
                     map((data) =>
                         ReportsActions.loadOccurrencesSuccess({ payload: data })
                     ),

@@ -12,6 +12,7 @@ namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.CreateRepo
 public class CreateReportCommand : IRequest<(Result, ReportDto?)>
 {
     public long? OccurrenceId { get; set; }
+    public long CountryId { get; set; }
     public long RegionId { get; set; }
     public long? CommunityId { get; set; }
     public long? DistrictId { get; set; }
@@ -85,7 +86,7 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             {
                
                 // TODO: Get occurrence date from request
-                occurrence = Occurrence.Create(request.RegionId, request.MunicipalityId, request.DistrictId, request.CommunityId, DateOnly.FromDateTime(DateTime.UtcNow));
+                occurrence = Occurrence.Create(request.CountryId, request.RegionId, request.MunicipalityId, request.DistrictId, request.CommunityId, DateOnly.FromDateTime(DateTime.UtcNow));
 
                 if (transboundaryDisease != null)
                 {

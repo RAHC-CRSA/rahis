@@ -522,6 +522,16 @@
               "nullable": true
             },
             "x-position": 1
+          },
+          {
+            "name": "CountryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 2
           }
         ],
         "responses": {
@@ -565,7 +575,8 @@
               "Super Admin",
               " Admin",
               " Reporter",
-              " Verifier"
+              " Verifier",
+              " Chief Veterinary Officer"
             ]
           }
         ]
@@ -620,6 +631,18 @@
         "summary": "Gets the list of occurrences",
         "description": "Gets the list of occurrences in the system",
         "operationId": "GetOccurrences_Handle",
+        "parameters": [
+          {
+            "name": "CountryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -659,7 +682,8 @@
           {
             "JWT": [
               "Super Admin",
-              " Admin"
+              " Admin",
+              " Reporter"
             ]
           }
         ]
@@ -723,7 +747,8 @@
               "Super Admin",
               " Admin",
               " Reporter",
-              " Verifier"
+              " Verifier",
+              " Chief Veterinary Officer"
             ]
           }
         ]
@@ -2677,6 +2702,10 @@
             "format": "int64",
             "nullable": true
           },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
+          },
           "regionId": {
             "type": "integer",
             "format": "int64"
@@ -3393,6 +3422,11 @@
           },
           "email": {
             "type": "string"
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
           },
           "authToken": {
             "type": "string"

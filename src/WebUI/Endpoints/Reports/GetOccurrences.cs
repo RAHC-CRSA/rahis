@@ -13,8 +13,8 @@ using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetOccurrences;
 namespace WebUI.Endpoints.Reports;
 
 [OpenApiTag("Reports")]
-[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class GetOccurrences : EndpointBaseAsync.WithoutRequest.WithActionResult<List<OccurrenceDto>>
+[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+public class GetOccurrences : EndpointBaseAsync.WithRequest<GetOccurrencesQuery>.WithActionResult<List<OccurrenceDto>>
 {
     private readonly IMediator _mediator;
 
@@ -31,9 +31,9 @@ public class GetOccurrences : EndpointBaseAsync.WithoutRequest.WithActionResult<
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult<List<OccurrenceDto>>> HandleAsync(CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<List<OccurrenceDto>>> HandleAsync([FromQuery] GetOccurrencesQuery request, CancellationToken cancellationToken = default)
     {
-        var (result, data) = await _mediator.Send(new GetOccurrencesQuery(), cancellationToken);
+        var (result, data) = await _mediator.Send(request, cancellationToken);
         if (result.Succeeded)
             return Ok(data);
 

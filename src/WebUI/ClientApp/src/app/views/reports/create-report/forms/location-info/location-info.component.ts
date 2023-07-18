@@ -21,6 +21,7 @@ import {
     loadCountries,
     loadDistricts,
     loadMunicipalities,
+    loadOccurrences,
     loadRegions,
 } from 'app/modules/reports/store/actions';
 import {
@@ -236,6 +237,7 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
         this.communityControl.setValue('', { emitEvent: true });
 
         this.store.dispatch(loadRegions({ payload: country.id }));
+        this.store.dispatch(loadOccurrences({ payload: country.id }));
     }
 
     // Municipality field

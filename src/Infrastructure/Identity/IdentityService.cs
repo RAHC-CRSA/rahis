@@ -139,6 +139,7 @@ public class IdentityService : IIdentityService
             LastName = user.LastName,
             Email = user.Email,
             AppUserId = user.Id,
+            CountryId = user.CountryId,
             AuthToken = tokenHandler.WriteToken(token),
             Roles = roles.ToList()
         };
