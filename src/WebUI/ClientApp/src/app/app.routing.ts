@@ -145,6 +145,17 @@ export const appRoutes: Route[] = [
                 path: 'dashboard',
                 canMatch: [RoleGuard],
                 data: {
+                    roles: ['Chief Veterinary Officer'],
+                },
+                loadChildren: () =>
+                    import(
+                        'app/dashboards/chief-veterinary-officer/chief-veterinary-officer.module'
+                    ).then((m) => m.VerifierModule),
+            },
+            {
+                path: 'dashboard',
+                canMatch: [RoleGuard],
+                data: {
                     roles: ['Reporter'],
                 },
                 loadChildren: () =>

@@ -54,6 +54,13 @@ const routes: Routes = [
                                 'app/views/reports/occurrences-list/occurrences-list.module'
                             ).then((m) => m.OccurrencesListModule),
                     },
+                    {
+                        path: 'create-confirmation',
+                        loadChildren: () =>
+                            import(
+                                'app/views/reports/create-confirmation/create-confirmation.module'
+                            ).then((m) => m.CreateConfirmationModule),
+                    },
                 ],
             },
             {

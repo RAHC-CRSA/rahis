@@ -3947,6 +3947,8 @@ export class UserListDto implements IUserListDto {
     name?: string;
     email?: string;
     roles?: string;
+    country?: string;
+    countryFlag?: string;
 
     constructor(data?: IUserListDto) {
         if (data) {
@@ -3963,6 +3965,8 @@ export class UserListDto implements IUserListDto {
             this.name = _data["name"];
             this.email = _data["email"];
             this.roles = _data["roles"];
+            this.country = _data["country"];
+            this.countryFlag = _data["countryFlag"];
         }
     }
 
@@ -3979,6 +3983,8 @@ export class UserListDto implements IUserListDto {
         data["name"] = this.name;
         data["email"] = this.email;
         data["roles"] = this.roles;
+        data["country"] = this.country;
+        data["countryFlag"] = this.countryFlag;
         return data;
     }
 }
@@ -3988,6 +3994,8 @@ export interface IUserListDto {
     name?: string;
     email?: string;
     roles?: string;
+    country?: string;
+    countryFlag?: string;
 }
 
 export class SpeciesDto implements ISpeciesDto {
@@ -6422,6 +6430,7 @@ export class CreateUserCommand implements ICreateUserCommand {
     username?: string;
     password?: string;
     roles?: string[];
+    countryId?: number;
 
     constructor(data?: ICreateUserCommand) {
         if (data) {
@@ -6444,6 +6453,7 @@ export class CreateUserCommand implements ICreateUserCommand {
                 for (let item of _data["roles"])
                     this.roles!.push(item);
             }
+            this.countryId = _data["countryId"];
         }
     }
 
@@ -6466,6 +6476,7 @@ export class CreateUserCommand implements ICreateUserCommand {
             for (let item of this.roles)
                 data["roles"].push(item);
         }
+        data["countryId"] = this.countryId;
         return data;
     }
 }
@@ -6477,6 +6488,7 @@ export interface ICreateUserCommand {
     username?: string;
     password?: string;
     roles?: string[];
+    countryId?: number;
 }
 
 function formatDate(d: Date) {

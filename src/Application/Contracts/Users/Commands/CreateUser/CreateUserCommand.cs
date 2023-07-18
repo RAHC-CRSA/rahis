@@ -16,6 +16,7 @@ public class CreateUserCommand : IRequest<(Result, UserListDto?)>
     public string Username { get; set; }
     public string Password { get; set; }
     public List<string> Roles { get; set; }
+    public long CountryId { get; set; }
 }
 
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, (Result, UserListDto?)>
@@ -35,7 +36,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, (Resu
     {
         try
         {
-            var (result, userId) = await _identityService.CreateUserAsync(request.Username, request.Password, request.FirstName, request.LastName);
+            var (result, userId) = await _identityService.CreateUserAsync(request.Username, request.Password, request.FirstName, request.LastName, request.CountryId);
 
             if (!result.Succeeded)
             {

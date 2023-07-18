@@ -18,6 +18,7 @@ import { getUser } from '../auth/store/selectors';
 import * as defaultNav from 'app/mock-api/common/navigation/default.data';
 import * as superAdminNav from 'app/mock-api/common/navigation/super-admin.data';
 import * as adminNav from 'app/mock-api/common/navigation/admin.data';
+import * as chiefVeterinaryOfficerNav from 'app/mock-api/common/navigation/chief-veterinary-officer.data';
 import * as reporterNav from 'app/mock-api/common/navigation/reporter.data';
 import * as verifierNav from 'app/mock-api/common/navigation/verifier.data';
 import { FuseNavigationItem } from '@fuse/components/navigation';
@@ -85,6 +86,9 @@ export class NavigationService implements OnInit {
                 break;
             case 'Admin':
                 userNav = adminNav;
+                break;
+            case 'Chief Veterinary Officer':
+                userNav = chiefVeterinaryOfficerNav;
                 break;
             case 'Reporter':
                 userNav = reporterNav;

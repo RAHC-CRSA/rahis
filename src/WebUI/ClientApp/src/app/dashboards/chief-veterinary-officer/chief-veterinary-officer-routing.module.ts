@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ReporterComponent } from './reporter.component';
+import { ChiefVeterinaryOfficerComponent } from './chief-veterinary-officer.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: ReporterComponent,
+        component: ChiefVeterinaryOfficerComponent,
         data: {
-            roles: ['Reporter'],
-            title: 'Reporter Dashboard',
+            roles: ['Verifier'],
+            title: 'Verifier Dashboard',
         },
         children: [
             {
@@ -21,22 +21,22 @@ const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        redirectTo: 'create',
+                        redirectTo: 'list',
                         pathMatch: 'full',
                     },
                     {
-                        path: 'create',
+                        path: 'list',
                         loadChildren: () =>
                             import(
-                                'app/views/reports/create-report/create-report.module'
-                            ).then((m) => m.CreateReportModule),
+                                'app/views/reports/reports-list/reports-list.module'
+                            ).then((m) => m.ReportsListModule),
                     },
                     {
-                        path: 'create-confirmation',
+                        path: 'view/:id',
                         loadChildren: () =>
                             import(
-                                'app/views/reports/create-confirmation/create-confirmation.module'
-                            ).then((m) => m.CreateConfirmationModule),
+                                'app/views/reports/view-report/view-report.module'
+                            ).then((m) => m.ViewReportModule),
                     },
                 ],
             },
@@ -48,4 +48,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class ReporterRoutingModule {}
+export class ChiefVeterinaryOfficerRoutingModule {}

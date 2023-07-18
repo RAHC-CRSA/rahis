@@ -14,6 +14,11 @@ export const getRoles = createSelector(
     (state: UserState) => state.roles
 );
 
+export const getCountries = createSelector(
+    usersState,
+    (state: UserState) => state.countries
+);
+
 export const getUsersLoading = createSelector(
     usersState,
     (state: UserState) => state.loading

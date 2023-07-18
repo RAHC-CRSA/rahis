@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Security;
-using RegionalAnimalHealth.Application.Contracts.Reports.Commands.DeleteReport;
 using RegionalAnimalHealth.Application.Contracts.Reports.Commands.VerifyReport;
 
 namespace WebUI.Endpoints.Reports;

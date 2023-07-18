@@ -49,12 +49,12 @@
           </div>
 
           <!-- Notifiability display -->
-          <div class="w-full my-4">
+          <div *ngIf="canNotify" class="w-full my-4">
             <fuse-alert *ngIf="(report$ | async)?.notifiabilityPoints >= 7" [type]="'error'" [appearance]="'outline'">
               <span fuseAlertTitle>Notification Recommended</span>
               We recommend an immediate notification click the button to send email notifications to relevant parties.
               <div class="my-3">
-                <button *ngIf="canVerify" class="px-8" mat-flat-button [color]="'error'" type="button"
+                <button *ngIf="canNotify" class="px-8" mat-flat-button [color]="'error'" type="button"
                   (click)="sendNotification()">
                   <span *ngIf="!( loading$ | async )">
                     Send Notification
@@ -71,7 +71,7 @@
               <span fuseAlertTitle>Notification Optional</span>
               You can optionally send a notification to all relevant parties.
               <div class="my-3">
-                <button *ngIf="canVerify" class="px-8" mat-flat-button [color]="'warn'" type="button"
+                <button *ngIf="canNotify" class="px-8" mat-flat-button [color]="'warn'" type="button"
                   (click)="sendNotification()">
                   <span *ngIf="!( loading$ | async )">
                     Send Notification
@@ -90,7 +90,8 @@
                 is a
                 monitorable/notifiable disease, would you like to notify?</ng-container>
               <div class="my-3">
-                <button class="px-4" mat-flat-button [color]="'primary'" type="button" (click)="sendNotification()">
+                <button *ngIf="canNotify" class="px-4" mat-flat-button [color]="'primary'" type="button"
+                  (click)="sendNotification()">
                   <span *ngIf="!( loading$ | async )">
                     Send Notification
                   </span>

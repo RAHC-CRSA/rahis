@@ -764,7 +764,7 @@
         "security": [
           {
             "JWT": [
-              "Verifier"
+              "Chief Veterinary Officer"
             ]
           }
         ]
@@ -2322,6 +2322,12 @@
           },
           "roles": {
             "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "countryFlag": {
+            "type": "string"
           }
         }
       },
@@ -3438,6 +3444,10 @@
             "items": {
               "type": "string"
             }
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       }
