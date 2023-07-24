@@ -72,6 +72,23 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
+              <mat-label>Country</mat-label>
+              <input type="text" aria-label="Country" matInput [formControl]="countryControl"
+                [matAutocomplete]="countryAutocomplete">
+              <mat-autocomplete #countryAutocomplete="matAutocomplete" [displayWith]="displayCountryFn"
+                (optionSelected)="updateSelectedCountry($event)">
+                <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                  <img [src]="country.flag" class="w-6 m-1 inline-block">
+                  {{ country.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Country is required', control: userForm.controls['country']}"></ng-container>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
               <mat-label>Email</mat-label>
               <input type="email" aria-label="Email address" matInput formControlName="email"
                 placeholder="Email address" />

@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import {
+    CountryDto,
     ICreateUserCommand,
     IDeleteUserCommand,
     ServerResponse,
@@ -15,6 +16,16 @@ export const loadUsers = createAction(LOAD_USERS);
 export const loadUsersSuccess = createAction(
     LOAD_USERS_SUCCESS,
     props<{ payload: UserListDto[] }>()
+);
+
+// Get countries
+export const LOAD_COUNTRIES = `[Users] Load Countries`;
+export const LOAD_COUNTRIES_SUCCESS = `[Users] Load Countries Success`;
+
+export const loadCountries = createAction(LOAD_COUNTRIES);
+export const loadCountriesSuccess = createAction(
+    LOAD_COUNTRIES_SUCCESS,
+    props<{ payload: CountryDto[] }>()
 );
 
 export const CREATE_USER = `[Users] Create User`;

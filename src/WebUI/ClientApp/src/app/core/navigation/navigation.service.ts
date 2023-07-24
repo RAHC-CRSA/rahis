@@ -1,15 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { cloneDeep } from 'lodash-es';
-import {
-    Observable,
-    ReplaySubject,
-    catchError,
-    tap,
-    of,
-    map,
-    switchMap,
-} from 'rxjs';
+import { Observable, ReplaySubject, tap } from 'rxjs';
 import { Navigation } from 'app/core/navigation/navigation.types';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../auth/store';
@@ -18,8 +10,9 @@ import { getUser } from '../auth/store/selectors';
 import * as defaultNav from 'app/mock-api/common/navigation/default.data';
 import * as superAdminNav from 'app/mock-api/common/navigation/super-admin.data';
 import * as adminNav from 'app/mock-api/common/navigation/admin.data';
+import * as chiefVeterinaryOfficerNav from 'app/mock-api/common/navigation/chief-veterinary-officer.data';
 import * as reporterNav from 'app/mock-api/common/navigation/reporter.data';
-import * as verifierNav from 'app/mock-api/common/navigation/verifier.data';
+import * as rahOfficerNav from 'app/mock-api/common/navigation/rah-officer.data';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 
 @Injectable({
@@ -86,11 +79,14 @@ export class NavigationService implements OnInit {
             case 'Admin':
                 userNav = adminNav;
                 break;
+            case 'Chief Veterinary Officer':
+                userNav = chiefVeterinaryOfficerNav;
+                break;
             case 'Reporter':
                 userNav = reporterNav;
                 break;
-            case 'Verifier':
-                userNav = verifierNav;
+            case 'Regional Animal Health Officer':
+                userNav = rahOfficerNav;
                 break;
             default:
                 break;

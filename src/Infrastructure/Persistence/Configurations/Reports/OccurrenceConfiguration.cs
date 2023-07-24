@@ -8,5 +8,7 @@ public class OccurenceConfiguration : IEntityTypeConfiguration<Occurrence>
     public void Configure(EntityTypeBuilder<Occurrence> builder)
     {
         builder.ToTable($"{nameof(Occurrence)}s");
+
+        builder.HasOne(p => p.Country).WithMany().OnDelete(DeleteBehavior.Restrict);
     }
 }

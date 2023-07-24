@@ -39,6 +39,11 @@
                     class="w-full mt-0.5 whitespace-nowrap text-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
                     {{ (user$ | async)?.roles[0] }}
                 </div>
+                <div *ngIf="(user$ | async)?.countryId"
+                    class="w-full mt-2 whitespace-nowrap text-ellipsis overflow-hidden text-center text-md leading-normal font-medium">
+                    <img [src]="(user$ | async)?.countryFlag" class="w-5 inline-block"> {{ (user$ |
+                    async)?.countryName }}
+                </div>
             </div>
         </div>
     </ng-container>

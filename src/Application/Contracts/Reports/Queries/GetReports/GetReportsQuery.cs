@@ -12,6 +12,7 @@ namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReports;
 public class GetReportsQuery : IRequest<(Result, List<ReportListDto>?)>
 {
     public bool? IsVerified { get; set; }
+    public long? CountryId { get; set; }
 }
 
 public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, List<ReportListDto>?)>
@@ -37,7 +38,9 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, 
                     .ThenInclude(o => o.Region)
                         .ThenInclude(e => e.Country)
                 .Include(x => x.Disease)
-                .Where(x => !x.IsDeleted && (request.IsVerified != null ? x.IsVerified == request.IsVerified : true))
+                .Where(x => !x.IsDeleted && 
+                    (request.IsVerified != null ? x.IsVerified == request.IsVerified : true) && 
+                    (request.CountryId != null ? x.Occurrence.Country.Id == request.CountryId : true))
                 .Select(ReportSelectorExpression())
                 .ToListAsync();
 

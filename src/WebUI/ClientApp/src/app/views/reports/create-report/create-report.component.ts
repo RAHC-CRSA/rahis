@@ -170,8 +170,6 @@ export class CreateReportComponent implements OnInit {
     }
 
     submit() {
-        console.log({ currentValues: this.formValues });
-
         const medications = this.formValues.medications?.map(
             (e) => new MedicationDto(e)
         );
@@ -183,6 +181,7 @@ export class CreateReportComponent implements OnInit {
         );
 
         const payload: ICreateReportCommand = {
+            countryId: parseInt(this.formValues.country),
             regionId: parseInt(this.formValues.region),
             municipalityId: parseInt(this.formValues.municipality),
             districtId: parseInt(this.formValues.district),

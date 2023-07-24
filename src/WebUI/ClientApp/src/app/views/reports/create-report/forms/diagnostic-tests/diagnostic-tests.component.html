@@ -19,10 +19,28 @@
                 <td mat-cell *matCellDef="let el"> {{el.name}} </td>
               </ng-container>
 
-              <!-- Dosage Column -->
+              <!-- Number Tested Column -->
               <ng-container matColumnDef="numberTested">
                 <th mat-header-cell *matHeaderCellDef> Number Tested </th>
                 <td mat-cell *matCellDef="let el"> {{el.numberTested}} </td>
+              </ng-container>
+
+              <!-- Number Positive Column -->
+              <ng-container matColumnDef="numberPositive">
+                <th mat-header-cell *matHeaderCellDef> Number Positive </th>
+                <td mat-cell *matCellDef="let el"> {{el.numberPositive}} </td>
+              </ng-container>
+
+              <!-- Number Negative Column -->
+              <ng-container matColumnDef="numberNegative">
+                <th mat-header-cell *matHeaderCellDef> Number Negative </th>
+                <td mat-cell *matCellDef="let el"> {{el.numberNegative}} </td>
+              </ng-container>
+
+              <!-- Number Undetermined Column -->
+              <ng-container matColumnDef="numberUndetermined">
+                <th mat-header-cell *matHeaderCellDef> Number Undetermined </th>
+                <td mat-cell *matCellDef="let el"> {{el.numberTested - (el.numberPositive + el.numberNegative) }} </td>
               </ng-container>
 
               <!-- Actions Column -->
@@ -56,6 +74,22 @@
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested is required', control: testForm.controls['numberTested']}"></ng-container>
+
+          <mat-form-field class="w-full mb-4">
+            <mat-label>How many subjects tested positive?</mat-label>
+            <input type="number" aria-label="Number positive" formControlName="numberPositive" matInput
+              placeholder="Number positive" />
+          </mat-form-field>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested positive is required', control: testForm.controls['numberPositive']}"></ng-container>
+
+          <mat-form-field class="w-full mb-4">
+            <mat-label>How many subjects tested negative?</mat-label>
+            <input type="number" aria-label="Number negative" formControlName="numberNegative" matInput
+              placeholder="Number negative" />
+          </mat-form-field>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested negative is required', control: testForm.controls['numberNegative']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
             <mat-label>Which para-professional carried out the tests?</mat-label>

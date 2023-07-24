@@ -31,6 +31,13 @@ const routes: Routes = [
                                 'app/views/reports/create-report/create-report.module'
                             ).then((m) => m.CreateReportModule),
                     },
+                    {
+                        path: 'create-confirmation',
+                        loadChildren: () =>
+                            import(
+                                'app/views/reports/create-confirmation/create-confirmation.module'
+                            ).then((m) => m.CreateConfirmationModule),
+                    },
                 ],
             },
         ],

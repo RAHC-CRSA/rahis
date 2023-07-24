@@ -92,24 +92,6 @@ export const appRoutes: Route[] = [
         ],
     },
 
-    // Landing routes
-    {
-        path: '',
-        component: LayoutComponent,
-        data: {
-            layout: 'empty',
-        },
-        children: [
-            {
-                path: 'home',
-                loadChildren: () =>
-                    import('app/modules/landing/home/home.module').then(
-                        (m) => m.LandingHomeModule
-                    ),
-            },
-        ],
-    },
-
     // Dashboard routes
     {
         path: '',
@@ -145,6 +127,17 @@ export const appRoutes: Route[] = [
                 path: 'dashboard',
                 canMatch: [RoleGuard],
                 data: {
+                    roles: ['Chief Veterinary Officer'],
+                },
+                loadChildren: () =>
+                    import(
+                        'app/dashboards/chief-veterinary-officer/chief-veterinary-officer.module'
+                    ).then((m) => m.ChiefVeterinaryOfficerModule),
+            },
+            {
+                path: 'dashboard',
+                canMatch: [RoleGuard],
+                data: {
                     roles: ['Reporter'],
                 },
                 loadChildren: () =>
@@ -159,9 +152,9 @@ export const appRoutes: Route[] = [
                     roles: ['Verifier'],
                 },
                 loadChildren: () =>
-                    import('app/dashboards/verifier/verifier.module').then(
-                        (m) => m.VerifierModule
-                    ),
+                    import(
+                        'app/dashboards/rah-officer/rah-officer.module'
+                    ).then((m) => m.RahOfficerModule),
             },
         ],
     },

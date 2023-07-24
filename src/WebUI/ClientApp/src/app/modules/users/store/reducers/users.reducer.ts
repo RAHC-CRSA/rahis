@@ -5,18 +5,25 @@ import {
     createUserSuccess,
     deleteUser,
     deleteUserSuccess,
+    loadCountries,
+    loadCountriesSuccess,
     loadRoles,
     loadRolesSuccess,
     loadUsers,
     loadUsersSuccess,
     setFeedback,
 } from '../actions';
-import { ServerResponse, UserListDto } from '../../../../web-api-client';
+import {
+    CountryDto,
+    ServerResponse,
+    UserListDto,
+} from '../../../../web-api-client';
 
 export interface UserState {
     data?: UserListDto[] | null;
     entry?: UserListDto | null;
     roles?: string[] | null;
+    countries?: CountryDto[] | null;
     loaded: boolean;
     loading: boolean;
     feedback?: ServerResponse | null;
@@ -25,7 +32,8 @@ export interface UserState {
 export const initialState: UserState = {
     data: [],
     entry: null,
-    roles: null,
+    roles: [],
+    countries: [],
     loaded: false,
     loading: false,
     feedback: null,
@@ -57,6 +65,17 @@ export const usersReducer = createReducer(
         feedback: null,
         loading: false,
         roles: payload,
+    })),
+    on(loadCountries, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(loadCountriesSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        countries: payload,
     })),
     on(deleteUser, (state) => ({ ...state, feedback: null, loading: true })),
     on(deleteUserSuccess, (state, { payload }) => ({

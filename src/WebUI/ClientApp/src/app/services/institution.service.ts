@@ -14,8 +14,14 @@ import {
     IAddParaProfessionalCommand,
     IDeleteInstitutionCommand,
     IDeleteParaProfessionalCommand,
+    IUpdateInstitutionCommand,
+    IUpdateParaProfessionalCommand,
     InstitutionDto,
     ParaProfessionalDto,
+    UpdateInstitutionClient,
+    UpdateInstitutionCommand,
+    UpdateParaProfessionalClient,
+    UpdateParaProfessionalCommand,
 } from '../web-api-client';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -28,18 +34,24 @@ export class InstitutionService {
     getParaProfessionalsClient: GetParaProfessionalsClient;
     getInstitutionsClient: GetInstitutionsClient;
     addParaProfessionalClient: AddParaProfessionalClient;
+    updateParaProfessionalClient: UpdateParaProfessionalClient;
     deleteParaProfessionalClient: DeleteParaProfessionalClient;
     addInstitutionClient: AddInstitutionClient;
+    updateInstitutionClient: UpdateInstitutionClient;
     deleteInstitutionClient: DeleteInstitutionClient;
 
     constructor(http: HttpClient) {
         this.getParaProfessionalsClient = new GetParaProfessionalsClient(http);
         this.getInstitutionsClient = new GetInstitutionsClient(http);
         this.addParaProfessionalClient = new AddParaProfessionalClient(http);
+        this.updateParaProfessionalClient = new UpdateParaProfessionalClient(
+            http
+        );
         this.deleteParaProfessionalClient = new DeleteParaProfessionalClient(
             http
         );
         this.addInstitutionClient = new AddInstitutionClient(http);
+        this.updateInstitutionClient = new UpdateInstitutionClient(http);
         this.deleteInstitutionClient = new DeleteInstitutionClient(http);
     }
 
@@ -53,6 +65,14 @@ export class InstitutionService {
         const request = new AddParaProfessionalCommand(payload);
 
         return this.addParaProfessionalClient.handle(request);
+    }
+
+    updateParaProfessional(
+        payload: IUpdateParaProfessionalCommand
+    ): Observable<ParaProfessionalDto> {
+        const request = new UpdateParaProfessionalCommand(payload);
+
+        return this.updateParaProfessionalClient.handle(request);
     }
 
     deleteParaProfessional(payload: IDeleteParaProfessionalCommand) {
@@ -71,6 +91,14 @@ export class InstitutionService {
         const request = new AddInstitutionCommand(payload);
 
         return this.addInstitutionClient.handle(request);
+    }
+
+    updateInstitution(
+        payload: IUpdateInstitutionCommand
+    ): Observable<InstitutionDto> {
+        const request = new UpdateInstitutionCommand(payload);
+
+        return this.updateInstitutionClient.handle(request);
     }
 
     deleteInstitution(payload: IDeleteInstitutionCommand) {

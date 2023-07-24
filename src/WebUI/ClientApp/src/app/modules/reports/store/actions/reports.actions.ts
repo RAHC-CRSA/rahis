@@ -86,7 +86,9 @@ export const LOAD_REPORTS_SUCCESS = `[Reports] Load Reports Success`;
 
 export const loadReports = createAction(
     LOAD_REPORTS,
-    props<{ payload: boolean | null | undefined }>()
+    props<{
+        payload: { isVerified: boolean; countryId: number | undefined };
+    }>()
 );
 export const loadReportsSuccess = createAction(
     LOAD_REPORTS_SUCCESS,
@@ -156,7 +158,10 @@ export const loadCountriesSuccess = createAction(
 export const LOAD_OCCURRENCES = `[Reports] Load Occurrences`;
 export const LOAD_OCCURRENCES_SUCCESS = `[Reports] Load Occurrences Success`;
 
-export const loadOccurrences = createAction(LOAD_OCCURRENCES);
+export const loadOccurrences = createAction(
+    LOAD_OCCURRENCES,
+    props<{ payload?: number | undefined }>()
+);
 export const loadOccurrencesSuccess = createAction(
     LOAD_OCCURRENCES_SUCCESS,
     props<{ payload: OccurrenceDto[] }>()

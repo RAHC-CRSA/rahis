@@ -46,16 +46,19 @@ export class ReportService {
         this.sendNotificationClient = new SendNotificationClient(http);
     }
 
-    getAllOccurrences() {
-        return this.getOccurrencesClient.handle();
+    getAllOccurrences(countryId: number | undefined) {
+        return this.getOccurrencesClient.handle(countryId);
     }
 
     createReport(payload: ICreateReportCommand) {
         return this.createReportClient.handle(new CreateReportCommand(payload));
     }
 
-    getAllReports(verified: boolean) {
-        return this.getReportsClient.handle(verified);
+    getAllReports(payload) {
+        return this.getReportsClient.handle(
+            payload.isVerified,
+            payload.countryId
+        );
     }
 
     getReport(id: number) {

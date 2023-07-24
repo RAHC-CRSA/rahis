@@ -54,6 +54,13 @@ const routes: Routes = [
                                 'app/views/reports/occurrences-list/occurrences-list.module'
                             ).then((m) => m.OccurrencesListModule),
                     },
+                    {
+                        path: 'create-confirmation',
+                        loadChildren: () =>
+                            import(
+                                'app/views/reports/create-confirmation/create-confirmation.module'
+                            ).then((m) => m.CreateConfirmationModule),
+                    },
                 ],
             },
             {
@@ -137,6 +144,13 @@ const routes: Routes = [
                         pathMatch: 'full',
                     },
                     {
+                        path: 'edit/:id',
+                        loadChildren: () =>
+                            import(
+                                'app/views/institutions/edit-institution/edit-institution.module'
+                            ).then((m) => m.EditInstitutionModule),
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -159,6 +173,13 @@ const routes: Routes = [
                         path: '',
                         redirectTo: 'list',
                         pathMatch: 'full',
+                    },
+                    {
+                        path: 'edit/:id',
+                        loadChildren: () =>
+                            import(
+                                'app/views/professionals/edit-professional/edit-professional.module'
+                            ).then((m) => m.EditProfessionalModule),
                     },
                     {
                         path: 'create',

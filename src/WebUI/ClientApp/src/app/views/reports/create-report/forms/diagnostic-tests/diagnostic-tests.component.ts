@@ -50,7 +50,14 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
     @Output() submit = new EventEmitter();
 
     hasTests: boolean;
-    displayedColumns: string[] = ['name', 'numberTested', 'actions'];
+    displayedColumns: string[] = [
+        'name',
+        'numberTested',
+        'numberPositive',
+        'numberNegative',
+        'numberUndetermined',
+        'actions',
+    ];
 
     testsInfo: FormGroup;
     testForm: FormGroup;
@@ -82,6 +89,8 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
         this.testForm = this.formBuilder.group({
             name: ['', [Validators.required]],
             numberTested: ['', [Validators.required]],
+            numberPositive: ['', [Validators.required]],
+            numberNegative: ['', [Validators.required]],
             professionalId: ['', [Validators.required]],
         });
     }
