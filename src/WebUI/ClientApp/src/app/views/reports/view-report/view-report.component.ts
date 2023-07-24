@@ -43,6 +43,9 @@ export class ViewReportComponent implements OnInit {
         'id',
         'testName',
         'numberTested',
+        'numberPositive',
+        'numberNegative',
+        'numberUndetermined',
         'professionalName',
     ];
 

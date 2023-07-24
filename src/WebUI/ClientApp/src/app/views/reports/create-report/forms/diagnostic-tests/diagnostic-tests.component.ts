@@ -50,7 +50,14 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
     @Output() submit = new EventEmitter();
 
     hasTests: boolean;
-    displayedColumns: string[] = ['name', 'numberTested', 'actions'];
+    displayedColumns: string[] = [
+        'name',
+        'numberTested',
+        'numberPositive',
+        'numberNegative',
+        'numberUndetermined',
+        'actions',
+    ];
 
     testsInfo: FormGroup;
     testForm: FormGroup;

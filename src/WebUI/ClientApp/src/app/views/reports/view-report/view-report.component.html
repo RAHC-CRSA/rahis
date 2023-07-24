@@ -112,6 +112,7 @@
                 <th mat-header-cell *matHeaderCellDef class="text-center"> Stamping-out </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.stampingOut" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+                  <mat-icon *ngIf="!el.stampingOut" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
                 </td>
               </ng-container>
 
@@ -121,6 +122,8 @@
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.destructionOfCorpses" color="primary"
                     svgIcon="heroicons_solid:check-circle"></mat-icon>
+                  <mat-icon *ngIf="!el.destructionOfCorpses" color="danger"
+                    svgIcon="heroicons_solid:minus-circle"></mat-icon>
               </ng-container>
 
               <!-- Treatment Column -->
@@ -128,6 +131,7 @@
                 <th mat-header-cell *matHeaderCellDef class="text-center"> Treatment </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.treatment" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+                  <mat-icon *ngIf="!el.treatment" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
               </ng-container>
 
               <!-- Disinfection Column -->
@@ -135,6 +139,7 @@
                 <th mat-header-cell *matHeaderCellDef class="text-center"> Disinfection </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.disinfection" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+                  <mat-icon *ngIf="!el.disinfection" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
               </ng-container>
 
               <!-- Quarantine Column -->
@@ -142,6 +147,7 @@
                 <th mat-header-cell *matHeaderCellDef class="text-center"> Quarantine </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.quarantine" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+                  <mat-icon *ngIf="!el.quarantine" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
               </ng-container>
 
               <!-- Vaccination Column -->
@@ -149,6 +155,7 @@
                 <th mat-header-cell *matHeaderCellDef class="text-center"> Vaccination </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.vaccination" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+                  <mat-icon *ngIf="!el.vaccination" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
               </ng-container>
 
               <!-- Movement control Column -->
@@ -157,6 +164,8 @@
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.movementControl" color="primary"
                     svgIcon="heroicons_solid:check-circle"></mat-icon>
+                  <mat-icon *ngIf="!el.movementControl" color="danger"
+                    svgIcon="heroicons_solid:minus-circle"></mat-icon>
               </ng-container>
 
               <!-- Observation Column -->
@@ -164,6 +173,7 @@
                 <th mat-header-cell *matHeaderCellDef class="text-center"> Observation (in case of bite) </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.observation" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
+                  <mat-icon *ngIf="!el.observation" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="actionsInfoColumns"></tr>
@@ -192,6 +202,25 @@
                   <ng-container matColumnDef="numberTested">
                     <th mat-header-cell *matHeaderCellDef> Number Tested </th>
                     <td mat-cell *matCellDef="let el"> {{el.numberTested}} </td>
+                  </ng-container>
+
+                  <!-- Number Positive Column -->
+                  <ng-container matColumnDef="numberPositive">
+                    <th mat-header-cell *matHeaderCellDef> Number Positive </th>
+                    <td mat-cell *matCellDef="let el"> {{el.numberPositive}} </td>
+                  </ng-container>
+
+                  <!-- Number Negative Column -->
+                  <ng-container matColumnDef="numberNegative">
+                    <th mat-header-cell *matHeaderCellDef> Number Negative </th>
+                    <td mat-cell *matCellDef="let el"> {{el.numberNegative}} </td>
+                  </ng-container>
+
+                  <!-- Number Undetermined Column -->
+                  <ng-container matColumnDef="numberUndetermined">
+                    <th mat-header-cell *matHeaderCellDef> Number Undetermined </th>
+                    <td mat-cell *matCellDef="let el"> {{el.numberTested - (el.numberPositive + el.numberNegative) }}
+                    </td>
                   </ng-container>
 
                   <!-- Professional Name Column -->
@@ -274,7 +303,6 @@
 
                   <tr mat-header-row *matHeaderRowDef="vaccinationColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: vaccinationColumns;"></tr>
-
                 </table>
               </div>
             </mat-tab>
