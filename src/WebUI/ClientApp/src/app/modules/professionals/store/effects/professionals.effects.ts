@@ -104,6 +104,44 @@ export class ProfessionalsEffects {
         { dispatch: false }
     );
 
+    updateParaProfessional$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ProfessionalsActions.updateParaProfessional),
+            exhaustMap((action) =>
+                this.institutionService
+                    .updateParaProfessional(action.payload)
+                    .pipe(
+                        map((data) =>
+                            ProfessionalsActions.updateParaProfessionalSuccess({
+                                payload: data,
+                            })
+                        ),
+                        catchError((error) =>
+                            of(
+                                ProfessionalsActions.setFeedback({
+                                    payload:
+                                        this.feedbackService.processResponse(
+                                            error
+                                        ),
+                                })
+                            )
+                        )
+                    )
+            )
+        )
+    );
+
+    updateParaProfessionalSuccess$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(ProfessionalsActions.updateParaProfessionalSuccess),
+                tap(() => {
+                    this.router.navigateByUrl('/dashboard/para-professionals');
+                })
+            ),
+        { dispatch: false }
+    );
+
     deleteParaProfessional$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ProfessionalsActions.deleteParaProfessional),

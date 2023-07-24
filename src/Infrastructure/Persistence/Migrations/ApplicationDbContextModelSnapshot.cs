@@ -627,6 +627,12 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("NumberNegative")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberPositive")
+                        .HasColumnType("int");
+
                     b.Property<int>("NumberTested")
                         .HasColumnType("int");
 
@@ -1156,6 +1162,12 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiry")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");

@@ -13,7 +13,7 @@ using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReportById;
 namespace WebUI.Endpoints.Reports;
 
 [OpenApiTag("Reports")]
-[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}, {SecurityRoles.Verifier}, {SecurityRoles.ChiefVeterinaryOfficer}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}, {SecurityRoles.RahOfficer}, {SecurityRoles.ChiefVeterinaryOfficer}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class GetReport : EndpointBaseAsync.WithRequest<GetReportByIdQuery>.WithActionResult<ReportDto>
 {
     private readonly IMediator _mediator;
@@ -23,7 +23,7 @@ public class GetReport : EndpointBaseAsync.WithRequest<GetReportByIdQuery>.WithA
         _mediator = mediator;
     }
 
-    [HttpGet("api/report/{ReportId}")]
+    [HttpGet("api/report/{reportId}")]
     [OpenApiOperation(
             "Gets a report by id",
             "Gets a report by id")

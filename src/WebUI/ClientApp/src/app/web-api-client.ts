@@ -1164,7 +1164,7 @@ export class GetReportClient implements IGetReportClient {
      * Gets a report by id
      */
     handle(reportId: number): Observable<ReportDto> {
-        let url_ = this.baseUrl + "/api/report/{ReportId}";
+        let url_ = this.baseUrl + "/api/report/{reportId}";
         if (reportId === undefined || reportId === null)
             throw new Error("The parameter 'reportId' must be defined.");
         url_ = url_.replace("{ReportId}", encodeURIComponent("" + reportId));
@@ -3102,6 +3102,89 @@ export class GetInstitutionsClient implements IGetInstitutionsClient {
     }
 }
 
+export interface IUpdateInstitutionClient {
+    /**
+     * Updates an institution
+     */
+    handle(request: UpdateInstitutionCommand): Observable<InstitutionDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class UpdateInstitutionClient implements IUpdateInstitutionClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Updates an institution
+     */
+    handle(request: UpdateInstitutionCommand): Observable<InstitutionDto> {
+        let url_ = this.baseUrl + "/api/institutions";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("patch", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<InstitutionDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<InstitutionDto>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<InstitutionDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = InstitutionDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IAddParaProfessionalClient {
     /**
      * Adds a para-professional
@@ -3334,6 +3417,89 @@ export class GetParaProfessionalsClient implements IGetParaProfessionalsClient {
             else {
                 result200 = <any>null;
             }
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export interface IUpdateParaProfessionalClient {
+    /**
+     * Updates a para-professional
+     */
+    handle(request: UpdateParaProfessionalCommand): Observable<ParaProfessionalDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class UpdateParaProfessionalClient implements IUpdateParaProfessionalClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Updates a para-professional
+     */
+    handle(request: UpdateParaProfessionalCommand): Observable<ParaProfessionalDto> {
+        let url_ = this.baseUrl + "/api/para-professionals";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ParaProfessionalDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ParaProfessionalDto>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ParaProfessionalDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ParaProfessionalDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status === 400) {
@@ -4214,6 +4380,8 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
     reportId?: number;
     name?: string;
     numberTested?: number;
+    numberPositive?: number;
+    numberNegative?: number;
     professionalId?: number;
 
     constructor(data?: IAddDiagnosticTestCommand) {
@@ -4230,6 +4398,8 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
             this.reportId = _data["reportId"];
             this.name = _data["name"];
             this.numberTested = _data["numberTested"];
+            this.numberPositive = _data["numberPositive"];
+            this.numberNegative = _data["numberNegative"];
             this.professionalId = _data["professionalId"];
         }
     }
@@ -4246,6 +4416,8 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
         data["reportId"] = this.reportId;
         data["name"] = this.name;
         data["numberTested"] = this.numberTested;
+        data["numberPositive"] = this.numberPositive;
+        data["numberNegative"] = this.numberNegative;
         data["professionalId"] = this.professionalId;
         return data;
     }
@@ -4255,6 +4427,8 @@ export interface IAddDiagnosticTestCommand {
     reportId?: number;
     name?: string;
     numberTested?: number;
+    numberPositive?: number;
+    numberNegative?: number;
     professionalId?: number;
 }
 
@@ -4631,6 +4805,8 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
     name?: string;
     reportId?: number;
     numberTested?: number;
+    numberPositive?: number;
+    numberNegative?: number;
     professionalId?: number;
     professionalName?: string;
 
@@ -4649,6 +4825,8 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
             this.name = _data["name"];
             this.reportId = _data["reportId"];
             this.numberTested = _data["numberTested"];
+            this.numberPositive = _data["numberPositive"];
+            this.numberNegative = _data["numberNegative"];
             this.professionalId = _data["professionalId"];
             this.professionalName = _data["professionalName"];
         }
@@ -4667,6 +4845,8 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
         data["name"] = this.name;
         data["reportId"] = this.reportId;
         data["numberTested"] = this.numberTested;
+        data["numberPositive"] = this.numberPositive;
+        data["numberNegative"] = this.numberNegative;
         data["professionalId"] = this.professionalId;
         data["professionalName"] = this.professionalName;
         return data;
@@ -4678,6 +4858,8 @@ export interface IDiagnosticTestDto {
     name?: string;
     reportId?: number;
     numberTested?: number;
+    numberPositive?: number;
+    numberNegative?: number;
     professionalId?: number;
     professionalName?: string;
 }
@@ -6179,6 +6361,102 @@ export interface IDeleteParaProfessionalCommand {
     id?: number;
 }
 
+export class UpdateInstitutionCommand implements IUpdateInstitutionCommand {
+    institutionId?: number;
+    name?: string;
+    publicSector?: boolean;
+    type?: string | undefined;
+
+    constructor(data?: IUpdateInstitutionCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.institutionId = _data["institutionId"];
+            this.name = _data["name"];
+            this.publicSector = _data["publicSector"];
+            this.type = _data["type"];
+        }
+    }
+
+    static fromJS(data: any): UpdateInstitutionCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateInstitutionCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["institutionId"] = this.institutionId;
+        data["name"] = this.name;
+        data["publicSector"] = this.publicSector;
+        data["type"] = this.type;
+        return data;
+    }
+}
+
+export interface IUpdateInstitutionCommand {
+    institutionId?: number;
+    name?: string;
+    publicSector?: boolean;
+    type?: string | undefined;
+}
+
+export class UpdateParaProfessionalCommand implements IUpdateParaProfessionalCommand {
+    paraProfessionalId?: number;
+    email?: string;
+    phone?: string;
+    position?: string;
+
+    constructor(data?: IUpdateParaProfessionalCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.paraProfessionalId = _data["paraProfessionalId"];
+            this.email = _data["email"];
+            this.phone = _data["phone"];
+            this.position = _data["position"];
+        }
+    }
+
+    static fromJS(data: any): UpdateParaProfessionalCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateParaProfessionalCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["paraProfessionalId"] = this.paraProfessionalId;
+        data["email"] = this.email;
+        data["phone"] = this.phone;
+        data["position"] = this.position;
+        return data;
+    }
+}
+
+export interface IUpdateParaProfessionalCommand {
+    paraProfessionalId?: number;
+    email?: string;
+    phone?: string;
+    position?: string;
+}
+
 export class DiseaseDto implements IDiseaseDto {
     id?: number;
     name?: string;
@@ -6330,6 +6608,8 @@ export class AuthResponseDto implements IAuthResponseDto {
     username?: string;
     email?: string;
     countryId?: number | undefined;
+    countryName?: string;
+    countryFlag?: string;
     authToken?: string;
     refreshToken?: string;
     roles?: string[];
@@ -6351,6 +6631,8 @@ export class AuthResponseDto implements IAuthResponseDto {
             this.username = _data["username"];
             this.email = _data["email"];
             this.countryId = _data["countryId"];
+            this.countryName = _data["countryName"];
+            this.countryFlag = _data["countryFlag"];
             this.authToken = _data["authToken"];
             this.refreshToken = _data["refreshToken"];
             if (Array.isArray(_data["roles"])) {
@@ -6376,6 +6658,8 @@ export class AuthResponseDto implements IAuthResponseDto {
         data["username"] = this.username;
         data["email"] = this.email;
         data["countryId"] = this.countryId;
+        data["countryName"] = this.countryName;
+        data["countryFlag"] = this.countryFlag;
         data["authToken"] = this.authToken;
         data["refreshToken"] = this.refreshToken;
         if (Array.isArray(this.roles)) {
@@ -6394,6 +6678,8 @@ export interface IAuthResponseDto {
     username?: string;
     email?: string;
     countryId?: number | undefined;
+    countryName?: string;
+    countryFlag?: string;
     authToken?: string;
     refreshToken?: string;
     roles?: string[];

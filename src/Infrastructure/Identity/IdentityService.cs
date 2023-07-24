@@ -17,6 +17,7 @@ namespace RegionalAnimalHealth.Infrastructure.Identity;
 public class IdentityService : IIdentityService
 {
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IApplicationDbContext _context;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly RoleManager<IdentityRole> _roleManager;
@@ -25,11 +26,13 @@ public class IdentityService : IIdentityService
 
     public IdentityService(
         UserManager<ApplicationUser> userManager,
+        IApplicationDbContext context,
         IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
         SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager,
         IAuthorizationService authorizationService, AuthorizationConfiguration authConfiguration)
     {
         _userManager = userManager;
+        _context = context;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _signInManager = signInManager;
         _roleManager = roleManager;
@@ -132,6 +135,8 @@ public class IdentityService : IIdentityService
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
+        var country = await _context.Countries.Where(x => !x.IsDeleted && x.Id == user.CountryId).FirstOrDefaultAsync();
+
         return new AuthResponseDto()
         {
             Username = user.UserName,
@@ -140,6 +145,8 @@ public class IdentityService : IIdentityService
             Email = user.Email,
             AppUserId = user.Id,
             CountryId = user.CountryId,
+            CountryName = country?.Name,
+            CountryFlag = country?.Flag,
             AuthToken = tokenHandler.WriteToken(token),
             Roles = roles.ToList()
         };

@@ -142,7 +142,7 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             {
                 foreach (var test in request.DiagnosticTests)
                 {
-                    report.AddDiagnosticTest(test.Name, test.NumberTested, test.ProfessionalId);
+                    report.AddDiagnosticTest(test.Name, test.NumberTested, test.NumberPositive, test.NumberNegative, test.ProfessionalId);
                 }
             }
 

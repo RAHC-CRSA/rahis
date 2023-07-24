@@ -37,6 +37,17 @@ export const reducer = createReducer(
         loading: false,
         data: [...state.data, payload],
     })),
+    on(actions.updateParaProfessional, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.updateParaProfessionalSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        data: state.data.filter((e) => (e.id == payload.id ? payload : e)),
+    })),
     on(actions.loadParaProfessionals, (state) => ({
         ...state,
         feedback: null,

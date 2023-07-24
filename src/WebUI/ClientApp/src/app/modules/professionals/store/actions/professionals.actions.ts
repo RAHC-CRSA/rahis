@@ -5,6 +5,7 @@ import {
     InstitutionDto,
     ServerResponse,
     IDeleteParaProfessionalCommand,
+    IUpdateParaProfessionalCommand,
 } from '../../../../web-api-client';
 
 export const featureKey = 'para-rofessionals';
@@ -35,6 +36,18 @@ export const addParaProfessionalSuccess = createAction(
     props<{ payload: ParaProfessionalDto }>()
 );
 
+// Update para-professional
+export const UPDATE_PARA_PROFESSIONAL = `[ParaProfessionals] Update ParaProfessional`;
+export const UPDATE_PARA_PROFESSIONAL_SUCCESS = `[ParaProfessionals] Update ParaProfessional Success`;
+
+export const updateParaProfessional = createAction(
+    UPDATE_PARA_PROFESSIONAL,
+    props<{ payload: IUpdateParaProfessionalCommand }>()
+);
+export const updateParaProfessionalSuccess = createAction(
+    UPDATE_PARA_PROFESSIONAL_SUCCESS,
+    props<{ payload: ParaProfessionalDto }>()
+);
 // Delete para-professional
 export const DELETE_PARA_PROFESSIONAL = `[ParaProfessionals] Delete ParaProfessional`;
 export const DELETE_PARA_PROFESSIONAL_SUCCESS = `[ParaProfessionals] Delete ParaProfessional Success`;

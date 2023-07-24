@@ -68,8 +68,9 @@ export class ReportsListComponent {
                 this.roles = user.roles;
 
                 let verified: boolean | null | undefined = undefined;
-                if (user.roles.includes('Verifier')) verified = false;
-                else if (user.roles.includes('Chief Veterinary Officer'))
+                if (user.roles.includes('Chief Veterinary Officer'))
+                    verified = false;
+                else if (user.roles.includes('Regional Animal Health Officer'))
                     verified = true;
 
                 const payload = {
@@ -78,7 +79,7 @@ export class ReportsListComponent {
                 };
 
                 this.store.dispatch(loadReports({ payload }));
-                this.reports$ = user.roles.includes('Verifier')
+                this.reports$ = user.roles.includes('Chief Veterinary Officer')
                     ? this.store.select(getUnverifiedReports)
                     : this.store.select(getReports);
             }

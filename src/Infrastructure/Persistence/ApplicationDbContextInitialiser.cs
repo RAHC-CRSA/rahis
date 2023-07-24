@@ -66,7 +66,7 @@ public class ApplicationDbContextInitialiser
         {
             SecurityRoles.SuperAdmin,
             SecurityRoles.Admin,
-            SecurityRoles.Verifier,
+            SecurityRoles.RahOfficer,
             SecurityRoles.ChiefVeterinaryOfficer,
             SecurityRoles.Reporter,
             SecurityRoles.NotifiedUser,

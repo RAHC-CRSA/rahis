@@ -13,7 +13,7 @@ using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetOccurrences;
 namespace WebUI.Endpoints.Reports;
 
 [OpenApiTag("Reports")]
-[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}, {SecurityRoles.ChiefVeterinaryOfficer}, {SecurityRoles.RahOfficer}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class GetOccurrences : EndpointBaseAsync.WithRequest<GetOccurrencesQuery>.WithActionResult<List<OccurrenceDto>>
 {
     private readonly IMediator _mediator;

@@ -11,7 +11,7 @@ using RegionalAnimalHealth.Application.Contracts.Reports.Commands.VerifyReport;
 namespace WebUI.Endpoints.Reports;
 
 [OpenApiTag("Reports")]
-[Authorize(Roles = SecurityRoles.Verifier, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(Roles = SecurityRoles.ChiefVeterinaryOfficer, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class VerifyReport : EndpointBaseAsync.WithRequest<VerifyReportCommand>.WithActionResult<long>
 {
     private readonly IMediator _mediator;

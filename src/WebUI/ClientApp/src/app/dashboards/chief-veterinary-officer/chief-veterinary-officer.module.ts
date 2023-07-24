@@ -8,4 +8,4 @@ import { ChiefVeterinaryOfficerComponent } from './chief-veterinary-officer.comp
     declarations: [ChiefVeterinaryOfficerComponent],
     imports: [CommonModule, ChiefVeterinaryOfficerRoutingModule],
 })
-export class VerifierModule {}
+export class ChiefVeterinaryOfficerModule {}

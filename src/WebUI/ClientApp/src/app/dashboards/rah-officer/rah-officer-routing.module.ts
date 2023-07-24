@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { VerifierComponent } from './verifier.component';
+import { RahOfficerComponent } from './rah-officer.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: VerifierComponent,
+        component: RahOfficerComponent,
         data: {
             roles: ['Verifier'],
             title: 'Verifier Dashboard',
@@ -48,4 +48,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class VerifierRoutingModule {}
+export class RahOfficerRoutingModule {}

@@ -38,4 +38,15 @@ public class ParaProfessional : BaseAuditableEntity<long>
         IsDeleted = true;
         LastModified = DateTime.Now;
     }
+
+    public void Update(string phone, string email, string position)
+    {
+        Guard.IsNotNullOrEmpty(phone, nameof(phone));
+        Guard.IsNotNullOrEmpty(email, nameof(email));
+        Guard.IsNotNullOrEmpty(position, nameof(position));
+
+        Phone = phone.Trim();
+        Email = email.Trim();
+        Position = position;
+    }
 }

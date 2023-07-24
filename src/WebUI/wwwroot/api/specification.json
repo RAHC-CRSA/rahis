@@ -575,7 +575,7 @@
               "Super Admin",
               " Admin",
               " Reporter",
-              " Verifier",
+              " Regional Animal Health Officer",
               " Chief Veterinary Officer"
             ]
           }
@@ -683,13 +683,15 @@
             "JWT": [
               "Super Admin",
               " Admin",
-              " Reporter"
+              " Reporter",
+              " Chief Veterinary Officer",
+              " Regional Animal Health Officer"
             ]
           }
         ]
       }
     },
-    "/api/report/{ReportId}": {
+    "/api/report/{reportId}": {
       "get": {
         "tags": [
           "Reports"
@@ -747,7 +749,7 @@
               "Super Admin",
               " Admin",
               " Reporter",
-              " Verifier",
+              " Regional Animal Health Officer",
               " Chief Veterinary Officer"
             ]
           }
@@ -789,7 +791,7 @@
         "security": [
           {
             "JWT": [
-              "Chief Veterinary Officer"
+              "Regional Animal Health Officer"
             ]
           }
         ]
@@ -831,7 +833,7 @@
         "security": [
           {
             "JWT": [
-              "Verifier"
+              "Chief Veterinary Officer"
             ]
           }
         ]
@@ -1868,6 +1870,56 @@
             ]
           }
         ]
+      },
+      "patch": {
+        "tags": [
+          "Institutions"
+        ],
+        "summary": "Updates an institution",
+        "description": "Updates an institution on the system",
+        "operationId": "UpdateInstitution_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInstitutionCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstitutionDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
       }
     },
     "/api/para-professionals": {
@@ -2013,6 +2065,56 @@
               "Super Admin",
               " Admin",
               " Reporter"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "ParaProfessionals"
+        ],
+        "summary": "Updates a para-professional",
+        "description": "Updates a para-professional on the system",
+        "operationId": "UpdateParaProfessional_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParaProfessionalCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParaProfessionalDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
             ]
           }
         ]
@@ -2434,6 +2536,14 @@
             "type": "integer",
             "format": "int32"
           },
+          "numberPositive": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberNegative": {
+            "type": "integer",
+            "format": "int32"
+          },
           "professionalId": {
             "type": "integer",
             "format": "int64"
@@ -2681,6 +2791,14 @@
             "format": "int64"
           },
           "numberTested": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberPositive": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberNegative": {
             "type": "integer",
             "format": "int32"
           },
@@ -3346,6 +3464,45 @@
           }
         }
       },
+      "UpdateInstitutionCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "institutionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "publicSector": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateParaProfessionalCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paraProfessionalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          }
+        }
+      },
       "DiseaseDto": {
         "type": "object",
         "additionalProperties": false,
@@ -3427,6 +3584,12 @@
             "type": "integer",
             "format": "int64",
             "nullable": true
+          },
+          "countryName": {
+            "type": "string"
+          },
+          "countryFlag": {
+            "type": "string"
           },
           "authToken": {
             "type": "string"

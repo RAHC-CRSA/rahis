@@ -82,6 +82,8 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
         this.testForm = this.formBuilder.group({
             name: ['', [Validators.required]],
             numberTested: ['', [Validators.required]],
+            numberPositive: ['', [Validators.required]],
+            numberNegative: ['', [Validators.required]],
             professionalId: ['', [Validators.required]],
         });
     }

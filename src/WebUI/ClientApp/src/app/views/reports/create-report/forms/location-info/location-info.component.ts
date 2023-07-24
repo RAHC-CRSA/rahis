@@ -15,6 +15,8 @@ import {
 } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
+import { AuthState } from 'app/core/auth/store';
+import { getUser } from 'app/core/auth/store/selectors';
 import { ReportState } from 'app/modules/reports/store';
 import {
     loadCommunities,
@@ -53,6 +55,7 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
     otherOption: string = 'Other';
     newRegion: boolean = false;
 
+    userCountryId: number | null | undefined;
     countryControl = new FormControl();
     regionControl = new FormControl();
     municipalityControl = new FormControl();
@@ -93,7 +96,8 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
     constructor(
         private formBuilder: FormBuilder,
         private changeDetector: ChangeDetectorRef,
-        private store: Store<ReportState>
+        private store: Store<ReportState>,
+        private authStore: Store<AuthState>
     ) {}
 
     ngAfterContentChecked(): void {
@@ -133,6 +137,19 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
                     name ? this._filterCountry(name) : this.countries.slice()
                 )
             );
+
+            if (this.userCountryId) {
+                const country = this.countries.find(
+                    (c) => c.id == this.userCountryId
+                );
+
+                this.selectedCountry = country;
+                this.countryControl.setValue(country, { emitEvent: true });
+
+                this.locationInfo.patchValue({ country: country.id });
+                this.store.dispatch(loadRegions({ payload: country.id }));
+                this.store.dispatch(loadOccurrences({ payload: country.id }));
+            }
         });
 
         this.regions$ = this.store.select(getRegions);
@@ -208,6 +225,12 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
                 )
             );
         });
+
+        this.authStore.select(getUser).subscribe((user) => {
+            if (user && user.countryId) {
+                this.userCountryId = user.countryId;
+            }
+        });
     }
 
     get f() {
@@ -230,12 +253,11 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
         this.selectedCountry = event.option.value;
         const country: CountryDto = event.option.value;
 
-        this.locationInfo.patchValue({ country: country.id });
-
         this.regionControl.setValue('', { emitEvent: true });
         this.districtControl.setValue('', { emitEvent: true });
         this.communityControl.setValue('', { emitEvent: true });
 
+        this.locationInfo.patchValue({ country: country.id });
         this.store.dispatch(loadRegions({ payload: country.id }));
         this.store.dispatch(loadOccurrences({ payload: country.id }));
     }
