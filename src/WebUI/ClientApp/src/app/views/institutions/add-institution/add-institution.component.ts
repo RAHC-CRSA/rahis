@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
     styleUrls: ['./add-institution.component.scss'],
     animations: fuseAnimations,
 })
-export class AddInstitutionComponent {
+export class AddInstitutionComponent implements OnInit {
     institutionForm: FormGroup;
     loading$: Observable<boolean>;
     feedback$: Observable<ServerResponse | null | undefined>;

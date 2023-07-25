@@ -1,0 +1,127 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+  <!-- Header -->
+  <div
+    class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div class="flex-1 min-w-0">
+      <!-- Breadcrumbs -->
+      <div class="flex flex-wrap items-center font-medium">
+        <div>
+          <a class="whitespace-nowrap text-primary-500">Para-Professionals</a>
+        </div>
+        <div class="flex items-center ml-1 whitespace-nowrap">
+          <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+          <a class="ml-1 text-primary-500">Edit a Para-Professional</a>
+        </div>
+      </div>
+      <!-- Title -->
+      <div class="mt-2">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+          Edit a Para-Professional
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="flex-auto p-6 sm:p-10">
+
+    <div class="w-full">
+
+      <div class="p-4 bg-card shadow rounded overflow-hidden">
+
+        <!-- Alert -->
+        <app-feedback-display *ngIf="feedback$ | async" [feedback]="feedback$"></app-feedback-display>
+
+        <form [formGroup]="professionalForm">
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Name</mat-label>
+              <input aria-label="Para-Professional name" matInput [value]="professional?.name"
+                placeholder="Para-Professional name" disabled />
+            </mat-form-field>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Position</mat-label>
+              <input aria-label="Para-Professional position" matInput formControlName="position"
+                placeholder="Para-Professional position" />
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Para-Professional position is required', control: professionalForm.controls['position']}"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'minlength', message: 'Para-Professional position should have at least 3 characters', control: professionalForm.controls['position']}"></ng-container>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Email</mat-label>
+              <input type="email" aria-label="Email address" matInput formControlName="email"
+                placeholder="Email address" />
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'required',
+            message: 'Email is required',
+            control: professionalForm.controls['email']
+          }"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'email',
+            message: 'Email is invalid',
+            control: professionalForm.controls['email']
+          }"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'minlength',
+            message: 'Email should have at least 3 characters',
+            control: professionalForm.controls['email']
+          }"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'maxlength',
+            message: 'Email should have maximum 360 symbols',
+            control: professionalForm.controls['email']
+          }"></ng-container>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Phone Number</mat-label>
+              <input aria-label="Para-Professional phone number" matInput formControlName="phone"
+                placeholder="Para-Professional phone number" />
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Para-Professional phone is required', control: professionalForm.controls['phone']}"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'minlength', message: 'Para-Professional phone should have at least 3 characters', control: professionalForm.controls['phone']}"></ng-container>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Institution</mat-label>
+              <input type="text" aria-label="Institution" [value]="professional?.institutionName" matInput disabled>
+            </mat-form-field>
+          </div>
+
+          <div class="flex justify-between my-4">
+            <a [routerLink]="['/dashboard/para-professionals']" class="px-8" mat-flat-button [color]="'accent'">
+              Cancel
+            </a>
+            <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="professionalForm.invalid"
+              (click)="submit()">
+              <span *ngIf="!( loading$ | async )">
+                Update Para-Professional
+              </span>
+              <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

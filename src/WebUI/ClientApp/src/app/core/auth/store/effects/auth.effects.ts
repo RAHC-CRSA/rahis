@@ -24,7 +24,10 @@ export class AuthEffects {
                     map((data) => {
                         this.authService.setCurrentUser(data);
 
-                        return AuthActions.loginSuccess({ payload: data });
+                        return AuthActions.loginSuccess({
+                            payload: data,
+                            redirectUrl: action.redirectUrl,
+                        });
                     }),
                     catchError((error) =>
                         of(AuthActions.setFeedback({ payload: error }))
@@ -56,7 +59,7 @@ export class AuthEffects {
                 ofType(AuthActions.loginSuccess),
                 tap((action) => {
                     this.authService.setCurrentUser(action.payload);
-                    this.router.navigateByUrl('/');
+                    this.router.navigateByUrl(action.redirectUrl);
                 })
             ),
         { dispatch: false }
@@ -102,9 +105,9 @@ export class AuthEffects {
             switchMap(() =>
                 this.authService.getCurrentUser().pipe(
                     map((user) =>
-                        user != null
-                            ? AuthActions.loginSuccess({ payload: user })
-                            : AuthActions.logout({ payload: 'sign-in' })
+                        AuthActions.loadUserSuccess({
+                            payload: user,
+                        })
                     ),
                     catchError(() =>
                         of(AuthActions.logout({ payload: 'sign-in' }))

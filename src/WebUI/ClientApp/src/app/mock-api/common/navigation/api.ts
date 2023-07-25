@@ -6,7 +6,7 @@ import * as defaultNav from 'app/mock-api/common/navigation/default.data';
 import * as superAdminNav from 'app/mock-api/common/navigation/super-admin.data';
 import * as adminNav from 'app/mock-api/common/navigation/admin.data';
 import * as reporterNav from 'app/mock-api/common/navigation/reporter.data';
-import * as verifierNav from 'app/mock-api/common/navigation/verifier.data';
+import * as verifierNav from 'app/mock-api/common/navigation/rah-officer.data';
 
 @Injectable({
     providedIn: 'root',

@@ -28,7 +28,7 @@ import { Observable } from 'rxjs';
     animations: fuseAnimations,
 })
 export class SpeciesListComponent {
-    displayedColumns: string[] = ['id', 'name', 'actions'];
+    displayedColumns: string[] = ['id', 'name'];
     dataSource: MatTableDataSource<SpeciesDto>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;

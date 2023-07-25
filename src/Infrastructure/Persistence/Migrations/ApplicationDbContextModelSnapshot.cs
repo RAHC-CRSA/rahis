@@ -627,6 +627,12 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("NumberNegative")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberPositive")
+                        .HasColumnType("int");
+
                     b.Property<int>("NumberTested")
                         .HasColumnType("int");
 
@@ -800,6 +806,9 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                     b.Property<long?>("CommunityId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("CountryId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
@@ -839,6 +848,8 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CommunityId");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("DistrictId");
 
@@ -1117,6 +1128,9 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -1148,6 +1162,12 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiry")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -1316,6 +1336,12 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("CommunityId");
 
+                    b.HasOne("RegionalAnimalHealth.Domain.Entities.Regions.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("RegionalAnimalHealth.Domain.Entities.Regions.District", "District")
                         .WithMany()
                         .HasForeignKey("DistrictId");
@@ -1335,6 +1361,8 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                         .HasForeignKey("TransboundaryDiseaseId");
 
                     b.Navigation("Community");
+
+                    b.Navigation("Country");
 
                     b.Navigation("District");
 

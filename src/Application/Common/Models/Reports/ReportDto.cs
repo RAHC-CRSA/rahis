@@ -42,6 +42,10 @@ public class ReportDto
     public string? TreatmentDetails { get; set; }
 
     public List<MedicationDto> Medications { get; set; }
+
+    public bool Tested { get; set; }
     public List<DiagnosticTestDto> DiagnosticTests { get; set; }
+
+    public bool Vaccinated { get; set; }
     public List<VaccinationDto> Vaccinations { get; set; }
 }

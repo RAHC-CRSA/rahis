@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
-import { UserService } from '../../../../services';
+import { RegionService, UserService } from '../../../../services';
 import * as UserActions from '../actions/users.actions';
 import { FeedbackService } from 'app/common/helpers/feedback.service';
 
@@ -13,6 +13,7 @@ export class UsersEffects {
         private actions$: Actions,
         private router: Router,
         private userService: UserService,
+        private regionsService: RegionService,
         private feedbackService: FeedbackService
     ) {}
 
@@ -23,6 +24,29 @@ export class UsersEffects {
                 this.userService.getAllUsers().pipe(
                     map((payload) =>
                         UserActions.loadUsersSuccess({ payload: payload })
+                    ),
+                    catchError((error) =>
+                        of(
+                            UserActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    loadCountries$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(UserActions.loadCountries),
+            mergeMap(() =>
+                this.regionsService.getAllCountries().pipe(
+                    map((payload) =>
+                        UserActions.loadCountriesSuccess({
+                            payload: payload,
+                        })
                     ),
                     catchError((error) =>
                         of(

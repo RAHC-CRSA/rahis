@@ -11,6 +11,7 @@ using RegionalAnimalHealth.Domain.Exceptions;
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetOccurrences;
 public class GetOccurrencesQuery : IRequest<(Result, List<OccurrenceDto>?)>
 {
+    public long? CountryId { get; set; }
 }
 
 public class GetOccurrencesQueryHandler : IRequestHandler<GetOccurrencesQuery, (Result, List<OccurrenceDto>?)>
@@ -33,7 +34,7 @@ public class GetOccurrencesQueryHandler : IRequestHandler<GetOccurrencesQuery, (
                     .ThenInclude(r => r.Disease)
                 .Include(x => x.Region)
                     .ThenInclude(e => e.Country)
-                .Where(x => !x.IsDeleted)
+                .Where(x => !x.IsDeleted && (request.CountryId != null ? x.CountryId == request.CountryId : true))
                 .Select(OccurrencesSelectorExpression())
                 .ToListAsync();
 

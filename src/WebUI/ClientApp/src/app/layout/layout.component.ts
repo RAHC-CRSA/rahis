@@ -18,6 +18,7 @@ import { AppConfig } from 'app/core/config/app.config';
 import { AuthState } from 'app/core/auth/store';
 import { Store } from '@ngrx/store';
 import { loadUser } from 'app/core/auth/store/actions/auth.actions';
+import { getUser, getUserLoaded } from 'app/core/auth/store/selectors';
 
 @Component({
     selector: 'layout',

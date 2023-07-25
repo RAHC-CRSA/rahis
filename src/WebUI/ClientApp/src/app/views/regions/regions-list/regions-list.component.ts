@@ -28,7 +28,7 @@ import { Observable } from 'rxjs';
     animations: fuseAnimations,
 })
 export class RegionsListComponent {
-    displayedColumns: string[] = ['id', 'name', 'country', 'actions'];
+    displayedColumns: string[] = ['id', 'name', 'country'];
     dataSource: MatTableDataSource<RegionDto>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;

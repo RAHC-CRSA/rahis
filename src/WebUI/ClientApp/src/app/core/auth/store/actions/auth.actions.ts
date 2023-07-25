@@ -22,7 +22,7 @@ export const loginFail = createAction(
 );
 export const loginSuccess = createAction(
     LOGIN_SUCCESS,
-    props<{ payload: AuthResponseDto }>()
+    props<{ payload: AuthResponseDto; redirectUrl: string }>()
 );
 
 // Logout
@@ -34,10 +34,15 @@ export const logoutSuccess = createAction(LOGOUT_SUCCESS);
 
 // load user
 export const LOAD_USER = `[Auth] Load User`;
+export const LOAD_USER_SUCCESS = `[Auth] Load User Success`;
 export const CHECK_TOKEN_EXPIRATION = `[Auth] Check Token Expiration`;
 export const CHECK_TOKEN_EXPIRATION_SUCCESS = `[Auth] Check Token Expiration Success`;
 
 export const loadUser = createAction(LOAD_USER);
+export const loadUserSuccess = createAction(
+    LOAD_USER_SUCCESS,
+    props<{ payload: AuthResponseDto }>()
+);
 export const checkTokenExpiration = createAction(CHECK_TOKEN_EXPIRATION);
 export const checkTokenExpirationSuccess = createAction(
     CHECK_TOKEN_EXPIRATION_SUCCESS

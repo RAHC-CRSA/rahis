@@ -31,6 +31,17 @@ export const reducer = createReducer(
         data: [...state.data, payload],
         loading: false,
     })),
+    on(actions.updateInstitution, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.updateInstitutionSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        data: state.data.filter((e) => (e.id == payload.id ? payload : e)),
+    })),
     on(actions.deleteInstitution, (state) => ({
         ...state,
         feedback: null,

@@ -144,6 +144,13 @@ const routes: Routes = [
                         pathMatch: 'full',
                     },
                     {
+                        path: 'edit/:id',
+                        loadChildren: () =>
+                            import(
+                                'app/views/institutions/edit-institution/edit-institution.module'
+                            ).then((m) => m.EditInstitutionModule),
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -166,6 +173,14 @@ const routes: Routes = [
                         path: '',
                         redirectTo: 'list',
                         pathMatch: 'full',
+                    },
+                    {
+                        path: 'edit/:id',
+                        pathMatch: 'full',
+                        loadChildren: () =>
+                            import(
+                                'app/views/professionals/edit-professional/edit-professional.module'
+                            ).then((m) => m.EditProfessionalModule),
                     },
                     {
                         path: 'create',

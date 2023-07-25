@@ -12,7 +12,7 @@ using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReports;
 namespace WebUI.Endpoints.Reports;
 
 [OpenApiTag("Reports")]
-[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}, {SecurityRoles.Verifier}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}, {SecurityRoles.RahOfficer}, {SecurityRoles.ChiefVeterinaryOfficer}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class GetReports : EndpointBaseAsync.WithRequest<GetReportsQuery>.WithActionResult<List<ReportListDto>>
 {
     private readonly IMediator _mediator;
