@@ -4587,7 +4587,9 @@ export class ReportDto implements IReportDto {
     treatment?: boolean;
     treatmentDetails?: string | undefined;
     medications?: MedicationDto[];
+    tested?: boolean;
     diagnosticTests?: DiagnosticTestDto[];
+    vaccinated?: boolean;
     vaccinations?: VaccinationDto[];
 
     constructor(data?: IReportDto) {
@@ -4639,11 +4641,13 @@ export class ReportDto implements IReportDto {
                 for (let item of _data["medications"])
                     this.medications!.push(MedicationDto.fromJS(item));
             }
+            this.tested = _data["tested"];
             if (Array.isArray(_data["diagnosticTests"])) {
                 this.diagnosticTests = [] as any;
                 for (let item of _data["diagnosticTests"])
                     this.diagnosticTests!.push(DiagnosticTestDto.fromJS(item));
             }
+            this.vaccinated = _data["vaccinated"];
             if (Array.isArray(_data["vaccinations"])) {
                 this.vaccinations = [] as any;
                 for (let item of _data["vaccinations"])
@@ -4699,11 +4703,13 @@ export class ReportDto implements IReportDto {
             for (let item of this.medications)
                 data["medications"].push(item.toJSON());
         }
+        data["tested"] = this.tested;
         if (Array.isArray(this.diagnosticTests)) {
             data["diagnosticTests"] = [];
             for (let item of this.diagnosticTests)
                 data["diagnosticTests"].push(item.toJSON());
         }
+        data["vaccinated"] = this.vaccinated;
         if (Array.isArray(this.vaccinations)) {
             data["vaccinations"] = [];
             for (let item of this.vaccinations)
@@ -4748,7 +4754,9 @@ export interface IReportDto {
     treatment?: boolean;
     treatmentDetails?: string | undefined;
     medications?: MedicationDto[];
+    tested?: boolean;
     diagnosticTests?: DiagnosticTestDto[];
+    vaccinated?: boolean;
     vaccinations?: VaccinationDto[];
 }
 

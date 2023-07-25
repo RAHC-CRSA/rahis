@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { mergeMap, map, catchError, exhaustMap } from 'rxjs/operators';
+import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
 import {
     DiseaseService,
     InstitutionService,
@@ -11,6 +11,8 @@ import {
 } from '../../../../services';
 import * as ReportsActions from '../actions/reports.actions';
 import { FeedbackService } from 'app/common/helpers/feedback.service';
+import { Router } from '@angular/router';
+import { IServerResponse, ServerResponse } from 'app/web-api-client';
 
 @Injectable()
 export class ReportsEffects {
@@ -21,7 +23,8 @@ export class ReportsEffects {
         private speciesService: SpeciesService,
         private diseaseService: DiseaseService,
         private institutionsService: InstitutionService,
-        private feedbackService: FeedbackService
+        private feedbackService: FeedbackService,
+        private router: Router
     ) {}
 
     createReport$ = createEffect(() =>
@@ -85,6 +88,17 @@ export class ReportsEffects {
                 )
             )
         )
+    );
+
+    verifyReportSuccess$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(ReportsActions.verifyReportSuccess),
+                tap(() => {
+                    this.router.navigateByUrl('/dashboard/reports');
+                })
+            ),
+        { dispatch: false }
     );
 
     sendNotification$ = createEffect(() =>

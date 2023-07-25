@@ -37,6 +37,7 @@ export class ViewReportComponent implements OnInit {
     feedback$: Observable<ServerResponse | null | undefined>;
     loading$: Observable<boolean>;
     loaded$: Observable<boolean>;
+    reportInfoData$: Observable<any[] | null | undefined>;
     actionsInfoData$: Observable<any[] | null | undefined>;
 
     diagnosticTestColumns: string[] = [
@@ -63,13 +64,19 @@ export class ViewReportComponent implements OnInit {
     actionsInfoColumns: string[] = [
         'stampingOut',
         'destructionOfCorpses',
-        'treatment',
         'disinfection',
         'quarantine',
-        'vaccinated',
-        'tested',
         'movementControl',
         'observation',
+    ];
+
+    reportInfoColumns: string[] = [
+        'animalsExposed',
+        'animalsInfected',
+        'animalMortality',
+        'humansExposed',
+        'humansInfected',
+        'humanMortality',
     ];
 
     constructor(
@@ -102,14 +109,24 @@ export class ViewReportComponent implements OnInit {
 
         this.report$.subscribe((data) => {
             if (data) {
+                console.log({ data });
+                this.reportInfoData$ = of([
+                    {
+                        animalsExposed: data.exposed ?? 0,
+                        animalsInfected: data.infected ?? 0,
+                        animalMortality: data.mortality ?? 0,
+                        humansExposed: data.humansExposed ?? 0,
+                        humansInfected: data.humansInfected ?? 0,
+                        humanMortality: data.humansMortality ?? 0,
+                    },
+                ]);
+
                 this.actionsInfoData$ = of([
                     {
                         stampingOut: data.stampingOut,
                         destructionOfCorpses: data.destructionOfCorpses,
-                        treatment: data.treatment,
                         disinfection: data.disinfection,
                         quarantine: data.quarantine,
-                        vaccination: data.vaccinations,
                         movementControl: data.movementControl,
                         observation: data.observation,
                     },
