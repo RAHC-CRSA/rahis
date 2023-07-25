@@ -149,7 +149,7 @@ export const appRoutes: Route[] = [
                 path: 'dashboard',
                 canMatch: [RoleGuard],
                 data: {
-                    roles: ['Verifier'],
+                    roles: ['Regional Animal Health Officer'],
                 },
                 loadChildren: () =>
                     import(
