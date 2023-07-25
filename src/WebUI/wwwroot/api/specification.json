@@ -691,7 +691,7 @@
         ]
       }
     },
-    "/api/report/{reportId}": {
+    "/api/report/{ReportId}": {
       "get": {
         "tags": [
           "Reports"

@@ -66,7 +66,8 @@ export class ViewReportComponent implements OnInit {
         'treatment',
         'disinfection',
         'quarantine',
-        'vaccination',
+        'vaccinated',
+        'tested',
         'movementControl',
         'observation',
     ];
