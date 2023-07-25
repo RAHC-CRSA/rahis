@@ -54,8 +54,8 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
         'name',
         'numberTested',
         'numberPositive',
-        'numberNegative',
-        'numberUndetermined',
+        // 'numberNegative',
+        // 'numberUndetermined',
         'actions',
     ];
 

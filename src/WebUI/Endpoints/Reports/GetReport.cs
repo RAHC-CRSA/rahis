@@ -23,7 +23,7 @@ public class GetReport : EndpointBaseAsync.WithRequest<GetReportByIdQuery>.WithA
         _mediator = mediator;
     }
 
-    [HttpGet("api/report/{reportId}")]
+    [HttpGet("api/report/{ReportId}")]
     [OpenApiOperation(
             "Gets a report by id",
             "Gets a report by id")
