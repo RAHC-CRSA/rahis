@@ -2741,11 +2741,17 @@
               "$ref": "#/components/schemas/MedicationDto"
             }
           },
+          "tested": {
+            "type": "boolean"
+          },
           "diagnosticTests": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DiagnosticTestDto"
             }
+          },
+          "vaccinated": {
+            "type": "boolean"
           },
           "vaccinations": {
             "type": "array",
