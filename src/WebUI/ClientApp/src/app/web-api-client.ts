@@ -1164,7 +1164,7 @@ export class GetReportClient implements IGetReportClient {
      * Gets a report by id
      */
     handle(reportId: number): Observable<ReportDto> {
-        let url_ = this.baseUrl + "/api/report/{reportId}";
+        let url_ = this.baseUrl + "/api/report/{ReportId}";
         if (reportId === undefined || reportId === null)
             throw new Error("The parameter 'reportId' must be defined.");
         url_ = url_.replace("{ReportId}", encodeURIComponent("" + reportId));
