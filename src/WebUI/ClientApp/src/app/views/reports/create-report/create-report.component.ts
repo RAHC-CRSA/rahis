@@ -103,11 +103,17 @@ export class CreateReportComponent implements OnInit {
             // Capture form values
             this.formValues.exposed = formData.numberExposed;
             this.formValues.infected = formData.numberInfected;
-            this.formValues.mortality = formData.mortality;
+            this.formValues.dead = formData.numberDead;
+            this.formValues.mortality = Math.round(
+                (formData.numberDead / formData.numberExposed) * 100
+            );
             this.formValues.humanInfection = formData.humanInfection;
             this.formValues.humansExposed = formData.humansExposed;
             this.formValues.humansInfected = formData.humansInfected;
-            this.formValues.humansMortality = formData.humansMortality;
+            this.formValues.humansDead = formData.humansDead;
+            this.formValues.humansMortality = Math.round(
+                (formData.humansDead / formData.humansExposed) * 100
+            );
 
             this.formStep++;
 
@@ -191,13 +197,13 @@ export class CreateReportComponent implements OnInit {
             occurrenceId: this.formValues.occurrence
                 ? parseInt(this.formValues.occurrence)
                 : undefined,
-            numberExposed: parseInt(this.formValues.exposed),
-            numberInfected: parseInt(this.formValues.infected),
-            mortality: parseInt(this.formValues.mortality),
+            numberExposed: this.formValues.exposed,
+            numberInfected: this.formValues.infected,
+            mortality: this.formValues.mortality,
             humanInfection: this.formValues.humanInfection,
-            humansExposed: parseInt(this.formValues.humansExposed),
-            humansInfected: parseInt(this.formValues.humansInfected),
-            humansMortality: parseInt(this.formValues.humansMortality),
+            humansExposed: this.formValues.humansExposed,
+            humansInfected: this.formValues.humansInfected,
+            humansMortality: this.formValues.humansMortality,
             stampingOut: this.formValues.stampingOut,
             destructionOfCorpses: this.formValues.destructionOfCorpses,
             corpsesDestroyed: this.formValues.corpsesDestroyed
@@ -236,13 +242,15 @@ export class CreateReportComponent implements OnInit {
             species: '',
             newOccurrence: false,
             occurrence: '',
-            exposed: '',
-            infected: '',
-            mortality: '',
+            exposed: 0,
+            infected: 0,
+            dead: 0,
+            mortality: 0,
             humanInfection: false,
-            humansExposed: '',
-            humansInfected: '',
-            humansMortality: '',
+            humansExposed: 0,
+            humansInfected: 0,
+            humansDead: 0,
+            humansMortality: 0,
             stampingOut: false,
             destructionOfCorpses: false,
             corpsesDestroyed: '',

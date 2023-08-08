@@ -239,12 +239,18 @@ public class IdentityService : IIdentityService
         return (Result.Success(), resetToken);
     }
 
-    public async Task<Result> UpdatePasswordAsync(string email, string newPassword, string resetToken)
+    public async Task<Result> UpdatePasswordByTokenAsync(string newPassword, string resetToken)
     {
-        var user = await _userManager.Users.Where(x => x.Email == email &&  x.PasswordResetToken == resetToken && x.PasswordResetTokenExpiry <= DateTime.UtcNow.AddMinutes(15)).FirstOrDefaultAsync();
+        var user = await _userManager.Users.Where(x => x.PasswordResetToken == resetToken && x.PasswordResetTokenExpiry <= DateTime.UtcNow.AddMinutes(15)).FirstOrDefaultAsync();
 
         if (user == null)
             return Result.Failure(new List<string> { "User not found." });
+
+        if (user.PasswordResetToken == null)
+            return Result.Failure(new List<string> { "Password reset token not found" });
+
+        if (user.PasswordResetTokenExpiry > DateTime.UtcNow.AddMinutes(15))
+            return Result.Failure(new List<string> { "Password reset token has expired. Please request a new password request link." });
 
         await _userManager.RemovePasswordAsync(user);
         var result = await _userManager.AddPasswordAsync(user, newPassword);
@@ -252,6 +258,11 @@ public class IdentityService : IIdentityService
         {
             return Result.Failure(result.Errors.Select(r => r.Description).ToList());
         }
+
+        user.PasswordResetToken = null;
+        user.PasswordResetTokenExpiry = null;
+
+        await _userManager.UpdateAsync(user);
 
         return Result.Success();
     } 

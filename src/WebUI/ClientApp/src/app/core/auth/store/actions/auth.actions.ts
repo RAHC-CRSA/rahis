@@ -45,6 +45,7 @@ export const loadUserSuccess = createAction(
     LOAD_USER_SUCCESS,
     props<{ payload: AuthResponseDto }>()
 );
+
 export const checkTokenExpiration = createAction(CHECK_TOKEN_EXPIRATION);
 export const checkTokenExpirationSuccess = createAction(
     CHECK_TOKEN_EXPIRATION_SUCCESS

@@ -90,7 +90,6 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
             name: ['', [Validators.required]],
             numberTested: ['', [Validators.required]],
             numberPositive: ['', [Validators.required]],
-            numberNegative: ['', [Validators.required]],
             professionalId: ['', [Validators.required]],
         });
     }

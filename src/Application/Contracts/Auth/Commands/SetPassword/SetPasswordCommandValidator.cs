@@ -1,10 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace RegionalAnimalHealth.Application.Contracts.Auth.Commands.SetPassword;
-internal class SetPasswordCommandValidator
+public class SetPasswordCommandValidator : AbstractValidator<SetPasswordCommand>
 {
+    public SetPasswordCommandValidator()
+    {
+        RuleFor(x => x.ResetToken)
+            .NotEmpty().WithMessage("Reset token cannot be null");
+
+        RuleFor(x => x.Password)
+            .NotEmpty().WithMessage("Password is required");
+    }
 }

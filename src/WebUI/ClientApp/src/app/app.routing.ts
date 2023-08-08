@@ -22,7 +22,7 @@ export const appRoutes: Route[] = [
     // Auth routes for guests
     {
         path: '',
-        canMatch: [NoAuthGuard],
+        // canMatch: [NoAuthGuard],
         component: LayoutComponent,
         data: {
             layout: 'empty',

@@ -7,7 +7,6 @@ namespace RegionalAnimalHealth.Application.Contracts.Auth.Commands.SetPassword;
 public class SetPasswordCommand : IRequest<Result>
 {
     public string ResetToken { get; set; }
-    public string Email { get; set; }
     public string Password { get; set; }
 }
 
@@ -28,7 +27,7 @@ public class SetPasswordCommandHandler : IRequestHandler<SetPasswordCommand, Res
     {
         try
         {
-            return await _identityService.UpdatePasswordAsync(request.Email, request.Password, request.ResetToken);
+            return await _identityService.UpdatePasswordByTokenAsync(request.Password, request.ResetToken);
         }
         catch (Exception ex)
         {

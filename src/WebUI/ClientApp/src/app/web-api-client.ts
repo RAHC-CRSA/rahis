@@ -6938,7 +6938,6 @@ export interface IResetPasswordCommand {
 
 export class SetPasswordCommand implements ISetPasswordCommand {
     resetToken?: string;
-    email?: string;
     password?: string;
 
     constructor(data?: ISetPasswordCommand) {
@@ -6953,7 +6952,6 @@ export class SetPasswordCommand implements ISetPasswordCommand {
     init(_data?: any) {
         if (_data) {
             this.resetToken = _data["resetToken"];
-            this.email = _data["email"];
             this.password = _data["password"];
         }
     }
@@ -6968,7 +6966,6 @@ export class SetPasswordCommand implements ISetPasswordCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["resetToken"] = this.resetToken;
-        data["email"] = this.email;
         data["password"] = this.password;
         return data;
     }
@@ -6976,7 +6973,6 @@ export class SetPasswordCommand implements ISetPasswordCommand {
 
 export interface ISetPasswordCommand {
     resetToken?: string;
-    email?: string;
     password?: string;
 }
 

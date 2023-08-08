@@ -28,9 +28,9 @@ public class PasswordReset : EndpointBaseAsync.WithRequest<ResetPasswordCommand>
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<string>> HandleAsync(ResetPasswordCommand request, CancellationToken cancellationToken = default)
     {
-        var (result, resetToken) = await _mediator.Send(request);
+        var result = await _mediator.Send(request);
         if (result.Succeeded)
-            return Ok(resetToken);
+            return Ok("Password reset email sent.");
 
         return BadRequest(new ServerResponse(result.Errors));
     }

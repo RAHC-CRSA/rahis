@@ -28,7 +28,6 @@ import { setPassword } from 'app/core/auth/store/actions/auth.actions';
 })
 export class AuthResetPasswordComponent implements OnInit {
     token: string;
-    email: string;
     resetPasswordForm: FormGroup;
     loading$: Observable<boolean | null | undefined>;
     feedback$: Observable<ServerResponse | null | undefined>;
@@ -51,8 +50,7 @@ export class AuthResetPasswordComponent implements OnInit {
      */
 
     ngOnInit() {
-        console.log('Touched!');
-        this.route.paramMap.subscribe((params: ParamMap) => {
+        this.route.queryParamMap.subscribe((params: ParamMap) => {
             this.token = params.get('token');
             console.log(this.token);
         });
@@ -63,19 +61,12 @@ export class AuthResetPasswordComponent implements OnInit {
     initData() {
         this.loading$ = this.store.select(getUserLoading);
         this.feedback$ = this.store.select(getFeedback);
-
-        this.store.select(getUser).subscribe((user) => {
-            if (user) {
-                this.email = user?.email;
-            }
-        });
     }
 
     initForm() {
         // Create the form
         this.resetPasswordForm = this.formBuilder.group(
             {
-                resetToken: ['', Validators.required],
                 password: ['', Validators.required],
                 passwordConfirm: ['', Validators.required],
             },
@@ -101,9 +92,8 @@ export class AuthResetPasswordComponent implements OnInit {
 
         // Send the request to the server
         const payload: ISetPasswordCommand = {
-            resetToken: this.resetPasswordForm.controls.resetToken.value,
+            resetToken: this.token,
             password: this.resetPasswordForm.controls.password.value,
-            email: this.email,
         };
 
         this.store.dispatch(setPassword({ payload }));
