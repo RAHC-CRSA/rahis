@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanMatch, Route, Router, UrlSegment, UrlTree } from '@angular/router';
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable, catchError, exhaustMap, map, of, switchMap } from 'rxjs';
 import { AuthService } from 'app/core/auth/auth.service';
 import { AuthState } from '../store';
 import { Store } from '@ngrx/store';
@@ -50,10 +50,10 @@ export class NoAuthGuard implements CanMatch {
      * @private
      */
     private _check(): Observable<boolean> {
-        // Check the authentication status and return an observable of
-        // "true" or "false" to allow or prevent the access
+        // Check the authentication status
+        console.log('Check no auth...');
         return this._store
             .select(getUser)
-            .pipe(switchMap((authenticated) => of(!authenticated)));
+            .pipe(exhaustMap((user) => of(user == null || user == undefined)));
     }
 }

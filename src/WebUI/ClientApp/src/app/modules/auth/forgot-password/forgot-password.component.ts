@@ -1,36 +1,33 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
-import { finalize } from 'rxjs';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Observable, finalize } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { AuthState } from 'app/core/auth/store';
+import { Store } from '@ngrx/store';
+import { IResetPasswordCommand, ServerResponse } from 'app/web-api-client';
+import { resetPassword } from 'app/core/auth/store/actions/auth.actions';
+import { getUser } from 'app/core/auth/store/selectors';
 
 @Component({
-    selector     : 'auth-forgot-password',
-    templateUrl  : './forgot-password.component.html',
+    selector: 'auth-forgot-password',
+    templateUrl: './forgot-password.component.html',
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations,
 })
-export class AuthForgotPasswordComponent implements OnInit
-{
-    @ViewChild('forgotPasswordNgForm') forgotPasswordNgForm: NgForm;
-
-    alert: { type: FuseAlertType; message: string } = {
-        type   : 'success',
-        message: ''
-    };
-    forgotPasswordForm: UntypedFormGroup;
-    showAlert: boolean = false;
+export class AuthForgotPasswordComponent implements OnInit {
+    forgotPasswordForm: FormGroup;
+    feedback$: Observable<ServerResponse | null | undefined>;
 
     /**
      * Constructor
      */
     constructor(
         private _authService: AuthService,
-        private _formBuilder: UntypedFormBuilder
-    )
-    {
-    }
+        private _formBuilder: FormBuilder,
+        private store: Store<AuthState>
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -39,11 +36,10 @@ export class AuthForgotPasswordComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Create the form
         this.forgotPasswordForm = this._formBuilder.group({
-            email: ['', [Validators.required, Validators.email]]
+            email: ['', [Validators.required, Validators.email]],
         });
     }
 
@@ -54,52 +50,10 @@ export class AuthForgotPasswordComponent implements OnInit
     /**
      * Send the reset link
      */
-    sendResetLink(): void
-    {
-        // Return if the form is invalid
-        if ( this.forgotPasswordForm.invalid )
-        {
-            return;
-        }
-
-        // Disable the form
-        this.forgotPasswordForm.disable();
-
-        // Hide the alert
-        this.showAlert = false;
-
-        // Forgot password
-        this._authService.forgotPassword(this.forgotPasswordForm.get('email').value)
-            .pipe(
-                finalize(() => {
-
-                    // Re-enable the form
-                    this.forgotPasswordForm.enable();
-
-                    // Reset the form
-                    this.forgotPasswordNgForm.resetForm();
-
-                    // Show the alert
-                    this.showAlert = true;
-                })
-            )
-            .subscribe(
-                (response) => {
-
-                    // Set the alert
-                    this.alert = {
-                        type   : 'success',
-                        message: 'Password reset sent! You\'ll receive an email if you are registered on our system.'
-                    };
-                },
-                (response) => {
-
-                    // Set the alert
-                    this.alert = {
-                        type   : 'error',
-                        message: 'Email does not found! Are you sure you are already a member?'
-                    };
-                }
-            );
+    sendResetLink(): void {
+        const payload: IResetPasswordCommand = {
+            email: this.forgotPasswordForm.controls.email.value,
+        };
+        this.store.dispatch(resetPassword({ payload }));
     }
 }

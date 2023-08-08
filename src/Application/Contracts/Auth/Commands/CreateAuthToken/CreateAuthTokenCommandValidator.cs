@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace RegionalAnimalHealth.Application.Contracts.Auth.Commands.CreateAuthTokenCommand;
+namespace RegionalAnimalHealth.Application.Contracts.Auth.Commands.CreateAuthToken;
 public class CreateAuthTokenCommandValidator : AbstractValidator<CreateAuthTokenCommand>
 {
     public CreateAuthTokenCommandValidator()

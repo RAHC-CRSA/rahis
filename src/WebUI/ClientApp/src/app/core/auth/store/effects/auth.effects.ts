@@ -30,7 +30,11 @@ export class AuthEffects {
                         });
                     }),
                     catchError((error) =>
-                        of(AuthActions.setFeedback({ payload: error }))
+                        of(
+                            AuthActions.setFeedback({
+                                payload: error,
+                            })
+                        )
                     )
                 )
             )
@@ -106,11 +110,8 @@ export class AuthEffects {
                 this.authService.getCurrentUser().pipe(
                     map((user) =>
                         AuthActions.loadUserSuccess({
-                            payload: user,
+                            payload: user ?? null,
                         })
-                    ),
-                    catchError(() =>
-                        of(AuthActions.logout({ payload: 'sign-in' }))
                     )
                 )
             )
@@ -127,6 +128,50 @@ export class AuthEffects {
 
                 return of(AuthActions.checkTokenExpirationSuccess());
             })
+        )
+    );
+
+    passwordReset$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.resetPassword),
+            exhaustMap((action) =>
+                this.authService.passwordReset(action.payload).pipe(
+                    map((data) =>
+                        AuthActions.resetPasswordSuccess({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            AuthActions.setFeedback({
+                                payload: error,
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    setPassword$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.setPassword),
+            exhaustMap((action) =>
+                this.authService.setPassword(action.payload).pipe(
+                    map((data) =>
+                        AuthActions.setFeedback({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            AuthActions.setFeedback({
+                                payload: error,
+                            })
+                        )
+                    )
+                )
+            )
         )
     );
 }

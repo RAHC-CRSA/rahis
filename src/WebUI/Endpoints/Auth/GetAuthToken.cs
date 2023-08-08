@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Authorization;
-using RegionalAnimalHealth.Application.Contracts.Auth.Commands.CreateAuthTokenCommand;
+using RegionalAnimalHealth.Application.Contracts.Auth.Commands.CreateAuthToken;
 
 namespace WebUI.Endpoints.Auth;
 

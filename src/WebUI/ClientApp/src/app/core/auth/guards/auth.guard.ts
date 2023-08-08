@@ -53,19 +53,24 @@ export class AuthGuard implements CanMatch {
      */
     private _check(segments: UrlSegment[]): Observable<boolean | UrlTree> {
         // Check the authentication status
-        this._store.dispatch(checkTokenExpiration());
+        // this._store.dispatch(checkTokenExpiration());
+        console.log('Check auth...');
         return this._store.select(getUser).pipe(
             map((user) => {
-                if (user && user?.authToken != null) {
+                if (user !== null && user?.authToken !== '') {
                     return true;
                 } else {
                     // Redirect to the sign-in page with a redirectUrl param
-                    const redirectURL = `/${segments.join('/')}`;
-                    const urlTree = this._router.parseUrl(
-                        `sign-in?redirectURL=${redirectURL}`
-                    );
+                    // const redirectURL = `/${segments.join('/')}`;
+                    // const urlTree = this._router.parseUrl(
+                    //     `sign-in?redirectURL=${redirectURL}`
+                    // );
 
-                    return urlTree;
+                    // console.log({ urlTree });
+
+                    // return urlTree;
+
+                    return false;
                 }
             }),
             catchError((error) => {

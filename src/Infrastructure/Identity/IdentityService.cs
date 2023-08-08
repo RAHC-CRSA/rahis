@@ -11,6 +11,7 @@ using RegionalAnimalHealth.Application.Common.Security.Configurations;
 using RegionalAnimalHealth.Application.Common.Models.Authorization;
 using RegionalAnimalHealth.Application.Contracts.Users.Queries.GetUsers;
 using RegionalAnimalHealth.Application.Common.Models.Personas;
+using static Duende.IdentityServer.Models.IdentityResources;
 
 namespace RegionalAnimalHealth.Infrastructure.Identity;
 
@@ -117,6 +118,30 @@ public class IdentityService : IIdentityService
         }
     }
 
+    public async Task<Result> UpdatePasswordAsync(string userId, string newPassword)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return Result.Failure(new List<string> { "User not found." });
+
+            var result = await _userManager.AddPasswordAsync(user, newPassword);
+            if (!result.Succeeded)
+            {
+                return Result.Failure(result.Errors.Select(r => r.Description).ToList());
+            }
+
+            return Result.Success();
+
+        }
+        catch (Exception ex)
+        {
+            return Result.Failure(new List<string> { ex.Message });
+        }
+    }
+
     public async Task<AuthResponseDto> GetTokenAsync(string userName)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -193,4 +218,51 @@ public class IdentityService : IIdentityService
         return (Result.Success(), userDto);
     }
 
+    public async Task<(Result, string?)> CreatePasswordResetTokenAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user == null)
+            return (Result.Failure(new List<string> { "User not found." }), null);
+
+        var resetToken = GenerateRandomString(8);
+
+        user.PasswordResetToken = resetToken;
+        user.PasswordResetTokenExpiry = DateTime.UtcNow.AddMinutes(15);
+
+        var result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+        {
+            return (Result.Failure(result.Errors.Select(r => r.Description).ToList()), null);
+        }
+
+        return (Result.Success(), resetToken);
+    }
+
+    public async Task<Result> UpdatePasswordAsync(string email, string newPassword, string resetToken)
+    {
+        var user = await _userManager.Users.Where(x => x.Email == email &&  x.PasswordResetToken == resetToken && x.PasswordResetTokenExpiry <= DateTime.UtcNow.AddMinutes(15)).FirstOrDefaultAsync();
+
+        if (user == null)
+            return Result.Failure(new List<string> { "User not found." });
+
+        await _userManager.RemovePasswordAsync(user);
+        var result = await _userManager.AddPasswordAsync(user, newPassword);
+        if (!result.Succeeded)
+        {
+            return Result.Failure(result.Errors.Select(r => r.Description).ToList());
+        }
+
+        return Result.Success();
+    } 
+
+    private string GenerateRandomString(int length)
+    {
+        var random = new Random();
+        const string pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        var chars = Enumerable.Range(0, length).Select(x => pool[random.Next(0, pool.Length)]);
+
+        return new string(chars.ToArray());
+    }
+         
 }

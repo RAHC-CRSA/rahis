@@ -20,6 +20,10 @@ export const getRoles = createSelector(
     authState,
     (state: AuthState) => state.data?.roles
 );
+export const getPasswordResetToken = createSelector(
+    authState,
+    (state: AuthState) => state.passwordResetToken
+);
 export const getFeedback = createSelector(
     authState,
     (state: AuthState) => state.feedback

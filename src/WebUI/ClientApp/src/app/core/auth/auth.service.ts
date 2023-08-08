@@ -10,6 +10,13 @@ import {
     CreateAuthTokenCommand,
     GetAuthTokenClient,
     ICreateAuthTokenCommand,
+    IPasswordResetClient,
+    IResetPasswordCommand,
+    ISetPasswordCommand,
+    PasswordResetClient,
+    ResetPasswordCommand,
+    SetPasswordClient,
+    SetPasswordCommand,
 } from 'app/web-api-client';
 
 @Injectable()
@@ -18,7 +25,9 @@ export class AuthService {
     private _authenticated: boolean = false;
 
     // Http clients
-    getAuthToken: GetAuthTokenClient;
+    getAuthTokenClient: GetAuthTokenClient;
+    passwordResetClient: PasswordResetClient;
+    setPasswordClient: SetPasswordClient;
 
     /**
      * Constructor
@@ -27,7 +36,9 @@ export class AuthService {
         private _httpClient: HttpClient,
         private _userService: UserService
     ) {
-        this.getAuthToken = new GetAuthTokenClient(_httpClient);
+        this.getAuthTokenClient = new GetAuthTokenClient(_httpClient);
+        this.passwordResetClient = new PasswordResetClient(_httpClient);
+        this.setPasswordClient = new SetPasswordClient(_httpClient);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -207,7 +218,18 @@ export class AuthService {
             password: payload.password,
         });
 
-        return this.getAuthToken.handle(request);
+        return this.getAuthTokenClient.handle(request);
+    }
+
+    passwordReset(payload: IResetPasswordCommand) {
+        const request = new ResetPasswordCommand(payload);
+
+        return this.passwordResetClient.handle(request);
+    }
+
+    setPassword(payload: ISetPasswordCommand) {
+        const request = new SetPasswordCommand(payload);
+        return this.setPasswordClient.handle(request);
     }
 
     getCurrentUser(): Observable<AuthResponseDto> {

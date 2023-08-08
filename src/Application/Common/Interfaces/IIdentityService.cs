@@ -27,4 +27,8 @@ public interface IIdentityService
     Task<Result> AddUserToRoles(string userId, List<string> roles);
 
     Task<(Result, UserDto?)> GetUserAsync(string userId);
+
+    Task<(Result, string?)> CreatePasswordResetTokenAsync(string email);
+
+    Task<Result> UpdatePasswordAsync(string email, string password, string resetToken);
 }
