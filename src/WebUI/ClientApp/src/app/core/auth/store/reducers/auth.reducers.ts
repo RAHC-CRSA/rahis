@@ -6,6 +6,7 @@ import {
     loadUser,
     setFeedback,
     clearFeedback,
+    loadUserSuccess,
 } from '../actions/auth.actions';
 import { createReducer, on } from '@ngrx/store';
 import { AuthResponseDto } from 'app/web-api-client';
@@ -28,6 +29,12 @@ export const initialState: AuthState = {
 export const authReducer = createReducer(
     initialState,
     on(loadUser, (state) => ({ ...state, loading: true })),
+    on(loadUserSuccess, (state, { payload }) => ({
+        ...state,
+        data: payload,
+        loading: false,
+        loaded: true,
+    })),
     on(login, (state) => ({ ...state, loading: true, feedback: null })),
     on(loginSuccess, (state, { payload }) => ({
         ...state,

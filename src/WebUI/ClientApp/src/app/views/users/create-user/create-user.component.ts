@@ -9,13 +9,22 @@ import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { PasswordValidator } from 'app/common/validators';
 import { UserState } from 'app/modules/users/store';
-import { createUser, loadRoles } from 'app/modules/users/store/actions';
 import {
+    createUser,
+    loadCountries,
+    loadRoles,
+} from 'app/modules/users/store/actions';
+import {
+    getCountries,
     getFeedback,
     getRoles,
     getUsersLoading,
 } from 'app/modules/users/store/selectors';
-import { ICreateUserCommand, ServerResponse } from 'app/web-api-client';
+import {
+    CountryDto,
+    ICreateUserCommand,
+    ServerResponse,
+} from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
 @Component({
@@ -36,6 +45,14 @@ export class CreateUserComponent {
     roles$: Observable<string[] | null | undefined>;
     roles: string[];
     filteredRoles: Observable<string[]>;
+
+    countryControl = new FormControl();
+
+    selectedCountry: CountryDto;
+
+    countries$: Observable<CountryDto[] | null | undefined>;
+    countries: CountryDto[];
+    filteredCountries: Observable<CountryDto[]>;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -62,6 +79,25 @@ export class CreateUserComponent {
                 map((role) => this._filterRole(role || ''))
             );
         });
+
+        this.store.dispatch(loadCountries());
+        this.countries$ = this.store.select(getCountries);
+        this.countries$.subscribe((countries) => {
+            this.countries = countries;
+
+            this.filteredCountries = this.countryControl.valueChanges.pipe(
+                startWith({} as CountryDto),
+                map((country) =>
+                    country && typeof country === 'object'
+                        ? country.name
+                        : country
+                ),
+                map((name: string) =>
+                    name ? this._filterCountry(name) : this.countries.slice()
+                )
+            );
+        });
+
         this.loading$ = this.store.select(getUsersLoading);
         this.feedback$ = this.store.select(getFeedback);
     }
@@ -83,6 +119,7 @@ export class CreateUserComponent {
                 ]),
             ],
             role: [null, Validators.compose([Validators.required])],
+            country: [null, Validators.compose([Validators.required])],
             email: [
                 null,
                 Validators.compose([
@@ -128,6 +165,24 @@ export class CreateUserComponent {
         this.userForm.patchValue({ role });
     }
 
+    private _filterCountry(name: string): CountryDto[] {
+        return this.countries.filter(
+            (option) =>
+                option.name.toLowerCase().indexOf(name.toLowerCase()) === 0
+        );
+    }
+
+    displayCountryFn(country: CountryDto): string {
+        return country ? country.name : '';
+    }
+
+    updateSelectedCountry(event: any) {
+        this.selectedCountry = event.option.value;
+        const country: CountryDto = event.option.value;
+
+        this.userForm.patchValue({ country: country.id });
+    }
+
     submit() {
         const payload: ICreateUserCommand = {
             firstName: this.f.firstName.value,
@@ -136,6 +191,7 @@ export class CreateUserComponent {
             email: this.f.email.value,
             password: this.f.password.value,
             roles: [this.f.role.value],
+            countryId: this.f.country.value,
         };
 
         this.store.dispatch(createUser({ payload }));

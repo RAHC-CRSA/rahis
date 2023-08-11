@@ -144,6 +144,13 @@ const routes: Routes = [
                         pathMatch: 'full',
                     },
                     {
+                        path: 'edit/:id',
+                        loadChildren: () =>
+                            import(
+                                'app/views/institutions/edit-institution/edit-institution.module'
+                            ).then((m) => m.EditInstitutionModule),
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -168,6 +175,14 @@ const routes: Routes = [
                         pathMatch: 'full',
                     },
                     {
+                        path: 'edit/:id',
+                        pathMatch: 'full',
+                        loadChildren: () =>
+                            import(
+                                'app/views/professionals/edit-professional/edit-professional.module'
+                            ).then((m) => m.EditProfessionalModule),
+                    },
+                    {
                         path: 'create',
                         loadChildren: () =>
                             import(
@@ -180,6 +195,30 @@ const routes: Routes = [
                             import(
                                 'app/views/professionals/professionals-list/professionals-list.module'
                             ).then((m) => m.ProfessionalsListModule),
+                    },
+                ],
+            },
+            {
+                path: 'notification-recipients',
+                children: [
+                    {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full',
+                    },
+                    {
+                        path: 'create',
+                        loadChildren: () =>
+                            import(
+                                'app/views/notification-recipients/add-notification-recipient/add-notification-recipient.module'
+                            ).then((m) => m.AddNotificationRecipientModule),
+                    },
+                    {
+                        path: 'list',
+                        loadChildren: () =>
+                            import(
+                                'app/views/notification-recipients/notification-recipients-list/notification-recipients-list.module'
+                            ).then((m) => m.NotificationRecipientsListModule),
                     },
                 ],
             },

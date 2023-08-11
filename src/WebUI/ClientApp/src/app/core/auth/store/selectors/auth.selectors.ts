@@ -18,7 +18,7 @@ export const getUser = createSelector(
 );
 export const getRoles = createSelector(
     authState,
-    (state: AuthState) => state.data.roles
+    (state: AuthState) => state.data?.roles
 );
 export const getFeedback = createSelector(
     authState,

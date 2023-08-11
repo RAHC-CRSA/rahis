@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { mergeMap, map, catchError, exhaustMap } from 'rxjs/operators';
+import { mergeMap, map, catchError, exhaustMap, tap } from 'rxjs/operators';
 import {
     DiseaseService,
     InstitutionService,
@@ -11,6 +11,8 @@ import {
 } from '../../../../services';
 import * as ReportsActions from '../actions/reports.actions';
 import { FeedbackService } from 'app/common/helpers/feedback.service';
+import { Router } from '@angular/router';
+import { IServerResponse, ServerResponse } from 'app/web-api-client';
 
 @Injectable()
 export class ReportsEffects {
@@ -21,7 +23,8 @@ export class ReportsEffects {
         private speciesService: SpeciesService,
         private diseaseService: DiseaseService,
         private institutionsService: InstitutionService,
-        private feedbackService: FeedbackService
+        private feedbackService: FeedbackService,
+        private router: Router
     ) {}
 
     createReport$ = createEffect(() =>
@@ -73,6 +76,40 @@ export class ReportsEffects {
                 this.reportsService.verifyReport(action.payload).pipe(
                     map((data) =>
                         ReportsActions.verifyReportSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    verifyReportSuccess$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(ReportsActions.verifyReportSuccess),
+                tap(() => {
+                    this.router.navigateByUrl('/dashboard/reports');
+                })
+            ),
+        { dispatch: false }
+    );
+
+    sendNotification$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.sendNotification),
+            exhaustMap((action) =>
+                this.reportsService.sendNotification(action.payload).pipe(
+                    map((data) =>
+                        ReportsActions.setFeedback({
+                            payload: data,
+                        })
                     ),
                     catchError((error) =>
                         of(
@@ -155,8 +192,8 @@ export class ReportsEffects {
     loadOccurrences$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ReportsActions.loadOccurrences),
-            mergeMap(() =>
-                this.reportsService.getAllOccurrences().pipe(
+            mergeMap((action) =>
+                this.reportsService.getAllOccurrences(action.payload).pipe(
                     map((data) =>
                         ReportsActions.loadOccurrencesSuccess({ payload: data })
                     ),

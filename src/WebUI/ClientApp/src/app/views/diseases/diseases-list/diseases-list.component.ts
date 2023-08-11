@@ -37,7 +37,6 @@ export class DiseasesListComponent {
         'code',
         'classification',
         'zoonotic',
-        'actions',
     ];
     dataSource: MatTableDataSource<DiseaseDto>;
     @ViewChild(MatPaginator) paginator: MatPaginator;

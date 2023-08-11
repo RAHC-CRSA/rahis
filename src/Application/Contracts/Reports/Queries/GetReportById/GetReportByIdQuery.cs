@@ -58,7 +58,7 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
 
     private Expression<Func<Report, ReportDto>> ReportSelectorExpression()
     {
-        return e => new ReportDto { 
+        return e => new ReportDto {
             Id = e.Id,
             OccurrenceId = e.OccurrenceId,
             OccurrenceTitle = $"{e.Occurrence.Reports.OrderBy(x => x.Id).Take(1).FirstOrDefault().Disease.Name ?? "Unidentified Disease"} / {e.Occurrence.DateStarted.ToString("MMMM dd, yyyy")}",
@@ -90,8 +90,10 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
             MovementControlMeasures = e.MovementControlMeasures,
             Treatment = e.Treatment,
             TreatmentDetails = e.TreatmentDetails,
+            Tested = e.DiagnosticTests.Any(),
             DiagnosticTests = e.DiagnosticTests.AsQueryable().Select(DiagnosticTestSelectorExpression()).ToList(),
             Medications = e.Medications.AsQueryable().Select(MedicationSelectorExpression()).ToList(),
+            Vaccinated = e.Vaccinations.Any(),
             Vaccinations = e.Vaccinations.AsQueryable().Select(VaccinationSelectorExpression()).ToList(),
             Location = $"{e.Occurrence.Region.Name}, {e.Occurrence.Region.Country.Name}",
             Created = DateOnly.FromDateTime(e.Created).ToString("MMMM dd, yyyy")

@@ -15,6 +15,7 @@ public interface IApplicationDbContext
     DbSet<Institution> Institutions { get; }
     DbSet<Medication> Medications { get; }
     DbSet<Municipality> Municipalities { get; }
+    DbSet<NotificationRecipient> NotificationRecipients { get; }
     DbSet<Occurrence> Occurrences { get; }
     DbSet<ParaProfessional> ParaProfessionals { get; }
     DbSet<Region> Regions { get; }

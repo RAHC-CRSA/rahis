@@ -250,16 +250,6 @@ export const reducer = createReducer(
         feedback: null,
         loading: true,
     })),
-    on(actions.verifyReportSuccess, (state, { payload }) => {
-        let report = state.data.find((e) => e.id == payload);
-        report.isVerified = true;
-        return {
-            ...state,
-            feedback: null,
-            loading: false,
-            data: state.data.map((e) => (e.id != payload ? e : report)),
-        };
-    }),
     on(actions.deleteReport, (state) => ({
         ...state,
         feedback: null,
@@ -303,6 +293,11 @@ export const reducer = createReducer(
         feedback: null,
         loading: false,
         municipalities: payload,
+    })),
+    on(actions.sendNotification, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
     })),
     on(actions.setFeedback, (state, { payload }) => ({
         ...state,

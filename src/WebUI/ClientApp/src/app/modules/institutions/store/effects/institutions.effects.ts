@@ -73,6 +73,40 @@ export class InstitutionsEffects {
         { dispatch: false }
     );
 
+    updateInstitution$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(InstitutionsActions.updateInstitution),
+            exhaustMap((action) =>
+                this.institutionService.updateInstitution(action.payload).pipe(
+                    map((data) =>
+                        InstitutionsActions.updateInstitutionSuccess({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            InstitutionsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    updateInstitutionSuccess$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(InstitutionsActions.updateInstitutionSuccess),
+                tap((action) => {
+                    this.router.navigateByUrl('/dashboard/institutions');
+                })
+            ),
+        { dispatch: false }
+    );
+
     deleteInstitution$ = createEffect(() =>
         this.actions$.pipe(
             ofType(InstitutionsActions.deleteInstitution),

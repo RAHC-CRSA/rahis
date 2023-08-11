@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto min-w-0" *transloco="let t">
+<div class="flex flex-col flex-auto min-w-0">
 
   <!-- Header -->
   <div
@@ -11,13 +11,13 @@
         </div>
         <div class="flex items-center ml-1 whitespace-nowrap">
           <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
-          <a class="ml-1 text-primary-500"> {{t('Add-a-User')}}:</a>
+          <a class="ml-1 text-primary-500">Add a User</a>
         </div>
       </div>
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-          {{t('Add-a-User')}}
+          Add a User
         </h2>
       </div>
     </div>
@@ -36,30 +36,30 @@
         <form [formGroup]="userForm">
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>{{t('First-Name')}}:</mat-label>
-              <input aria-label="{{t('First-Name')}}" matInput formControlName="firstName" placeholder="{{t('First-Name')}}" />
+              <mat-label>First Name</mat-label>
+              <input aria-label="First name" matInput formControlName="firstName" placeholder="First name" />
             </mat-form-field>
-            <ng-container [ngTemplateOutlet]="formError" *transloco="let t"
-              [ngTemplateOutletContext]="{validation: 'required', message: ''+t('First-Name')+' '+t('is-required') +'', control: userForm.controls['firstName']}"></ng-container>
             <ng-container [ngTemplateOutlet]="formError"
-              [ngTemplateOutletContext]="{validation: 'minlength', message: ''+t('First-Name')+' '+t('should-have-at-least-3-characters') +'', control: userForm.controls['firstName']}"></ng-container>
+              [ngTemplateOutletContext]="{validation: 'required', message: 'First name is required', control: userForm.controls['firstName']}"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'minlength', message: 'First name should have at least 3 characters', control: userForm.controls['firstName']}"></ng-container>
           </div>
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>{{t('Last-Name')}}:</mat-label>
-              <input aria-label="{{t('Last-Name')}}" matInput formControlName="lastName" placeholder="{{t('Last-Name')}}" />
+              <mat-label>Last Name</mat-label>
+              <input aria-label="Last Name" matInput formControlName="lastName" placeholder="Last name" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
-              [ngTemplateOutletContext]="{validation: 'required', message: ''+t('Last-Name')+' '+t('is-required') +'', control: userForm.controls['lastName']}"></ng-container>
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Last name is required', control: userForm.controls['lastName']}"></ng-container>
             <ng-container [ngTemplateOutlet]="formError"
-              [ngTemplateOutletContext]="{validation: 'minlength', message: ''+t('First-Name')+' '+t('should-have-at-least-3-characters') +'', control: userForm.controls['lastName']}"></ng-container>
+              [ngTemplateOutletContext]="{validation: 'minlength', message: 'Last name should have at least 3 characters', control: userForm.controls['lastName']}"></ng-container>
           </div>
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>{{t('Role')}}:</mat-label>
-              <input type="text" aria-label="{{t('Role')}}" matInput [formControl]="roleControl"
+              <mat-label>Role</mat-label>
+              <input type="text" aria-label="Role" matInput [formControl]="roleControl"
                 [matAutocomplete]="roleAutocomplete">
               <mat-autocomplete #roleAutocomplete="matAutocomplete" [displayWith]="displayRoleFn"
                 (optionSelected)="updateSelectedRole($event)">
@@ -72,23 +72,40 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>{{t('Email')}}:</mat-label>
-              <input type="email" aria-label="{{t('Email')}} {{t('Address')}}" matInput formControlName="email"
-                placeholder="{{t('Email')}} {{t('Address')}}" />
+              <mat-label>Country</mat-label>
+              <input type="text" aria-label="Country" matInput [formControl]="countryControl"
+                [matAutocomplete]="countryAutocomplete">
+              <mat-autocomplete #countryAutocomplete="matAutocomplete" [displayWith]="displayCountryFn"
+                (optionSelected)="updateSelectedCountry($event)">
+                <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                  <img [src]="country.flag" class="w-6 m-1 inline-block">
+                  {{ country.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Country is required', control: userForm.controls['country']}"></ng-container>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>Email</mat-label>
+              <input type="email" aria-label="Email address" matInput formControlName="email"
+                placeholder="Email address" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
             validation: 'required',
-            message: ''+t('Email')+' '+t('is-required') +'',
+            message: 'Email is required',
             control: userForm.controls['email']
           }"></ng-container>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
             validation: 'email',
-            message: ''+t('Email')+' '+t('is-invalid') +'',
+            message: 'Email is invalid',
             control: userForm.controls['email']
           }"></ng-container>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
             validation: 'minlength',
-            message: ''+t('Email')+' '+t('should-have-at-least-3-characters') +'',
+            message: 'Email should have at least 3 characters',
             control: userForm.controls['email']
           }"></ng-container>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
@@ -100,8 +117,8 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>{{t('Password')}}:</mat-label>
-              <input type="password" aria-label="{{t('Password')}}" matInput formControlName="password" placeholder="{{t('Password')}}" />
+              <mat-label>Password</mat-label>
+              <input type="password" aria-label="Password" matInput formControlName="password" placeholder="Password" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Password is required', control: userForm.controls['password']}"></ng-container>
@@ -113,9 +130,9 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>{{t('Confirm-Password')}}:</mat-label>
-              <input type="password" aria-label="{{t('Confirm')}}-{{t('Password')}}" matInput formControlName="confirmPassword"
-                placeholder="{{t('Confirm')}} {{t('Password')}}" />
+              <mat-label>Confirm Password</mat-label>
+              <input type="password" aria-label="Confirm password" matInput formControlName="confirmPassword"
+                placeholder="Confirm password" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Password confirmation is required', control: userForm.controls['confirmPassword']}"></ng-container>
@@ -125,12 +142,12 @@
 
           <div class="flex justify-between my-4">
             <a [routerLink]="['/dashboard/users']" class="px-8" mat-flat-button [color]="'secondary'">
-                {{t('Cancel')}}
+              Cancel
             </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="userForm.invalid"
               (click)="submit()">
               <span *ngIf="!( loading$ | async )">
-                {{t('Add-User')}}
+                Add User
               </span>
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>

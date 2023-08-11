@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { VerifierComponent } from './verifier.component';
+import { ChiefVeterinaryOfficerComponent } from './chief-veterinary-officer.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: VerifierComponent,
+        component: ChiefVeterinaryOfficerComponent,
         data: {
             roles: ['Verifier'],
             title: 'Verifier Dashboard',
@@ -13,10 +13,8 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () =>
-                    import(
-                        'app/views/dashboards/verifier/verifier.module'
-                    ).then((m) => m.VerifierModule),
+                redirectTo: 'reports',
+                pathMatch: 'full',
             },
             {
                 path: 'reports',
@@ -50,4 +48,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class VerifierRoutingModule {}
+export class ChiefVeterinaryOfficerRoutingModule {}

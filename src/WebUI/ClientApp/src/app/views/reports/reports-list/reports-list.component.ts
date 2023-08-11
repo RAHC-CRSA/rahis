@@ -7,7 +7,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ConfirmDialogComponent } from 'app/common/components/confirm-dialog/confirm-dialog.component';
 import { AuthState } from 'app/core/auth/store';
-import { getRoles } from 'app/core/auth/store/selectors';
+import { getRoles, getUser } from 'app/core/auth/store/selectors';
 import { ReportState } from 'app/modules/reports/store';
 import { deleteReport, loadReports } from 'app/modules/reports/store/actions';
 import {
@@ -15,6 +15,7 @@ import {
     getReports,
     getReportsLoaded,
     getReportsLoading,
+    getUnverifiedReports,
 } from 'app/modules/reports/store/selectors';
 import {
     IDeleteReportCommand,
@@ -62,15 +63,27 @@ export class ReportsListComponent {
     }
 
     initData() {
-        this.authStore.select(getRoles).subscribe((roles) => {
-            this.roles = roles;
+        this.authStore.select(getUser).subscribe((user) => {
+            if (user) {
+                this.roles = user.roles;
 
-            let verified: boolean | null | undefined;
-            if (roles.includes('Verifier')) verified = false;
+                let verified: boolean | null | undefined = undefined;
+                if (user.roles.includes('Chief Veterinary Officer'))
+                    verified = false;
+                else if (user.roles.includes('Regional Animal Health Officer'))
+                    verified = true;
 
-            this.store.dispatch(loadReports({ payload: verified }));
+                const payload = {
+                    isVerified: verified,
+                    countryId: user.countryId,
+                };
+
+                this.store.dispatch(loadReports({ payload }));
+                this.reports$ = user.roles.includes('Chief Veterinary Officer')
+                    ? this.store.select(getUnverifiedReports)
+                    : this.store.select(getReports);
+            }
         });
-        this.reports$ = this.store.select(getReports);
         this.reports$.subscribe((items) => {
             this.dataSource = new MatTableDataSource(items);
             this.dataSource.paginator = this.paginator;

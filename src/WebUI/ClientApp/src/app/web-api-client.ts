@@ -867,8 +867,9 @@ export interface IGetReportsClient {
     /**
      * Gets the list of reports
      * @param isVerified (optional) 
+     * @param countryId (optional) 
      */
-    handle(isVerified: boolean | null | undefined): Observable<ReportListDto[]>;
+    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined): Observable<ReportListDto[]>;
 }
 
 @Injectable({
@@ -887,11 +888,14 @@ export class GetReportsClient implements IGetReportsClient {
     /**
      * Gets the list of reports
      * @param isVerified (optional) 
+     * @param countryId (optional) 
      */
-    handle(isVerified: boolean | null | undefined): Observable<ReportListDto[]> {
+    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined): Observable<ReportListDto[]> {
         let url_ = this.baseUrl + "/api/reports?";
         if (isVerified !== undefined && isVerified !== null)
             url_ += "IsVerified=" + encodeURIComponent("" + isVerified) + "&";
+        if (countryId !== undefined && countryId !== null)
+            url_ += "CountryId=" + encodeURIComponent("" + countryId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1041,8 +1045,9 @@ export class DeleteOccurrenceClient implements IDeleteOccurrenceClient {
 export interface IGetOccurrencesClient {
     /**
      * Gets the list of occurrences
+     * @param countryId (optional) 
      */
-    handle(): Observable<OccurrenceDto[]>;
+    handle(countryId: number | null | undefined): Observable<OccurrenceDto[]>;
 }
 
 @Injectable({
@@ -1060,9 +1065,12 @@ export class GetOccurrencesClient implements IGetOccurrencesClient {
 
     /**
      * Gets the list of occurrences
+     * @param countryId (optional) 
      */
-    handle(): Observable<OccurrenceDto[]> {
-        let url_ = this.baseUrl + "/api/reports/occurrences";
+    handle(countryId: number | null | undefined): Observable<OccurrenceDto[]> {
+        let url_ = this.baseUrl + "/api/reports/occurrences?";
+        if (countryId !== undefined && countryId !== null)
+            url_ += "CountryId=" + encodeURIComponent("" + countryId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1212,6 +1220,82 @@ export class GetReportClient implements IGetReportClient {
                 result400 = resultData400 !== undefined ? resultData400 : <any>null;
     
             return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export interface ISendNotificationClient {
+    /**
+     * Sends a notification
+     */
+    handle(request: SendNotificationCommand): Observable<ServerResponse>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class SendNotificationClient implements ISendNotificationClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Sends a notification
+     */
+    handle(request: SendNotificationCommand): Observable<ServerResponse> {
+        let url_ = this.baseUrl + "/api/reports/send-notification";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ServerResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ServerResponse>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ServerResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ServerResponse.fromJS(resultData200);
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -2503,6 +2587,275 @@ export class GetRegionsClient implements IGetRegionsClient {
     }
 }
 
+export interface IAddRecipientClient {
+    /**
+     * Allows an admin to add a notification recipient
+     */
+    handle(request: AddRecipientCommand): Observable<NotificationRecipientDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class AddRecipientClient implements IAddRecipientClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Allows an admin to add a notification recipient
+     */
+    handle(request: AddRecipientCommand): Observable<NotificationRecipientDto> {
+        let url_ = this.baseUrl + "/api/notification-recipients";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<NotificationRecipientDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<NotificationRecipientDto>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<NotificationRecipientDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = NotificationRecipientDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export interface IDeleteRecipientClient {
+    /**
+     * Deletes a notification recipient
+     */
+    handle(request: DeleteRecipientCommand): Observable<number>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class DeleteRecipientClient implements IDeleteRecipientClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Deletes a notification recipient
+     */
+    handle(request: DeleteRecipientCommand): Observable<number> {
+        let url_ = this.baseUrl + "/api/notification-recipients";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<number>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<number>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result400 = resultData400 !== undefined ? resultData400 : <any>null;
+    
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export interface IGetRecipientsClient {
+    /**
+     * Gets the list of notification recipients
+     */
+    handle(): Observable<NotificationRecipientDto[]>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class GetRecipientsClient implements IGetRecipientsClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Gets the list of notification recipients
+     */
+    handle(): Observable<NotificationRecipientDto[]> {
+        let url_ = this.baseUrl + "/api/notification-recipients";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<NotificationRecipientDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<NotificationRecipientDto[]>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<NotificationRecipientDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(NotificationRecipientDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result400 = resultData400 !== undefined ? resultData400 : <any>null;
+    
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IAddInstitutionClient {
     /**
      * Adds an institution
@@ -2731,6 +3084,89 @@ export class GetInstitutionsClient implements IGetInstitutionsClient {
             else {
                 result200 = <any>null;
             }
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export interface IUpdateInstitutionClient {
+    /**
+     * Updates an institution
+     */
+    handle(request: UpdateInstitutionCommand): Observable<InstitutionDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class UpdateInstitutionClient implements IUpdateInstitutionClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Updates an institution
+     */
+    handle(request: UpdateInstitutionCommand): Observable<InstitutionDto> {
+        let url_ = this.baseUrl + "/api/institutions";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("patch", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<InstitutionDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<InstitutionDto>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<InstitutionDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = InstitutionDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status === 400) {
@@ -2981,6 +3417,89 @@ export class GetParaProfessionalsClient implements IGetParaProfessionalsClient {
             else {
                 result200 = <any>null;
             }
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export interface IUpdateParaProfessionalClient {
+    /**
+     * Updates a para-professional
+     */
+    handle(request: UpdateParaProfessionalCommand): Observable<ParaProfessionalDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class UpdateParaProfessionalClient implements IUpdateParaProfessionalClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Updates a para-professional
+     */
+    handle(request: UpdateParaProfessionalCommand): Observable<ParaProfessionalDto> {
+        let url_ = this.baseUrl + "/api/para-professionals";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ParaProfessionalDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ParaProfessionalDto>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ParaProfessionalDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ParaProfessionalDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status === 400) {
@@ -3602,6 +4121,8 @@ export class UserListDto implements IUserListDto {
     name?: string;
     email?: string;
     roles?: string;
+    country?: string;
+    countryFlag?: string;
 
     constructor(data?: IUserListDto) {
         if (data) {
@@ -3618,6 +4139,8 @@ export class UserListDto implements IUserListDto {
             this.name = _data["name"];
             this.email = _data["email"];
             this.roles = _data["roles"];
+            this.country = _data["country"];
+            this.countryFlag = _data["countryFlag"];
         }
     }
 
@@ -3634,6 +4157,8 @@ export class UserListDto implements IUserListDto {
         data["name"] = this.name;
         data["email"] = this.email;
         data["roles"] = this.roles;
+        data["country"] = this.country;
+        data["countryFlag"] = this.countryFlag;
         return data;
     }
 }
@@ -3643,6 +4168,8 @@ export interface IUserListDto {
     name?: string;
     email?: string;
     roles?: string;
+    country?: string;
+    countryFlag?: string;
 }
 
 export class SpeciesDto implements ISpeciesDto {
@@ -3853,6 +4380,8 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
     reportId?: number;
     name?: string;
     numberTested?: number;
+    numberPositive?: number;
+    numberNegative?: number;
     professionalId?: number;
 
     constructor(data?: IAddDiagnosticTestCommand) {
@@ -3869,6 +4398,8 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
             this.reportId = _data["reportId"];
             this.name = _data["name"];
             this.numberTested = _data["numberTested"];
+            this.numberPositive = _data["numberPositive"];
+            this.numberNegative = _data["numberNegative"];
             this.professionalId = _data["professionalId"];
         }
     }
@@ -3885,6 +4416,8 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
         data["reportId"] = this.reportId;
         data["name"] = this.name;
         data["numberTested"] = this.numberTested;
+        data["numberPositive"] = this.numberPositive;
+        data["numberNegative"] = this.numberNegative;
         data["professionalId"] = this.professionalId;
         return data;
     }
@@ -3894,6 +4427,8 @@ export interface IAddDiagnosticTestCommand {
     reportId?: number;
     name?: string;
     numberTested?: number;
+    numberPositive?: number;
+    numberNegative?: number;
     professionalId?: number;
 }
 
@@ -4052,7 +4587,9 @@ export class ReportDto implements IReportDto {
     treatment?: boolean;
     treatmentDetails?: string | undefined;
     medications?: MedicationDto[];
+    tested?: boolean;
     diagnosticTests?: DiagnosticTestDto[];
+    vaccinated?: boolean;
     vaccinations?: VaccinationDto[];
 
     constructor(data?: IReportDto) {
@@ -4104,11 +4641,13 @@ export class ReportDto implements IReportDto {
                 for (let item of _data["medications"])
                     this.medications!.push(MedicationDto.fromJS(item));
             }
+            this.tested = _data["tested"];
             if (Array.isArray(_data["diagnosticTests"])) {
                 this.diagnosticTests = [] as any;
                 for (let item of _data["diagnosticTests"])
                     this.diagnosticTests!.push(DiagnosticTestDto.fromJS(item));
             }
+            this.vaccinated = _data["vaccinated"];
             if (Array.isArray(_data["vaccinations"])) {
                 this.vaccinations = [] as any;
                 for (let item of _data["vaccinations"])
@@ -4164,11 +4703,13 @@ export class ReportDto implements IReportDto {
             for (let item of this.medications)
                 data["medications"].push(item.toJSON());
         }
+        data["tested"] = this.tested;
         if (Array.isArray(this.diagnosticTests)) {
             data["diagnosticTests"] = [];
             for (let item of this.diagnosticTests)
                 data["diagnosticTests"].push(item.toJSON());
         }
+        data["vaccinated"] = this.vaccinated;
         if (Array.isArray(this.vaccinations)) {
             data["vaccinations"] = [];
             for (let item of this.vaccinations)
@@ -4213,7 +4754,9 @@ export interface IReportDto {
     treatment?: boolean;
     treatmentDetails?: string | undefined;
     medications?: MedicationDto[];
+    tested?: boolean;
     diagnosticTests?: DiagnosticTestDto[];
+    vaccinated?: boolean;
     vaccinations?: VaccinationDto[];
 }
 
@@ -4270,6 +4813,8 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
     name?: string;
     reportId?: number;
     numberTested?: number;
+    numberPositive?: number;
+    numberNegative?: number;
     professionalId?: number;
     professionalName?: string;
 
@@ -4288,6 +4833,8 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
             this.name = _data["name"];
             this.reportId = _data["reportId"];
             this.numberTested = _data["numberTested"];
+            this.numberPositive = _data["numberPositive"];
+            this.numberNegative = _data["numberNegative"];
             this.professionalId = _data["professionalId"];
             this.professionalName = _data["professionalName"];
         }
@@ -4306,6 +4853,8 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
         data["name"] = this.name;
         data["reportId"] = this.reportId;
         data["numberTested"] = this.numberTested;
+        data["numberPositive"] = this.numberPositive;
+        data["numberNegative"] = this.numberNegative;
         data["professionalId"] = this.professionalId;
         data["professionalName"] = this.professionalName;
         return data;
@@ -4317,12 +4866,15 @@ export interface IDiagnosticTestDto {
     name?: string;
     reportId?: number;
     numberTested?: number;
+    numberPositive?: number;
+    numberNegative?: number;
     professionalId?: number;
     professionalName?: string;
 }
 
 export class CreateReportCommand implements ICreateReportCommand {
     occurrenceId?: number | undefined;
+    countryId?: number;
     regionId?: number;
     communityId?: number | undefined;
     districtId?: number | undefined;
@@ -4370,6 +4922,7 @@ export class CreateReportCommand implements ICreateReportCommand {
     init(_data?: any) {
         if (_data) {
             this.occurrenceId = _data["occurrenceId"];
+            this.countryId = _data["countryId"];
             this.regionId = _data["regionId"];
             this.communityId = _data["communityId"];
             this.districtId = _data["districtId"];
@@ -4429,6 +4982,7 @@ export class CreateReportCommand implements ICreateReportCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["occurrenceId"] = this.occurrenceId;
+        data["countryId"] = this.countryId;
         data["regionId"] = this.regionId;
         data["communityId"] = this.communityId;
         data["districtId"] = this.districtId;
@@ -4481,6 +5035,7 @@ export class CreateReportCommand implements ICreateReportCommand {
 
 export interface ICreateReportCommand {
     occurrenceId?: number | undefined;
+    countryId?: number;
     regionId?: number;
     communityId?: number | undefined;
     districtId?: number | undefined;
@@ -4712,6 +5267,42 @@ export interface IReportListDto {
     mortality?: number;
     location?: string;
     created?: string;
+}
+
+export class SendNotificationCommand implements ISendNotificationCommand {
+    reportId?: number;
+
+    constructor(data?: ISendNotificationCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.reportId = _data["reportId"];
+        }
+    }
+
+    static fromJS(data: any): SendNotificationCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new SendNotificationCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["reportId"] = this.reportId;
+        return data;
+    }
+}
+
+export interface ISendNotificationCommand {
+    reportId?: number;
 }
 
 export class VerifyReportCommand implements IVerifyReportCommand {
@@ -5354,6 +5945,142 @@ export interface IDeleteRegionCommand {
     id?: number;
 }
 
+export class NotificationRecipientDto implements INotificationRecipientDto {
+    id?: number;
+    name?: string;
+    email?: string;
+    institution?: string;
+    isEnabled?: boolean;
+
+    constructor(data?: INotificationRecipientDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.email = _data["email"];
+            this.institution = _data["institution"];
+            this.isEnabled = _data["isEnabled"];
+        }
+    }
+
+    static fromJS(data: any): NotificationRecipientDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotificationRecipientDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["email"] = this.email;
+        data["institution"] = this.institution;
+        data["isEnabled"] = this.isEnabled;
+        return data;
+    }
+}
+
+export interface INotificationRecipientDto {
+    id?: number;
+    name?: string;
+    email?: string;
+    institution?: string;
+    isEnabled?: boolean;
+}
+
+export class AddRecipientCommand implements IAddRecipientCommand {
+    name?: string;
+    email?: string;
+    institution?: string;
+    isEnabled?: boolean;
+
+    constructor(data?: IAddRecipientCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.email = _data["email"];
+            this.institution = _data["institution"];
+            this.isEnabled = _data["isEnabled"];
+        }
+    }
+
+    static fromJS(data: any): AddRecipientCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddRecipientCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["email"] = this.email;
+        data["institution"] = this.institution;
+        data["isEnabled"] = this.isEnabled;
+        return data;
+    }
+}
+
+export interface IAddRecipientCommand {
+    name?: string;
+    email?: string;
+    institution?: string;
+    isEnabled?: boolean;
+}
+
+export class DeleteRecipientCommand implements IDeleteRecipientCommand {
+    id?: number;
+
+    constructor(data?: IDeleteRecipientCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): DeleteRecipientCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new DeleteRecipientCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IDeleteRecipientCommand {
+    id?: number;
+}
+
 export class InstitutionDto implements IInstitutionDto {
     id?: number;
     name?: string;
@@ -5642,6 +6369,102 @@ export interface IDeleteParaProfessionalCommand {
     id?: number;
 }
 
+export class UpdateInstitutionCommand implements IUpdateInstitutionCommand {
+    institutionId?: number;
+    name?: string;
+    publicSector?: boolean;
+    type?: string | undefined;
+
+    constructor(data?: IUpdateInstitutionCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.institutionId = _data["institutionId"];
+            this.name = _data["name"];
+            this.publicSector = _data["publicSector"];
+            this.type = _data["type"];
+        }
+    }
+
+    static fromJS(data: any): UpdateInstitutionCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateInstitutionCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["institutionId"] = this.institutionId;
+        data["name"] = this.name;
+        data["publicSector"] = this.publicSector;
+        data["type"] = this.type;
+        return data;
+    }
+}
+
+export interface IUpdateInstitutionCommand {
+    institutionId?: number;
+    name?: string;
+    publicSector?: boolean;
+    type?: string | undefined;
+}
+
+export class UpdateParaProfessionalCommand implements IUpdateParaProfessionalCommand {
+    paraProfessionalId?: number;
+    email?: string;
+    phone?: string;
+    position?: string;
+
+    constructor(data?: IUpdateParaProfessionalCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.paraProfessionalId = _data["paraProfessionalId"];
+            this.email = _data["email"];
+            this.phone = _data["phone"];
+            this.position = _data["position"];
+        }
+    }
+
+    static fromJS(data: any): UpdateParaProfessionalCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateParaProfessionalCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["paraProfessionalId"] = this.paraProfessionalId;
+        data["email"] = this.email;
+        data["phone"] = this.phone;
+        data["position"] = this.position;
+        return data;
+    }
+}
+
+export interface IUpdateParaProfessionalCommand {
+    paraProfessionalId?: number;
+    email?: string;
+    phone?: string;
+    position?: string;
+}
+
 export class DiseaseDto implements IDiseaseDto {
     id?: number;
     name?: string;
@@ -5792,6 +6615,9 @@ export class AuthResponseDto implements IAuthResponseDto {
     lastName?: string;
     username?: string;
     email?: string;
+    countryId?: number | undefined;
+    countryName?: string;
+    countryFlag?: string;
     authToken?: string;
     refreshToken?: string;
     roles?: string[];
@@ -5812,6 +6638,9 @@ export class AuthResponseDto implements IAuthResponseDto {
             this.lastName = _data["lastName"];
             this.username = _data["username"];
             this.email = _data["email"];
+            this.countryId = _data["countryId"];
+            this.countryName = _data["countryName"];
+            this.countryFlag = _data["countryFlag"];
             this.authToken = _data["authToken"];
             this.refreshToken = _data["refreshToken"];
             if (Array.isArray(_data["roles"])) {
@@ -5836,6 +6665,9 @@ export class AuthResponseDto implements IAuthResponseDto {
         data["lastName"] = this.lastName;
         data["username"] = this.username;
         data["email"] = this.email;
+        data["countryId"] = this.countryId;
+        data["countryName"] = this.countryName;
+        data["countryFlag"] = this.countryFlag;
         data["authToken"] = this.authToken;
         data["refreshToken"] = this.refreshToken;
         if (Array.isArray(this.roles)) {
@@ -5853,6 +6685,9 @@ export interface IAuthResponseDto {
     lastName?: string;
     username?: string;
     email?: string;
+    countryId?: number | undefined;
+    countryName?: string;
+    countryFlag?: string;
     authToken?: string;
     refreshToken?: string;
     roles?: string[];
@@ -5905,6 +6740,7 @@ export class CreateUserCommand implements ICreateUserCommand {
     username?: string;
     password?: string;
     roles?: string[];
+    countryId?: number;
 
     constructor(data?: ICreateUserCommand) {
         if (data) {
@@ -5927,6 +6763,7 @@ export class CreateUserCommand implements ICreateUserCommand {
                 for (let item of _data["roles"])
                     this.roles!.push(item);
             }
+            this.countryId = _data["countryId"];
         }
     }
 
@@ -5949,6 +6786,7 @@ export class CreateUserCommand implements ICreateUserCommand {
             for (let item of this.roles)
                 data["roles"].push(item);
         }
+        data["countryId"] = this.countryId;
         return data;
     }
 }
@@ -5960,6 +6798,7 @@ export interface ICreateUserCommand {
     username?: string;
     password?: string;
     roles?: string[];
+    countryId?: number;
 }
 
 function formatDate(d: Date) {

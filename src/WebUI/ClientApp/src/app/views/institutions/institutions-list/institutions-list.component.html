@@ -79,9 +79,12 @@
             <!-- <button mat-icon-button>
               <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
             </button> -->
-            <button type="button" mat-icon-button (click)="onDelete(row.id)">
+            <a [routerLink]="['/dashboard/institutions/edit', row.id]" mat-icon-button>
+              <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+            </a>
+            <!-- <button type="button" mat-icon-button (click)="onDelete(row.id)">
               <mat-icon color="warn" svgIcon="heroicons_outline:trash"></mat-icon>
-            </button>
+            </button> -->
           </td>
         </ng-container>
 

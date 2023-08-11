@@ -13,7 +13,10 @@ import {
     ICreateReportCommand,
     IDeleteOccurrenceCommand,
     IDeleteReportCommand,
+    ISendNotificationCommand,
     IVerifyReportCommand,
+    SendNotificationClient,
+    SendNotificationCommand,
     VerifyReportClient,
     VerifyReportCommand,
 } from '../web-api-client';
@@ -30,6 +33,7 @@ export class ReportService {
     verifyReportClient: VerifyReportClient;
     deleteReportClient: DeleteReportClient;
     deleteOccurrenceClient: DeleteOccurrenceClient;
+    sendNotificationClient: SendNotificationClient;
 
     constructor(http: HttpClient) {
         this.getOccurrencesClient = new GetOccurrencesClient(http);
@@ -39,18 +43,22 @@ export class ReportService {
         this.verifyReportClient = new VerifyReportClient(http);
         this.deleteReportClient = new DeleteReportClient(http);
         this.deleteOccurrenceClient = new DeleteOccurrenceClient(http);
+        this.sendNotificationClient = new SendNotificationClient(http);
     }
 
-    getAllOccurrences() {
-        return this.getOccurrencesClient.handle();
+    getAllOccurrences(countryId: number | undefined) {
+        return this.getOccurrencesClient.handle(countryId);
     }
 
     createReport(payload: ICreateReportCommand) {
         return this.createReportClient.handle(new CreateReportCommand(payload));
     }
 
-    getAllReports(verified: boolean) {
-        return this.getReportsClient.handle(verified);
+    getAllReports(payload) {
+        return this.getReportsClient.handle(
+            payload.isVerified,
+            payload.countryId
+        );
     }
 
     getReport(id: number) {
@@ -59,6 +67,12 @@ export class ReportService {
 
     verifyReport(payload: IVerifyReportCommand) {
         return this.verifyReportClient.handle(new VerifyReportCommand(payload));
+    }
+
+    sendNotification(payload: ISendNotificationCommand) {
+        return this.sendNotificationClient.handle(
+            new SendNotificationCommand(payload)
+        );
     }
 
     deleteReport(payload: IDeleteReportCommand) {

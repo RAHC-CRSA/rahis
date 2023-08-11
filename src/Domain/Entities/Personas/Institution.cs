@@ -42,4 +42,14 @@ public class Institution : BaseAuditableEntity<long>, IAggregateRoot
         foreach (var pro in _paraProfessionals)
             pro.Delete();
     }
+
+    public void Update(string name, string? type, bool publicSector)
+    {
+        Guard.IsNotNullOrEmpty(name, nameof(name));
+        Guard.IsNotNullOrEmpty(type, nameof(type));
+
+        Name = name;
+        Type = type;
+        PublicSector = publicSector;
+    }
 }

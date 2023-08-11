@@ -12,6 +12,8 @@ public class AddDiagnosticTestCommand : IRequest<(Result, DiagnosticTestDto?)>
     public long ReportId { get; set; }
     public string Name { get; set; }
     public int NumberTested { get; set; }
+    public int NumberPositive { get; set; }
+    public int NumberNegative { get; set; }
     public long ProfessionalId { get; set; }
 }
 
@@ -39,7 +41,7 @@ public class AddDiagnosticTestCommandHandler : IRequestHandler<AddDiagnosticTest
                 return (Result.Failure(new List<string> { message }), null);
             }
 
-            var diagnosticTest = DiagnosticTest.Create(report.Id, request.Name, request.NumberTested, request.ProfessionalId);
+            var diagnosticTest = DiagnosticTest.Create(report.Id, request.Name, request.NumberTested, request.NumberPositive, request.NumberNegative, request.ProfessionalId);
 
             await _context.DiagnosticTests.AddAsync(diagnosticTest);
             await _context.SaveChangesAsync(cancellationToken);
@@ -50,6 +52,8 @@ public class AddDiagnosticTestCommandHandler : IRequestHandler<AddDiagnosticTest
                 Name = diagnosticTest.Name,
                 ReportId = diagnosticTest.ReportId,
                 NumberTested = diagnosticTest.NumberTested,
+                NumberPositive = diagnosticTest.NumberPositive,
+                NumberNegative = diagnosticTest.NumberNegative,
                 ProfessionalId = diagnosticTest.ProfessionalId,
             };
 

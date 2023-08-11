@@ -31,7 +31,13 @@ import { fuseAnimations } from '@fuse/animations';
     animations: fuseAnimations,
 })
 export class UsersListComponent {
-    displayedColumns: string[] = ['name', 'roles', 'email', 'actions'];
+    displayedColumns: string[] = [
+        'name',
+        'country',
+        'roles',
+        'email',
+        'actions',
+    ];
     dataSource: MatTableDataSource<UserListDto>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;

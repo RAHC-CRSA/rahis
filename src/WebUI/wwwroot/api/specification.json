@@ -522,6 +522,16 @@
               "nullable": true
             },
             "x-position": 1
+          },
+          {
+            "name": "CountryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 2
           }
         ],
         "responses": {
@@ -565,7 +575,8 @@
               "Super Admin",
               " Admin",
               " Reporter",
-              " Verifier"
+              " Regional Animal Health Officer",
+              " Chief Veterinary Officer"
             ]
           }
         ]
@@ -620,6 +631,18 @@
         "summary": "Gets the list of occurrences",
         "description": "Gets the list of occurrences in the system",
         "operationId": "GetOccurrences_Handle",
+        "parameters": [
+          {
+            "name": "CountryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -659,7 +682,10 @@
           {
             "JWT": [
               "Super Admin",
-              " Admin"
+              " Admin",
+              " Reporter",
+              " Chief Veterinary Officer",
+              " Regional Animal Health Officer"
             ]
           }
         ]
@@ -723,7 +749,49 @@
               "Super Admin",
               " Admin",
               " Reporter",
-              " Verifier"
+              " Regional Animal Health Officer",
+              " Chief Veterinary Officer"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/reports/send-notification": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Sends a notification",
+        "description": "Sends a notification for a report in the system",
+        "operationId": "SendNotification_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendNotificationCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Regional Animal Health Officer"
             ]
           }
         ]
@@ -765,7 +833,7 @@
         "security": [
           {
             "JWT": [
-              "Verifier"
+              "Chief Veterinary Officer"
             ]
           }
         ]
@@ -1504,6 +1572,170 @@
         ]
       }
     },
+    "/api/notification-recipients": {
+      "post": {
+        "tags": [
+          "Notification Recipients"
+        ],
+        "summary": "Allows an admin to add a notification recipient",
+        "description": "Allows an admin to add a notification recipient to the system",
+        "operationId": "AddRecipient_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRecipientCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationRecipientDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Notification Recipients"
+        ],
+        "summary": "Deletes a notification recipient",
+        "description": "Deletes a notification recipient from the system",
+        "operationId": "DeleteRecipient_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteRecipientCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Notification Recipients"
+        ],
+        "summary": "Gets the list of notification recipients",
+        "description": "Gets the list of notification recipients in the system",
+        "operationId": "GetRecipients_Handle",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationRecipientDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
+            ]
+          }
+        ]
+      }
+    },
     "/api/institutions": {
       "post": {
         "tags": [
@@ -1635,6 +1867,56 @@
               "Super Admin",
               " Admin",
               " Reporter"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Institutions"
+        ],
+        "summary": "Updates an institution",
+        "description": "Updates an institution on the system",
+        "operationId": "UpdateInstitution_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInstitutionCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstitutionDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
             ]
           }
         ]
@@ -1783,6 +2065,56 @@
               "Super Admin",
               " Admin",
               " Reporter"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "ParaProfessionals"
+        ],
+        "summary": "Updates a para-professional",
+        "description": "Updates a para-professional on the system",
+        "operationId": "UpdateParaProfessional_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParaProfessionalCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParaProfessionalDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin"
             ]
           }
         ]
@@ -2117,6 +2449,12 @@
           },
           "roles": {
             "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "countryFlag": {
+            "type": "string"
           }
         }
       },
@@ -2195,6 +2533,14 @@
             "type": "string"
           },
           "numberTested": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberPositive": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberNegative": {
             "type": "integer",
             "format": "int32"
           },
@@ -2395,11 +2741,17 @@
               "$ref": "#/components/schemas/MedicationDto"
             }
           },
+          "tested": {
+            "type": "boolean"
+          },
           "diagnosticTests": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DiagnosticTestDto"
             }
+          },
+          "vaccinated": {
+            "type": "boolean"
           },
           "vaccinations": {
             "type": "array",
@@ -2448,6 +2800,14 @@
             "type": "integer",
             "format": "int32"
           },
+          "numberPositive": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberNegative": {
+            "type": "integer",
+            "format": "int32"
+          },
           "professionalId": {
             "type": "integer",
             "format": "int64"
@@ -2465,6 +2825,10 @@
             "type": "integer",
             "format": "int64",
             "nullable": true
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
           },
           "regionId": {
             "type": "integer",
@@ -2701,6 +3065,16 @@
           }
         }
       },
+      "SendNotificationCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reportId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
       "VerifyReportCommand": {
         "type": "object",
         "additionalProperties": false,
@@ -2930,6 +3304,56 @@
           }
         }
       },
+      "NotificationRecipientDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "institution": {
+            "type": "string"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AddRecipientCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "institution": {
+            "type": "string"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DeleteRecipientCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
       "InstitutionDto": {
         "type": "object",
         "additionalProperties": false,
@@ -3046,6 +3470,45 @@
           }
         }
       },
+      "UpdateInstitutionCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "institutionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "publicSector": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateParaProfessionalCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paraProfessionalId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          }
+        }
+      },
       "DiseaseDto": {
         "type": "object",
         "additionalProperties": false,
@@ -3123,6 +3586,17 @@
           "email": {
             "type": "string"
           },
+          "countryId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "countryName": {
+            "type": "string"
+          },
+          "countryFlag": {
+            "type": "string"
+          },
           "authToken": {
             "type": "string"
           },
@@ -3173,6 +3647,10 @@
             "items": {
               "type": "string"
             }
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       }
@@ -3215,6 +3693,9 @@
     },
     {
       "name": "Regions"
+    },
+    {
+      "name": "Notification Recipients"
     },
     {
       "name": "Institutions"

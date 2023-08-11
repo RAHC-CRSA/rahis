@@ -70,7 +70,7 @@ export class OccurrenceInfoComponent implements OnInit, AfterContentChecked {
     }
 
     initData() {
-        this.store.dispatch(loadOccurrences());
+        this.store.dispatch(loadOccurrences(this.formData.country));
         this.occurrences$ = this.store.select(getOccurrences);
         this.occurrences$.subscribe((occurrences) => {
             this.occurrences = [
