@@ -47,6 +47,7 @@ export class ReportsListComponent {
     @ViewChild(MatSort) sort: MatSort;
 
     roles: string[];
+    canCreateReport: boolean;
     reports$: Observable<ReportListDto[] | null | undefined>;
     loading$: Observable<boolean>;
     loaded$: Observable<boolean>;
@@ -66,6 +67,10 @@ export class ReportsListComponent {
         this.authStore.select(getUser).subscribe((user) => {
             if (user) {
                 this.roles = user.roles;
+                this.canCreateReport =
+                    this.roles.includes('Admim') ||
+                    this.roles.includes('Super Admin') ||
+                    this.roles.includes('Reporter');
 
                 let verified: boolean | null | undefined = undefined;
                 if (user.roles.includes('Chief Veterinary Officer'))

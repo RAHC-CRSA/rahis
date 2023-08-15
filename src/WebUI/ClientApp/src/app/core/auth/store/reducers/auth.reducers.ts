@@ -11,6 +11,8 @@ import {
     resetPasswordSuccess,
     setPassword,
     setPasswordSuccess,
+    updateProfile,
+    updateProfileSuccess,
 } from '../actions/auth.actions';
 import { createReducer, on } from '@ngrx/store';
 import { AuthResponseDto } from 'app/web-api-client';
@@ -18,7 +20,6 @@ import { ServerResponse } from '../../../../web-api-client';
 
 export interface AuthState {
     data?: AuthResponseDto | null;
-    passwordResetToken: string | null;
     loaded: boolean;
     loading: boolean;
     feedback?: ServerResponse | null;
@@ -26,7 +27,6 @@ export interface AuthState {
 
 export const initialState: AuthState = {
     data: null,
-    passwordResetToken: null,
     loaded: false,
     loading: false,
     feedback: null,
@@ -58,19 +58,23 @@ export const authReducer = createReducer(
     on(resetPassword, (state) => ({
         ...state,
         loading: true,
-        passwordResetToken: null,
         feedback: null,
     })),
     on(resetPasswordSuccess, (state, { payload }) => ({
         ...state,
         loading: false,
-        passwordResetToken: payload,
+        feedback: payload,
     })),
     on(setPassword, (state) => ({ ...state, loading: true, feedback: null })),
     on(setPasswordSuccess, (state, { payload }) => ({
         ...state,
         loading: false,
-        passwordResetToken: null,
+        feedback: payload,
+    })),
+    on(updateProfile, (state) => ({ ...state, loading: true, feedback: null })),
+    on(updateProfileSuccess, (state, { payload }) => ({
+        ...state,
+        loading: false,
         feedback: payload,
     })),
     on(setFeedback, (state, { payload }) => ({

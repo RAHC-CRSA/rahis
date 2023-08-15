@@ -156,6 +156,13 @@ export const appRoutes: Route[] = [
                         'app/dashboards/rah-officer/rah-officer.module'
                     ).then((m) => m.RahOfficerModule),
             },
+            {
+                path: 'dashboard/profile',
+                loadChildren: () =>
+                    import('app/modules/auth/profile/profile.module').then(
+                        (m) => m.ProfileModule
+                    ),
+            },
         ],
     },
 ];

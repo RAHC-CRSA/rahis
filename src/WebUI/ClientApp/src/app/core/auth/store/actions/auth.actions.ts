@@ -4,6 +4,7 @@ import {
     ICreateAuthTokenCommand,
     IResetPasswordCommand,
     ISetPasswordCommand,
+    IUpdateProfileCommand,
     ServerResponse,
 } from '../../../../../app/web-api-client';
 
@@ -61,7 +62,7 @@ export const resetPassword = createAction(
 );
 export const resetPasswordSuccess = createAction(
     RESET_PASSWORD_SUCCESS,
-    props<{ payload: string }>()
+    props<{ payload: ServerResponse }>()
 );
 
 // Set password
@@ -74,6 +75,19 @@ export const setPassword = createAction(
 );
 export const setPasswordSuccess = createAction(
     SET_PASSWORD_SUCCESS,
+    props<{ payload: ServerResponse }>()
+);
+
+// Update profile
+export const UPDATE_PROFILE = `[Auth] Update Profile`;
+export const UPDATE_PROFILE_SUCCESS = `[Auth] Update Profile Success`;
+
+export const updateProfile = createAction(
+    UPDATE_PROFILE,
+    props<{ payload: IUpdateProfileCommand }>()
+);
+export const updateProfileSuccess = createAction(
+    UPDATE_PROFILE_SUCCESS,
     props<{ payload: ServerResponse }>()
 );
 

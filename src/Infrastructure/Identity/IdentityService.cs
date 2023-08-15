@@ -9,9 +9,8 @@ using System.Security.Claims;
 using System.Text;
 using RegionalAnimalHealth.Application.Common.Security.Configurations;
 using RegionalAnimalHealth.Application.Common.Models.Authorization;
-using RegionalAnimalHealth.Application.Contracts.Users.Queries.GetUsers;
 using RegionalAnimalHealth.Application.Common.Models.Personas;
-using static Duende.IdentityServer.Models.IdentityResources;
+using Duende.IdentityServer.Services;
 
 namespace RegionalAnimalHealth.Infrastructure.Identity;
 
@@ -266,6 +265,29 @@ public class IdentityService : IIdentityService
 
         return Result.Success();
     } 
+
+    public async Task<Result> UpdateUserProfileAsync(string userId, string email, string password)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user == null)
+            return Result.Failure(new List<string> { "User not found." });
+
+        user.Email = email;
+        user.UserName = email;
+        await _userManager.UpdateNormalizedEmailAsync(user);
+        await _userManager.UpdateNormalizedUserNameAsync(user);
+
+        if (!string.IsNullOrEmpty(password))
+        {
+            await _userManager.RemovePasswordAsync(user);
+            var result = await _userManager.AddPasswordAsync(user, password);
+
+            if (!result.Succeeded) return Result.Failure(result.Errors.Select(r => r.Description).ToList());
+        }
+
+        return Result.Success();
+    }
 
     private string GenerateRandomString(int length)
     {

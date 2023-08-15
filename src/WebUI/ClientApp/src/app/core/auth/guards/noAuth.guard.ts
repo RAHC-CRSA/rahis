@@ -53,6 +53,7 @@ export class NoAuthGuard {
         // Check the authentication status
         return this._store.select(getUser).pipe(
             map((user) => {
+                console.log({ user });
                 return !(user != null || user != undefined);
             })
         );

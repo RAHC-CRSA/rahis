@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import {
     CreateReportClient,
     CreateReportCommand,
+    DataQueryTimeSpan,
     DeleteOccurrenceClient,
     DeleteOccurrenceCommand,
     DeleteReportClient,
     DeleteReportCommand,
     GetOccurrencesClient,
     GetReportClient,
+    GetReportsAnalyticsClient,
     GetReportsClient,
     ICreateReportCommand,
     IDeleteOccurrenceCommand,
@@ -26,14 +28,15 @@ import {
 })
 export class ReportService {
     // Clients
-    getOccurrencesClient: GetOccurrencesClient;
-    createReportClient: CreateReportClient;
-    getReportsClient: GetReportsClient;
-    getReportClient: GetReportClient;
-    verifyReportClient: VerifyReportClient;
-    deleteReportClient: DeleteReportClient;
-    deleteOccurrenceClient: DeleteOccurrenceClient;
-    sendNotificationClient: SendNotificationClient;
+    private getOccurrencesClient: GetOccurrencesClient;
+    private createReportClient: CreateReportClient;
+    private getReportsClient: GetReportsClient;
+    private getReportClient: GetReportClient;
+    private verifyReportClient: VerifyReportClient;
+    private deleteReportClient: DeleteReportClient;
+    private deleteOccurrenceClient: DeleteOccurrenceClient;
+    private sendNotificationClient: SendNotificationClient;
+    private getReportsAnalyticsClient: GetReportsAnalyticsClient;
 
     constructor(http: HttpClient) {
         this.getOccurrencesClient = new GetOccurrencesClient(http);
@@ -44,6 +47,7 @@ export class ReportService {
         this.deleteReportClient = new DeleteReportClient(http);
         this.deleteOccurrenceClient = new DeleteOccurrenceClient(http);
         this.sendNotificationClient = new SendNotificationClient(http);
+        this.getReportsAnalyticsClient = new GetReportsAnalyticsClient(http);
     }
 
     getAllOccurrences(countryId: number | undefined) {
@@ -83,5 +87,9 @@ export class ReportService {
         return this.deleteOccurrenceClient.handle(
             new DeleteOccurrenceCommand(payload)
         );
+    }
+
+    getReportsAnalytics(payload: DataQueryTimeSpan) {
+        return this.getReportsAnalyticsClient.handle(payload);
     }
 }

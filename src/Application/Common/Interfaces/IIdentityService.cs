@@ -31,4 +31,6 @@ public interface IIdentityService
     Task<(Result, string?)> CreatePasswordResetTokenAsync(string email);
 
     Task<Result> UpdatePasswordByTokenAsync(string password, string resetToken);
+
+    Task<Result> UpdateUserProfileAsync(string userId, string email, string password);
 }

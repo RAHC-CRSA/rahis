@@ -1,22 +1,12 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Observable, finalize } from 'rxjs';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseValidators } from '@fuse/validators';
-import { AuthService } from 'app/core/auth/auth.service';
 import { AuthState } from 'app/core/auth/store';
 import { Store } from '@ngrx/store';
-import {
-    IResetPasswordCommand,
-    ISetPasswordCommand,
-    ServerResponse,
-} from 'app/web-api-client';
-import {
-    getFeedback,
-    getPasswordResetToken,
-    getUser,
-    getUserLoading,
-} from 'app/core/auth/store/selectors';
+import { ISetPasswordCommand, ServerResponse } from 'app/web-api-client';
+import { getFeedback, getUserLoading } from 'app/core/auth/store/selectors';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { setPassword } from 'app/core/auth/store/actions/auth.actions';
 

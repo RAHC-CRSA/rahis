@@ -10,13 +10,15 @@ import {
     CreateAuthTokenCommand,
     GetAuthTokenClient,
     ICreateAuthTokenCommand,
-    IPasswordResetClient,
     IResetPasswordCommand,
     ISetPasswordCommand,
+    IUpdateProfileCommand,
     PasswordResetClient,
     ResetPasswordCommand,
     SetPasswordClient,
     SetPasswordCommand,
+    UpdateProfileCommand,
+    UpdateUserProfileClient,
 } from 'app/web-api-client';
 
 @Injectable()
@@ -28,6 +30,7 @@ export class AuthService {
     getAuthTokenClient: GetAuthTokenClient;
     passwordResetClient: PasswordResetClient;
     setPasswordClient: SetPasswordClient;
+    updateUserProfileClient: UpdateUserProfileClient;
 
     /**
      * Constructor
@@ -39,6 +42,7 @@ export class AuthService {
         this.getAuthTokenClient = new GetAuthTokenClient(_httpClient);
         this.passwordResetClient = new PasswordResetClient(_httpClient);
         this.setPasswordClient = new SetPasswordClient(_httpClient);
+        this.updateUserProfileClient = new UpdateUserProfileClient(_httpClient);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -230,6 +234,11 @@ export class AuthService {
     setPassword(payload: ISetPasswordCommand) {
         const request = new SetPasswordCommand(payload);
         return this.setPasswordClient.handle(request);
+    }
+
+    updateProfile(payload: IUpdateProfileCommand) {
+        const request = new UpdateProfileCommand(payload);
+        return this.updateUserProfileClient.handle(request);
     }
 
     getCurrentUser(): Observable<AuthResponseDto> {

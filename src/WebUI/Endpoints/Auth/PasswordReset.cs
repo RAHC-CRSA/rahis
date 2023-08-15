@@ -9,7 +9,7 @@ using RegionalAnimalHealth.Application.Contracts.Auth.Commands.ResetPassword;
 namespace WebUI.Endpoints.Auth;
 
 [OpenApiTag("Auth")]
-public class PasswordReset : EndpointBaseAsync.WithRequest<ResetPasswordCommand>.WithActionResult<string>
+public class PasswordReset : EndpointBaseAsync.WithRequest<ResetPasswordCommand>.WithActionResult<ServerResponse>
 {
     private readonly IMediator _mediator;
 
@@ -23,14 +23,14 @@ public class PasswordReset : EndpointBaseAsync.WithRequest<ResetPasswordCommand>
         "Requests a user password reset",
         "Requests a user password reset")
     ]
-    [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ServerResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ServerResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult<string>> HandleAsync(ResetPasswordCommand request, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<ServerResponse>> HandleAsync(ResetPasswordCommand request, CancellationToken cancellationToken = default)
     {
         var result = await _mediator.Send(request);
         if (result.Succeeded)
-            return Ok("Password reset email sent.");
+            return Ok(new ServerResponse("Password reset email sent.", false));
 
         return BadRequest(new ServerResponse(result.Errors));
     }

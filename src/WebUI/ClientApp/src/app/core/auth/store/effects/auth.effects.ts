@@ -137,7 +137,7 @@ export class AuthEffects {
             exhaustMap((action) =>
                 this.authService.passwordReset(action.payload).pipe(
                     map((data) =>
-                        AuthActions.resetPasswordSuccess({
+                        AuthActions.setFeedback({
                             payload: data,
                         })
                     ),
@@ -172,6 +172,37 @@ export class AuthEffects {
                     )
                 )
             )
+        )
+    );
+
+    updateProfile$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.updateProfile),
+            exhaustMap((action) =>
+                this.authService.updateProfile(action.payload).pipe(
+                    map((data) =>
+                        AuthActions.updateProfileSuccess({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            AuthActions.setFeedback({
+                                payload: error,
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    updateProfileSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.updateProfileSuccess),
+            switchMap(() => {
+                return of(AuthActions.logout({ payload: 'sign-in' }));
+            })
         )
     );
 }

@@ -12,6 +12,7 @@ import {
     RegionDto,
     ReportDto,
     ReportListDto,
+    ReportsAnalyticsDto,
     ServerResponse,
     SpeciesDto,
 } from '../../../../web-api-client';
@@ -19,6 +20,7 @@ import {
 export interface ReportState {
     data?: ReportListDto[] | null;
     entry?: ReportDto | null;
+    analytics?: ReportsAnalyticsDto | null;
     communities?: CommunityDto[] | null;
     districts?: DistrictDto[] | null;
     municipalities?: MunicipalityDto[] | null;
@@ -37,6 +39,7 @@ export interface ReportState {
 export const initialState: ReportState = {
     data: [],
     entry: null,
+    analytics: null,
     communities: [],
     districts: [],
     municipalities: [],
@@ -98,6 +101,17 @@ export const reducer = createReducer(
         feedback: null,
         loading: false,
         data: payload,
+    })),
+    on(actions.loadAnalytics, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadAnalyticsSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        analytics: payload,
     })),
     on(actions.loadRegions, (state) => ({
         ...state,
