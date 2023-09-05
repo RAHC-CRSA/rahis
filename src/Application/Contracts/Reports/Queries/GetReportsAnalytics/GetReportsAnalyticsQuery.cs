@@ -1,11 +1,9 @@
-﻿using System.Linq.Expressions;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Analytics;
-using RegionalAnimalHealth.Domain.Entities.Reports;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReportsAnalytics;
 public class GetReportsAnalyticsQuery : IRequest<(Result, ReportsAnalyticsDto)>
@@ -30,7 +28,7 @@ public class GetReportsChartDataQueryHandler : IRequestHandler<GetReportsAnalyti
         try
         {
             var seriesType = GetSeriesType(request.TimeSpan);
-            var (start, end) = GetQuerySpan(seriesType, request.TimeSpan);
+            var (start, end, format, series) = GetQuerySpan(seriesType, request.TimeSpan);
 
             var reports = await _context.Reports
                 .Where(x => !x.IsDeleted && x.Created.Date >= start && x.Created.Date <= end)
@@ -45,11 +43,11 @@ public class GetReportsChartDataQueryHandler : IRequestHandler<GetReportsAnalyti
             var dataPoints = new List<DataPoint>();
             while (start < end)
             {
-                dataPoints.Add(new DataPoint { Date = DateOnly.FromDateTime(start).ToShortDateString(), Value = reports.Where(x => x.Created.Date == start).Count() });
+                dataPoints.Add(new DataPoint { Value = reports.Where(x => x.Created.Date == start).Count(), Date = start });
                 start = start.AddDays(1);
             }
 
-            chartData.Name = seriesType.ToString();
+            chartData.Name = series;
             chartData.DataPoints = dataPoints;
 
 
@@ -62,30 +60,53 @@ public class GetReportsChartDataQueryHandler : IRequestHandler<GetReportsAnalyti
         }
     }
 
-    private (DateTime start, DateTime end) GetQuerySpan(DataSeriesType seriesType, DataQueryTimeSpan timeSpan)
+    private (DateTime start, DateTime end, string format, string series) GetQuerySpan(DataSeriesType seriesType, DataQueryTimeSpan timeSpan)
     {
+        DateTime start;
+        DateTime end;
+        string format;
+        string series;
+
         switch (seriesType)
         {
-            case DataSeriesType.Days:
+            case DataSeriesType.Year:
+                start = DateTime.UtcNow.Date.AddYears(-1);
+                end = DateTime.UtcNow.Date.AddDays(1).AddMicroseconds(-1);
+                format = "dd/MM/yyyy";
+                series = "Past Year";
+
+                break;
+            case DataSeriesType.Month:
+                start = DateTime.UtcNow.Date.AddMonths(-1);
+                end = DateTime.UtcNow.Date.AddDays(1).AddMicroseconds(-1);
+                format = "dd MMM";
+                series = "Past Month";
+
+                break;
+            case DataSeriesType.Week:
             default:
-                var end = DateTime.UtcNow.AddDays(1).Date;
-                var start = end.AddDays(-7).Date;
-                
-                return (start, end);
+                start = DateTime.UtcNow.Date.AddDays(-7);
+                end = DateTime.UtcNow.Date.AddDays(1).AddMicroseconds(-1);
+                format = "ddd, dd";
+                series = "Past Week";
+
+                break;
         }
+
+        return (start, end, format, series);
     }
 
     private DataSeriesType GetSeriesType(DataQueryTimeSpan timeSpan)
     {
         switch (timeSpan)
         {
+            case DataQueryTimeSpan.PastYear:
+                return DataSeriesType.Year;
             case DataQueryTimeSpan.PastMonth:
-            case DataQueryTimeSpan.ThisMonth:
-                return DataSeriesType.Weeks;
-            case DataQueryTimeSpan.ThisWeek:
-            case DataQueryTimeSpan.LastWeek:
+                return DataSeriesType.Month;
+            case DataQueryTimeSpan.PastWeek:
             default:
-                return DataSeriesType.Days;
+                return DataSeriesType.Week;
         }
     }
 }

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ReportAnalyticsComponent } from './report-analytics.component';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
     declarations: [ReportAnalyticsComponent],
-    imports: [CommonModule, NgApexchartsModule],
+    imports: [SharedModule, NgApexchartsModule],
     exports: [ReportAnalyticsComponent],
 })
 export class ReportAnalyticsModule {}

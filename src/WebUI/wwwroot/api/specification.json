@@ -3298,9 +3298,9 @@
         "type": "integer",
         "description": "",
         "x-enumNames": [
-          "Days",
-          "Weeks",
-          "Months"
+          "Week",
+          "Month",
+          "Year"
         ],
         "enum": [
           0,
@@ -3317,7 +3317,8 @@
             "format": "int32"
           },
           "date": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -3325,24 +3326,14 @@
         "type": "integer",
         "description": "",
         "x-enumNames": [
-          "Today",
-          "ThisWeek",
           "PastWeek",
-          "LastWeek",
-          "ThisMonth",
           "PastMonth",
-          "ThisYear",
           "PastYear"
         ],
         "enum": [
           0,
           1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          2
         ]
       },
       "SendNotificationCommand": {

@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
     styleUrls: ['./report-analytics.component.scss'],
 })
 export class ReportAnalyticsComponent implements OnInit {
+    seriesTimeSpan: DataQueryTimeSpan = DataQueryTimeSpan.PastWeek;
     reportsChart: ApexOptions = {};
     data$: Observable<ReportsAnalyticsDto | null | undefined>;
     data: ReportsAnalyticsDto;
@@ -25,15 +26,10 @@ export class ReportAnalyticsComponent implements OnInit {
     }
 
     initData() {
-        this.store.dispatch(
-            loadAnalytics({ payload: DataQueryTimeSpan.ThisWeek })
-        );
+        this.store.dispatch(loadAnalytics({ payload: this.seriesTimeSpan }));
         this.data$ = this.store.select(getAnalytics);
         this.data$.subscribe((data) => {
             this.data = data;
-
-            console.log({ data });
-
             this.prepareChartData();
         });
 
@@ -50,6 +46,14 @@ export class ReportAnalyticsComponent implements OnInit {
                 },
             },
         };
+    }
+
+    public get dataQueryTimeSpan(): typeof DataQueryTimeSpan {
+        return DataQueryTimeSpan;
+    }
+
+    changeSeriesRange() {
+        this.store.dispatch(loadAnalytics({ payload: this.seriesTimeSpan }));
     }
 
     prepareChartData() {
@@ -69,16 +73,11 @@ export class ReportAnalyticsComponent implements OnInit {
             },
             colors: ['#64748B', '#94A3B8'],
             dataLabels: {
-                enabled: true,
-                enabledOnSeries: [0],
-                background: {
-                    borderWidth: 0,
-                },
+                enabled: false,
             },
             grid: {
                 borderColor: 'var(--fuse-border)',
             },
-            labels: this.data?.dataPoints?.map((e) => e.date),
             legend: {
                 show: false,
             },
@@ -90,7 +89,10 @@ export class ReportAnalyticsComponent implements OnInit {
             series: [
                 {
                     name: this.data?.name,
-                    data: this.data?.dataPoints?.map((e) => e.value),
+                    data: this.data?.dataPoints?.map((e) => [
+                        new Date(e.date).getTime(),
+                        e.value,
+                    ]),
                 },
             ],
             states: {
@@ -109,6 +111,7 @@ export class ReportAnalyticsComponent implements OnInit {
                 theme: 'dark',
             },
             xaxis: {
+                type: 'datetime',
                 axisBorder: {
                     show: false,
                 },

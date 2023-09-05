@@ -2,5 +2,5 @@
 public class DataPoint
 {
     public int Value { get; set; }
-    public string Date { get; set; }
+    public DateTime Date { get; set; }
 }

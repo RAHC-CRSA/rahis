@@ -5680,14 +5680,14 @@ export interface IReportsAnalyticsDto {
 }
 
 export enum DataSeriesType {
-    Days = 0,
-    Weeks = 1,
-    Months = 2,
+    Week = 0,
+    Month = 1,
+    Year = 2,
 }
 
 export class DataPoint implements IDataPoint {
     value?: number;
-    date?: string;
+    date?: Date;
 
     constructor(data?: IDataPoint) {
         if (data) {
@@ -5701,7 +5701,7 @@ export class DataPoint implements IDataPoint {
     init(_data?: any) {
         if (_data) {
             this.value = _data["value"];
-            this.date = _data["date"];
+            this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
         }
     }
 
@@ -5715,25 +5715,20 @@ export class DataPoint implements IDataPoint {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["value"] = this.value;
-        data["date"] = this.date;
+        data["date"] = this.date ? this.date.toISOString() : <any>undefined;
         return data;
     }
 }
 
 export interface IDataPoint {
     value?: number;
-    date?: string;
+    date?: Date;
 }
 
 export enum DataQueryTimeSpan {
-    Today = 0,
-    ThisWeek = 1,
-    PastWeek = 2,
-    LastWeek = 3,
-    ThisMonth = 4,
-    PastMonth = 5,
-    ThisYear = 6,
-    PastYear = 7,
+    PastWeek = 0,
+    PastMonth = 1,
+    PastYear = 2,
 }
 
 export class SendNotificationCommand implements ISendNotificationCommand {
