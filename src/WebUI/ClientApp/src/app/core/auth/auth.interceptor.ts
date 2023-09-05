@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+    HttpErrorResponse,
     HttpEvent,
     HttpHandler,
     HttpInterceptor,
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from './store';
 import { getUser } from './store/selectors';
-import { checkTokenExpiration } from './store/actions/auth.actions';
+import { checkTokenExpiration, logout } from './store/actions/auth.actions';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -22,7 +23,6 @@ export class AuthInterceptor implements HttpInterceptor {
     ): Observable<HttpEvent<any>> {
         return this.store.select(getUser).pipe(
             first(),
-            tap(() => this.store.dispatch(checkTokenExpiration())),
             switchMap((user) => {
                 const authReq = req.clone({
                     headers: req.headers.set(
@@ -35,8 +35,12 @@ export class AuthInterceptor implements HttpInterceptor {
                     tap(
                         (event: HttpEvent<any>) => {},
                         (error) => {
-                            if (error.status === 401) {
-                                this.router.navigateByUrl('401');
+                            this.store.dispatch(checkTokenExpiration());
+                            if (error instanceof HttpErrorResponse) {
+                                if (error.status === 401) {
+                                    const payload = this.router.url;
+                                    this.store.dispatch(logout({ payload }));
+                                }
                             }
                         }
                     )

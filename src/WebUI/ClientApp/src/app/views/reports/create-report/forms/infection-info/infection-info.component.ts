@@ -63,11 +63,11 @@ export class InfectionInfoComponent {
         this.infectionInfo = this.formBuilder.group({
             numberExposed: [this.formData.exposed, Validators.required],
             numberInfected: [this.formData.infected, Validators.required],
-            mortality: [this.formData.mortality, Validators.required],
+            numberDead: [0, Validators.required],
             humanInfection: [false, Validators.compose([Validators.required])],
             humansExposed: [this.formData.humansExposed],
             humansInfected: [this.formData.humansInfected],
-            humansMortality: [this.formData.humansMortality],
+            humansDead: [0],
         });
     }
 

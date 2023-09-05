@@ -34,13 +34,25 @@ public class SendNotificationCommandHandler : IRequestHandler<SendNotificationCo
     {
         try
         {
-            var report = await _context.Reports.Where(x => !x.IsDeleted && x.Id == request.ReportId).Select(ReportSelectorExpression()).FirstOrDefaultAsync();
+            var reportData = await _context.Reports.Where(x => !x.IsDeleted && x.Id == request.ReportId).Select(ReportSelectorExpression()).FirstOrDefaultAsync();
             var notifications = await _context.NotificationRecipients
                 .Where(x => !x.IsDeleted && x.IsEnabled)
-                .Select(EmailRecipientSelector(report))
+                .Select(EmailRecipientSelector(reportData))
                 .ToListAsync();
 
-            await _emailService.SendBulkEmailsAsync(notifications, TemplateId);
+            var result = await _emailService.SendBulkEmailsAsync(notifications, TemplateId);
+
+            if (result.Succeeded)
+            {
+                var report = await _context.Reports.Where(x => x.Id == request.ReportId).FirstOrDefaultAsync();
+
+
+                report.SetNotificationSendStatus();
+
+                _context.Reports.Update(report);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+
 
             return Result.Success();
         }

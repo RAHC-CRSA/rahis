@@ -4,7 +4,7 @@
     async)?.summary
     }}</p>
 
-  <ul *ngIf="(feedback$ | async)?.errors?.length">
+  <ul *ngIf="(feedback$ | async)?.errors[0] !== (feedback$ | async)?.summary">
     <li *ngFor="let error of (feedback$ | async)?.errors">{{ error }}</li>
   </ul>
 </fuse-alert>

@@ -7,6 +7,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,6 +33,7 @@ import { FeedbackDisplayModule } from 'app/common/modules/feedback-display/feedb
         MatPaginatorModule,
         MatSortModule,
         MatButtonModule,
+        MatButtonToggleModule,
         MatAutocompleteModule,
         MatCheckboxModule,
         MatFormFieldModule,

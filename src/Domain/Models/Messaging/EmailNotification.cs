@@ -4,7 +4,8 @@ using Newtonsoft.Json;
 namespace RegionalAnimalHealth.Domain.Models.Messaging;
 public class EmailNotification
 {
-    public static string TemplateId = "d-a2f64a2491bc4f1989ec60e670119a84";
+    //public static string TemplateId = "d-a2f64a2491bc4f1989ec60e670119a84";
+    public static string TemplateId = "d-f8c81d976f384943b50920efb0d020ca";
 
     [JsonProperty("content")]
     public string Content { get; private set; }

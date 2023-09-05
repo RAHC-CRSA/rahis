@@ -2,9 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
-using RegionalAnimalHealth.Application.Common.Models.Personas;
 using RegionalAnimalHealth.Application.Contracts.Users.Queries.GetUsers;
-using RegionalAnimalHealth.Domain.Exceptions;
 using RegionalAnimalHealth.Domain.Models.Messaging;
 
 namespace RegionalAnimalHealth.Application.Contracts.Users.Commands.CreateUser;
@@ -68,7 +66,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, (Resu
         catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);
-            return (Result.Failure(new List<string> { ex.Message}), null);
-        }        
+            return (Result.Failure(new List<string> { ex.Message }), null);
+        }
     }
 }

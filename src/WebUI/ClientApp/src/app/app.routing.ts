@@ -22,7 +22,7 @@ export const appRoutes: Route[] = [
     // Auth routes for guests
     {
         path: '',
-        canMatch: [NoAuthGuard],
+        // canMatch: [NoAuthGuard],
         component: LayoutComponent,
         data: {
             layout: 'empty',
@@ -155,6 +155,13 @@ export const appRoutes: Route[] = [
                     import(
                         'app/dashboards/rah-officer/rah-officer.module'
                     ).then((m) => m.RahOfficerModule),
+            },
+            {
+                path: 'dashboard/profile',
+                loadChildren: () =>
+                    import('app/modules/auth/profile/profile.module').then(
+                        (m) => m.ProfileModule
+                    ),
             },
         ],
     },

@@ -10,6 +10,15 @@ import {
     CreateAuthTokenCommand,
     GetAuthTokenClient,
     ICreateAuthTokenCommand,
+    IResetPasswordCommand,
+    ISetPasswordCommand,
+    IUpdateProfileCommand,
+    PasswordResetClient,
+    ResetPasswordCommand,
+    SetPasswordClient,
+    SetPasswordCommand,
+    UpdateProfileCommand,
+    UpdateUserProfileClient,
 } from 'app/web-api-client';
 
 @Injectable()
@@ -18,7 +27,10 @@ export class AuthService {
     private _authenticated: boolean = false;
 
     // Http clients
-    getAuthToken: GetAuthTokenClient;
+    getAuthTokenClient: GetAuthTokenClient;
+    passwordResetClient: PasswordResetClient;
+    setPasswordClient: SetPasswordClient;
+    updateUserProfileClient: UpdateUserProfileClient;
 
     /**
      * Constructor
@@ -27,7 +39,10 @@ export class AuthService {
         private _httpClient: HttpClient,
         private _userService: UserService
     ) {
-        this.getAuthToken = new GetAuthTokenClient(_httpClient);
+        this.getAuthTokenClient = new GetAuthTokenClient(_httpClient);
+        this.passwordResetClient = new PasswordResetClient(_httpClient);
+        this.setPasswordClient = new SetPasswordClient(_httpClient);
+        this.updateUserProfileClient = new UpdateUserProfileClient(_httpClient);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -207,7 +222,23 @@ export class AuthService {
             password: payload.password,
         });
 
-        return this.getAuthToken.handle(request);
+        return this.getAuthTokenClient.handle(request);
+    }
+
+    passwordReset(payload: IResetPasswordCommand) {
+        const request = new ResetPasswordCommand(payload);
+
+        return this.passwordResetClient.handle(request);
+    }
+
+    setPassword(payload: ISetPasswordCommand) {
+        const request = new SetPasswordCommand(payload);
+        return this.setPasswordClient.handle(request);
+    }
+
+    updateProfile(payload: IUpdateProfileCommand) {
+        const request = new UpdateProfileCommand(payload);
+        return this.updateUserProfileClient.handle(request);
     }
 
     getCurrentUser(): Observable<AuthResponseDto> {

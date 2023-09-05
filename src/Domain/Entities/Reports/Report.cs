@@ -12,7 +12,9 @@ public class Report : BaseAuditableEntity<long>
     public int? HumansExposed { get; private set; }
     public int? HumansMortality { get; private set; }
     public bool IsOngoing { get; private set; }
-    public bool IsVerified { get; private set; }    
+    public bool IsVerified { get; private set; }
+    public bool IsNotified { get; private set; }
+    public DateTime NotificationSent { get; private set; }
     public ReportType ReportType { get; private set; }
     public decimal? Longitude { get; private set; }
     public decimal? Latitude { get; private set; }
@@ -169,5 +171,12 @@ public class Report : BaseAuditableEntity<long>
     {
         foreach (var vacc in _vaccinations)
             vacc.Delete();
+    }
+
+    public void SetNotificationSendStatus()
+    {
+        IsNotified = true;
+        NotificationSent = DateTime.UtcNow;
+        LastModified = DateTime.UtcNow;
     }
 }

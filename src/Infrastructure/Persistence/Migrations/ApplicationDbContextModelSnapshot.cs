@@ -903,6 +903,9 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsNotified")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsOngoing")
                         .HasColumnType("bit");
 
@@ -932,6 +935,9 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 
                     b.Property<int>("NotifiabilityPoints")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("NotificationSent")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("NumberExposed")
                         .HasColumnType("int");
