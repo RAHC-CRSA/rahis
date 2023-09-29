@@ -6,25 +6,23 @@ using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Domain.Entities.Reports;
 
-namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReports;
-public class GetReportsQuery : IRequest<(Result, List<ReportListDto>?)>
+namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetPublicReports;
+public class GetPublicReportsQuery : IRequest<(Result, List<PublicReportDto>?)>
 {
-    public bool? IsVerified { get; set; }
-    public long? CountryId { get; set; }
 }
 
-public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, List<ReportListDto>?)>
+public class GetPublicReportsQueryHandler : IRequestHandler<GetPublicReportsQuery, (Result, List<PublicReportDto?>)>
 {
     private readonly IApplicationDbContext _context;
-    private readonly ILogger<GetReportsQuery> _logger;
+    private readonly ILogger<GetPublicReportsQuery> _logger;
 
-    public GetReportsQueryHandler(IApplicationDbContext context, ILogger<GetReportsQuery> logger)
+    public GetPublicReportsQueryHandler(IApplicationDbContext context, ILogger<GetPublicReportsQuery> logger)
     {
         _context = context;
         _logger = logger;
     }
 
-    public async Task<(Result, List<ReportListDto>?)> Handle(GetReportsQuery request, CancellationToken cancellationToken)
+    public async Task<(Result, List<PublicReportDto?>)> Handle(GetPublicReportsQuery request, CancellationToken cancellationToken)
     {
         try
         {
@@ -36,9 +34,7 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, 
                     .ThenInclude(o => o.Region)
                         .ThenInclude(e => e.Country)
                 .Include(x => x.Disease)
-                .Where(x => !x.IsDeleted &&
-                    (request.IsVerified != null ? x.IsVerified == request.IsVerified : true) &&
-                    (request.CountryId != null ? x.Occurrence.Country.Id == request.CountryId : true))
+                .Where(x => !x.IsDeleted && x.IsVerified && x.Created >= DateTime.UtcNow.Date.AddMonths(-1))
                 .Select(ReportSelectorExpression())
                 .ToListAsync();
 
@@ -51,9 +47,9 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, 
         }
     }
 
-    private Expression<Func<Report, ReportListDto>> ReportSelectorExpression()
+    private Expression<Func<Report, PublicReportDto>> ReportSelectorExpression()
     {
-        return e => new ReportListDto
+        return e => new PublicReportDto
         {
             Id = e.Id,
             OccurrenceTitle = $"{e.Occurrence.Reports.OrderBy(x => x.Id).Take(1).FirstOrDefault().Disease.Name ?? "Unidentified Disease"} / {e.Occurrence.DateStarted.ToString("MMMM dd, yyyy")}",

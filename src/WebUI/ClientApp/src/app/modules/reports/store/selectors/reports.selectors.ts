@@ -74,6 +74,11 @@ export const getSpecies = createSelector(
     (state: ReportState) => state.species
 );
 
+export const getPublicReports = createSelector(
+    reportState,
+    (state: ReportState) => state.publicReports
+);
+
 export const getReportsLoading = createSelector(
     reportState,
     (state: ReportState) => state.loading

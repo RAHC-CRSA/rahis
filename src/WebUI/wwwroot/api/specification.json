@@ -691,6 +691,51 @@
         ]
       }
     },
+    "/api/reports/public": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Gets monthly reports",
+        "description": "Gets monthly reports in the system",
+        "operationId": "GetPublicReports_Handle",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PublicReportDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/report/{ReportId}": {
       "get": {
         "tags": [
@@ -3223,6 +3268,40 @@
           "reports": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "PublicReportDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "occurrenceTitle": {
+            "type": "string"
+          },
+          "isVerified": {
+            "type": "boolean"
+          },
+          "exposed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "infected": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mortality": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "location": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
           }
         }
       },

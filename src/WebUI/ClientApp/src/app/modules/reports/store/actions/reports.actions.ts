@@ -24,6 +24,7 @@ import {
     IVerifyReportCommand,
     ISendNotificationCommand,
     DataQueryTimeSpan,
+    PublicReportDto,
 } from '../../../../web-api-client';
 
 // Create report
@@ -313,6 +314,16 @@ export const loadAnalytics = createAction(
 export const loadAnalyticsSuccess = createAction(
     LOAD_ANALYTICS_SUCCESS,
     props<{ payload: ReportListDto }>()
+);
+
+// Load public reports
+export const LOAD_PUBLIC_REPORTS = `[Reports] Load Public Reports`;
+export const LOAD_PUBLIC_REPORTS_SUCCESS = `[Reports] Load Public Reports Success`;
+
+export const loadPublicReports = createAction(LOAD_PUBLIC_REPORTS);
+export const loadPublicReportsSuccess = createAction(
+    LOAD_PUBLIC_REPORTS_SUCCESS,
+    props<{ payload: PublicReportDto[] }>()
 );
 
 // Set feedback

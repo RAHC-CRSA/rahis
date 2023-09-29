@@ -296,6 +296,29 @@ export class ReportsEffects {
         )
     );
 
+    loadPublicReports$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.loadPublicReports),
+            exhaustMap((action) =>
+                this.reportsService.getPublicReports().pipe(
+                    map((data) =>
+                        ReportsActions.loadPublicReportsSuccess({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     loadParaProfessionals$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ReportsActions.loadParaProfessionals),

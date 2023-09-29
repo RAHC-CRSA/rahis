@@ -19,6 +19,32 @@ export const appRoutes: Route[] = [
     // location. This is a small convenience to keep all main routes together here on this file.
     { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'dashboard' },
 
+    // Public routes for guests
+    {
+        path: '',
+        // canMatch: [NoAuthGuard],
+        component: LayoutComponent,
+        data: {
+            layout: 'guest',
+        },
+        children: [
+            {
+                path: 'home',
+                loadChildren: () =>
+                    import('app/views/guest/home/home.module').then(
+                        (m) => m.HomeModule
+                    ),
+            },
+            {
+                path: 'report',
+                loadChildren: () =>
+                    import('app/views/guest/report/report.module').then(
+                        (m) => m.ReportModule
+                    ),
+            },
+        ],
+    },
+
     // Auth routes for guests
     {
         path: '',
@@ -28,6 +54,13 @@ export const appRoutes: Route[] = [
             layout: 'empty',
         },
         children: [
+            {
+                path: 'home',
+                loadChildren: () =>
+                    import('app/views/guest/home/home.module').then(
+                        (m) => m.HomeModule
+                    ),
+            },
             {
                 path: 'confirmation-required',
                 loadChildren: () =>

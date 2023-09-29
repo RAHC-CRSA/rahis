@@ -1,5 +1,6 @@
 export type Layout =
     | 'empty'
+    | 'guest'
     // Horizontal
     | 'centered'
     | 'enterprise'

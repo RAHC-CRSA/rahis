@@ -9,6 +9,7 @@ import {
     DeleteReportClient,
     DeleteReportCommand,
     GetOccurrencesClient,
+    GetPublicReportsClient,
     GetReportClient,
     GetReportsAnalyticsClient,
     GetReportsClient,
@@ -37,6 +38,7 @@ export class ReportService {
     private deleteOccurrenceClient: DeleteOccurrenceClient;
     private sendNotificationClient: SendNotificationClient;
     private getReportsAnalyticsClient: GetReportsAnalyticsClient;
+    private getPublicReportsClient: GetPublicReportsClient;
 
     constructor(http: HttpClient) {
         this.getOccurrencesClient = new GetOccurrencesClient(http);
@@ -48,6 +50,7 @@ export class ReportService {
         this.deleteOccurrenceClient = new DeleteOccurrenceClient(http);
         this.sendNotificationClient = new SendNotificationClient(http);
         this.getReportsAnalyticsClient = new GetReportsAnalyticsClient(http);
+        this.getPublicReportsClient = new GetPublicReportsClient(http);
     }
 
     getAllOccurrences(countryId: number | undefined) {
@@ -91,5 +94,9 @@ export class ReportService {
 
     getReportsAnalytics(payload: DataQueryTimeSpan) {
         return this.getReportsAnalyticsClient.handle(payload);
+    }
+
+    getPublicReports() {
+        return this.getPublicReportsClient.handle();
     }
 }

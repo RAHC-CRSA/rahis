@@ -9,6 +9,7 @@ import {
     MunicipalityDto,
     OccurrenceDto,
     ParaProfessionalDto,
+    PublicReportDto,
     RegionDto,
     ReportDto,
     ReportListDto,
@@ -21,6 +22,7 @@ export interface ReportState {
     data?: ReportListDto[] | null;
     entry?: ReportDto | null;
     analytics?: ReportsAnalyticsDto | null;
+    publicReports?: PublicReportDto[] | null;
     communities?: CommunityDto[] | null;
     districts?: DistrictDto[] | null;
     municipalities?: MunicipalityDto[] | null;
@@ -40,6 +42,7 @@ export const initialState: ReportState = {
     data: [],
     entry: null,
     analytics: null,
+    publicReports: null,
     communities: [],
     districts: [],
     municipalities: [],
@@ -307,6 +310,17 @@ export const reducer = createReducer(
         feedback: null,
         loading: false,
         municipalities: payload,
+    })),
+    on(actions.loadPublicReports, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.loadPublicReportsSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        publicReports: payload,
     })),
     on(actions.sendNotification, (state) => ({
         ...state,
