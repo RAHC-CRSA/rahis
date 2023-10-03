@@ -10,7 +10,7 @@ import { RoleGuard } from './core/auth/guards/role.guard';
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
     // Redirect empty path to '/example'
-    { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+    { path: '', pathMatch: 'full', redirectTo: 'home' },
 
     // Redirect signed-in user to the '/example'
     //

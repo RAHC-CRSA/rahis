@@ -63,7 +63,7 @@ export class ReportComponent implements OnInit {
 
     exportExcel() {
         let workbook = new Workbook();
-        let worksheet = workbook.addWorksheet('ProductSheet');
+        let worksheet = workbook.addWorksheet('Monthly Report');
 
         worksheet.columns = [
             { header: 'Id', key: 'id', width: 10 },
@@ -92,7 +92,7 @@ export class ReportComponent implements OnInit {
             let blob = new Blob([data], {
                 type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             });
-            fs.saveAs(blob, 'RAHIS_Report.xlsx');
+            fs.saveAs(blob, 'RAHIS_Monthly_Report.xlsx');
         });
     }
 }
