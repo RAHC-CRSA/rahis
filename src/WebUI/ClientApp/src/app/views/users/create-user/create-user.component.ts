@@ -6,6 +6,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
+import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { PasswordValidator } from 'app/common/validators';
 import { UserState } from 'app/modules/users/store';
@@ -56,7 +57,8 @@ export class CreateUserComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        private store: Store<UserState>
+        private store: Store<UserState>,
+        private translocoService: TranslocoService
     ) {}
 
     ngOnInit() {

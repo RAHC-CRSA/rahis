@@ -23,10 +23,6 @@ import { TranslocoHttpLoader } from 'app/core/transloco/transloco.http-loader';
                     {
                         id   : 'pg',
                         label: 'Portuguese'
-                    },
-                    {
-                        id   : 'tr',
-                        label: 'Turkish'
                     }
                 ],
                 defaultLang         : 'en',

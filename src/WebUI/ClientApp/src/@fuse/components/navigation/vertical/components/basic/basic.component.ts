@@ -5,6 +5,7 @@ import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/ver
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
 import { FuseUtilsService } from '@fuse/services/utils/utils.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
     selector       : 'fuse-vertical-navigation-basic-item',
@@ -26,7 +27,8 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
-        private _fuseUtilsService: FuseUtilsService
+        private _fuseUtilsService: FuseUtilsService,
+        private translocoService: TranslocoService
     )
     {
         // Set the equivalent of {exact: false} as default for active match options.

@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col flex-auto min-w-0" *transloco="let t">
 
   <!-- Header -->
   <div class="bg-card">
@@ -8,7 +8,7 @@
         <div class="flex flex-auto items-center min-w-0">
           <div class="flex flex-col min-w-0 ml-4">
             <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
-              Welcome, {{ (user$ | async)?.firstName }}!</div>
+                {{ t('Welcome') }}, {{ (user$ | async)?.firstName }}!</div>
             <!-- <div class="flex items-center">
               <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:bell'"></mat-icon>
               <div class="ml-1.5 leading-6 truncate text-secondary">You have 2 new messages and 15 new tasks</div>
@@ -19,11 +19,11 @@
         <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
           <a [routerLink]="['/dashboard/reports']" class="bg-accent" mat-flat-button [color]="'accent'">
             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
-            <span class="ml-2">Manage Reports</span>
+            <span class="ml-2">{{ t('Manage-Reports') }} </span>
           </a>
           <a [routerLink]="['/dashboard/users']" mat-flat-button [color]="'primary'">
             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:users'"></mat-icon>
-            <span class="ml-2">Manage Users</span>
+            <span class="ml-2">{{ t('Manage-Users') }}</span>
           </a>
         </div>
       </div>

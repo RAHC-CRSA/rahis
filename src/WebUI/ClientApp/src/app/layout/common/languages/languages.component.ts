@@ -53,8 +53,7 @@ export class LanguagesComponent implements OnInit, OnDestroy
         this.flagCodes = {
             'en': 'us',
             'fr': 'fr',
-            'pg': 'pg',
-            'tr': 'tr'
+            'pg': 'pg'
         };
     }
 

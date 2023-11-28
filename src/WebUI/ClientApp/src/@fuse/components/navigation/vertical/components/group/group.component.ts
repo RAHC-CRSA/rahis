@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/vertical/vertical.component';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
     selector       : 'fuse-vertical-navigation-group-item',
@@ -28,7 +29,8 @@ export class FuseVerticalNavigationGroupItemComponent implements OnInit, OnDestr
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private translocoService: TranslocoService
     )
     {
     }
