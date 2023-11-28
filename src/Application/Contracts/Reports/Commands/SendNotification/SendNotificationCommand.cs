@@ -8,6 +8,7 @@ using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Domain.Entities.Reports;
 using RegionalAnimalHealth.Domain.Models.Messaging;
+using static RegionalAnimalHealth.Domain.Models.Messaging.DiseaseNotification;
 using static RegionalAnimalHealth.Domain.Models.Messaging.ReportNotification;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.SendNotification;
@@ -40,7 +41,7 @@ public class SendNotificationCommandHandler : IRequestHandler<SendNotificationCo
                 .Select(EmailRecipientSelector(reportData))
                 .ToListAsync();
 
-            var result = await _emailService.SendBulkEmailsAsync(notifications, TemplateId);
+            var result = await _emailService.SendBulkEmailsAsync(notifications, DiseaseNotification.TemplateId);
 
             if (result.Succeeded)
             {
@@ -67,13 +68,18 @@ public class SendNotificationCommandHandler : IRequestHandler<SendNotificationCo
     {
         return e => new ReportDto
         {
-            StampingOut = e.StampingOut
+            DiseaseName = e.Disease.Name,
+            OccurrenceRegion = e.OccurrenceLocation,
+            NotifiabilityPoints = e.NotifiabilityPoints,
+            Exposed = e.NumberExposed,
+            Infected = e.NumberInfected,
+            Mortality = e.Mortality,
         };
     }
 
-    private Expression<Func<NotificationRecipient, ReportNotification>> EmailRecipientSelector(ReportDto report)
+    private Expression<Func<NotificationRecipient, DiseaseNotification>> EmailRecipientSelector(ReportDto report)
     {
-        var reportData = ReportData.Create(report.StampingOut);
-        return e => Create(reportData, "A notification report has been sent.", e.EmailAddress, "New Report", e.FullName);
+        var diseaseData = DiseaseData.Create(report.DiseaseName, report.OccurrenceRegion, report.NotifiabilityPoints, report.Exposed, report.Infected, report.Mortality);
+        return e => Create(diseaseData, "A report notification has been sent.", e.EmailAddress, "New Report Notification", e.FullName);
     }
 }

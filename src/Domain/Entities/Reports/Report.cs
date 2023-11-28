@@ -49,6 +49,8 @@ public class Report : BaseAuditableEntity<long>
     private readonly List<Vaccination> _vaccinations = new();
     public virtual IReadOnlyCollection<Vaccination> Vaccinations => _vaccinations.AsReadOnly();
 
+    public string OccurrenceLocation => $"{(Occurrence?.Community != null ? $"{Occurrence?.Community?.Name}, " : string.Empty)}{(Occurrence?.District != null ? $"{Occurrence?.District?.Name}, " : string.Empty)}{(Occurrence?.Municipality != null ? $"{Occurrence?.Municipality?.Name}, " : string.Empty)}{Occurrence?.Region?.Name}, {Occurrence?.Region?.Country?.Name}";
+
     private Report() : base()
     {
     }
