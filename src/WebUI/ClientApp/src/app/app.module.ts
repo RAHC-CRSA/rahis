@@ -20,6 +20,7 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -52,6 +53,12 @@ const routerConfig: ExtraOptions = {
             logOnly: environment.production, // Restrict extension to log-only mode
         }),
         StoreRouterConnectingModule.forRoot(),
+    ],
+    providers: [
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { displayDefaultIndicatorType: false },
+        },
     ],
     bootstrap: [AppComponent],
 })

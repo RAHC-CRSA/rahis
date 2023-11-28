@@ -35,7 +35,7 @@
       <!-- Alert -->
       <app-feedback-display *ngIf="feedback$ | async" [feedback]="feedback$"></app-feedback-display>
 
-      <div class="flex justify-end my-4">
+      <div class="flex justify-end my-4" *ngIf="canCreateReport">
         <a [routerLink]="['/dashboard/reports/create']" class="px-8" mat-flat-button [color]="'primary'">
           Add Report
         </a>

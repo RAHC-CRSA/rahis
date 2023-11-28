@@ -10,7 +10,7 @@ import { RoleGuard } from './core/auth/guards/role.guard';
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
     // Redirect empty path to '/example'
-    { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+    { path: '', pathMatch: 'full', redirectTo: 'home' },
 
     // Redirect signed-in user to the '/example'
     //
@@ -19,15 +19,48 @@ export const appRoutes: Route[] = [
     // location. This is a small convenience to keep all main routes together here on this file.
     { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'dashboard' },
 
+    // Public routes for guests
+    {
+        path: '',
+        // canMatch: [NoAuthGuard],
+        component: LayoutComponent,
+        data: {
+            layout: 'guest',
+        },
+        children: [
+            {
+                path: 'home',
+                loadChildren: () =>
+                    import('app/views/guest/home/home.module').then(
+                        (m) => m.HomeModule
+                    ),
+            },
+            {
+                path: 'report',
+                loadChildren: () =>
+                    import('app/views/guest/report/report.module').then(
+                        (m) => m.ReportModule
+                    ),
+            },
+        ],
+    },
+
     // Auth routes for guests
     {
         path: '',
-        canMatch: [NoAuthGuard],
+        // canMatch: [NoAuthGuard],
         component: LayoutComponent,
         data: {
             layout: 'empty',
         },
         children: [
+            {
+                path: 'home',
+                loadChildren: () =>
+                    import('app/views/guest/home/home.module').then(
+                        (m) => m.HomeModule
+                    ),
+            },
             {
                 path: 'confirmation-required',
                 loadChildren: () =>
@@ -155,6 +188,13 @@ export const appRoutes: Route[] = [
                     import(
                         'app/dashboards/rah-officer/rah-officer.module'
                     ).then((m) => m.RahOfficerModule),
+            },
+            {
+                path: 'dashboard/profile',
+                loadChildren: () =>
+                    import('app/modules/auth/profile/profile.module').then(
+                        (m) => m.ProfileModule
+                    ),
             },
         ],
     },

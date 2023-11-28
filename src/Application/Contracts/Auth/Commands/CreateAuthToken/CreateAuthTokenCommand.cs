@@ -4,7 +4,7 @@ using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Authorization;
 
-namespace RegionalAnimalHealth.Application.Contracts.Auth.Commands.CreateAuthTokenCommand;
+namespace RegionalAnimalHealth.Application.Contracts.Auth.Commands.CreateAuthToken;
 
 public class CreateAuthTokenCommand : IRequest<(Result, AuthResponseDto?)>
 {

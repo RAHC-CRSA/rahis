@@ -98,8 +98,7 @@ public class ApplicationDbContextInitialiser
                 UserName = "admin@rahis.io",
                 Email = "admin@rahis.io",
                 FirstName = "Super",
-                LastName = "Admin" +
-                ""
+                LastName = "Admin"
             };
 
             if (_userManager.Users.All(u => u.UserName != administrator.UserName))

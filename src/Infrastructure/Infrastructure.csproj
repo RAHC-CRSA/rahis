@@ -17,6 +17,8 @@
     <ItemGroup>
         <PackageReference Include="CsvHelper" Version="30.0.1" />
         <PackageReference Include="Dapper" Version="2.0.123" />
+        <PackageReference Include="Mandrill.net" Version="8.3.0" />
+        <PackageReference Include="Mandrill.net.Extensions.DependencyInjection" Version="1.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="7.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.2" />

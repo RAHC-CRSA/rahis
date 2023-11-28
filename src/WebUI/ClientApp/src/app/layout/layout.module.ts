@@ -13,10 +13,12 @@ import { FuturisticLayoutModule } from 'app/layout/layouts/vertical/futuristic/f
 import { ThinLayoutModule } from 'app/layout/layouts/vertical/thin/thin.module';
 import { SettingsModule } from 'app/layout/common/settings/settings.module';
 import { SharedModule } from 'app/shared/shared.module';
+import { GuestLayoutModule } from './layouts/guest/guest.module';
 
 const layoutModules = [
     // Empty
     EmptyLayoutModule,
+    GuestLayoutModule,
 
     // Horizontal navigation
     CenteredLayoutModule,
@@ -30,23 +32,12 @@ const layoutModules = [
     CompactLayoutModule,
     DenseLayoutModule,
     FuturisticLayoutModule,
-    ThinLayoutModule
+    ThinLayoutModule,
 ];
 
 @NgModule({
-    declarations: [
-        LayoutComponent
-    ],
-    imports     : [
-        SharedModule,
-        SettingsModule,
-        ...layoutModules
-    ],
-    exports     : [
-        LayoutComponent,
-        ...layoutModules
-    ]
+    declarations: [LayoutComponent],
+    imports: [SharedModule, SettingsModule, ...layoutModules],
+    exports: [LayoutComponent, ...layoutModules],
 })
-export class LayoutModule
-{
-}
+export class LayoutModule {}

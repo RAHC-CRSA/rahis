@@ -2,6 +2,9 @@ import { createAction, props } from '@ngrx/store';
 import {
     AuthResponseDto,
     ICreateAuthTokenCommand,
+    IResetPasswordCommand,
+    ISetPasswordCommand,
+    IUpdateProfileCommand,
     ServerResponse,
 } from '../../../../../app/web-api-client';
 
@@ -43,9 +46,49 @@ export const loadUserSuccess = createAction(
     LOAD_USER_SUCCESS,
     props<{ payload: AuthResponseDto }>()
 );
+
 export const checkTokenExpiration = createAction(CHECK_TOKEN_EXPIRATION);
 export const checkTokenExpirationSuccess = createAction(
     CHECK_TOKEN_EXPIRATION_SUCCESS
+);
+
+// Password Reset
+export const RESET_PASSWORD = `[Auth] Reset Password`;
+export const RESET_PASSWORD_SUCCESS = `[Auth] Reset Password Success`;
+
+export const resetPassword = createAction(
+    RESET_PASSWORD,
+    props<{ payload: IResetPasswordCommand }>()
+);
+export const resetPasswordSuccess = createAction(
+    RESET_PASSWORD_SUCCESS,
+    props<{ payload: ServerResponse }>()
+);
+
+// Set password
+export const SET_PASSWORD = `[Auth] Set Password`;
+export const SET_PASSWORD_SUCCESS = `[Auth] Set Password Success`;
+
+export const setPassword = createAction(
+    SET_PASSWORD,
+    props<{ payload: ISetPasswordCommand }>()
+);
+export const setPasswordSuccess = createAction(
+    SET_PASSWORD_SUCCESS,
+    props<{ payload: ServerResponse }>()
+);
+
+// Update profile
+export const UPDATE_PROFILE = `[Auth] Update Profile`;
+export const UPDATE_PROFILE_SUCCESS = `[Auth] Update Profile Success`;
+
+export const updateProfile = createAction(
+    UPDATE_PROFILE,
+    props<{ payload: IUpdateProfileCommand }>()
+);
+export const updateProfileSuccess = createAction(
+    UPDATE_PROFILE_SUCCESS,
+    props<{ payload: ServerResponse }>()
 );
 
 // Set feedback

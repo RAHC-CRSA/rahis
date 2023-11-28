@@ -1140,6 +1140,100 @@ export class GetOccurrencesClient implements IGetOccurrencesClient {
     }
 }
 
+export interface IGetPublicReportsClient {
+    /**
+     * Gets monthly reports
+     */
+    handle(): Observable<PublicReportDto[]>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class GetPublicReportsClient implements IGetPublicReportsClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Gets monthly reports
+     */
+    handle(): Observable<PublicReportDto[]> {
+        let url_ = this.baseUrl + "/api/reports/public";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PublicReportDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PublicReportDto[]>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<PublicReportDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(PublicReportDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result400 = resultData400 !== undefined ? resultData400 : <any>null;
+    
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IGetReportClient {
     /**
      * Gets a report by id
@@ -1204,6 +1298,99 @@ export class GetReportClient implements IGetReportClient {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = ReportDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result400 = resultData400 !== undefined ? resultData400 : <any>null;
+    
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export interface IGetReportsAnalyticsClient {
+    /**
+     * Gets analytics data for reports
+     * @param timeSpan (optional) 
+     */
+    handle(timeSpan: DataQueryTimeSpan | undefined): Observable<ReportsAnalyticsDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class GetReportsAnalyticsClient implements IGetReportsAnalyticsClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Gets analytics data for reports
+     * @param timeSpan (optional) 
+     */
+    handle(timeSpan: DataQueryTimeSpan | undefined): Observable<ReportsAnalyticsDto> {
+        let url_ = this.baseUrl + "/api/reports/analytics?";
+        if (timeSpan === null)
+            throw new Error("The parameter 'timeSpan' cannot be null.");
+        else if (timeSpan !== undefined)
+            url_ += "TimeSpan=" + encodeURIComponent("" + timeSpan) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ReportsAnalyticsDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ReportsAnalyticsDto>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ReportsAnalyticsDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ReportsAnalyticsDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status === 401) {
@@ -3933,6 +4120,255 @@ export class GetSystemRolesClient implements IGetSystemRolesClient {
     }
 }
 
+export interface IPasswordResetClient {
+    /**
+     * Requests a user password reset
+     */
+    handle(request: ResetPasswordCommand): Observable<ServerResponse>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class PasswordResetClient implements IPasswordResetClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Requests a user password reset
+     */
+    handle(request: ResetPasswordCommand): Observable<ServerResponse> {
+        let url_ = this.baseUrl + "/api/auth/password-reset";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ServerResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ServerResponse>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ServerResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ServerResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export interface ISetPasswordClient {
+    /**
+     * Sets a new user password
+     */
+    handle(request: SetPasswordCommand): Observable<ServerResponse>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class SetPasswordClient implements ISetPasswordClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Sets a new user password
+     */
+    handle(request: SetPasswordCommand): Observable<ServerResponse> {
+        let url_ = this.baseUrl + "/api/auth/set-password";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ServerResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ServerResponse>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ServerResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ServerResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export interface IUpdateUserProfileClient {
+    /**
+     * Updates a user's profile
+     */
+    handle(request: UpdateProfileCommand): Observable<ServerResponse>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class UpdateUserProfileClient implements IUpdateUserProfileClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Updates a user's profile
+     */
+    handle(request: UpdateProfileCommand): Observable<ServerResponse> {
+        let url_ = this.baseUrl + "/api/auth/update-profile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ServerResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ServerResponse>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ServerResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ServerResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface ICreateUserClient {
     /**
      * Allows an admin to create a user account
@@ -5205,6 +5641,70 @@ export interface IOccurrenceDto {
     reports?: number;
 }
 
+export class PublicReportDto implements IPublicReportDto {
+    id?: number;
+    occurrenceTitle?: string;
+    isVerified?: boolean;
+    exposed?: number;
+    infected?: number;
+    mortality?: number;
+    location?: string;
+    created?: string;
+
+    constructor(data?: IPublicReportDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.occurrenceTitle = _data["occurrenceTitle"];
+            this.isVerified = _data["isVerified"];
+            this.exposed = _data["exposed"];
+            this.infected = _data["infected"];
+            this.mortality = _data["mortality"];
+            this.location = _data["location"];
+            this.created = _data["created"];
+        }
+    }
+
+    static fromJS(data: any): PublicReportDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PublicReportDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["occurrenceTitle"] = this.occurrenceTitle;
+        data["isVerified"] = this.isVerified;
+        data["exposed"] = this.exposed;
+        data["infected"] = this.infected;
+        data["mortality"] = this.mortality;
+        data["location"] = this.location;
+        data["created"] = this.created;
+        return data;
+    }
+}
+
+export interface IPublicReportDto {
+    id?: number;
+    occurrenceTitle?: string;
+    isVerified?: boolean;
+    exposed?: number;
+    infected?: number;
+    mortality?: number;
+    location?: string;
+    created?: string;
+}
+
 export class ReportListDto implements IReportListDto {
     id?: number;
     occurrenceTitle?: string;
@@ -5267,6 +5767,126 @@ export interface IReportListDto {
     mortality?: number;
     location?: string;
     created?: string;
+}
+
+export class ReportsAnalyticsDto implements IReportsAnalyticsDto {
+    name?: string;
+    total?: number;
+    verified?: number;
+    unverified?: number;
+    notified?: number;
+    seriesType?: DataSeriesType;
+    dataPoints?: DataPoint[];
+
+    constructor(data?: IReportsAnalyticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.total = _data["total"];
+            this.verified = _data["verified"];
+            this.unverified = _data["unverified"];
+            this.notified = _data["notified"];
+            this.seriesType = _data["seriesType"];
+            if (Array.isArray(_data["dataPoints"])) {
+                this.dataPoints = [] as any;
+                for (let item of _data["dataPoints"])
+                    this.dataPoints!.push(DataPoint.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ReportsAnalyticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReportsAnalyticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["total"] = this.total;
+        data["verified"] = this.verified;
+        data["unverified"] = this.unverified;
+        data["notified"] = this.notified;
+        data["seriesType"] = this.seriesType;
+        if (Array.isArray(this.dataPoints)) {
+            data["dataPoints"] = [];
+            for (let item of this.dataPoints)
+                data["dataPoints"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IReportsAnalyticsDto {
+    name?: string;
+    total?: number;
+    verified?: number;
+    unverified?: number;
+    notified?: number;
+    seriesType?: DataSeriesType;
+    dataPoints?: DataPoint[];
+}
+
+export enum DataSeriesType {
+    Week = 0,
+    Month = 1,
+    Year = 2,
+}
+
+export class DataPoint implements IDataPoint {
+    value?: number;
+    date?: Date;
+
+    constructor(data?: IDataPoint) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.value = _data["value"];
+            this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): DataPoint {
+        data = typeof data === 'object' ? data : {};
+        let result = new DataPoint();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["value"] = this.value;
+        data["date"] = this.date ? this.date.toISOString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IDataPoint {
+    value?: number;
+    date?: Date;
+}
+
+export enum DataQueryTimeSpan {
+    PastWeek = 0,
+    PastMonth = 1,
+    PastYear = 2,
 }
 
 export class SendNotificationCommand implements ISendNotificationCommand {
@@ -6729,6 +7349,126 @@ export class CreateAuthTokenCommand implements ICreateAuthTokenCommand {
 }
 
 export interface ICreateAuthTokenCommand {
+    username?: string;
+    password?: string;
+}
+
+export class ResetPasswordCommand implements IResetPasswordCommand {
+    email?: string;
+
+    constructor(data?: IResetPasswordCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.email = _data["email"];
+        }
+    }
+
+    static fromJS(data: any): ResetPasswordCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResetPasswordCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email;
+        return data;
+    }
+}
+
+export interface IResetPasswordCommand {
+    email?: string;
+}
+
+export class SetPasswordCommand implements ISetPasswordCommand {
+    resetToken?: string;
+    password?: string;
+
+    constructor(data?: ISetPasswordCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.resetToken = _data["resetToken"];
+            this.password = _data["password"];
+        }
+    }
+
+    static fromJS(data: any): SetPasswordCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new SetPasswordCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["resetToken"] = this.resetToken;
+        data["password"] = this.password;
+        return data;
+    }
+}
+
+export interface ISetPasswordCommand {
+    resetToken?: string;
+    password?: string;
+}
+
+export class UpdateProfileCommand implements IUpdateProfileCommand {
+    email?: string;
+    username?: string;
+    password?: string;
+
+    constructor(data?: IUpdateProfileCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.email = _data["email"];
+            this.username = _data["username"];
+            this.password = _data["password"];
+        }
+    }
+
+    static fromJS(data: any): UpdateProfileCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateProfileCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email;
+        data["username"] = this.username;
+        data["password"] = this.password;
+        return data;
+    }
+}
+
+export interface IUpdateProfileCommand {
+    email?: string;
     username?: string;
     password?: string;
 }

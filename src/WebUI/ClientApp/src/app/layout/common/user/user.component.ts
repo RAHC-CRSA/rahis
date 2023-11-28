@@ -102,6 +102,10 @@ export class UserComponent implements OnInit, OnDestroy {
             .subscribe();
     }
 
+    goToProfile() {
+        this._router.navigateByUrl('dashboard/profile');
+    }
+
     /**
      * Sign out
      */

@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AddRegionComponent } from './add-region.component';
 import { Route, RouterModule } from '@angular/router';
 import { RegionsModule } from 'app/modules/regions/regions.module';

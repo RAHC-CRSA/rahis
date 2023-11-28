@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Mandrill.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,8 @@ public static class ConfigureServices
         var emailConfig = configuration.GetSection("EmailConfiguration")
             .Get<EmailConfiguration>();
         services.AddSingleton<EmailConfiguration>(emailConfig);
+
+        services.AddMandrill(opt => opt.ApiKey =emailConfig.MandrillApiKey);
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();

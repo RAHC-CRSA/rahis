@@ -6,6 +6,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using WebUI.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ public static class ConfigureServices
         services.AddDatabaseDeveloperPageExceptionFilter();
 
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddSingleton<IHostingEnvironmentService, HostingEnvironmentService>();
 
         services.AddHttpContextAccessor();
 

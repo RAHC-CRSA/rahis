@@ -275,6 +275,50 @@ export class ReportsEffects {
         )
     );
 
+    loadReportsAnalytics$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.loadAnalytics),
+            exhaustMap((action) =>
+                this.reportsService.getReportsAnalytics(action.payload).pipe(
+                    map((data) =>
+                        ReportsActions.loadAnalyticsSuccess({ payload: data })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    loadPublicReports$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.loadPublicReports),
+            exhaustMap((action) =>
+                this.reportsService.getPublicReports().pipe(
+                    map((data) =>
+                        ReportsActions.loadPublicReportsSuccess({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     loadParaProfessionals$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ReportsActions.loadParaProfessionals),

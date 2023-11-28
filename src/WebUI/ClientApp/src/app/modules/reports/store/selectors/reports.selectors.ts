@@ -14,6 +14,11 @@ export const getUnverifiedReports = createSelector(
     (state: ReportState) => state.data.filter((e) => !e.isVerified)
 );
 
+export const getAnalytics = createSelector(
+    reportState,
+    (state: ReportState) => state.analytics
+);
+
 export const getCommunities = createSelector(
     reportState,
     (state: ReportState) => state.communities
@@ -67,6 +72,11 @@ export const getDiseases = createSelector(
 export const getSpecies = createSelector(
     reportState,
     (state: ReportState) => state.species
+);
+
+export const getPublicReports = createSelector(
+    reportState,
+    (state: ReportState) => state.publicReports
 );
 
 export const getReportsLoading = createSelector(

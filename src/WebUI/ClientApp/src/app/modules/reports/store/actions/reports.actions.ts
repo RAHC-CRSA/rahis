@@ -23,6 +23,8 @@ import {
     CommunityDto,
     IVerifyReportCommand,
     ISendNotificationCommand,
+    DataQueryTimeSpan,
+    PublicReportDto,
 } from '../../../../web-api-client';
 
 // Create report
@@ -299,6 +301,29 @@ export const SEND_NOTIFICATION_SUCCESS = `[Reports] Send Notification Success`;
 export const sendNotification = createAction(
     SEND_NOTIFICATION,
     props<{ payload: ISendNotificationCommand }>()
+);
+
+// Load Analytics
+export const LOAD_ANALYTICS = `[Reports] Load Analytics`;
+export const LOAD_ANALYTICS_SUCCESS = `[Reports] Load Analytics Success`;
+
+export const loadAnalytics = createAction(
+    LOAD_ANALYTICS,
+    props<{ payload: DataQueryTimeSpan }>()
+);
+export const loadAnalyticsSuccess = createAction(
+    LOAD_ANALYTICS_SUCCESS,
+    props<{ payload: ReportListDto }>()
+);
+
+// Load public reports
+export const LOAD_PUBLIC_REPORTS = `[Reports] Load Public Reports`;
+export const LOAD_PUBLIC_REPORTS_SUCCESS = `[Reports] Load Public Reports Success`;
+
+export const loadPublicReports = createAction(LOAD_PUBLIC_REPORTS);
+export const loadPublicReportsSuccess = createAction(
+    LOAD_PUBLIC_REPORTS_SUCCESS,
+    props<{ payload: PublicReportDto[] }>()
 );
 
 // Set feedback

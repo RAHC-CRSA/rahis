@@ -29,7 +29,8 @@ export class FeedbackService {
     private _processErrors(responseErrors: any) {
         let errors = [];
         for (let error in responseErrors) {
-            let err = `${responseErrors[error].map(
+            console.log(responseErrors);
+            let err = `${responseErrors[error]?.map(
                 (e, i) =>
                     `${e}${i < responseErrors[error].length - 1 ? ', ' : ''}`
             )}`;

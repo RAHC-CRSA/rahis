@@ -84,14 +84,6 @@
             [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested positive is required', control: testForm.controls['numberPositive']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>How many subjects tested negative?</mat-label>
-            <input type="number" aria-label="Number negative" formControlName="numberNegative" matInput
-              placeholder="Number negative" />
-          </mat-form-field>
-          <ng-container [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested negative is required', control: testForm.controls['numberNegative']}"></ng-container>
-
-          <mat-form-field class="w-full mb-4">
             <mat-label>Which para-professional carried out the tests?</mat-label>
             <input type="text" aria-label="ParaProfessional" matInput [formControl]="professionalControl"
               [matAutocomplete]="professionalAutocomplete" placeholder="Select para-professional">

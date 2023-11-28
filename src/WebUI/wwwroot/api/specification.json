@@ -691,6 +691,51 @@
         ]
       }
     },
+    "/api/reports/public": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Gets monthly reports",
+        "description": "Gets monthly reports in the system",
+        "operationId": "GetPublicReports_Handle",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PublicReportDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/report/{ReportId}": {
       "get": {
         "tags": [
@@ -718,6 +763,69 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ReportDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter",
+              " Regional Animal Health Officer",
+              " Chief Veterinary Officer"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/reports/analytics": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Gets analytics data for reports",
+        "description": "Gets analytics data for reports in the system",
+        "operationId": "GetReportsAnalytics_Handle",
+        "parameters": [
+          {
+            "name": "TimeSpan",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/DataQueryTimeSpan"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportsAnalyticsDto"
                 }
               }
             }
@@ -2342,6 +2450,138 @@
         ]
       }
     },
+    "/api/auth/password-reset": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Requests a user password reset",
+        "description": "Requests a user password reset",
+        "operationId": "PasswordReset_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/set-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sets a new user password",
+        "description": "Sets a new user password",
+        "operationId": "SetPassword_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetPasswordCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/update-profile": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Updates a user's profile",
+        "description": "Updates a user's profile",
+        "operationId": "UpdateUserProfile_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfileCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/account/CreateUser": {
       "post": {
         "tags": [
@@ -3031,6 +3271,40 @@
           }
         }
       },
+      "PublicReportDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "occurrenceTitle": {
+            "type": "string"
+          },
+          "isVerified": {
+            "type": "boolean"
+          },
+          "exposed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "infected": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mortality": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "location": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          }
+        }
+      },
       "ReportListDto": {
         "type": "object",
         "additionalProperties": false,
@@ -3064,6 +3338,82 @@
             "type": "string"
           }
         }
+      },
+      "ReportsAnalyticsDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "verified": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unverified": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "notified": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seriesType": {
+            "$ref": "#/components/schemas/DataSeriesType"
+          },
+          "dataPoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataPoint"
+            }
+          }
+        }
+      },
+      "DataSeriesType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Week",
+          "Month",
+          "Year"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "DataPoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DataQueryTimeSpan": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "PastWeek",
+          "PastMonth",
+          "PastYear"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
       },
       "SendNotificationCommand": {
         "type": "object",
@@ -3615,6 +3965,42 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "ResetPasswordCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "SetPasswordCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resetToken": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateProfileCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string"
+          },
           "username": {
             "type": "string"
           },

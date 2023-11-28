@@ -4,9 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
-using RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetOccurrences;
 using RegionalAnimalHealth.Domain.Entities.Reports;
-using RegionalAnimalHealth.Domain.Exceptions;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReports;
 public class GetReportsQuery : IRequest<(Result, List<ReportListDto>?)>
@@ -38,8 +36,8 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, 
                     .ThenInclude(o => o.Region)
                         .ThenInclude(e => e.Country)
                 .Include(x => x.Disease)
-                .Where(x => !x.IsDeleted && 
-                    (request.IsVerified != null ? x.IsVerified == request.IsVerified : true) && 
+                .Where(x => !x.IsDeleted &&
+                    (request.IsVerified != null ? x.IsVerified == request.IsVerified : true) &&
                     (request.CountryId != null ? x.Occurrence.Country.Id == request.CountryId : true))
                 .Select(ReportSelectorExpression())
                 .ToListAsync();
