@@ -1,38 +1,35 @@
-<form [formGroup]="occurrenceInfo" class="p-2 md:p-6">
+<form [formGroup]="occurrenceInfo" class="p-2 md:p-6" *transloco="let t">
   <div class="flex flex-col g-3 my-4">
 
     <mat-form-field class="w-full">
-      <mat-label>Select an occurrence</mat-label>
+      <mat-label>{{ t('Select an occurrence') }}</mat-label>
       <input type="text" aria-label="Occurrence" matInput [formControl]="occurrenceControl"
-        [matAutocomplete]="occurrenceAutocomplete" placeholder="Select occurrence">
+        [matAutocomplete]="occurrenceAutocomplete" placeholder="{{ t('Select an occurrence') }}">
       <mat-autocomplete #occurrenceAutocomplete="matAutocomplete" [displayWith]="displayOccurrenceFn"
         (optionSelected)="updateSelectedOccurrence($event)">
         <mat-option *ngFor="let occurrence of filteredOccurrences | async" [value]="occurrence">
-          {{ occurrence.title }}
+          {{ occurrence.title | transloco }}
         </mat-option>
       </mat-autocomplete>
-      <mat-hint *ngIf="!newOccurrence">Select <strong>'{{ otherOption }}'</strong> to add this report as a new
-        occurrence.</mat-hint>
+      <mat-hint *ngIf="!newOccurrence">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add this report as a new occurrence') }}.</mat-hint>
     </mat-form-field>
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Occurrence is required', control: occurrenceInfo.controls['occurrence']}"></ng-container>
 
     <div *ngIf="newOccurrence || !occurrences.length" @expandCollapse>
       <div *ngIf="occurrences.length">
-        <button mat-button color="primary" type="button" (click)="onCheckOccurrence(false)">Select an existing
-          occurrence
-          instead</button>
+        <button mat-button color="primary" type="button" (click)="onCheckOccurrence(false)"> {{ t('Select an existing occurrence instead') }} </button>
       </div>
     </div>
   </div>
 
   <div class="flex justify-between my-4">
     <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
-      Back
+        {{ t('Back') }}
     </button>
     <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="occurrenceInfo.invalid"
       (click)="onSubmit()">
-      Next
+       {{ t('Next') }}
     </button>
   </div>
 </form>

@@ -1,8 +1,8 @@
-<form [formGroup]="diseaseInfo" class="p-2 md:p-6">
+<form [formGroup]="diseaseInfo" class="p-2 md:p-6" *transloco="let t">
   <div class="flex flex-col g-3 my-4">
 
     <mat-form-field class="w-full mb-4">
-      <mat-label>What is the affected species?</mat-label>
+      <mat-label>{{ t('What is the affected species') }}?</mat-label>
       <input type="text" aria-label="Species" matInput [formControl]="speciesControl"
         [matAutocomplete]="speciesAutocomplete">
       <mat-autocomplete #speciesAutocomplete="matAutocomplete" [displayWith]="displaySpeciesFn"
@@ -11,7 +11,7 @@
           {{ species.name }}
         </mat-option>
       </mat-autocomplete>
-      <mat-hint *ngIf="!newSpecies">Select <strong>'{{ otherOption }}'</strong> to add a new species.</mat-hint>
+      <mat-hint *ngIf="!newSpecies">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new species') }}.</mat-hint>
     </mat-form-field>
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Species is required', control: diseaseInfo.controls['species']}"></ng-container>
@@ -22,7 +22,7 @@
     </div>
 
     <mat-form-field class="w-full mb-4">
-      <mat-label>What is the name of the disease?</mat-label>
+      <mat-label>{{ t('What is the name of the disease') }}?</mat-label>
       <input type="text" aria-label="Disease" matInput [formControl]="diseaseControl"
         [matAutocomplete]="diseaseAutocomplete">
       <mat-autocomplete #diseaseAutocomplete="matAutocomplete" [displayWith]="displayDiseaseFn"
@@ -31,7 +31,7 @@
           {{ disease.name }}
         </mat-option>
       </mat-autocomplete>
-      <mat-hint *ngIf="!newDisease">Select <strong>'{{ otherOption }}'</strong> to add a new disease.</mat-hint>
+      <mat-hint *ngIf="!newDisease">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new disease') }}.</mat-hint>
     </mat-form-field>
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Disease is required', control: diseaseInfo.controls['disease']}"></ng-container>
@@ -44,11 +44,11 @@
 
   <div class="flex justify-between my-4">
     <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
-      Back
+        {{ t('Back') }}
     </button>
     <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="diseaseInfo.invalid"
       (click)="onSubmit()">
-      Next
+    {{ t('Next') }}
     </button>
   </div>
 </form>

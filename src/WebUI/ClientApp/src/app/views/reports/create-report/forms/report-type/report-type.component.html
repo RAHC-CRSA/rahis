@@ -1,19 +1,19 @@
-<form [formGroup]="reportTypeForm" class="p-2 md:p-6">
+<form [formGroup]="reportTypeForm" class="p-2 md:p-6" *transloco="let t">
   <div class="flex flex-col max-w-md mx-auto justify-center text-center gap-3">
-    <mat-label>Select a report type</mat-label>
+    <mat-label>{{ t('Select a report type') }}</mat-label>
     <mat-radio-group formControlName="reportType" aria-label="Select a report type">
-      <mat-radio-button [value]="'Immediate'">Immediate</mat-radio-button>
-      <mat-radio-button [value]="'FollowUp'">Follow-Up</mat-radio-button>
+      <mat-radio-button [value]="'Immediate'">{{ t('Immediate') }}</mat-radio-button>
+      <mat-radio-button [value]="'FollowUp'">{{ t('Follow-Up') }}</mat-radio-button>
     </mat-radio-group>
   </div>
 
   <div class="flex justify-between my-4">
     <a [routerLink]="['/dashboard/reports']" class="px-8" mat-flat-button [color]="'accent'">
-      Cancel
+       {{ t('Cancel') }}
     </a>
     <button class="px-8" mat-flat-button [color]="'primary'" [disabled]="reportTypeForm.invalid" type="button"
       (click)="onSubmit()">
-      Next
+       {{ t('Next') }}
     </button>
   </div>
 </form>

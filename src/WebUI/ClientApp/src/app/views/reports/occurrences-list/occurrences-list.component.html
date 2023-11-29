@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col flex-auto min-w-0" *transloco="let t">
 
   <!-- Header -->
   <div
@@ -7,13 +7,13 @@
       <!-- Breadcrumbs -->
       <div class="flex flex-wrap items-center font-medium">
         <div>
-          <a class="whitespace-nowrap text-primary-500">Reports</a>
+          <a class="whitespace-nowrap text-primary-500">{{ t('Reports') }}</a>
         </div>
       </div>
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-          Occurrences List
+           {{ t('Occurrences List') }}
         </h2>
       </div>
     </div>
@@ -33,12 +33,12 @@
 
       <div class="flex justify-end my-4">
         <a [routerLink]="['/dashboard/reports/create']" class="px-8" mat-flat-button [color]="'primary'">
-          Add Report
+           {{ t('Add Report') }}
         </a>
       </div>
 
       <mat-form-field class="w-full">
-        <mat-label>Filter</mat-label>
+        <mat-label>{{ t('Filter') }}</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. horses" #input>
       </mat-form-field>
 
@@ -46,37 +46,37 @@
 
         <!-- ID Column -->
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef class="p-4">ID</th>
+          <th mat-header-cell *matHeaderCellDef class="p-4">{{ t('ID') }}</th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.id}} </td>
         </ng-container>
 
         <!-- title Column -->
         <ng-container matColumnDef="title">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Title </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Titile') }} </th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.title}}</td>
         </ng-container>
 
         <!-- Location Column -->
         <ng-container matColumnDef="location">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Location </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Location') }} </th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.location}} </td>
         </ng-container>
 
         <!-- Date Started Column -->
         <ng-container matColumnDef="dateStarted">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Start Date </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Start Date') }} </th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.dateStarted}} </td>
         </ng-container>
 
         <!-- Date Ended Column -->
         <ng-container matColumnDef="dateEnded">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Date Ended </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Date Ended') }} </th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.dateEnded ?? '-'}} </td>
         </ng-container>
 
         <!-- Infected Column -->
         <ng-container matColumnDef="reports">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Reports </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Reports') }} </th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.reports}} </td>
         </ng-container>
 
@@ -101,10 +101,10 @@
           <td class="mat-cell p-12 text-center" colspan="7">
             <mat-icon class="icon-size-24 text-secondary" [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
             <ng-container *ngIf="(occurrences$ | async)?.length">
-              <p>No data matching the filter "{{input.value}}"</p>
+              <p> {{ t('No data matching the filter') }}"{{input.value}}"</p>
             </ng-container>
             <ng-container *ngIf="!(occurrences$ | async)?.length">
-              <p>No data was loaded</p>
+              <p>{{ t('No data was loaded') }}</p>
             </ng-container>
           </td>
         </tr>
