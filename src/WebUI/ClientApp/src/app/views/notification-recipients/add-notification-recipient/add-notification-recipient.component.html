@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col flex-auto min-w-0" *transloco="let t">
 
   <!-- Header -->
   <div
@@ -7,17 +7,17 @@
       <!-- Breadcrumbs -->
       <div class="flex flex-wrap items-center font-medium">
         <div>
-          <a class="whitespace-nowrap text-primary-500">Notification Recipients</a>
+          <a class="whitespace-nowrap text-primary-500">{{ t('Notification Recipients') }}</a>
         </div>
         <div class="flex items-center ml-1 whitespace-nowrap">
           <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
-          <a class="ml-1 text-primary-500">Add a Notification Recipient</a>
+          <a class="ml-1 text-primary-500">{{ t('Add a Notification Recipient') }}</a>
         </div>
       </div>
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-          Add a Notification Recipient
+          {{ t('Add a Notification Recipient') }}
         </h2>
       </div>
     </div>
@@ -36,8 +36,8 @@
         <form [formGroup]="notificationRecipientForm">
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Full Name</mat-label>
-              <input aria-label="Full name" matInput formControlName="name" placeholder="Full name" />
+              <mat-label>{{ t('Full Name') }}</mat-label>
+              <input aria-label="{{ t('Full Name') }}" matInput formControlName="name" placeholder="{{ t('Full Name') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Full name is required', control: notificationRecipientForm.controls['name']}"></ng-container>
@@ -45,7 +45,7 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Email</mat-label>
+              <mat-label>{{ t('Email') }}</mat-label>
               <input type="email" aria-label="Email address" matInput formControlName="email"
                 placeholder="Email address" />
             </mat-form-field>
@@ -73,16 +73,16 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full mb-4">
-              <mat-label>Institution</mat-label>
-              <input aria-label="Institution" matInput formControlName="institution" placeholder="Institution" />
+              <mat-label>{{ t('Institution') }}</mat-label>
+              <input aria-label="{{ t('Institution') }}" matInput formControlName="institution" placeholder="{{ t('Institution') }}" />
             </mat-form-field>
           </div>
 
           <div class="w-full mb-4">
-            <label>Enable</label>
+            <label>{{ t('Enable') }}</label>
             <mat-radio-group class="flex" formControlName="isEnabled" aria-label="publicSector">
-              <mat-radio-button [value]="false">No</mat-radio-button>
-              <mat-radio-button [value]="true">Yes</mat-radio-button>
+              <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
+              <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
             </mat-radio-group>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Enabled is required', control: notificationRecipientForm.controls['isEnabled']}"></ng-container>
@@ -90,12 +90,12 @@
 
           <div class="flex justify-between my-4">
             <a [routerLink]="['/dashboard/notification-recipients']" class="px-8" mat-flat-button [color]="'secondary'">
-              Cancel
+              {{ t('Cancel') }}
             </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button"
               [disabled]="notificationRecipientForm.invalid" (click)="submit()">
               <span *ngIf="!( loading$ | async )">
-                Add Notification Recipient
+                {{ t('Add Notification Recipient') }}
               </span>
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>
