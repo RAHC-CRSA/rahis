@@ -142,12 +142,12 @@
 
           <div class="flex justify-between my-4">
             <a [routerLink]="['/dashboard/users']" class="px-8" mat-flat-button [color]="'secondary'">
-              Cancel
+                {{ t('Cancel') }}
             </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="userForm.invalid"
               (click)="submit()">
               <span *ngIf="!( loading$ | async )">
-                Add User
+                {{ t('Add User') }}
               </span>
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>
