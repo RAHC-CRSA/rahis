@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
+import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { AuthState } from 'app/core/auth/store';
 import { getUser } from 'app/core/auth/store/selectors';
@@ -15,7 +16,7 @@ import { Observable } from 'rxjs';
 export class SuperAdminComponent implements OnInit {
     user$: Observable<AuthResponseDto | null | undefined>;
 
-    constructor(private store: Store<AuthState>) {}
+    constructor(private store: Store<AuthState>, private translocoService: TranslocoService) {}
 
     ngOnInit() {
         this.user$ = this.store.select(getUser);

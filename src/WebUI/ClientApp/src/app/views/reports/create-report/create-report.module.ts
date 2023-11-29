@@ -20,6 +20,7 @@ import { AddRegionComponent } from './forms/add-region/add-region.component';
 import { AddInstitutionComponent } from './forms/add-institution/add-institution.component';
 import { AddSpeciesComponent } from './forms/add-species/add-species.component';
 import { AddDiseaseComponent } from './forms/add-disease/add-disease.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 export const routes: Route[] = [
     {
@@ -47,6 +48,6 @@ export const routes: Route[] = [
         AddSpeciesComponent,
         AddDiseaseComponent,
     ],
-    imports: [ReportsModule, SharedModule, RouterModule.forChild(routes)],
+    imports: [ReportsModule, SharedModule, RouterModule.forChild(routes), TranslocoModule],
 })
 export class CreateReportModule {}

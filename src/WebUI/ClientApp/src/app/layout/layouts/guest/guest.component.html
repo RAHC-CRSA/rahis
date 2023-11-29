@@ -2,7 +2,7 @@
 <fuse-loading-bar></fuse-loading-bar>
 
 <!-- Wrapper -->
-<div class="flex flex-col flex-auto w-full bg-white">
+<div class="flex flex-col flex-auto w-full bg-white" *transloco="let t">
 
 
   <nav class="bg-white border-gray-200 dark:bg-gray-900 drop-shadow-xl z-99">
@@ -19,18 +19,19 @@
             d="M1 1h15M1 7h15M1 13h15" />
         </svg>
       </button>
+      <languages></languages>
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul
           class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
           <li>
             <a [routerLink]="['/home']"
               [routerLinkActive]="'md:text-primary-500 md:hover:text-primary-500 dark:bg-gray-700 dark:text-white md:hover:bg-transparent'"
-              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-500 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Home</a>
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-500 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"> {{ t('Home') }}</a>
           </li>
           <li>
             <a [routerLink]="['/report']"
               [routerLinkActive]="'md:text-primary-500 md:hover:text-primary-500 dark:bg-gray-700 dark:text-white md:hover:bg-transparent'"
-              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-500 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Report</a>
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-500 md:p-0 dark:text-white md:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">{{ t('Report') }}</a>
           </li>
         </ul>
       </div>
@@ -50,9 +51,9 @@
     <!-- <div class="flex flex-row p-8 mx-auto w-full max-w-xl lg:max-w-screen-xl"></div> -->
 
     <div class="flex flex-col p-3 mx-auto w-full max-w-xl lg:max-w-screen-xl">
-      <p class="text-gray-400 text-center">Copyright &copy; 2023 <a href="https://crsa-rahc.org/"
-          class="text-primary-500 hover:text-primary-700" target="_blank">Regional Animal Health Center</a>. All rights
-        reserved.</p>
+      <p class="text-gray-400 text-center">{{ t('Copyright') }} &copy; 2023 <a href="https://crsa-rahc.org/"
+          class="text-primary-500 hover:text-primary-700" target="_blank">{{ t('Regional Animal Health Center') }}</a>.
+          {{ t('All rights reserved') }}.</p>
     </div>
   </footer>
 </div>

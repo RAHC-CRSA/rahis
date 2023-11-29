@@ -1,19 +1,16 @@
-<div class="w-full">
+<div class="w-full" *transloco="let t">
   <div class="w-full bg-gray-100 p-8 mb-0">
     <div class="flex flex-row mx-auto w-full max-w-xl lg:max-w-screen-xl">
       <div class="flex-col w-full my-8 md:text-center py-12">
-        <h3 class="text-4xl font-bold text-primary-500 mb-6">Monthly Report</h3>
-        <p class="text-lg font-bold">RAHIS is an initiative of
-          the Regional Animal Health Center (RAHC), an
-          intergovernmental agency assigned the mandate of providing an essential framework to monitor,
-          aggregate, evaluate and analyse data pertaining to emerging diseases affecting animals in West Africa.</p>
+        <h3 class="text-4xl font-bold text-primary-500 mb-6">{{ t('Monthly Report') }}</h3>
+        <p class="text-lg font-bold">{{ t('RAHIS is an initiative of the Regional Animal Health Center (RAHC), an intergovernmental agency assigned the mandate of providing an essential framework to monitor, aggregate, evaluate and analyze data pertaining to emerging diseases affecting animals in West Africa') }}.</p>
       </div>
     </div>
 
     <div class="flex-col p-12 w-full">
       <div class="flex justify-end my-4" *ngIf="reports.length">
         <button type="button" class="px-8" mat-flat-button [color]="'primary'" (click)="exportExcel()">
-          <mat-icon svgIcon="heroicons_outline:download"></mat-icon> Download Report
+          <mat-icon svgIcon="heroicons_outline:download"></mat-icon> {{ t('Download Report') }}
         </button>
       </div>
 
@@ -21,49 +18,49 @@
 
         <!-- ID Column -->
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef class="p-4">ID</th>
+          <th mat-header-cell *matHeaderCellDef class="p-4">{{ t('ID') }}</th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.id}} </td>
         </ng-container>
 
         <!-- Occurrence title Column -->
         <ng-container matColumnDef="occurrenceTitle">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Occurrence </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Occurrence') }} </th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.occurrenceTitle}}</td>
         </ng-container>
 
         <!-- Location Column -->
         <ng-container matColumnDef="location">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Location </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Location') }} </th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.location}} </td>
         </ng-container>
 
         <!-- Verified Column -->
         <ng-container matColumnDef="isVerified">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Verified </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4">  {{ t('Verified') }}</th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.isVerified ? "Yes" : "No"}} </td>
         </ng-container>
 
         <!-- Exposed Column -->
         <ng-container matColumnDef="exposed">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Exposed </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4">  {{ t('Number exposed') }}</th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.exposed}} </td>
         </ng-container>
 
         <!-- Infected Column -->
         <ng-container matColumnDef="infected">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Infected </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Infected') }} </th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.infected}} </td>
         </ng-container>
 
         <!-- Mortality Column -->
         <ng-container matColumnDef="mortality">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Mortality </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Mortality') }} </th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.mortality}} </td>
         </ng-container>
 
         <!-- Created Column -->
         <ng-container matColumnDef="created">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> Created </th>
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Created') }} </th>
           <td mat-cell *matCellDef="let el" class="p-4"> {{el.created}} </td>
         </ng-container>
 
@@ -75,7 +72,7 @@
           <td class="mat-cell p-12 text-center" colspan="9">
             <mat-icon class="icon-size-24 text-secondary" [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
             <ng-container *ngIf="!(reports$ | async)?.length">
-              <p>No data found</p>
+              <p>{{ t('No data found') }}</p>
             </ng-container>
           </td>
         </tr>

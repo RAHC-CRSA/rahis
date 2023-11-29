@@ -1,33 +1,33 @@
-<form [formGroup]="testsInfo">
+<form [formGroup]="testsInfo" *transloco="let t">
 
   <div class="w-full mb-4">
-    <mat-label>Were tests carried out?</mat-label>
+    <mat-label>{{ t('Were tests carried out') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="tested" aria-label="Tested">
-      <mat-radio-button [value]="false">No</mat-radio-button>
-      <mat-radio-button [value]="true">Yes</mat-radio-button>
+      <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
+      <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
     </mat-radio-group>
 
     <div *ngIf="hasTests" @expandCollapse>
       <div class="w-full mt-4">
-        <h4 class="text-2xl mb-4">Diagnostic Tests</h4>
+        <h4 class="text-2xl mb-4">{{ t('Diagnostic Tests') }}</h4>
         <div *ngIf="formData.diagnosticTests?.length" @expandCollapse>
           <div class="mb-4">
             <table mat-table [dataSource]="formData.diagnosticTests" class="w-full">
               <!-- Name Column -->
               <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <th mat-header-cell *matHeaderCellDef> {{ t('Name') }} </th>
                 <td mat-cell *matCellDef="let el"> {{el.name}} </td>
               </ng-container>
 
               <!-- Number Tested Column -->
               <ng-container matColumnDef="numberTested">
-                <th mat-header-cell *matHeaderCellDef> Number Tested </th>
+                <th mat-header-cell *matHeaderCellDef> {{ t('Number Tested') }}</th>
                 <td mat-cell *matCellDef="let el"> {{el.numberTested}} </td>
               </ng-container>
 
               <!-- Number Positive Column -->
               <ng-container matColumnDef="numberPositive">
-                <th mat-header-cell *matHeaderCellDef> Number Positive </th>
+                <th mat-header-cell *matHeaderCellDef>{{ t('Number Positive') }} </th>
                 <td mat-cell *matCellDef="let el"> {{el.numberPositive}} </td>
               </ng-container>
 
@@ -61,39 +61,39 @@
 
         <form [formGroup]="testForm">
           <mat-form-field class="w-full mb-4">
-            <mat-label>What is the name of the test?</mat-label>
-            <input aria-label="Test name" formControlName="name" matInput placeholder="Test name" />
+            <mat-label>{{ t('What is the name of the test') }}?</mat-label>
+            <input aria-label="{{ t('Test name') }}" formControlName="name" matInput placeholder="{{ t('Test name') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Test name is required', control: testForm.controls['name']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>How many subjects were the test carried out on?</mat-label>
-            <input type="number" aria-label="Number tested" formControlName="numberTested" matInput
-              placeholder="Number tested" />
+            <mat-label>{{ t('How many subjects were the test carried out on') }}?</mat-label>
+            <input type="number" aria-label="{{ t('Number Tested') }}" formControlName="numberTested" matInput
+              placeholder="{{ t('Number Tested') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested is required', control: testForm.controls['numberTested']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>How many subjects tested positive?</mat-label>
-            <input type="number" aria-label="Number positive" formControlName="numberPositive" matInput
-              placeholder="Number positive" />
+            <mat-label>{{ t('How many subjects tested positive') }}?</mat-label>
+            <input type="number" aria-label="{{ t('Number Positive') }}" formControlName="numberPositive" matInput
+              placeholder="{{ t('Number Positive') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested positive is required', control: testForm.controls['numberPositive']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>Which para-professional carried out the tests?</mat-label>
-            <input type="text" aria-label="ParaProfessional" matInput [formControl]="professionalControl"
-              [matAutocomplete]="professionalAutocomplete" placeholder="Select para-professional">
+            <mat-label>{{ t('Which para-professional carried out the tests') }}?</mat-label>
+            <input type="text" aria-label="{{ t('Select para-professional') }}" matInput [formControl]="professionalControl"
+              [matAutocomplete]="professionalAutocomplete" placeholder="{{ t('Select para-professional') }}">
             <mat-autocomplete #professionalAutocomplete="matAutocomplete" [displayWith]="displayProfessionalFn"
               (optionSelected)="updateSelectedProfessional($event)">
               <mat-option *ngFor="let professional of filteredProfessionals | async" [value]="professional">
                 {{ professional.name }}
               </mat-option>
             </mat-autocomplete>
-            <mat-hint>Select <strong>'{{ otherOption }}'</strong> to add a new Para-Professional</mat-hint>
+            <mat-hint>{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new Para-Professional') }}</mat-hint>
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Para-professional is required', control: testForm.controls['professionalId']}"></ng-container>
@@ -106,7 +106,7 @@
           <div class="flex justify-end mb-4">
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onTestSubmitted()"
               [disabled]="testForm.invalid">
-              Add Test
+              {{ t('Add Test') }}
             </button>
           </div>
         </form>
@@ -117,11 +117,11 @@
 
   <div class="flex justify-between my-4">
     <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
-      Back
+      {{ t('Back') }}
     </button>
     <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="testsInfo.invalid"
       (click)="onSubmit()">
-      Next
+      {{ t('Next') }}
     </button>
   </div>
 </form>

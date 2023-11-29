@@ -1,14 +1,14 @@
-<form [formGroup]="medicationForm">
+<form [formGroup]="medicationForm"  *transloco="let t">
   <mat-form-field class="w-full mb-4">
-    <mat-label>Name</mat-label>
-    <input aria-label="Medication name" formControlName="name" matInput placeholder="Medication name" />
+    <mat-label>{{ t('Name') }}</mat-label>
+    <input aria-label="{{ t('Medication name') }}" formControlName="name" matInput placeholder="{{ t('Medication name') }}" />
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Medication name is required', control: medicationForm.controls['name']}"></ng-container>
   </mat-form-field>
 
   <mat-form-field class="w-full mb-4">
-    <mat-label>Dosage</mat-label>
-    <input aria-label="Medication dosage" formControlName="dosage" matInput placeholder="Medication dosage" />
+    <mat-label>{{ t('Dosage') }}</mat-label>
+    <input aria-label="{{ t('Medication dosage') }}" formControlName="dosage" matInput placeholder="{{ t('Medication dosage') }}" />
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Medication dosage is required', control: medicationForm.controls['dosage']}"></ng-container>
   </mat-form-field>
@@ -16,7 +16,7 @@
   <div class="flex justify-end mb-4">
     <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onSubmit()"
       [disabled]="medicationForm.invalid">
-      Add Medication
+       {{ t('Add Medication') }}
     </button>
   </div>
 </form>

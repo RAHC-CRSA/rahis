@@ -1,3 +1,4 @@
+<span *transloco="let t">
 <button mat-icon-button [matMenuTriggerFor]="userActions">
     <span class="relative">
         <img class="w-7 h-7 rounded-full" *ngIf="showAvatar && user?.avatar" [src]="user?.avatar">
@@ -11,17 +12,17 @@
     </span>
 </button>
 
-<mat-menu [xPosition]="'before'" #userActions="matMenu">
+<mat-menu [xPosition]="'before'"  #userActions="matMenu" >
     <button mat-menu-item>
         <span class="flex flex-col leading-none">
-            <span>Signed in as</span>
+            <span>{{ t('Signed in as') }}</span>
             <span class="mt-1.5 text-md font-medium">{{ (user$ | async)?.username }}</span>
         </span>
     </button>
     <mat-divider class="my-2"></mat-divider>
     <button mat-menu-item (click)="goToProfile()">
         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-        <span>Profile</span>
+        <span>{{ t('Profile') }}</span>
     </button>
     <!-- <button mat-menu-item>
         <mat-icon [svgIcon]="'heroicons_outline:cog'"></mat-icon>
@@ -34,10 +35,11 @@
     <mat-divider class="my-2"></mat-divider>
     <button mat-menu-item (click)="signOut()">
         <mat-icon [svgIcon]="'heroicons_outline:logout'"></mat-icon>
-        <span>Sign out</span>
+        <span>{{ t('Sign out') }}</span>
     </button>
 </mat-menu>
-<!-- 
+</span>
+<!--
 <mat-menu class="user-status-menu" #userStatus="matMenu">
     <button mat-menu-item (click)="updateUserStatus('online')">
         <span class="w-4 h-4 mr-3 rounded-full bg-green-500"></span>

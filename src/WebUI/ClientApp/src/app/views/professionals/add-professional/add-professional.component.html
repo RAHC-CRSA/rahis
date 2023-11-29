@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col flex-auto min-w-0" *transloco="let t">
 
   <!-- Header -->
   <div
@@ -7,17 +7,17 @@
       <!-- Breadcrumbs -->
       <div class="flex flex-wrap items-center font-medium">
         <div>
-          <a class="whitespace-nowrap text-primary-500">Para-Professionals</a>
+          <a class="whitespace-nowrap text-primary-500">{{ t('Para-Professionals') }}</a>
         </div>
         <div class="flex items-center ml-1 whitespace-nowrap">
           <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
-          <a class="ml-1 text-primary-500">Add a Para-Professional</a>
+          <a class="ml-1 text-primary-500">{{ t('Add a Para-Professional') }}</a>
         </div>
       </div>
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-          Add a Para-Professional
+          {{ t('Add a Para-Professional') }}
         </h2>
       </div>
     </div>
@@ -36,9 +36,9 @@
         <form [formGroup]="professionalForm">
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Name</mat-label>
-              <input aria-label="Para-Professional name" matInput formControlName="name"
-                placeholder="Para-Professional name" />
+              <mat-label>{{ t('Name') }}</mat-label>
+              <input aria-label="{{ t('Para-Professional name') }}" matInput formControlName="name"
+                placeholder="{{ t('Para-Professional name') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Para-Professional name is required', control: professionalForm.controls['name']}"></ng-container>
@@ -48,7 +48,7 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Position</mat-label>
+              <mat-label>{{ t('Position') }}</mat-label>
               <input aria-label="Para-Professional position" matInput formControlName="position"
                 placeholder="Para-Professional position" />
             </mat-form-field>
@@ -60,7 +60,7 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Email</mat-label>
+              <mat-label>{{ t('Email') }}</mat-label>
               <input type="email" aria-label="Email address" matInput formControlName="email"
                 placeholder="Email address" />
             </mat-form-field>
@@ -88,7 +88,7 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Phone Number</mat-label>
+              <mat-label>{{ t('Phone Number') }}</mat-label>
               <input aria-label="Para-Professional phone number" matInput formControlName="phone"
                 placeholder="Para-Professional phone number" />
             </mat-form-field>
@@ -100,8 +100,8 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Institution</mat-label>
-              <input type="text" aria-label="Institution" matInput [formControl]="institutionControl"
+              <mat-label>{{ t('Institution') }}</mat-label>
+              <input type="text" aria-label="{{ t('Institution') }}" matInput [formControl]="institutionControl"
                 [matAutocomplete]="institutionAutocomplete">
               <mat-autocomplete #institutionAutocomplete="matAutocomplete" [displayWith]="displayInstitutionFn"
                 (optionSelected)="updateSelectedInstitution($event)">
@@ -116,12 +116,12 @@
 
           <div class="flex justify-between my-4">
             <a [routerLink]="['/dashboard/para-professionals']" class="px-8" mat-flat-button [color]="'secondary'">
-              Cancel
+              {{ t('Cancel') }}
             </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="professionalForm.invalid"
               (click)="submit()">
               <span *ngIf="!( loading$ | async )">
-                Add Para-Professional
+                {{ t('Add Para-Professional') }}
               </span>
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>

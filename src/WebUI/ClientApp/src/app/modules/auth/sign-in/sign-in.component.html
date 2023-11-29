@@ -1,4 +1,7 @@
-<div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
+<div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0" *transloco="let t">
+    <div>
+        <languages></languages>
+    </div>
     <div
         class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
         <div class="w-full max-w-80 sm:w-80 mx-auto">
@@ -8,7 +11,7 @@
             </div>
 
             <!-- Title -->
-            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign in</div>
+            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">{{ t('Sign in') }}</div>
 
             <!-- Alert -->
             <app-feedback-display *ngIf="feedback$ | async" [feedback]="feedback$"></app-feedback-display>
@@ -19,19 +22,19 @@
 
                 <!-- Email field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Username</mat-label>
+                    <mat-label>{{ t('Username') }}</mat-label>
                     <input id="username" matInput [formControlName]="'username'">
                     <mat-error *ngIf="signInForm.get('username').hasError('required')">
-                        Username is required
+                        {{ t('Username is required') }}
                     </mat-error>
                     <mat-error *ngIf="signInForm.get('username').hasError('username')">
-                        Please enter a valid email address
+                        {{ t('Please enter a valid email address') }}
                     </mat-error>
                 </mat-form-field>
 
                 <!-- Password field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Password</mat-label>
+                    <mat-label>{{ t('Password') }}</mat-label>
                     <input id="password" matInput type="password" [formControlName]="'password'" #passwordField>
                     <button mat-icon-button type="button"
                         (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
@@ -42,17 +45,17 @@
                             [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
                     </button>
                     <mat-error>
-                        Password is required
+                        {{ t('Password is required') }}
                     </mat-error>
                 </mat-form-field>
 
                 <!-- Actions -->
                 <div class="inline-flex items-center justify-between w-full mt-1.5">
                     <mat-checkbox class="-ml-2" [color]="'primary'" [formControlName]="'rememberMe'">
-                        Remember me
+                        {{ t('Remember me') }}
                     </mat-checkbox>
                     <a class="text-md font-medium text-primary-500 hover:underline"
-                        [routerLink]="['/forgot-password']">Forgot password?
+                        [routerLink]="['/forgot-password']">{{ t('Forgot password') }}?
                     </a>
                 </div>
 
@@ -60,7 +63,7 @@
                 <button type="submit" class="fuse-mat-button-large w-full mt-6" mat-flat-button [color]="'primary'"
                     [disabled]="signInForm.invalid">
                     <span *ngIf="!( loading$ | async )">
-                        Sign in
+                        {{ t('Sign in') }}
                     </span>
                     <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                         [mode]="'indeterminate'"></mat-progress-spinner>
@@ -114,8 +117,8 @@
         <!-- Content -->
         <div class="z-10 relative w-full max-w-2xl">
             <div class="text-7xl font-bold leading-none text-gray-100">
-                <div>Regional Animal Health</div>
-                <div>Information System</div>
+                <div>{{ t('Regional Animal Health') }}</div>
+                <div>{{ t('Information System') }}</div>
             </div>
             <!-- <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
                 Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.

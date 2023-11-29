@@ -14,6 +14,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
+import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
 import { loadOccurrences } from 'app/modules/reports/store/actions';
@@ -48,7 +49,8 @@ export class OccurrenceInfoComponent implements OnInit, AfterContentChecked {
     constructor(
         private formBuilder: FormBuilder,
         private changeDetector: ChangeDetectorRef,
-        private store: Store<ReportState>
+        private store: Store<ReportState>,
+        private translocoService: TranslocoService
     ) {}
 
     ngOnInit() {

@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col flex-auto min-w-0" *transloco="let t">
 
   <!-- Header -->
   <div
@@ -7,17 +7,17 @@
       <!-- Breadcrumbs -->
       <div class="flex flex-wrap items-center font-medium">
         <div>
-          <a class="whitespace-nowrap text-primary-500">Users</a>
+          <a class="whitespace-nowrap text-primary-500">{{ t('Users') }}</a>
         </div>
         <div class="flex items-center ml-1 whitespace-nowrap">
           <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
-          <a class="ml-1 text-primary-500">Add a User</a>
+          <a class="ml-1 text-primary-500">{{ t('Add-a-User') }}</a>
         </div>
       </div>
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-          Add a User
+            {{ t('Add-a-User') }}
         </h2>
       </div>
     </div>
@@ -36,8 +36,8 @@
         <form [formGroup]="userForm">
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>First Name</mat-label>
-              <input aria-label="First name" matInput formControlName="firstName" placeholder="First name" />
+              <mat-label>{{ t('First-Name') }}</mat-label>
+              <input aria-label="{{ t('First-Name') }}" matInput formControlName="firstName" placeholder="{{ t('First-Name') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'First name is required', control: userForm.controls['firstName']}"></ng-container>
@@ -47,8 +47,8 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Last Name</mat-label>
-              <input aria-label="Last Name" matInput formControlName="lastName" placeholder="Last name" />
+              <mat-label>{{ t('Last-Name') }}</mat-label>
+              <input aria-label="{{ t('Last-Name') }}" matInput formControlName="lastName" placeholder="{{ t('Last-Name') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Last name is required', control: userForm.controls['lastName']}"></ng-container>
@@ -58,8 +58,8 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Role</mat-label>
-              <input type="text" aria-label="Role" matInput [formControl]="roleControl"
+              <mat-label>{{ t('Role') }}</mat-label>
+              <input type="text" aria-label="{{ t('Role') }}" matInput [formControl]="roleControl"
                 [matAutocomplete]="roleAutocomplete">
               <mat-autocomplete #roleAutocomplete="matAutocomplete" [displayWith]="displayRoleFn"
                 (optionSelected)="updateSelectedRole($event)">
@@ -72,8 +72,8 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Country</mat-label>
-              <input type="text" aria-label="Country" matInput [formControl]="countryControl"
+              <mat-label>{{ t('Country') }}</mat-label>
+              <input type="text" aria-label="{{ t('Country') }}" matInput [formControl]="countryControl"
                 [matAutocomplete]="countryAutocomplete">
               <mat-autocomplete #countryAutocomplete="matAutocomplete" [displayWith]="displayCountryFn"
                 (optionSelected)="updateSelectedCountry($event)">
@@ -89,7 +89,7 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Email</mat-label>
+              <mat-label>{{ t('Email') }}</mat-label>
               <input type="email" aria-label="Email address" matInput formControlName="email"
                 placeholder="Email address" />
             </mat-form-field>
@@ -117,8 +117,8 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Password</mat-label>
-              <input type="password" aria-label="Password" matInput formControlName="password" placeholder="Password" />
+              <mat-label>{{ t('Password') }}</mat-label>
+              <input type="password" aria-label="{{ t('Password') }}" matInput formControlName="password" placeholder="{{ t('Password') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Password is required', control: userForm.controls['password']}"></ng-container>
@@ -131,8 +131,8 @@
           <div class="mb-4">
             <mat-form-field class="w-full">
               <mat-label>Confirm Password</mat-label>
-              <input type="password" aria-label="Confirm password" matInput formControlName="confirmPassword"
-                placeholder="Confirm password" />
+              <input type="password" aria-label="{{ t('Confirm-Password') }}" matInput formControlName="confirmPassword"
+                placeholder="{{ t('Confirm-Password') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Password confirmation is required', control: userForm.controls['confirmPassword']}"></ng-container>
@@ -142,12 +142,12 @@
 
           <div class="flex justify-between my-4">
             <a [routerLink]="['/dashboard/users']" class="px-8" mat-flat-button [color]="'secondary'">
-              Cancel
+                {{ t('Cancel') }}
             </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="userForm.invalid"
               (click)="submit()">
               <span *ngIf="!( loading$ | async )">
-                Add User
+                {{ t('Add User') }}
               </span>
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>

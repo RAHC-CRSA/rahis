@@ -6,6 +6,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/vertical/vertical.component';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
     selector       : 'fuse-vertical-navigation-collapsable-item',
@@ -34,7 +35,8 @@ export class FuseVerticalNavigationCollapsableItemComponent implements OnInit, O
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private translocoService: TranslocoService
     )
     {
     }

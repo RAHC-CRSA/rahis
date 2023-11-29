@@ -3,6 +3,7 @@ import { NotificationRecipientsListComponent } from './notification-recipients-l
 import { Route, RouterModule } from '@angular/router';
 import { SharedModule } from 'app/shared/shared.module';
 import { NotificationRecipientsModule } from 'app/modules/notification-recipients/notification-recipients.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 export const routes: Route[] = [
     {
@@ -17,6 +18,7 @@ export const routes: Route[] = [
         NotificationRecipientsModule,
         SharedModule,
         RouterModule.forChild(routes),
+        TranslocoModule
     ],
 })
 export class NotificationRecipientsListModule {}

@@ -1,29 +1,29 @@
-<form [formGroup]="vaccinationsInfo">
+<form [formGroup]="vaccinationsInfo" *transloco="let t">
 
   <div class="w-full mb-4">
-    <mat-label>Were vaccines administered?</mat-label>
+    <mat-label>{{ t('Were vaccines administered') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="vaccinated" aria-label="Vaccinated">
-      <mat-radio-button [value]="false">No</mat-radio-button>
-      <mat-radio-button [value]="true">Yes</mat-radio-button>
+      <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
+      <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
     </mat-radio-group>
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Vaccinated is required', control: vaccinationsInfo.controls['vaccinated']}"></ng-container>
 
     <div *ngIf="hasVaccinations" @expandCollapse>
       <div class="w-full mt-4">
-        <h4 class="text-2xl mb-4">Vaccinations</h4>
+        <h4 class="text-2xl mb-4">{{ t('Vaccinations') }}</h4>
         <div *ngIf="formData.vaccinations?.length" @expandCollapse>
           <div class="mb-4">
             <table mat-table [dataSource]="formData.vaccinations" class="w-full">
               <!-- Name Column -->
               <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <th mat-header-cell *matHeaderCellDef> {{ t('Name') }} </th>
                 <td mat-cell *matCellDef="let el"> {{el.name}} </td>
               </ng-container>
 
               <!-- Dosage Column -->
               <ng-container matColumnDef="numberVaccinated">
-                <th mat-header-cell *matHeaderCellDef> Number Vaccinated </th>
+                <th mat-header-cell *matHeaderCellDef> {{ t('Number Vaccinated') }} </th>
                 <td mat-cell *matCellDef="let el"> {{el.numberVaccinated}} </td>
               </ng-container>
 
@@ -46,31 +46,31 @@
         <div>
           <form [formGroup]="vaccinationForm">
             <mat-form-field class="w-full mb-4">
-              <mat-label>What is the name of the vaccine?</mat-label>
+              <mat-label>{{ t('What is the name of the vaccine') }}?</mat-label>
               <input aria-label="Vaccine name" formControlName="name" matInput placeholder="Vaccine name" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Vaccine name is required', control: vaccinationForm.controls['name']}"></ng-container>
 
             <mat-form-field class="w-full mb-4">
-              <mat-label>How many were vaccinated?</mat-label>
-              <input type="number" aria-label="Number vaccinated" formControlName="numberVaccinated" matInput
-                placeholder="Number vaccinated" />
+              <mat-label>{{ t('How many were vaccinated') }}?</mat-label>
+              <input type="number" aria-label="{{ t('Number vaccinated') }}" formControlName="numberVaccinated" matInput
+                placeholder="{{ t('Number vaccinated') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Number vaccinated is required', control: vaccinationForm.controls['numberVaccinated']}"></ng-container>
 
             <mat-form-field class="w-full">
-              <mat-label>Which para-professional administered the vaccinations?</mat-label>
+              <mat-label>{{ t('Which para-professional administered the vaccinations') }}?</mat-label>
               <input type="text" aria-label="ParaProfessional" matInput [formControl]="professionalControl"
-                [matAutocomplete]="professionalAutocomplete" placeholder="Select para-professional">
+                [matAutocomplete]="professionalAutocomplete" placeholder="{{ t('Select para-professional') }}">
               <mat-autocomplete #professionalAutocomplete="matAutocomplete" [displayWith]="displayProfessionalFn"
                 (optionSelected)="updateSelectedProfessional($event)">
                 <mat-option *ngFor="let professional of filteredProfessionals | async" [value]="professional">
                   {{ professional.name }}
                 </mat-option>
               </mat-autocomplete>
-              <mat-hint>Select <strong>{{ otherOption }}</strong>> to add a new Para-Professional</mat-hint>
+              <mat-hint>{{ t('Select') }} <strong>{{ t(otherOption) }}</strong>> {{ t('to add a new Para-Professional') }}</mat-hint>
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Para-professional is required', control: vaccinationForm.controls['professionalId']}"></ng-container>
@@ -83,7 +83,7 @@
             <div class="flex justify-end mb-4">
               <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onVaccinationSubmitted()"
                 [disabled]="vaccinationForm.invalid">
-                Add Vaccination
+                {{ t('Add Vaccination') }}
               </button>
             </div>
           </form>
@@ -94,11 +94,11 @@
 
   <div class="flex justify-between my-4">
     <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
-      Back
+      {{ t('Back') }}
     </button>
     <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="vaccinationsInfo.invalid"
       (click)="onSubmit()">
-      Next
+      {{ t('Next') }}
     </button>
   </div>
 </form>

@@ -1,49 +1,49 @@
-<form [formGroup]="infectionInfo" class="p-2 md:p-6">
+<form [formGroup]="infectionInfo" class="p-2 md:p-6" *transloco="let t">
   <fieldset>
     <div>
       <div class="md:p-3">
-        <h4 class="text-2xl mb-4">Animals</h4>
+        <h4 class="text-2xl mb-4">{{ t('Animals') }}</h4>
         <mat-form-field class="w-full mb-4">
-          <mat-label>How many animals were exposed?</mat-label>
-          <input type="number" aria-label="Number exposed" matInput formControlName="numberExposed"
-            placeholder="Number exposed" />
+          <mat-label>{{ t('How many animals were exposed') }}?</mat-label>
+          <input type="number" aria-label="{{ t('Number exposed') }}" matInput formControlName="numberExposed"
+            placeholder="{{ t('Number exposed') }}" />
         </mat-form-field>
         <ng-container [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{validation: 'required', message: 'Number exposed is required', control: infectionInfo.controls['numberExposed']}"></ng-container>
 
 
         <mat-form-field class="w-full mb-4">
-          <mat-label>How many animals were infected?</mat-label>
-          <input type="number" aria-label="Number infected" matInput formControlName="numberInfected"
-            placeholder="Number infected" />
+          <mat-label> {{ t('How many animals were infected') }}?</mat-label>
+          <input type="number" aria-label="{{ t('Number infected') }}" matInput formControlName="numberInfected"
+            placeholder="{{ t('Number infected') }}" />
         </mat-form-field>
         <ng-container [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{validation: 'required', message: 'Number infected is required', control: infectionInfo.controls['numberInfected']}"></ng-container>
 
 
         <mat-form-field class="w-full mb-4">
-          <mat-label>How many animals died?</mat-label>
-          <input type="number" aria-label="Number Dead" matInput formControlName="numberDead"
-            placeholder="Number Dead" />
+          <mat-label>{{ t('How many animals died') }}?</mat-label>
+          <input type="number" aria-label="{{ t('Number Dead') }}" matInput formControlName="numberDead"
+            placeholder="{{ t('Number Dead') }}" />
         </mat-form-field>
         <ng-container [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{validation: 'required', message: 'Number dead is required', control: infectionInfo.controls['numberDead']}"></ng-container>
 
 
         <div class="w-full mb-4">
-          <mat-label>Were any humans infected?</mat-label>
+          <mat-label>{{ t('Were any humans infected') }}?</mat-label>
           <mat-radio-group class="flex" formControlName="humanInfection" aria-label="Human infection">
-            <mat-radio-button [value]="false" (change)="onHumanInfectionChange(false)">No</mat-radio-button>
-            <mat-radio-button [value]="true" (change)="onHumanInfectionChange(true)">Yes</mat-radio-button>
+            <mat-radio-button [value]="false" (change)="onHumanInfectionChange(false)">{{ t('No') }}</mat-radio-button>
+            <mat-radio-button [value]="true" (change)="onHumanInfectionChange(true)">{{ t('Yes') }}</mat-radio-button>
           </mat-radio-group>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Human infection is required', control: infectionInfo.controls['humanInfection']}"></ng-container>
         </div>
 
         <div *ngIf="humanInfection" @expandCollapse>
-          <h4 class="text-2xl mb-4">Humans</h4>
+          <h4 class="text-2xl mb-4">{{ t('Humans') }}</h4>
           <mat-form-field class="w-full mb-4">
-            <mat-label>How many humans were exposed?</mat-label>
+            <mat-label>{{ t('How many humans were exposed') }}?</mat-label>
             <input type="number" aria-label="Humans exposed" matInput formControlName="humansExposed"
               placeholder="Number exposed" />
           </mat-form-field>
@@ -52,17 +52,17 @@
 
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>How many humans were infected?</mat-label>
-            <input type="number" aria-label="Humans infected" matInput formControlName="humansInfected"
-              placeholder="Humans infected" />
+            <mat-label>{{ t('How many humans were infected') }} ?</mat-label>
+            <input type="number" aria-label="{{ t('Humans infected') }}" matInput formControlName="humansInfected"
+              placeholder="{{ t('Humans infected') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Humans infected is required', control: infectionInfo.controls['humansInfected']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>How many humans died?</mat-label>
+            <mat-label>{{ t('How many humans died') }}?</mat-label>
             <input type="number" aria-label="Humans Dead" matInput formControlName="humansDead"
-              placeholder="Mortality" />
+              placeholder="{{ t('Mortality') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Humans dead is required', control: infectionInfo.controls['humansDead']}"></ng-container>
@@ -70,11 +70,11 @@
 
         <div class="flex justify-between my-4">
           <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
-            Back
+             {{ t('Back') }}
           </button>
           <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="infectionInfo.invalid"
             (click)="onSubmit()">
-            Next
+             {{ t('Next') }}
           </button>
         </div>
       </div>

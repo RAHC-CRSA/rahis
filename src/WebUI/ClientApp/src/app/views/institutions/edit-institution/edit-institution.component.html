@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col flex-auto min-w-0" *transloco="let t">
 
   <!-- Header -->
   <div
@@ -7,17 +7,17 @@
       <!-- Breadcrumbs -->
       <div class="flex flex-wrap items-center font-medium">
         <div>
-          <a class="whitespace-nowrap text-primary-500">Institutions</a>
+          <a class="whitespace-nowrap text-primary-500">{{ t('Institutions') }}</a>
         </div>
         <div class="flex items-center ml-1 whitespace-nowrap">
           <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
-          <a class="ml-1 text-primary-500">Edit an Institution</a>
+          <a class="ml-1 text-primary-500">{{ t('Edit an Institution') }}</a>
         </div>
       </div>
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-          Edit an Institution
+          {{ t('Edit an Institution') }}
         </h2>
       </div>
     </div>
@@ -36,8 +36,8 @@
         <form [formGroup]="institutionForm">
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Name</mat-label>
-              <input aria-label="Institution name" matInput formControlName="name" placeholder="Institution name" />
+              <mat-label> {{ t('Name') }}</mat-label>
+              <input aria-label="{{ t('Institution name') }}" matInput formControlName="name" placeholder="{{ t('Institution name') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Institution name is required', control: institutionForm.controls['name']}"></ng-container>
@@ -45,8 +45,8 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full mb-4">
-              <mat-label>Type</mat-label>
-              <input aria-label="Institution type" matInput formControlName="type" placeholder="Institution type" />
+              <mat-label> {{ t('Type') }}</mat-label>
+              <input aria-label="{{ t('Institution type') }}" matInput formControlName="type" placeholder="{{ t('Institution type') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Institution type is required', control: institutionForm.controls['type']}"></ng-container>
@@ -55,10 +55,10 @@
           </div>
 
           <div class="w-full mb-4">
-            <label>Is this a public sector institution?</label>
+            <label>{{ t('Is this a public sector institution') }}?</label>
             <mat-radio-group class="flex" formControlName="publicSector" aria-label="publicSector">
-              <mat-radio-button [value]="false">No</mat-radio-button>
-              <mat-radio-button [value]="true">Yes</mat-radio-button>
+              <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
+              <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
             </mat-radio-group>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Public sector is required', control: institutionForm.controls['publicSector']}"></ng-container>
@@ -66,12 +66,12 @@
 
           <div class="flex justify-between my-4">
             <a [routerLink]="['/dashboard/institutions']" class="px-8" mat-flat-button [color]="'accent'">
-              Cancel
+               {{ t('Cancel') }}
             </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="institutionForm.invalid"
               (click)="submit()">
               <span *ngIf="!( loading$ | async )">
-                Update Institution
+                {{ t('Update Institution') }}
               </span>
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>

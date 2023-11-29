@@ -1,10 +1,10 @@
-<form [formGroup]="locationInfo" class="p-2 md:p-6">
+<form [formGroup]="locationInfo" class="p-2 md:p-6" *transloco="let t">
   <div class="flex flex-col g-3 my-4">
 
     <mat-form-field class="w-full">
-      <mat-label>What is the country of occurrence?</mat-label>
-      <input type="text" aria-label="Country" matInput [formControl]="countryControl"
-        [matAutocomplete]="countryAutocomplete" placeholder="Select occurrence country">
+      <mat-label>{{ t('What is the country of occurrence') }}?</mat-label>
+      <input type="text" aria-label="{{ t('Country') }}" matInput [formControl]="countryControl"
+        [matAutocomplete]="countryAutocomplete" placeholder="{{ t('Select occurrence country') }}">
       <mat-autocomplete #countryAutocomplete="matAutocomplete" [displayWith]="displayCountryFn"
         (optionSelected)="updateSelectedCountry($event)">
         <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
@@ -15,16 +15,16 @@
     </mat-form-field>
 
     <mat-form-field *ngIf="(regions$ | async)?.length" class="flex-auto w-full mb-6">
-      <mat-label>In what region?</mat-label>
-      <input type="text" aria-label="Region" matInput [formControl]="regionControl"
-        [matAutocomplete]="regionAutocomplete" placeholder="Select occurrence region">
+      <mat-label>{{ t('In what region') }}?</mat-label>
+      <input type="text" aria-label="{{ t('Region') }}" matInput [formControl]="regionControl"
+        [matAutocomplete]="regionAutocomplete" placeholder="{{ t('Select occurrence region') }}">
       <mat-autocomplete #regionAutocomplete="matAutocomplete" [displayWith]="displayRegionFn"
         (optionSelected)="updateSelectedRegion($event)">
         <mat-option *ngFor="let region of filteredRegions | async" [value]="region">
           {{ region.name }}
         </mat-option>
       </mat-autocomplete>
-      <mat-hint *ngIf="!newRegion">Select <strong>'{{ otherOption }}'</strong> to add a new region.</mat-hint>
+      <mat-hint *ngIf="!newRegion">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new region') }}.</mat-hint>
     </mat-form-field>
 
     <div *ngIf="newRegion || !regions.length" @expandCollapse>
@@ -33,9 +33,9 @@
     </div>
 
     <mat-form-field *ngIf="(regions$ | async)?.length && (municipalities$ | async)?.length" class="flex-auto w-full">
-      <mat-label>In what municipality?</mat-label>
-      <input type="text" aria-label="Municipality" matInput [formControl]="municipalityControl"
-        [matAutocomplete]="municipalityAutocomplete" placeholder="Select occurrence municipality">
+      <mat-label>{{ t('In what municipality') }}?</mat-label>
+      <input type="text" aria-label="{{ t('Select occurrence municipality') }}" matInput [formControl]="municipalityControl"
+        [matAutocomplete]="municipalityAutocomplete" placeholder="{{ t('Select occurrence municipality') }}">
       <mat-autocomplete #municipalityAutocomplete="matAutocomplete" [displayWith]="displayMunicipalityFn"
         (optionSelected)="updateSelectedMunicipality($event)">
         <mat-option *ngFor="let municipality of filteredMunicipalities | async" [value]="municipality">
@@ -47,9 +47,9 @@
     <mat-form-field
       *ngIf="(regions$ | async)?.length && (municipalities$ | async)?.length && (districts$ | async)?.length"
       class="flex-auto w-full">
-      <mat-label>In what district?</mat-label>
+      <mat-label>{{ t('In what district') }}?</mat-label>
       <input type="text" aria-label="Districts" matInput [formControl]="districtControl"
-        [matAutocomplete]="districtAutocomplete" placeholder="Select occurrence district">
+        [matAutocomplete]="districtAutocomplete" placeholder="{{ t('Select occurrence district') }}">
       <mat-autocomplete #districtAutocomplete="matAutocomplete" [displayWith]="displayDistrictFn"
         (optionSelected)="updateSelectedDistrict($event)">
         <mat-option *ngFor="let district of filteredDistricts | async" [value]="district">
@@ -61,9 +61,9 @@
     <mat-form-field
       *ngIf="(regions$ | async)?.length && (municipalities$ | async)?.length && (districts$ | async)?.length && (communities$ | async)?.length"
       class="flex-auto w-full">
-      <mat-label>In what community?</mat-label>
-      <input type="text" aria-label="Community" matInput [formControl]="communityControl"
-        [matAutocomplete]="communityAutocomplete" placeholder="Select occurrence community">
+      <mat-label>{{ t('In what community') }}?</mat-label>
+      <input type="text" aria-label="{{ t('Select occurrence community') }}" matInput [formControl]="communityControl"
+        [matAutocomplete]="communityAutocomplete" placeholder="{{ t('Select occurrence community') }}">
       <mat-autocomplete #communityAutocomplete="matAutocomplete" [displayWith]="displayCommunityFn"
         (optionSelected)="updateSelectedCommunity($event)">
         <mat-option *ngFor="let community of filteredCommunities | async" [value]="community">
@@ -75,11 +75,11 @@
 
   <div class="flex justify-between my-4">
     <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
-      Back
+      {{ t('Back') }}
     </button>
     <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="locationInfo.invalid"
       (click)="onSubmit()">
-      Next
+      {{ t('Next') }}
     </button>
   </div>
 </form>

@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col flex-auto min-w-0" *transloco="let t">
 
   <!-- Header -->
   <div
@@ -7,17 +7,17 @@
       <!-- Breadcrumbs -->
       <div class="flex flex-wrap items-center font-medium">
         <div>
-          <a class="whitespace-nowrap text-primary-500">Diseases</a>
+          <a class="whitespace-nowrap text-primary-500">{{ t('Diseases') }}</a>
         </div>
         <div class="flex items-center ml-1 whitespace-nowrap">
           <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
-          <a class="ml-1 text-primary-500">Add a Disease</a>
+          <a class="ml-1 text-primary-500">{{ t('Add a Disease') }}</a>
         </div>
       </div>
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-          Add a Disease
+          {{ t('Add a Disease') }}
         </h2>
       </div>
     </div>
@@ -37,8 +37,8 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Name</mat-label>
-              <input aria-label="Disease name" matInput formControlName="name" placeholder="Disease name" />
+              <mat-label>{{ t('Name') }}</mat-label>
+              <input aria-label="{{ t('Disease name') }}" matInput formControlName="name" placeholder="{{ t('Disease name') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Disease name is required', control: diseaseForm.controls['name']}"></ng-container>
@@ -46,23 +46,23 @@
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Code</mat-label>
-              <input aria-label="Disease code" matInput formControlName="code" placeholder="Disease code" />
+              <mat-label>{{ t('Code') }}</mat-label>
+              <input aria-label="{{ t('Disease code') }}" matInput formControlName="code" placeholder="{{ t('Disease code') }}" />
             </mat-form-field>
           </div>
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Classification</mat-label>
-              <input aria-label="Disease classification" matInput formControlName="classification"
-                placeholder="Disease classification" />
+              <mat-label>{{ t('Classification') }}</mat-label>
+              <input aria-label="{{ t('Disease classification') }}" matInput formControlName="classification"
+                placeholder="{{ t('Disease classification') }}" />
             </mat-form-field>
           </div>
 
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Associated Species</mat-label>
-              <input type="text" aria-label="Associated species" matInput [formControl]="speciesControl"
+              <mat-label>{{ t('Associated Species') }}</mat-label>
+              <input type="text" aria-label="{{ t('Associated Species') }}" matInput [formControl]="speciesControl"
                 [matAutocomplete]="speciesAutocomplete">
               <mat-autocomplete #speciesAutocomplete="matAutocomplete" [displayWith]="displaySpeciesFn"
                 (optionSelected)="updateSelectedSpecies($event)">
@@ -76,10 +76,10 @@
           </div>
 
           <div class="w-full mb-4">
-            <mat-label>Is this a zoonotic disease?</mat-label>
+            <mat-label>{{ t('Is this a zoonotic disease') }}?</mat-label>
             <mat-radio-group class="flex" formControlName="zoonotic" aria-label="zoonotic">
-              <mat-radio-button [value]="false">No</mat-radio-button>
-              <mat-radio-button [value]="true">Yes</mat-radio-button>
+              <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
+              <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
             </mat-radio-group>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'zoonotic is required', control: diseaseForm.controls['zoonotic']}"></ng-container>
@@ -87,12 +87,12 @@
 
           <div class="flex justify-between my-4">
             <a [routerLink]="['/dashboard/diseases']" class="px-8" mat-flat-button [color]="'secondary'">
-              Cancel
+              {{ t('Cancel') }}
             </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="diseaseForm.invalid"
               (click)="submit()">
               <span *ngIf="!( loading$ | async )">
-                Add Disease
+                {{ t('Add Disease') }}
               </span>
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>

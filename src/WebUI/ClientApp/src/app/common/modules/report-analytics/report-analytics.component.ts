@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { ApexOptions } from 'apexcharts';
 import { ReportState } from 'app/modules/reports/store';
@@ -19,7 +20,7 @@ export class ReportAnalyticsComponent implements OnInit {
     data$: Observable<ReportsAnalyticsDto | null | undefined>;
     data: ReportsAnalyticsDto;
 
-    constructor(private store: Store<ReportState>, private router: Router) {}
+    constructor(private store: Store<ReportState>, private router: Router, private translocoService: TranslocoService) {}
 
     ngOnInit() {
         this.initData();
