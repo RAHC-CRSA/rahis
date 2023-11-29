@@ -14,6 +14,7 @@ import { ThinLayoutModule } from 'app/layout/layouts/vertical/thin/thin.module';
 import { SettingsModule } from 'app/layout/common/settings/settings.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { GuestLayoutModule } from './layouts/guest/guest.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 const layoutModules = [
     // Empty
@@ -33,6 +34,7 @@ const layoutModules = [
     DenseLayoutModule,
     FuturisticLayoutModule,
     ThinLayoutModule,
+    TranslocoModule
 ];
 
 @NgModule({

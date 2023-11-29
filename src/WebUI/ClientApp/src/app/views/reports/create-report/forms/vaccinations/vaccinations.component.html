@@ -4,7 +4,7 @@
     <mat-label>{{ t('Were vaccines administered') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="vaccinated" aria-label="Vaccinated">
       <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
-      <mat-radio-button [value]="true">{{ t('yes') }}</mat-radio-button>
+      <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
     </mat-radio-group>
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Vaccinated is required', control: vaccinationsInfo.controls['vaccinated']}"></ng-container>

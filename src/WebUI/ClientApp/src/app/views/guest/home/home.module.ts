@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { Route, RouterModule } from '@angular/router';
 import { SharedModule } from 'app/shared/shared.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 export const routes: Route[] = [
     {
@@ -13,6 +14,6 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [HomeComponent],
-    imports: [SharedModule, RouterModule.forChild(routes)],
+    imports: [SharedModule, RouterModule.forChild(routes), TranslocoModule],
 })
 export class HomeModule {}
