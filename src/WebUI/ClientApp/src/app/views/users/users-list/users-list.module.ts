@@ -4,6 +4,7 @@ import { UsersListComponent } from './users-list.component';
 import { Route, RouterModule } from '@angular/router';
 import { UsersModule } from 'app/modules/users/users.module';
 import { SharedModule } from 'app/shared/shared.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 export const routes: Route[] = [
     {
@@ -14,6 +15,6 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [UsersListComponent],
-    imports: [UsersModule, SharedModule, RouterModule.forChild(routes)],
+    imports: [UsersModule, SharedModule, RouterModule.forChild(routes), TranslocoModule],
 })
 export class UsersListModule {}

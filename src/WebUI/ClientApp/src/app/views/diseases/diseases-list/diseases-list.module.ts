@@ -4,6 +4,7 @@ import { DiseasesListComponent } from './diseases-list.component';
 import { Route, RouterModule } from '@angular/router';
 import { SharedModule } from 'app/shared/shared.module';
 import { SpeciesModule } from 'app/modules/species/species.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 export const routes: Route[] = [
     {
@@ -14,6 +15,6 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [DiseasesListComponent],
-    imports: [SpeciesModule, SharedModule, RouterModule.forChild(routes)],
+    imports: [SpeciesModule, SharedModule, RouterModule.forChild(routes), TranslocoModule],
 })
 export class DiseasesListModule {}
