@@ -3,6 +3,7 @@ import { RegionsListComponent } from './regions-list.component';
 import { Route, RouterModule } from '@angular/router';
 import { RegionsModule } from 'app/modules/regions/regions.module';
 import { SharedModule } from 'app/shared/shared.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 export const routes: Route[] = [
     {
@@ -13,6 +14,6 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [RegionsListComponent],
-    imports: [RegionsModule, SharedModule, RouterModule.forChild(routes)],
+    imports: [RegionsModule, SharedModule, RouterModule.forChild(routes), TranslocoModule],
 })
 export class RegionsListModule {}

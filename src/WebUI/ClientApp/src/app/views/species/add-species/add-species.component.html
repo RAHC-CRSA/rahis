@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col flex-auto min-w-0" *transloco="let t">
 
   <!-- Header -->
   <div
@@ -7,17 +7,17 @@
       <!-- Breadcrumbs -->
       <div class="flex flex-wrap items-center font-medium">
         <div>
-          <a class="whitespace-nowrap text-primary-500">Species</a>
+          <a class="whitespace-nowrap text-primary-500">{{ t('Species') }}</a>
         </div>
         <div class="flex items-center ml-1 whitespace-nowrap">
           <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
-          <a class="ml-1 text-primary-500">Add a Species</a>
+          <a class="ml-1 text-primary-500">{{ t('Add a Species') }}</a>
         </div>
       </div>
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-          Add a Species
+          {{ t('Add a Species') }}
         </h2>
       </div>
     </div>
@@ -36,8 +36,8 @@
         <form [formGroup]="speciesForm">
           <div class="mb-4">
             <mat-form-field class="w-full">
-              <mat-label>Name</mat-label>
-              <input aria-label="Disease name" matInput formControlName="name" placeholder="Species name" />
+              <mat-label>{{ t('Name') }}</mat-label>
+              <input aria-label="{{ t('Species name') }}" matInput formControlName="name" placeholder="{{ t('Species name') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Species name is required', control: speciesForm.controls['name']}"></ng-container>
@@ -45,12 +45,12 @@
 
           <div class="flex justify-between my-4">
             <a [routerLink]="['/dashboard/species']" class="px-8" mat-flat-button [color]="'secondary'">
-              Cancel
+              {{ t('Cancel') }}
             </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="speciesForm.invalid"
               (click)="submit()">
               <span *ngIf="!( loading$ | async )">
-                Add Species
+                {{ t('Add Species') }}
               </span>
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>
