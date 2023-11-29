@@ -38,15 +38,15 @@
               </mat-form-field>
 
               <div *ngIf="newInstitution">
-                  <app-add-institution (submit)="onSubmitInstitution($event)"></app-add-institution>
+                  <app-add-institution (close)="onAddInstitutionClosed()"></app-add-institution>
               </div>
 
         </div>
       </ng-container>
     </div>
-    <!-- <div class="flex justify-end mb-4">
+    <div class="flex justify-end mb-4">
         <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onSubmit()" [disabled]="professionalForm.invalid">
-          Add Para-Professional
+          {{ t('Add Para-Professional') }}
         </button>
-      </div> -->
+      </div>
 </form>
