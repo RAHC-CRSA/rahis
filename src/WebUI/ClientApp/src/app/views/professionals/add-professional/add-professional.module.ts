@@ -4,6 +4,7 @@ import { AddProfessionalComponent } from './add-professional.component';
 import { Route, RouterModule } from '@angular/router';
 import { ProfessionalsModule } from 'app/modules/professionals/professionals.module';
 import { SharedModule } from 'app/shared/shared.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 export const routes: Route[] = [
     {
@@ -14,6 +15,6 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [AddProfessionalComponent],
-    imports: [ProfessionalsModule, SharedModule, RouterModule.forChild(routes)],
+    imports: [ProfessionalsModule, SharedModule, RouterModule.forChild(routes), TranslocoModule],
 })
 export class AddProfessionalModule {}

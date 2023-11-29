@@ -1,14 +1,14 @@
-<form [formGroup]="institutionForm">
+<form [formGroup]="institutionForm" *transloco="let t">
     <mat-form-field class="w-full mb-4">
-      <mat-label>Name</mat-label>
-      <input aria-label="Institution name" matInput formControlName="name" placeholder="Institution name" />
+      <mat-label>{{ t('Name') }}</mat-label>
+      <input aria-label="{{ t('Institution name') }}" matInput formControlName="name" placeholder="{{ t('Institution name') }}" />
       <ng-container [ngTemplateOutlet]="formError"
         [ngTemplateOutletContext]="{validation: 'required', message: 'Institution name is required', control: institutionForm.controls['name']}"></ng-container>
     </mat-form-field>
 
     <mat-form-field class="w-full mb-4">
-      <mat-label>Type</mat-label>
-      <input aria-label="Institution type" matInput formControlName="type" placeholder="Institution type" />
+      <mat-label>{{ t('Type') }}</mat-label>
+      <input aria-label="{{ t('Institution type') }}" matInput formControlName="type" placeholder="{{ t('Institution type') }}" />
       <ng-container [ngTemplateOutlet]="formError"
         [ngTemplateOutletContext]="{validation: 'required', message: 'Institution type is required', control: institutionForm.controls['type']}"></ng-container>
       <ng-container [ngTemplateOutlet]="formError"
@@ -16,17 +16,17 @@
     </mat-form-field>
 
     <div class="w-full mb-4">
-      <label>Is this a public sector institution?</label>
+      <label>{{ t('Is this a public sector institution') }}?</label>
       <mat-radio-group class="flex" formControlName="publicSector" aria-label="publicSector">
-        <mat-radio-button [value]="false">No</mat-radio-button>
-        <mat-radio-button [value]="true">Yes</mat-radio-button>
+        <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
+        <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
       </mat-radio-group>
     </div>
 
     <div class="flex justify-end my-4">
       <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="institutionForm.invalid"
         (click)="onSubmit()">
-        Add Institution
+        {{ t('Add Institution') }}
       </button>
     </div>
   </form>

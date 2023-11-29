@@ -1,31 +1,31 @@
-<form [formGroup]="professionalForm">
+<form [formGroup]="professionalForm" *transloco="let t">
     <div class="w-full mb-4">
       <ng-container>
         <div class="w-full mt-4">
-          <h4 class="text-2xl mb-4">Para-Professionals</h4>
+          <h4 class="text-2xl mb-4">{{ t('Para-Professionals') }}</h4>
 
             <mat-form-field class="w-full mb-4">
-                <mat-label>Name</mat-label>
-                <input aria-label="Para-Professional name" matInput formControlName="name" placeholder="Jane Doe" />
+                <mat-label>{{ t('Name') }}</mat-label>
+                <input aria-label="{{ t('Para-Professional name') }}" matInput formControlName="name" placeholder="Jane Doe" />
             </mat-form-field>
 
             <mat-form-field class="w-full">
-                <mat-label>Position</mat-label>
+                <mat-label>{{ t('Position') }}</mat-label>
                 <input aria-label="Para-Professional position" matInput formControlName="position" placeholder="Animal Doctor" />
               </mat-form-field>
 
               <mat-form-field class="w-full">
-                <mat-label>Email</mat-label>
+                <mat-label>{{ t('Email') }}</mat-label>
                 <input type="email" aria-label="Email address" matInput formControlName="email" placeholder="jane.doe@hosiptal.com" />
               </mat-form-field>
 
               <mat-form-field class="w-full">
-                <mat-label>Phone Number</mat-label>
+                <mat-label>{{ t('Phone Number') }}</mat-label>
                 <input aria-label="Para-Professional phone number" matInput formControlName="phone" placeholder="+2330099092739 " />
               </mat-form-field>
 
               <mat-form-field class="w-full">
-                <mat-label>Institution</mat-label>
+                <mat-label>{{ t('Institution') }}</mat-label>
                 <input type="text" aria-label="Institution" matInput [formControl]="institutionControl"
                   [matAutocomplete]="institutionAutocomplete">
                 <mat-autocomplete #institutionAutocomplete="matAutocomplete" [displayWith]="displayInstitutionFn"
@@ -34,7 +34,7 @@
                     {{ institution.name }}
                   </mat-option>
                 </mat-autocomplete>
-                <mat-hint>Select 'Other' to add a new institution</mat-hint>
+                <mat-hint>{{ t("Select 'Other' to add a new institution") }}</mat-hint>
               </mat-form-field>
 
               <div *ngIf="newInstitution">
