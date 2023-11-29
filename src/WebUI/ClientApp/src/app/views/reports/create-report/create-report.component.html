@@ -84,7 +84,7 @@
           </mat-step>
 
           <mat-step #reportFormVaccinations *ngIf="formStep == 8">
-            <ng-template matStepLabel>{{ t('Welcome') }}</ng-template>
+            <ng-template matStepLabel> {{ t('Vaccinations') }}</ng-template>
 
             <app-vaccinations [formData]="formValues" (previous)="previous()"
               (submit)="next($event)"></app-vaccinations>

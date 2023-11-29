@@ -63,7 +63,7 @@
             <mat-form-field class="w-full">
               <mat-label>{{ t('Which para-professional administered the vaccinations') }}?</mat-label>
               <input type="text" aria-label="ParaProfessional" matInput [formControl]="professionalControl"
-                [matAutocomplete]="professionalAutocomplete" placeholder="Select para-professional{{ t('Welcome') }}">
+                [matAutocomplete]="professionalAutocomplete" placeholder="{{ t('Select para-professional') }}">
               <mat-autocomplete #professionalAutocomplete="matAutocomplete" [displayWith]="displayProfessionalFn"
                 (optionSelected)="updateSelectedProfessional($event)">
                 <mat-option *ngFor="let professional of filteredProfessionals | async" [value]="professional">

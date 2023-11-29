@@ -75,7 +75,7 @@
     "Did-you-observe-infected-species": "Did you observe infected species",
     "For-how-long": "For how long",
     "Did-you-quarantine-infected-species": "Did you quarantine infected species",
-    "Did-you-control-movement": "Did you control movement",
+    "Did you control movement": "Did you control movement",
     "How": "How",
     "Did-you-administer-medication": "Did you administer medication",
     "Medications": "Medications",
@@ -251,6 +251,8 @@
     "Add a Notification Recipient": "Add a Notification Recipient",
     "Full Name": "Full Name",
     "Add Notification Recipient": "Add Notification Recipient",
+    "Notification Recipients List": "Notification Recipients List",
+    "Created": "Created",
     "Created": "Created",
     "Created": "Created",
     "Created": "Created"
