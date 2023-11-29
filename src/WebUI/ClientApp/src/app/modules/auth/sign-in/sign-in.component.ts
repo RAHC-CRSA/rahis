@@ -55,7 +55,7 @@ export class AuthSignInComponent implements OnInit {
         this.redirectUrl =
             this._activatedRoute.snapshot.queryParams[
                 'redirectURL'.toString()
-            ] || '/';
+            ] || '/dashboard';
 
         // Redirect if logged in
         this._store.select(getUser).subscribe((user) => {
