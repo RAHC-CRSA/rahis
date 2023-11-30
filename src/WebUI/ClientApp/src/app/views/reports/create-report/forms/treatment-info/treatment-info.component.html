@@ -105,8 +105,8 @@
   <div class="w-full mb-4">
     <mat-label> {{ t('Did you control movement') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="movementControl" aria-label="Movement control">
-      <mat-radio-button [value]="false">{{ t('Yes') }}</mat-radio-button>
-      <mat-radio-button [value]="true">{{ t('No') }}</mat-radio-button>
+      <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
+      <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
     </mat-radio-group>
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Movement control is required', control: treatmentInfo.controls['movementControl']}"></ng-container>
