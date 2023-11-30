@@ -37,7 +37,7 @@
                 <mat-hint>{{ t("Select 'Other' to add a new institution") }}</mat-hint>
               </mat-form-field>
 
-              <div *ngIf="newInstitution">
+              <div *ngIf="newInstitution" @expandCollapse>
                   <app-add-institution (close)="onAddInstitutionClosed()"></app-add-institution>
               </div>
 
