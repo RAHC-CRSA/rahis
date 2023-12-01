@@ -11,22 +11,22 @@
   </div>
 
   <div class="w-full mb-4">
-    <mat-label>{{ t('Did you destroy infected corpses') }}?</mat-label>
-    <mat-radio-group class="flex" formControlName="destructionOfCorpses" aria-label="Destruction of corpses">
+    <mat-label>{{ t('Did you destroy infected carcass') }}?</mat-label>
+    <mat-radio-group class="flex" formControlName="destructionOfCorpses" aria-label="Destruction of carcass">
       <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
       <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
     </mat-radio-group>
     <ng-container [ngTemplateOutlet]="formError"
-      [ngTemplateOutletContext]="{validation: 'required', message: 'Destruction of corpses is required', control: treatmentInfo.controls['destructionOfCorpses']}"></ng-container>
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Destruction of carcass is required', control: treatmentInfo.controls['destructionOfCorpses']}"></ng-container>
 
     <div *ngIf="corpseDestruction" @expandCollapse>
       <mat-form-field class="w-full mt-4">
-        <mat-label>{{ t('How many corpses were destroyed') }}?</mat-label>
-        <input type="number" aria-label="{{ t('Number of corpses destroyed') }}" matInput formControlName="corpsesDestroyed"
-          placeholder="{{ t('Number of corpses destroyed') }}" />
+        <mat-label>{{ t('How many carcass were destroyed') }}?</mat-label>
+        <input type="number" aria-label="{{ t('Number of carcass destroyed') }}" matInput formControlName="corpsesDestroyed"
+          placeholder="{{ t('Number of carcass destroyed') }}" />
       </mat-form-field>
       <ng-container [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{validation: 'required', message: 'Corpses destroyed is required', control: treatmentInfo.controls['corpsesDestroyed']}"></ng-container>
+        [ngTemplateOutletContext]="{validation: 'required', message: 'Carcass destroyed is required', control: treatmentInfo.controls['corpsesDestroyed']}"></ng-container>
     </div>
   </div>
 
@@ -85,7 +85,7 @@
       <div class="flex flex-row gap-3 w-full">
         <mat-form-field class="w-full">
           <input type="number" aria-label="Quarantine duration" matInput formControlName="quarantineDuration"
-            placeholder="7" />
+            placeholder="{{ t('For how long') }}" />
         </mat-form-field>
         <mat-form-field class="w-full">
           <mat-select formControlName="quarantineDurationSuffix">

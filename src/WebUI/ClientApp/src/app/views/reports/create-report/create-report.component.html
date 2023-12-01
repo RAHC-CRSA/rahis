@@ -70,7 +70,7 @@
           </mat-step>
 
           <mat-step #reportFormTreatmentInfo *ngIf="formStep == 6">
-            <ng-template matStepLabel>{{ t('Treatment') }}</ng-template>
+            <ng-template matStepLabel>{{ t('Control Measures') }}</ng-template>
 
             <app-treatment-info [formData]="formValues" (previous)="previous()"
               (submit)="next($event)"></app-treatment-info>

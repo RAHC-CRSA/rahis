@@ -68,7 +68,7 @@
             [ngTemplateOutletContext]="{validation: 'required', message: 'Test name is required', control: testForm.controls['name']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>{{ t('How many subjects were the test carried out on') }}?</mat-label>
+            <mat-label>{{ t('How many animals were the test carried out on') }}?</mat-label>
             <input type="number" aria-label="{{ t('Number Tested') }}" formControlName="numberTested" matInput
               placeholder="{{ t('Number Tested') }}" />
           </mat-form-field>
@@ -76,7 +76,7 @@
             [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested is required', control: testForm.controls['numberTested']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>{{ t('How many subjects tested positive') }}?</mat-label>
+            <mat-label>{{ t('How many animals tested positive') }}?</mat-label>
             <input type="number" aria-label="{{ t('Number Positive') }}" formControlName="numberPositive" matInput
               placeholder="{{ t('Number Positive') }}" />
           </mat-form-field>

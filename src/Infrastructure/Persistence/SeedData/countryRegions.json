@@ -16150,5 +16150,768 @@
         "District": "Ouenkoro"
       }
     ]
+  },
+  {
+    "Country": "Cabo Verde",
+    "Code": "CV",
+    "Flag": "https://flagsapi.com/CV/flat/64.png",
+    "Regions": [
+      {
+        "Country": "Cabo Verde",
+        "Region": "Boa Vista",
+        "Municipality": "Boa Vista",
+        "District": "Espingeira"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Boa Vista",
+        "Municipality": "Boa Vista",
+        "District": "Sal Rei"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Boa Vista",
+        "Municipality": "Boa Vista",
+        "District": "Bofareira"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Boa Vista",
+        "Municipality": "Boa Vista",
+        "District": "Fundo da Figueira"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Boa Vista",
+        "Municipality": "Boa Vista",
+        "District": "Povoação Velha"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Boa Vista",
+        "Municipality": "Boa Vista",
+        "District": "João Barroso"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Boa Vista",
+        "Municipality": "Boa Vista",
+        "District": "Curral Velho"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Brava",
+        "Municipality": "Brava",
+        "District": "Furna"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Brava",
+        "Municipality": "Brava",
+        "District": "Lém"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Brava",
+        "Municipality": "Brava",
+        "District": "Vila Nova Sintra"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Brava",
+        "Municipality": "Brava",
+        "District": "Nossa Senhora do Monte"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Brava",
+        "Municipality": "Brava",
+        "District": "Cachaço"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Brava",
+        "Municipality": "Brava",
+        "District": "Tantum"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Maio",
+        "Municipality": "Maio",
+        "District": "Morrinho"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Maio",
+        "Municipality": "Maio",
+        "District": "Praia Gonçalo"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Maio",
+        "Municipality": "Maio",
+        "District": "Alcatraz"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Maio",
+        "Municipality": "Maio",
+        "District": "Pilão Cão"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Maio",
+        "Municipality": "Maio",
+        "District": "Calheta"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Maio",
+        "Municipality": "Maio",
+        "District": "Figueira da Horta"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Maio",
+        "Municipality": "Maio",
+        "District": "Morro"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Maio",
+        "Municipality": "Maio",
+        "District": "Vila do Maio"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Maio",
+        "Municipality": "Maio",
+        "District": "Barreiro"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Fogo",
+        "Municipality": "Mosteiros",
+        "District": "Mosteiros"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Fogo",
+        "Municipality": "São Filipe",
+        "District": "Relva"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Fogo",
+        "Municipality": "São Filipe",
+        "District": "Cova figueira"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Fogo",
+        "Municipality": "São Filipe",
+        "District": "Figueira Pavão"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Fogo",
+        "Municipality": "São Filipe",
+        "District": "Patim"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Fogo",
+        "Municipality": "São Filipe",
+        "District": "São Filipe"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Fogo",
+        "Municipality": "São Filipe",
+        "District": "Pongon"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Fogo",
+        "Municipality": "São Filipe",
+        "District": "Italiano"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Fogo",
+        "Municipality": "São Filipe",
+        "District": "Galinheiro"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Fogo",
+        "Municipality": "Santa Catarina",
+        "District": "Santa Catrina"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santo Antão",
+        "Municipality": "Porto Novo",
+        "District": "Monte Trigo"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santo Antão",
+        "Municipality": "Porto Novo",
+        "District": "Tarrafal"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santo Antão",
+        "Municipality": "Porto Novo",
+        "District": "Água das Fortes"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santo Antão",
+        "Municipality": "Porto Novo",
+        "District": "Lascado"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santo Antão",
+        "Municipality": "Porto Novo",
+        "District": "Ribeira Fria"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santo Antão",
+        "Municipality": "Paúl",
+        "District": "Paúl"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santo Antão",
+        "Municipality": "Paúl",
+        "District": "Janela"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santo Antão",
+        "Municipality": "Ribeira Grande",
+        "District": "Ribeira Grande"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santo Antão",
+        "Municipality": "Ribeira Grande",
+        "District": "Ponto do So"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santo Antão",
+        "Municipality": "Ribeira Grande",
+        "District": "Chã de Igreja"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Achada Mato"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Paiol"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Achada de Santo António"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Tira Chapéu"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Palmarejo"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Alto da Glória"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Safende"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Vila Nova"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Calabaceira"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Eugénio Lima"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Achadinha"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Fazenda"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Ponta de Água"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "São Filipe"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Prainha"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "São Martinho Pequeno"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "Trindade"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Praia",
+        "District": "João Varela"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Ribeira Grande",
+        "District": "Cidade Velha"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Ribeira Grande",
+        "District": "Porto Mosquito"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Ribeira Grande",
+        "District": "Belém"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Ribeira Grande",
+        "District": "Santana"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Ribeira Grande",
+        "District": "João Varela"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Ribeira Grande",
+        "District": "São Martinho Grande"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Ribeira Grande",
+        "District": "Santana"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Catarina",
+        "District": "Assomada"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Catarina",
+        "District": "Figueira das Naus"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Catarina",
+        "District": "Ribeirão Manuel"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Catarina",
+        "District": "Ribeira da Barca"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Catarina",
+        "District": "Porto Rincão"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Catarina",
+        "District": "João Bernardo"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Catarina",
+        "District": "Mato Ché Ché"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Salvador do Mundo",
+        "District": "Achada Igreja"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Salvador do Mundo",
+        "District": "Mato Limão"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Salvador do Mundo",
+        "District": "Picos Acima"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Cruz",
+        "District": "Achada Igreja"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Cruz",
+        "District": "Pedra Padejo"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Cruz",
+        "District": "Chã da Silva"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Santa Cruz",
+        "District": "Matinho"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Sáo Lourenço dos Órgãos",
+        "District": "Poilão"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Sáo Lourenço dos Órgãos",
+        "District": "Ribeirão Galina"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Sáo Lourenço dos Órgãos",
+        "District": "Pico de Antónia"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Sáo Lourenço dos Órgãos",
+        "District": "Covada"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Sáo Lourenço dos Órgãos",
+        "District": "São Jorge"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Sáo Lourenço dos Órgãos",
+        "District": "Longueira"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Sáo Lourenço dos Órgãos",
+        "District": "Chã de Vaca"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Miguel",
+        "District": "São Miguel Beneza"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Miguel",
+        "District": "Principal"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Miguel",
+        "District": "Pilão Cão"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Domingos",
+        "District": "São Francisco"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Domingos",
+        "District": "Praia Baixo"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Domingos",
+        "District": "Rui Vaz"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Domingos",
+        "District": "Lagoa"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Domingos",
+        "District": "Ribeirão Chiqueiro"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "São Domingos",
+        "District": "Moa Moa"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Tarrafal",
+        "District": "Trás os montes"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Tarrafal",
+        "District": "Chão Bom"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Tarrafal",
+        "District": "Ribeira Da Prata"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Tarrafal",
+        "District": "Porto Formoso"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Santiago",
+        "Municipality": "Tarrafal",
+        "District": "Mangue das sete Ribeiras"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Praia Branca"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Fajã de Baixo"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Fajã de Cima"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Belém"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Morro Brás"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Juncalinho"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Jalunga"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Urzuleiros"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Castilhiano"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Carriçal"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Cruz de Baixo"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Escada"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Ribeira Brava",
+        "District": "Barril"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Nicolau",
+        "Municipality": "Tarrafal",
+        "District": "Tarrafal"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Vicente",
+        "Municipality": "São Vicente",
+        "District": "Mindelo"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Vicente",
+        "Municipality": "São Vicente",
+        "District": "Baía das gatas"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Vicente",
+        "Municipality": "São Vicente",
+        "District": "Calhau"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Vicente",
+        "Municipality": "São Vicente",
+        "District": "Lazareto"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Vicente",
+        "Municipality": "São Vicente",
+        "District": "Ribeira de Julião"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Vicente",
+        "Municipality": "São Vicente",
+        "District": "São Pedro"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "São Vicente",
+        "Municipality": "São Vicente",
+        "District": "Madeiral"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Sal",
+        "Municipality": "Sal",
+        "District": "Espargos"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Sal",
+        "Municipality": "Sal",
+        "District": "Murdeira"
+      },
+      {
+        "Country": "Cabo Verde",
+        "Region": "Sal",
+        "Municipality": "Sal",
+        "District": "Vila Santa Maria"
+      }
+    ]
   }
 ]

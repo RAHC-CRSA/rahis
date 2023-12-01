@@ -31,7 +31,7 @@
 
 
         <div class="w-full mb-4">
-          <mat-label>{{ t('Were any humans infected') }}?</mat-label>
+          <mat-label>{{ t('Were any humans exposed') }}?</mat-label>
           <mat-radio-group class="flex" formControlName="humanInfection" aria-label="Human infection">
             <mat-radio-button [value]="false" (change)="onHumanInfectionChange(false)">{{ t('No') }}</mat-radio-button>
             <mat-radio-button [value]="true" (change)="onHumanInfectionChange(true)">{{ t('Yes') }}</mat-radio-button>
@@ -50,8 +50,8 @@
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Humans exposed is required', control: infectionInfo.controls['humansExposed']}"></ng-container>
 
-
-          <mat-form-field class="w-full mb-4">
+<!-- REMOVE HUMANS INFECTED AND DIED -->
+          <!-- <mat-form-field class="w-full mb-4">
             <mat-label>{{ t('How many humans were infected') }} ?</mat-label>
             <input type="number" aria-label="{{ t('Humans infected') }}" matInput formControlName="humansInfected"
               placeholder="{{ t('Humans infected') }}" />
@@ -65,9 +65,9 @@
               placeholder="{{ t('Mortality') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{validation: 'required', message: 'Humans dead is required', control: infectionInfo.controls['humansDead']}"></ng-container>
-        </div>
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Humans dead is required', control: infectionInfo.controls['humansDead']}"></ng-container> -->
 
+        </div>
         <div class="flex justify-between my-4">
           <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
              {{ t('Back') }}
