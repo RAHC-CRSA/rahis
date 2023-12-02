@@ -6711,163 +6711,83 @@
     "Regions": [
       {
         "Country": "Sierra Leone",
-        "Region": "Freetown",
-        "Municipality": "West"
+        "Region": "Northern",
+        "Municipality": "Bombali"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Bo",
-        "Municipality": "South"
+        "Region": "Northern",
+        "Municipality": "Tonkolili"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Kenema",
-        "Municipality": "East "
+        "Region": "Northern",
+        "Municipality": "Koinadugu "
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Makeni",
-        "Municipality": "North"
+        "Region": "Northern",
+        "Municipality": "Falaba"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Koidu",
-        "Municipality": "East "
+        "Region": "Southern",
+        "Municipality": "Bo"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "lunsar",
-        "Municipality": "North"
+        "Region": "Southern",
+        "Municipality": "Pujehun"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Port-Loko",
-        "Municipality": "North"
+        "Region": "Southern",
+        "Municipality": "Bonthe "
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Pandebu",
-        "Municipality": "East "
+        "Region": "Southern",
+        "Municipality": "Moyamba"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Kabala",
-        "Municipality": "North"
+        "Region": "Eastern",
+        "Municipality": "Kenema"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Waterloo",
-        "Municipality": "West"
+        "Region": "Eastern",
+        "Municipality": "Kailhun "
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Kailahun",
-        "Municipality": "East "
+        "Region": "Eastern",
+        "Municipality": "Kono"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Magburaka",
-        "Municipality": "North"
+        "Region": "North Western",
+        "Municipality": "Kambia"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Segbwema",
-        "Municipality": "East "
+        "Region": "North Western",
+        "Municipality": "Port Loko"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Koindu",
-        "Municipality": "East "
+        "Region": "North Western",
+        "Municipality": "Karene"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "Goderich",
-        "Municipality": "West"
+        "Region": "Western Area",
+        "Municipality": "Western Rural"
       },
       {
         "Country": "Sierra Leone",
-        "Region": "bump",
-        "Municipality": "South"
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Yengema",
-        "Municipality": "East "
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Kambia",
-        "Municipality": "North"
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Rokupr",
-        "Municipality": "North"
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Gandorhun",
-        "Municipality": "South"
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Mile Ninetyone",
-        "Municipality": "North"
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Pendembu",
-        "Municipality": "East "
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Bonthe",
-        "Municipality": "South"
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "blame",
-        "Municipality": "East "
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Panguma",
-        "Municipality": "East "
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "barma",
-        "Municipality": "East "
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Bunumbu",
-        "Municipality": "East "
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Boajibu",
-        "Municipality": "East "
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Pujehun",
-        "Municipality": "South"
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Kamakwie",
-        "Municipality": "North"
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Kukuna",
-        "Municipality": "North"
-      },
-      {
-        "Country": "Sierra Leone",
-        "Region": "Mattru Jong",
-        "Municipality": "South"
+        "Region": "Western Area",
+        "Municipality": "Western Urban"
       }
     ]
   },
