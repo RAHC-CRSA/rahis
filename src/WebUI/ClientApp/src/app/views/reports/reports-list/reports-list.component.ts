@@ -73,10 +73,10 @@ export class ReportsListComponent {
                     this.roles.includes('Reporter');
 
                 let verified: boolean | null | undefined = undefined;
-                if (user.roles.includes('Chief Veterinary Officer'))
-                    verified = false;
-                else if (user.roles.includes('Regional Animal Health Officer'))
-                    verified = true;
+                // if (user.roles.includes('Chief Veterinary Officer'))
+                //     verified = false;
+                // else if (user.roles.includes('Regional Animal Health Officer'))
+                //     verified = true;
 
                 const payload = {
                     isVerified: verified,

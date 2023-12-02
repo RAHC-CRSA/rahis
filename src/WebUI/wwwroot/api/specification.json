@@ -3432,8 +3432,29 @@
           "id": {
             "type": "integer",
             "format": "int64"
+          },
+          "cvoComment": {
+            "type": "string",
+            "nullable": true
+          },
+          "reportStatus": {
+            "$ref": "#/components/schemas/ReportStatus"
           }
         }
+      },
+      "ReportStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Pending",
+          "Approved",
+          "Rejected"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
       },
       "CommunityDto": {
         "type": "object",

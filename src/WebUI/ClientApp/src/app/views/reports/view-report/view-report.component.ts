@@ -20,6 +20,7 @@ import {
     IVerifyReportClient,
     IVerifyReportCommand,
     ReportDto,
+    ReportStatus,
     ServerResponse,
 } from 'app/web-api-client';
 import { Observable, of } from 'rxjs';
@@ -33,6 +34,8 @@ export class ViewReportComponent implements OnInit {
     canVerify: boolean;
     canNotify: boolean;
     reportId: number;
+    cvoComment: string;
+    reportStatus: ReportStatus;
     report$: Observable<ReportDto | null | undefined>;
     feedback$: Observable<ServerResponse | null | undefined>;
     loading$: Observable<boolean>;
@@ -136,7 +139,11 @@ export class ViewReportComponent implements OnInit {
     }
 
     verify() {
-        const payload: IVerifyReportCommand = { id: this.reportId };
+
+    }
+
+    submit() {
+        const payload: IVerifyReportCommand = { id: this.reportId, cvoComment: "GUY WHY?", reportStatus: ReportStatus.Rejected };
         this.store.dispatch(verifyReport({ payload }));
     }
 

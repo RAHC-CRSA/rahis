@@ -14,6 +14,7 @@ import { OccurrenceInfoComponent } from './forms/occurrence-info/occurrence-info
 import { TreatmentInfoComponent } from './forms/treatment-info/treatment-info.component';
 import { VaccinationsComponent } from './forms/vaccinations/vaccinations.component';
 import { ReportTypeComponent } from './forms/report-type/report-type.component';
+import { ViewSummaryComponent } from './forms/view-summary/view-summary.component';
 
 import { AddParaProfessionalComponent } from './forms/add-para-professional/add-para-professional.component';
 import { AddRegionComponent } from './forms/add-region/add-region.component';
@@ -21,6 +22,7 @@ import { AddInstitutionComponent } from './forms/add-institution/add-institution
 import { AddSpeciesComponent } from './forms/add-species/add-species.component';
 import { AddDiseaseComponent } from './forms/add-disease/add-disease.component';
 import { TranslocoModule } from '@ngneat/transloco';
+
 
 export const routes: Route[] = [
     {
@@ -47,6 +49,7 @@ export const routes: Route[] = [
         AddInstitutionComponent,
         AddSpeciesComponent,
         AddDiseaseComponent,
+        ViewSummaryComponent
     ],
     imports: [ReportsModule, SharedModule, RouterModule.forChild(routes), TranslocoModule],
 })

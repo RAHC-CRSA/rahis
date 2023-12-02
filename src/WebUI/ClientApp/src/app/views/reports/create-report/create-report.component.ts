@@ -45,7 +45,7 @@ export class CreateReportComponent implements OnInit {
     }
 
     next(formData: any) {
-        if (this.formStep == 9) return;
+        if (this.formStep == 10) return;
 
         if (this.formStep == 1) {
             this.formValues.reportType = formData.reportType;
@@ -81,6 +81,8 @@ export class CreateReportComponent implements OnInit {
 
             this.reportFormStepper.selected.completed = true;
             this.reportFormStepper.next();
+
+            //do save draft here
             return;
         }
 
@@ -160,6 +162,14 @@ export class CreateReportComponent implements OnInit {
         if (this.formStep == 8) {
             this.formValues.vaccinations = formData.vaccinations;
 
+            this.formStep++;
+            this.reportFormStepper.selected.completed = true;
+            this.reportFormStepper.next();
+            return;
+        }
+
+        if (this.formStep == 9) {
+
             this.submit();
         }
     }
@@ -187,23 +197,23 @@ export class CreateReportComponent implements OnInit {
         );
 
         const payload: ICreateReportCommand = {
-            countryId: parseInt(this.formValues.country),
-            regionId: parseInt(this.formValues.region),
-            municipalityId: parseInt(this.formValues.municipality),
-            districtId: parseInt(this.formValues.district),
-            communityId: parseInt(this.formValues.community),
-            diseaseId: parseInt(this.formValues.disease),
-            speciesId: parseInt(this.formValues.species),
+            countryId: this.formValues.country ? parseInt(this.formValues.country) : undefined,
+            regionId: this.formValues.region ? parseInt(this.formValues.region) : undefined,
+            municipalityId: this.formValues.municipality ? parseInt(this.formValues.municipality) : undefined,
+            districtId: this.formValues.district ? parseInt(this.formValues.district) : undefined,
+            communityId: this.formValues.community ? parseInt(this.formValues.community) : undefined,
+            diseaseId: this.formValues.disease ? parseInt(this.formValues.disease) : undefined,
+            speciesId: this.formValues.species ? parseInt(this.formValues.species) : undefined,
             occurrenceId: this.formValues.occurrence
                 ? parseInt(this.formValues.occurrence)
                 : undefined,
             numberExposed: this.formValues.exposed,
             numberInfected: this.formValues.infected,
-            mortality: this.formValues.mortality,
+            mortality: this.formValues.mortality ? this.formValues.mortality : 0,
             humanInfection: this.formValues.humanInfection,
             humansExposed: this.formValues.humansExposed,
             humansInfected: this.formValues.humansInfected,
-            humansMortality: this.formValues.humansMortality,
+            humansMortality: this.formValues.humansMortality ? this.formValues.humansMortality : 0,
             stampingOut: this.formValues.stampingOut,
             destructionOfCorpses: this.formValues.destructionOfCorpses,
             corpsesDestroyed: this.formValues.corpsesDestroyed

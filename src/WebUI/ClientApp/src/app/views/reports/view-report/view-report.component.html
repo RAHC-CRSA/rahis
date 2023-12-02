@@ -358,6 +358,14 @@
           <a [routerLink]="['/dashboard/reports']" class="px-8" mat-flat-button [color]="'accent'">
             Back
           </a>
+          <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="danger"
+            type="button" [disabled]="!canVerify" (click)="verify()">
+            <span *ngIf="!( loading$ | async )">
+              Reject Report
+            </span>
+            <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+              [mode]="'indeterminate'"></mat-progress-spinner>
+          </button>
           <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="'primary'"
             type="button" [disabled]="!canVerify" (click)="verify()">
             <span *ngIf="!( loading$ | async )">

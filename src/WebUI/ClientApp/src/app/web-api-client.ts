@@ -5927,6 +5927,8 @@ export interface ISendNotificationCommand {
 
 export class VerifyReportCommand implements IVerifyReportCommand {
     id?: number;
+    cvoComment?: string | undefined;
+    reportStatus?: ReportStatus;
 
     constructor(data?: IVerifyReportCommand) {
         if (data) {
@@ -5940,6 +5942,8 @@ export class VerifyReportCommand implements IVerifyReportCommand {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.cvoComment = _data["cvoComment"];
+            this.reportStatus = _data["reportStatus"];
         }
     }
 
@@ -5953,12 +5957,22 @@ export class VerifyReportCommand implements IVerifyReportCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["cvoComment"] = this.cvoComment;
+        data["reportStatus"] = this.reportStatus;
         return data;
     }
 }
 
 export interface IVerifyReportCommand {
     id?: number;
+    cvoComment?: string | undefined;
+    reportStatus?: ReportStatus;
+}
+
+export enum ReportStatus {
+    Pending = 0,
+    Approved = 1,
+    Rejected = 2,
 }
 
 export class CommunityDto implements ICommunityDto {
