@@ -45,7 +45,7 @@ export class CreateReportComponent implements OnInit {
     }
 
     next(formData: any) {
-        if (this.formStep == 9) return;
+        if (this.formStep == 10) return;
 
         if (this.formStep == 1) {
             this.formValues.reportType = formData.reportType;
@@ -100,6 +100,14 @@ export class CreateReportComponent implements OnInit {
         }
 
         if (this.formStep == 5) {
+            this.formStep++;
+
+            this.reportFormStepper.selected.completed = true;
+            this.reportFormStepper.next();
+            return;
+        }
+
+        if (this.formStep == 6) {
             // Capture form values
             this.formValues.exposed = formData.numberExposed;
             this.formValues.infected = formData.numberInfected;
@@ -122,7 +130,7 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        if (this.formStep == 6) {
+        if (this.formStep == 7) {
             // Capture form values
             this.formValues.stampingOut = formData.stampingOut;
             this.formValues.destructionOfCorpses =
@@ -147,7 +155,7 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        if (this.formStep == 7) {
+        if (this.formStep == 8) {
             this.formValues.diagnosticTests = formData.tests;
 
             this.formStep++;
@@ -157,7 +165,7 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        if (this.formStep == 8) {
+        if (this.formStep == 9) {
             this.formValues.vaccinations = formData.vaccinations;
 
             this.submit();

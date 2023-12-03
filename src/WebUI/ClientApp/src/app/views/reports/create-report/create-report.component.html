@@ -62,28 +62,35 @@
               (submit)="next($event)"></app-occurrence-info>
           </mat-step>
 
-          <mat-step #reportFormInfectionInfo *ngIf="formStep == 5">
+          <mat-step #reportFormExcelImport *ngIf="formStep == 5">
+            <ng-template matStepLabel>Excel Import</ng-template>
+
+            <app-excel-import [formData]="formValues" (previous)="previous()"
+              (submit)="next($event)"></app-excel-import>
+          </mat-step>
+
+          <mat-step #reportFormInfectionInfo *ngIf="formStep == 6">
             <ng-template matStepLabel>{{ t('Infection') }}</ng-template>
 
             <app-infection-info [formData]="formValues" (previous)="previous()"
               (submit)="next($event)"></app-infection-info>
           </mat-step>
 
-          <mat-step #reportFormTreatmentInfo *ngIf="formStep == 6">
+          <mat-step #reportFormTreatmentInfo *ngIf="formStep == 7">
             <ng-template matStepLabel>{{ t('Treatment') }}</ng-template>
 
             <app-treatment-info [formData]="formValues" (previous)="previous()"
               (submit)="next($event)"></app-treatment-info>
           </mat-step>
 
-          <mat-step #reportFormTests *ngIf="formStep == 7">
+          <mat-step #reportFormTests *ngIf="formStep == 8">
             <ng-template matStepLabel>{{ t('Tests') }}</ng-template>
 
             <app-diagnostic-tests [formData]="formValues" (previous)="previous()"
               (submit)="next($event)"></app-diagnostic-tests>
           </mat-step>
 
-          <mat-step #reportFormVaccinations *ngIf="formStep == 8">
+          <mat-step #reportFormVaccinations *ngIf="formStep == 9">
             <ng-template matStepLabel> {{ t('Vaccinations') }}</ng-template>
 
             <app-vaccinations [formData]="formValues" (previous)="previous()"
