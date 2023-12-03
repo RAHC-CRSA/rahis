@@ -254,8 +254,22 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
         const country: CountryDto = event.option.value;
 
         this.regionControl.setValue('', { emitEvent: true });
+        this.locationInfo.patchValue(
+            { region: undefined },
+            { emitEvent: true }
+        );
+
         this.districtControl.setValue('', { emitEvent: true });
+        this.locationInfo.patchValue(
+            { district: undefined },
+            { emitEvent: true }
+        );
+
         this.communityControl.setValue('', { emitEvent: true });
+        this.locationInfo.patchValue(
+            { community: undefined },
+            { emitEvent: true }
+        );
 
         this.locationInfo.patchValue({ country: country.id });
         this.store.dispatch(loadRegions({ payload: country.id }));
@@ -281,7 +295,16 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
         this.locationInfo.patchValue({ municipality: municipality.id });
 
         this.districtControl.setValue('', { emitEvent: true });
+        this.locationInfo.patchValue(
+            { district: undefined },
+            { emitEvent: true }
+        );
+
         this.communityControl.setValue('', { emitEvent: true });
+        this.locationInfo.patchValue(
+            { community: undefined },
+            { emitEvent: true }
+        );
 
         this.store.dispatch(loadDistricts({ payload: municipality.id }));
     }
@@ -305,6 +328,10 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
         this.locationInfo.patchValue({ district: district.id });
 
         this.communityControl.setValue('', { emitEvent: true });
+        this.locationInfo.patchValue(
+            { community: undefined },
+            { emitEvent: true }
+        );
 
         this.store.dispatch(loadCommunities({ payload: district.id }));
     }
@@ -350,8 +377,22 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
         this.locationInfo.patchValue({ region: region.id });
 
         this.municipalityControl.setValue('', { emitEvent: true });
+        this.locationInfo.patchValue(
+            { municipality: undefined },
+            { emitEvent: true }
+        );
+
         this.districtControl.setValue('', { emitEvent: true });
+        this.locationInfo.patchValue(
+            { district: undefined },
+            { emitEvent: true }
+        );
+
         this.communityControl.setValue('', { emitEvent: true });
+        this.locationInfo.patchValue(
+            { community: undefined },
+            { emitEvent: true }
+        );
 
         this.store.dispatch(loadMunicipalities({ payload: region.id }));
 
@@ -369,7 +410,10 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
     onAddRegionClosed() {
         this.onCheckRegion(false);
         this.regionControl.setValue('', { emitEvent: true });
-        this.locationInfo.patchValue({ region: '' }, { emitEvent: true });
+        this.locationInfo.patchValue(
+            { region: undefined },
+            { emitEvent: true }
+        );
     }
 
     onPrevious() {

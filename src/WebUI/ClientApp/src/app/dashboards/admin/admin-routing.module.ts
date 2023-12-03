@@ -55,6 +55,13 @@ const routes: Routes = [
                             ).then((m) => m.OccurrencesListModule),
                     },
                     {
+                        path: 'review',
+                        loadChildren: () =>
+                            import(
+                                'app/views/reports/review/review.module'
+                            ).then((m) => m.ReviewModule),
+                    },
+                    {
                         path: 'create-confirmation',
                         loadChildren: () =>
                             import(

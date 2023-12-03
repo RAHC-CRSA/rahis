@@ -21,6 +21,7 @@ import { AddInstitutionComponent } from './forms/add-institution/add-institution
 import { AddSpeciesComponent } from './forms/add-species/add-species.component';
 import { AddDiseaseComponent } from './forms/add-disease/add-disease.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { ExcelImportComponent } from './forms/excel-import/excel-import.component';
 
 export const routes: Route[] = [
     {
@@ -47,6 +48,7 @@ export const routes: Route[] = [
         AddInstitutionComponent,
         AddSpeciesComponent,
         AddDiseaseComponent,
+        ExcelImportComponent,
     ],
     imports: [ReportsModule, SharedModule, RouterModule.forChild(routes), TranslocoModule],
 })

@@ -31,7 +31,7 @@ public class CreateReport : EndpointBaseAsync.WithRequest<CreateReportCommand>.W
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     public override async Task<ActionResult<ReportDto>> HandleAsync(CreateReportCommand request, CancellationToken cancellationToken = default)
-    {
+        {
         var (result, report) = await _mediator.Send(request);
         if (result.Succeeded)
             return Ok(report);
