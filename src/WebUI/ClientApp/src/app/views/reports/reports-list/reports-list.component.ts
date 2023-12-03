@@ -36,6 +36,7 @@ export class ReportsListComponent {
         'occurrenceTitle',
         'location',
         'isVerified',
+        'reportStatus',
         'exposed',
         'infected',
         'mortality',

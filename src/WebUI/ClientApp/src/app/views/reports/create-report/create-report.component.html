@@ -91,7 +91,7 @@
           </mat-step>
 
           <mat-step #reportFormSummary *ngIf="formStep == 9">
-            <ng-template matStepLabel> Confirmation {{ t('Confirmation') }}</ng-template>
+            <ng-template matStepLabel>{{ t('Confirmation') }}</ng-template>
 
             <app-report-summary [formData]="formValues" (previous)="previous()"
               (submit)="next($event)"></app-report-summary>

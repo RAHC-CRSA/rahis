@@ -43,6 +43,44 @@ export class ViewSummaryComponent implements OnInit {
     @Output() previous = new EventEmitter();
     @Output() submit = new EventEmitter();
 
+    diagnosticTestColumns: string[] = [
+        'id',
+        'testName',
+        'numberTested',
+        'numberPositive',
+        // 'numberNegative',
+        // 'numberUndetermined',
+        'professionalName',
+    ];
+
+    medicationColumns: string[] = ['id', 'name', 'dosage'];
+
+    vaccinationColumns: string[] = [
+        'id',
+        'vaccineName',
+        'numberVaccinated',
+        'humansVaccinated',
+        'animalsVaccinated',
+        'professionalName',
+    ];
+
+    actionsInfoColumns: string[] = [
+        'stampingOut',
+        'destructionOfCorpses',
+        'disinfection',
+        'quarantine',
+        'movementControl',
+        'observation',
+    ];
+
+    reportInfoColumns: string[] = [
+        'animalsExposed',
+        'animalsInfected',
+        'animalMortality',
+        'humansExposed',
+        'humansInfected',
+        'humanMortality',
+    ];
 
     constructor(
         private formBuilder: FormBuilder,

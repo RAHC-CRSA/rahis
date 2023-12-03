@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col flex-auto min-w-0" *transloco="let t">
 
   <!-- Header -->
   <div
@@ -7,17 +7,17 @@
       <!-- Breadcrumbs -->
       <div class="flex flex-wrap items-center font-medium">
         <div>
-          <a class="whitespace-nowrap text-primary-500">Reports</a>
+          <a class="whitespace-nowrap text-primary-500">{{ t('Reports') }}</a>
         </div>
         <div class="flex items-center ml-1 whitespace-nowrap">
           <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
-          <a class="ml-1 text-primary-500">View Report</a>
+          <a class="ml-1 text-primary-500">{{ t('View report') }}</a>
         </div>
       </div>
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-          View Report
+            {{ t('View report') }}
         </h2>
       </div>
     </div>
@@ -46,9 +46,9 @@
             <div class="w-full">
               <div class="flex gap-2 mb-1">
                 <span *ngIf="(report$ | async)?.isOngoing"
-                  class="bg-yellow-500 text-white px-3 py-1 rounded-xl">Ongoing</span>
+                  class="bg-yellow-500 text-white px-3 py-1 rounded-xl">{{ t('Ongoing') }}</span>
                 <span *ngIf="(report$ | async)?.isVerified"
-                  class="bg-green-500 text-white px-3 py-1 rounded-xl">Verified</span>
+                  class="bg-green-500 text-white px-3 py-1 rounded-xl">{{ t('Verified') }}</span>
               </div>
               <h3 class="text-3xl">{{ (report$ | async)?.occurrenceTitle }}</h3>
               <h4 class="text-2xl">{{ (report$ | async)?.occurrenceRegion }}</h4>
@@ -58,13 +58,13 @@
           <!-- Notifiability display -->
           <div *ngIf="canNotify" class="w-full my-4">
             <fuse-alert *ngIf="(report$ | async)?.notifiabilityPoints >= 7" [type]="'error'" [appearance]="'outline'">
-              <span fuseAlertTitle>Notification Recommended</span>
-              We recommend an immediate notification click the button to send email notifications to relevant parties.
+              <span fuseAlertTitle>{{ t('Notification Recommended') }}</span>
+              {{ t('We recommend an immediate notification click the button to send email notifications to relevant parties') }}.
               <div class="my-3">
                 <button *ngIf="canNotify" class="px-8" mat-flat-button [color]="'error'" type="button"
                   (click)="sendNotification()">
                   <span *ngIf="!( loading$ | async )">
-                    Send Notification
+                    {{ t('Send Notification') }}
                   </span>
                   <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                     [mode]="'indeterminate'"></mat-progress-spinner>
@@ -75,13 +75,13 @@
             <fuse-alert
               *ngIf="(report$ | async)?.notifiabilityPoints >= 4 && (report$ | async)?.notifiabilityPoints < 7"
               [type]="'warning'" [appearance]="'outline'">
-              <span fuseAlertTitle>Notification Optional</span>
-              You can optionally send a notification to all relevant parties.
+              <span fuseAlertTitle>{{ t('Notification Optional') }}</span>
+              {{ t('You can optionally send a notification to all relevant parties') }}.
               <div class="my-3">
                 <button *ngIf="canNotify" class="px-8" mat-flat-button [color]="'warn'" type="button"
                   (click)="sendNotification()">
                   <span *ngIf="!( loading$ | async )">
-                    Send Notification
+                    {{ t('Send Notification') }}
                   </span>
                   <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                     [mode]="'indeterminate'"></mat-progress-spinner>
@@ -90,17 +90,16 @@
             </fuse-alert>
 
             <fuse-alert *ngIf="(report$ | async)?.notifiabilityPoints < 4" [type]="'success'" [appearance]="'outline'">
-              <span fuseAlertTitle>Notification Optional</span>
+              <span fuseAlertTitle>{{ t('Notification Optional') }}</span>
               <ng-container *ngIf="!(report$ | async)?.isDiseaseNotifiable && !(report$ | async)?.isDiseaseMonitored">
-                Non-threatening report, no notifications necessary.</ng-container>
-              <ng-container *ngIf="(report$ | async)?.isDiseaseNotifiable || (report$ | async)?.isDiseaseMonitored">This
-                is a
-                monitorable/notifiable disease, would you like to notify?</ng-container>
+                {{ t('Non-threatening report, no notifications necessary') }}.</ng-container>
+              <ng-container *ngIf="(report$ | async)?.isDiseaseNotifiable || (report$ | async)?.isDiseaseMonitored">
+                {{ t('This is a monitorable/notifiable disease, would you like to notify') }}?</ng-container>
               <div class="my-3">
                 <button *ngIf="canNotify" class="px-4" mat-flat-button [color]="'primary'" type="button"
                   (click)="sendNotification()">
                   <span *ngIf="!( loading$ | async )">
-                    Send Notification
+                    {{ t('Send Notification') }}
                   </span>
                   <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                     [mode]="'indeterminate'"></mat-progress-spinner>
@@ -116,45 +115,45 @@
             <table mat-table [dataSource]="(reportInfoData$ | async)" class="w-full">
               <!-- Animals Exposed Column -->
               <ng-container matColumnDef="animalsExposed">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Animals Exposed </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Animals Exposed') }} </th>
                 <td mat-cell *matCellDef="let el" class="text-center">{{ el.animalsExposed }}
                 </td>
               </ng-container>
 
               <!-- Animals Infected Column -->
               <ng-container matColumnDef="animalsInfected">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Animals Infected </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Animals Infected') }} </th>
                 <td mat-cell *matCellDef="let el" class="text-center">{{ el.animalsInfected }}
                 </td>
               </ng-container>
 
               <!-- Animals Mortality Column -->
               <ng-container matColumnDef="animalMortality">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Animal Mortality </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Animal Mortality') }} </th>
                 <td mat-cell *matCellDef="let el" class="text-center">{{ el.animalMortality }}
                 </td>
               </ng-container>
 
               <!-- Humans Exposed Column -->
               <ng-container matColumnDef="humansExposed">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Humans Exposed </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Humans Exposed') }} </th>
                 <td mat-cell *matCellDef="let el" class="text-center">{{ el.humansExposed }}
                 </td>
               </ng-container>
 
-              <!-- Humans Infected Column -->
+              <!-- Humans Infected Column
               <ng-container matColumnDef="humansInfected">
                 <th mat-header-cell *matHeaderCellDef class="text-center"> Humans Infected </th>
                 <td mat-cell *matCellDef="let el" class="text-center">{{ el.humansInfected }}
                 </td>
               </ng-container>
 
-              <!-- Animals Mortality Column -->
-              <ng-container matColumnDef="humanMortality">
+              <-- Animals Mortality Column -->
+              <!-- <ng-container matColumnDef="humanMortality">
                 <th mat-header-cell *matHeaderCellDef class="text-center"> Human Mortality </th>
                 <td mat-cell *matCellDef="let el" class="text-center">{{ el.humanMortality }}
                 </td>
-              </ng-container>
+              </ng-container> -->
 
               <tr mat-header-row *matHeaderRowDef="reportInfoColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: reportInfoColumns;"></tr>
@@ -166,7 +165,7 @@
             <table mat-table [dataSource]="(actionsInfoData$ | async)" class="w-full">
               <!-- Stamping-out Column -->
               <ng-container matColumnDef="stampingOut">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Stamping-out </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Stamping-out') }} </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.stampingOut" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
                   <mat-icon *ngIf="!el.stampingOut" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
@@ -175,7 +174,7 @@
 
               <!-- Destruction of corpses Column -->
               <ng-container matColumnDef="destructionOfCorpses">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Destruction of Cacas </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Destruction of Cacas') }} </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.destructionOfCorpses" color="primary"
                     svgIcon="heroicons_solid:check-circle"></mat-icon>
@@ -185,7 +184,7 @@
 
               <!-- Disinfection Column -->
               <ng-container matColumnDef="disinfection">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Disinfection </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Disinfection') }} </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.disinfection" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
                   <mat-icon *ngIf="!el.disinfection" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
@@ -193,7 +192,7 @@
 
               <!-- Quarantine Column -->
               <ng-container matColumnDef="quarantine">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Quarantine </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Quarantine') }} </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.quarantine" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
                   <mat-icon *ngIf="!el.quarantine" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
@@ -201,7 +200,7 @@
 
               <!-- Movement control Column -->
               <ng-container matColumnDef="movementControl">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Movement Control </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Movement Control') }} </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.movementControl" color="primary"
                     svgIcon="heroicons_solid:check-circle"></mat-icon>
@@ -211,7 +210,7 @@
 
               <!-- Observation Column -->
               <ng-container matColumnDef="observation">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Observation (in case of bite) </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Observation (in case of bite)') }} </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.observation" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
                   <mat-icon *ngIf="!el.observation" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
@@ -229,25 +228,25 @@
                 <table mat-table [dataSource]="(report$ | async)?.diagnosticTests" class="w-full">
                   <!-- Id Column -->
                   <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('ID') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.id}} </td>
                   </ng-container>
 
                   <!-- Name Column -->
                   <ng-container matColumnDef="testName">
-                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Name') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.name}} </td>
                   </ng-container>
 
                   <!-- Munber Tested Column -->
                   <ng-container matColumnDef="numberTested">
-                    <th mat-header-cell *matHeaderCellDef> Number Tested </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Number Tested') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.numberTested}} </td>
                   </ng-container>
 
                   <!-- Number Positive Column -->
                   <ng-container matColumnDef="numberPositive">
-                    <th mat-header-cell *matHeaderCellDef> Number Positive </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Number Positive') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.numberPositive}} </td>
                   </ng-container>
 
@@ -266,7 +265,7 @@
 
                   <!-- Professional Name Column -->
                   <ng-container matColumnDef="professionalName">
-                    <th mat-header-cell *matHeaderCellDef> Tested by </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Tested by') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.professionalName}} </td>
                   </ng-container>
 
@@ -281,19 +280,19 @@
                 <table mat-table [dataSource]="(report$ | async)?.medications" class="w-full">
                   <!-- Id Column -->
                   <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('ID') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.id}} </td>
                   </ng-container>
 
                   <!-- Name Column -->
                   <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Name') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.name}} </td>
                   </ng-container>
 
                   <!-- Dosage Column -->
                   <ng-container matColumnDef="dosage">
-                    <th mat-header-cell *matHeaderCellDef> Dosage </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Dosage') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.dosage}} </td>
                   </ng-container>
 
@@ -308,37 +307,37 @@
                 <table mat-table [dataSource]="(report$ | async)?.vaccinations" class="w-full">
                   <!-- Id Column -->
                   <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('ID') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.id}} </td>
                   </ng-container>
 
                   <!-- Name Column -->
                   <ng-container matColumnDef="vaccineName">
-                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Name') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.name}} </td>
                   </ng-container>
 
                   <!-- Munber Vaccinated Column -->
                   <ng-container matColumnDef="numberVaccinated">
-                    <th mat-header-cell *matHeaderCellDef> Number Vaccinated </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Number Vaccinated') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.numberVaccinated}} </td>
                   </ng-container>
 
                   <!-- Munber Vaccinated Column -->
                   <ng-container matColumnDef="humansVaccinated">
-                    <th mat-header-cell *matHeaderCellDef> Humans Vaccinated </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Humans Vaccinated') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.isHuman ? "Yes" : "No"}} </td>
                   </ng-container>
 
                   <!-- Munber Vaccinated Column -->
                   <ng-container matColumnDef="animalsVaccinated">
-                    <th mat-header-cell *matHeaderCellDef> Animals Vaccinated </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Animals Vaccinated') }} </th>
                     <td mat-cell *matCellDef="let el"> {{el.isAnimal ? "Yes" : "No"}} </td>
                   </ng-container>
 
                   <!-- Professional Name Column -->
                   <ng-container matColumnDef="professionalName">
-                    <th mat-header-cell *matHeaderCellDef> Vaccinated by </th>
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Vaccinated by ') }}</th>
                     <td mat-cell *matCellDef="let el"> {{el.professionalName}} </td>
                   </ng-container>
 
@@ -356,12 +355,12 @@
 
         <div class="flex justify-between my-4">
           <a [routerLink]="['/dashboard/reports']" class="px-8" mat-flat-button [color]="'accent'">
-            Back
+            {{ t('Back') }}
           </a>
           <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="danger"
             type="button" [disabled]="!canVerify" (click)="verify()">
             <span *ngIf="!( loading$ | async )">
-              Reject Report
+                {{ t('Reject Report') }}
             </span>
             <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
               [mode]="'indeterminate'"></mat-progress-spinner>
@@ -369,7 +368,7 @@
           <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="'primary'"
             type="button" [disabled]="!canVerify" (click)="verify()">
             <span *ngIf="!( loading$ | async )">
-              Validate Report
+                {{ t('Validate Report') }}
             </span>
             <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
               [mode]="'indeterminate'"></mat-progress-spinner>
