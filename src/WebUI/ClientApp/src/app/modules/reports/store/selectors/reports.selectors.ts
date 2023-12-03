@@ -1,12 +1,18 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { featureKey } from '../actions';
 import { ReportState } from '../reducers';
+import { ReportStatus } from 'app/web-api-client';
 
 const reportState = createFeatureSelector<ReportState>(featureKey);
 
 export const getReports = createSelector(
     reportState,
     (state: ReportState) => state.data
+);
+
+export const getRejectedReports = createSelector(
+    reportState,
+    (state: ReportState) => state.data.filter((e) => e.reportStatus === ReportStatus.Rejected)
 );
 
 export const getUnverifiedReports = createSelector(

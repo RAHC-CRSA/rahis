@@ -4,10 +4,10 @@
     <mat-form-field class="w-full">
       <mat-label>{{ t('What is the country of occurrence') }}?</mat-label>
       <input type="text" aria-label="{{ t('Country') }}" matInput [formControl]="countryControl"
-        [matAutocomplete]="countryAutocomplete" placeholder="{{ t('Select occurrence country') }}">
+        [matAutocomplete]="countryAutocomplete" placeholder="{{ t('Select occurrence country') }}" [disabled]="userCountryId > 0">
       <mat-autocomplete #countryAutocomplete="matAutocomplete" [displayWith]="displayCountryFn"
         (optionSelected)="updateSelectedCountry($event)">
-        <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+        <mat-option *ngFor="let country of filteredCountries | async" [value]="country" [disabled]="userCountryId > 0">
           <img [src]="country.flag" class="w-6 m-1 inline-block">
           {{ country.name }}
         </mat-option>
@@ -24,7 +24,7 @@
           {{ region.name }}
         </mat-option>
       </mat-autocomplete>
-      <mat-hint *ngIf="!newRegion">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new region') }}.</mat-hint>
+      <!-- <mat-hint *ngIf="!newRegion">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new region') }}.</mat-hint> -->
     </mat-form-field>
 
     <div *ngIf="newRegion || !regions.length" @expandCollapse>

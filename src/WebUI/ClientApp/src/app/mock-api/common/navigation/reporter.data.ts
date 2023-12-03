@@ -3,11 +3,18 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
-        id: 'reports',
-        title: 'Reports',
+        id: 'create-report',
+        title: 'Create Report',
         type: 'basic',
         icon: 'heroicons_outline:clipboard-list',
         link: '/dashboard/reports/create',
+    },
+    {
+        id: 'reports',
+        title: 'Rejected Reports',
+        type: 'basic',
+        icon: 'heroicons_outline:beaker',
+        link: '/dashboard/reports/list',
     },
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -18,6 +25,13 @@ export const compactNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:clipboard-list',
         link: '/dashboard/reports/create',
     },
+    {
+        id: 'reports',
+        title: 'Rejected Reports',
+        type: 'basic',
+        icon: 'heroicons_outline:beaker',
+        link: '/dashboard/reports/list',
+    },
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
@@ -27,6 +41,13 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:clipboard-list',
         link: '/dashboard/reports/create',
     },
+    {
+        id: 'reports',
+        title: 'Rejected Reports',
+        type: 'basic',
+        icon: 'heroicons_outline:beaker',
+        link: '/dashboard/reports/list',
+    },
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
@@ -35,5 +56,12 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'heroicons_outline:clipboard-list',
         link: '/dashboard/reports/create',
+    },
+    {
+        id: 'reports',
+        title: 'Rejected Reports',
+        type: 'basic',
+        icon: 'heroicons_outline:beaker',
+        link: '/dashboard/reports/list',
     },
 ];

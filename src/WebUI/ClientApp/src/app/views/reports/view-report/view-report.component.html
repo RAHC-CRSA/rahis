@@ -348,6 +348,15 @@
             </mat-tab>
           </mat-tab-group>
 
+
+          <div class="mb-8">
+            <mat-form-field class="w-full mt-4">
+              <mat-label>Comment:</mat-label>
+              <textarea aria-label="Cvo Comment" formControlName="cvoComment" matInput placeholder="Additional comment to for this report"></textarea>
+            </mat-form-field>
+            <!-- <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Movement control measures is required', control: treatmentInfo.controls['movementControlMeasures']}"></ng-container> -->
+          </div>
           <!-- <pre>
             {{ (report$ | async) | json }}
           </pre> -->
@@ -357,22 +366,24 @@
           <a [routerLink]="['/dashboard/reports']" class="px-8" mat-flat-button [color]="'accent'">
             {{ t('Back') }}
           </a>
-          <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="danger"
-            type="button" [disabled]="!canVerify" (click)="verify()">
-            <span *ngIf="!( loading$ | async )">
-                {{ t('Reject Report') }}
-            </span>
-            <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
-              [mode]="'indeterminate'"></mat-progress-spinner>
-          </button>
-          <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="'primary'"
-            type="button" [disabled]="!canVerify" (click)="verify()">
-            <span *ngIf="!( loading$ | async )">
-                {{ t('Validate Report') }}
-            </span>
-            <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
-              [mode]="'indeterminate'"></mat-progress-spinner>
-          </button>
+          <div class="flex justify-between my-4">
+            <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="'warn'"
+                type="button" [disabled]="!canVerify" (click)="reject()">
+                <span *ngIf="!( loading$ | async )">
+                    {{ t('Reject Report') }}
+                </span>
+                <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+            <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="'primary'"
+                type="button" [disabled]="!canVerify" (click)="validate()">
+                <span *ngIf="!( loading$ | async )">
+                    {{ t('Validate Report') }}
+                </span>
+                <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+          </div>
         </div>
 
       </div>

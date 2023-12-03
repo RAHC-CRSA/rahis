@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
-import { createReport } from 'app/modules/reports/store/actions';
+import { createReport, loadReport } from 'app/modules/reports/store/actions';
 import {
     getFeedback,
+    getReport,
+    getReportsLoaded,
     getReportsLoading,
 } from 'app/modules/reports/store/selectors';
 import {
@@ -25,23 +27,44 @@ import { Observable } from 'rxjs';
     animations: fuseAnimations,
 })
 export class CreateReportComponent implements OnInit {
+    reportId: number;
+    updatingReport: boolean;
     loading$: Observable<boolean>;
     feedback$: Observable<ServerResponse | null | undefined>;
+    loaded$: Observable<boolean>;
+    savedReport$: Observable<any | null | undefined>;
 
     @ViewChild('reportFormStepper') private reportFormStepper: MatStepper;
 
     formStep: number = 1;
     formValues = this._getFormValues();
 
-    constructor(private router: Router, private store: Store<ReportState>) {}
+    constructor(private router: Router, private store: Store<ReportState>, private route: ActivatedRoute) {}
 
     ngOnInit() {
+        this.route.paramMap.subscribe((params: ParamMap) => {
+            this.reportId = +params.get('id');
+        });
         this.initData();
     }
 
     initData() {
-        this.loading$ = this.store.select(getReportsLoading);
         this.feedback$ = this.store.select(getFeedback);
+        this.loading$ = this.store.select(getReportsLoading);
+        if (this.reportId) {
+            this.updatingReport = true;
+            this.formStep = 5;
+            this.store.dispatch(loadReport({ payload: this.reportId }));
+            this.savedReport$ = this.store.select(getReport);
+            this.loaded$ = this.store.select(getReportsLoaded);
+
+            this.savedReport$.subscribe((data) => {
+                if (data) {
+                    console.log({ data });
+
+                }
+            });
+        }
     }
 
     next(formData: any) {

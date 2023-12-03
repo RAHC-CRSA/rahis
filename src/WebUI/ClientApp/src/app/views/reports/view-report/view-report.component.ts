@@ -78,8 +78,6 @@ export class ViewReportComponent implements OnInit {
         'animalsInfected',
         'animalMortality',
         'humansExposed',
-        'humansInfected',
-        'humanMortality',
     ];
 
     constructor(
@@ -138,8 +136,15 @@ export class ViewReportComponent implements OnInit {
         });
     }
 
-    verify() {
+    reject() {
+        const payload: IVerifyReportCommand = { id: this.reportId, cvoComment: this.cvoComment, isVerified: false, reportStatus: ReportStatus.Rejected };
+        console.log("cvo comment is ", this.cvoComment)
+        this.store.dispatch(verifyReport({ payload }));
+    }
 
+    validate() {
+        const payload: IVerifyReportCommand = { id: this.reportId, isVerified: true, reportStatus: ReportStatus.Approved };
+        this.store.dispatch(verifyReport({ payload }));
     }
 
     submit() {

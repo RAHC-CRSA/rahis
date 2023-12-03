@@ -11,7 +11,7 @@
           {{ species.name }}
         </mat-option>
       </mat-autocomplete>
-      <mat-hint *ngIf="!newSpecies">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new species') }}.</mat-hint>
+      <!-- <mat-hint *ngIf="!newSpecies">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new species') }}.</mat-hint> -->
     </mat-form-field>
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Species is required', control: diseaseInfo.controls['species']}"></ng-container>
@@ -31,7 +31,7 @@
           {{ disease.name }}
         </mat-option>
       </mat-autocomplete>
-      <mat-hint *ngIf="!newDisease">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new disease') }}.</mat-hint>
+      <!-- <mat-hint *ngIf="!newDisease">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new disease') }}.</mat-hint> -->
     </mat-form-field>
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Disease is required', control: diseaseInfo.controls['disease']}"></ng-container>

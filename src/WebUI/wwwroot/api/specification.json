@@ -2938,6 +2938,18 @@
           "isVerified": {
             "type": "boolean"
           },
+          "reportStatus": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ReportStatus"
+              }
+            ]
+          },
+          "cvoComment": {
+            "type": "string",
+            "nullable": true
+          },
           "stampingOut": {
             "type": "boolean"
           },
@@ -3000,6 +3012,20 @@
             }
           }
         }
+      },
+      "ReportStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Pending",
+          "Approved",
+          "Rejected"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
       },
       "MedicationDto": {
         "type": "object",
@@ -3134,7 +3160,12 @@
             "type": "boolean"
           },
           "reportType": {
-            "$ref": "#/components/schemas/ReportType"
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ReportType"
+              }
+            ]
           },
           "longitude": {
             "type": "number",
@@ -3319,6 +3350,14 @@
           "isVerified": {
             "type": "boolean"
           },
+          "reportStatus": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ReportStatus"
+              }
+            ]
+          },
           "exposed": {
             "type": "integer",
             "format": "int32"
@@ -3335,6 +3374,9 @@
             "type": "string"
           },
           "created": {
+            "type": "string"
+          },
+          "lastModified": {
             "type": "string"
           }
         }
@@ -3437,24 +3479,13 @@
             "type": "string",
             "nullable": true
           },
+          "isVerified": {
+            "type": "boolean"
+          },
           "reportStatus": {
             "$ref": "#/components/schemas/ReportStatus"
           }
         }
-      },
-      "ReportStatus": {
-        "type": "integer",
-        "description": "",
-        "x-enumNames": [
-          "Pending",
-          "Approved",
-          "Rejected"
-        ],
-        "enum": [
-          0,
-          1,
-          2
-        ]
       },
       "CommunityDto": {
         "type": "object",

@@ -1,4 +1,6 @@
-﻿namespace RegionalAnimalHealth.Application.Common.Models.Reports;
+﻿using RegionalAnimalHealth.Domain.Enums;
+
+namespace RegionalAnimalHealth.Application.Common.Models.Reports;
 public class ReportDto
 {
     public long? Id { get; set; }
@@ -28,6 +30,8 @@ public class ReportDto
 
     public bool IsOngoing { get; set; }
     public bool IsVerified { get; set; }
+    public ReportStatus? ReportStatus { get; set; }
+    public string? CvoComment { get; set; }
 
     public bool StampingOut { get; set; }
     public bool DestructionOfCorpses { get; set; }

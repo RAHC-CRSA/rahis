@@ -75,7 +75,11 @@
         <!-- Status Column -->
         <ng-container matColumnDef="reportStatus">
           <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Report Status') }} </th>
-          <td mat-cell *matCellDef="let el" class="p-4"> {{el.reportStatus}} </td>
+          <td mat-cell *matCellDef="let el" class="p-4">
+            <span *ngIf="el.reportStatus === 0" class="bg-yellow-500 text-white px-3 py-1 rounded-xl">{{ t('Pending') }}</span>
+            <span *ngIf="el.reportStatus === 2" class="bg-red-500 text-white px-3 py-1 rounded-xl">{{ t('Rejected') }}</span>
+            <span *ngIf="el.reportStatus === 1" class="bg-green-500 text-white px-3 py-1 rounded-xl">{{ t('Validated') }}</span>
+          </td>
         </ng-container>
 
         <!-- Exposed Column -->
@@ -97,9 +101,9 @@
         </ng-container>
 
         <!-- Created Column -->
-        <ng-container matColumnDef="created">
-          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Created') }}  </th>
-          <td mat-cell *matCellDef="let el" class="p-4"> {{el.created}} </td>
+        <ng-container matColumnDef="updated">
+          <th mat-header-cell *matHeaderCellDef class="p-4"> {{ t('Updated') }}  </th>
+          <td mat-cell *matCellDef="let el" class="p-4"> {{el.lastModified}} </td>
         </ng-container>
 
         <!-- Actions Column-->

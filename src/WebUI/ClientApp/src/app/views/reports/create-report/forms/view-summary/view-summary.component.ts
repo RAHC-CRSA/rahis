@@ -78,8 +78,6 @@ export class ViewSummaryComponent implements OnInit {
         'animalsInfected',
         'animalMortality',
         'humansExposed',
-        'humansInfected',
-        'humanMortality',
     ];
 
     constructor(
@@ -96,6 +94,7 @@ export class ViewSummaryComponent implements OnInit {
         console.log({ ...this.formData });
         this.report = this.formData;
         const data = this.formData;
+
         if (data) {
             this.reportInfoData=
                 {
@@ -103,8 +102,6 @@ export class ViewSummaryComponent implements OnInit {
                     animalsInfected: data.infected ?? 0,
                     animalMortality: data.mortality ?? 0,
                     humansExposed: data.humansExposed ?? 0,
-                    humansInfected: data.humansInfected ?? 0,
-                    humanMortality: data.humansMortality ?? 0,
                 };
 
             this.actionsInfoData =

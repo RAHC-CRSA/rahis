@@ -2,8 +2,18 @@
 
   <div class="w-full mb-4">
 
+    <div class="flex gap-3">
+        <div class="w-24 p-2" *ngIf="report?.occurrenceCountryFlag">
+          <img [src]="report?.occurrenceCountryFlag" alt="" class="w-auto">
+        </div>
+        <div class="w-full">
+          <h3 class="text-3xl">{{ report?.occurrenceTitle }}</h3>
+          <h4 class="text-2xl">{{ report?.occurrenceRegion }}</h4>
+        </div>
+      </div>
+
     <div class="mb-8">
-        <table mat-table [dataSource]="[report]" class="w-full">
+        <table mat-table [dataSource]="[reportInfoData]" class="w-full">
           <!-- Animals Exposed Column -->
           <ng-container matColumnDef="animalsExposed">
             <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Animals Exposed') }}</th>
@@ -21,7 +31,7 @@
           <!-- Animals Mortality Column -->
           <ng-container matColumnDef="animalMortality">
             <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Animal Mortality') }}</th>
-            <td mat-cell *matCellDef="let el" class="text-center">{{ el?.animalMortality }}
+            <td mat-cell *matCellDef="let el" class="text-center">{{ el.animalMortality || 0 }}
             </td>
           </ng-container>
 
@@ -29,20 +39,6 @@
           <ng-container matColumnDef="humansExposed">
             <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Humans Exposed') }}</th>
             <td mat-cell *matCellDef="let el" class="text-center">{{ el.humansExposed }}
-            </td>
-          </ng-container>
-
-          <!-- Humans Infected Column -->
-          <ng-container matColumnDef="humansInfected">
-            <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Filter') }}Humans Infected </th>
-            <td mat-cell *matCellDef="let el" class="text-center">{{ el.humansInfected }}
-            </td>
-          </ng-container>
-
-          <!-- Animals Mortality Column -->
-          <ng-container matColumnDef="humanMortality">
-            <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Filter') }}Human Mortality </th>
-            <td mat-cell *matCellDef="let el" class="text-center">{{ el.humanMortality }}
             </td>
           </ng-container>
 

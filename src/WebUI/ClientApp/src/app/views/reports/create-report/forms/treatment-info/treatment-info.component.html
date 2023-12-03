@@ -1,5 +1,15 @@
 <form [formGroup]="treatmentInfo" class="p-2 md:p-6" *transloco="let t">
 
+    <div class="w-full mb-4">
+        <mat-label>{{ t('Fong') }} What control measures did you take?</mat-label>
+        <mat-form-field class="w-full">
+        <mat-select formControlName="observationDurationSuffix">
+            <mat-option *ngFor="let duration of durations" [value]="duration">
+            {{ duration }}
+            </mat-option>
+        </mat-select>
+        </mat-form-field>
+    </div>
   <div class="w-full mb-4">
     <mat-label> {{ t('Were you able to stamp out the disease') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="stampingOut" aria-label="Stamping out">

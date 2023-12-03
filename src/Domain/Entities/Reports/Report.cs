@@ -143,11 +143,12 @@ public class Report : BaseAuditableEntity<long>
         Treatment = treatment;
     }
 
-    public void Verify(string? cvoComment, ReportStatus reportStatus)
+    public void Verify(string? cvoComment, bool verified, ReportStatus? reportStatus)
     {
         LastModified = DateTime.UtcNow;
         CvoComment = cvoComment;
-        ReportStatus = reportStatus;
+        IsVerified = verified;
+        ReportStatus = reportStatus ?? ReportStatus.Pending;
     }
 
     public void Delete()

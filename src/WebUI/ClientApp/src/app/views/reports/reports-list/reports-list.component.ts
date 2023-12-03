@@ -12,6 +12,7 @@ import { ReportState } from 'app/modules/reports/store';
 import { deleteReport, loadReports } from 'app/modules/reports/store/actions';
 import {
     getFeedback,
+    getRejectedReports,
     getReports,
     getReportsLoaded,
     getReportsLoading,
@@ -20,6 +21,7 @@ import {
 import {
     IDeleteReportCommand,
     ReportListDto,
+    ReportStatus,
     ServerResponse,
 } from 'app/web-api-client';
 import { Observable } from 'rxjs';
@@ -40,7 +42,7 @@ export class ReportsListComponent {
         'exposed',
         'infected',
         'mortality',
-        'created',
+        'updated',
         'actions',
     ];
     dataSource: MatTableDataSource<ReportListDto>;
@@ -53,6 +55,7 @@ export class ReportsListComponent {
     loading$: Observable<boolean>;
     loaded$: Observable<boolean>;
     feedback$: Observable<ServerResponse | null | undefined>;
+    ReportStatus: ReportStatus;
 
     constructor(
         private store: Store<ReportState>,
@@ -85,12 +88,19 @@ export class ReportsListComponent {
                 };
 
                 this.store.dispatch(loadReports({ payload }));
-                this.reports$ = user.roles.includes('Chief Veterinary Officer')
+                this.reports$ = this.store.select(getReports);
+                this.reports$ = user.roles.includes('Reporter')
+                    ? this.store.select(getRejectedReports)
+                    : user.roles.includes('Chief Veterinary Officer')
                     ? this.store.select(getUnverifiedReports)
                     : this.store.select(getReports);
+                // this.reports$ = user.roles.includes('Chief Veterinary Officer')
+                //     ? this.store.select(getUnverifiedReports)
+                //     : this.store.select(getReports);
             }
         });
         this.reports$.subscribe((items) => {
+            console.log({reports: items})
             this.dataSource = new MatTableDataSource(items);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
