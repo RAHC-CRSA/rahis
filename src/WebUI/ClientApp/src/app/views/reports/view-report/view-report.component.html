@@ -350,10 +350,14 @@
 
 
           <div class="mb-8">
-            <mat-form-field class="w-full mt-4">
+            <mat-form-field class="w-full mt-4" *ngIf="(canVerify)">
               <mat-label>Comment:</mat-label>
               <textarea aria-label="Cvo Comment" formControlName="cvoComment" matInput placeholder="Additional comment to for this report"></textarea>
             </mat-form-field>
+            <div *ngIf="(!canVerify)">
+                <p>Comment:</p> <br />
+                <p>{{(report$ | async)?.cvoComment}}</p>
+            </div>
             <!-- <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Movement control measures is required', control: treatmentInfo.controls['movementControlMeasures']}"></ng-container> -->
           </div>

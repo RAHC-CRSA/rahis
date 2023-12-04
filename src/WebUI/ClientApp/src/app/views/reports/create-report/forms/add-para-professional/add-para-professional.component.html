@@ -2,16 +2,16 @@
     <div class="w-full mb-4">
       <ng-container>
         <div class="w-full mt-4">
-          <h4 class="text-2xl mb-4">{{ t('Para-Professionals') }}</h4>
+          <h4 class="text-2xl mb-4">{{ t('Animal-Health Professionals') }}</h4>
 
             <mat-form-field class="w-full mb-4">
                 <mat-label>{{ t('Name') }}</mat-label>
-                <input aria-label="{{ t('Para-Professional name') }}" matInput formControlName="name" placeholder="Jane Doe" />
+                <input aria-label="{{ t('Animal-Health Professional name') }}" matInput formControlName="name" placeholder="Jane Doe" />
             </mat-form-field>
 
             <mat-form-field class="w-full">
                 <mat-label>{{ t('Position') }}</mat-label>
-                <input aria-label="Para-Professional position" matInput formControlName="position" placeholder="Animal Doctor" />
+                <input aria-label="Animal-Health Professional position" matInput formControlName="position" placeholder="Animal Doctor" />
               </mat-form-field>
 
               <mat-form-field class="w-full">
@@ -21,7 +21,7 @@
 
               <mat-form-field class="w-full">
                 <mat-label>{{ t('Phone Number') }}</mat-label>
-                <input aria-label="Para-Professional phone number" matInput formControlName="phone" placeholder="+2330099092739 " />
+                <input aria-label="Animal-Health Professional phone number" matInput formControlName="phone" placeholder="+2330099092739 " />
               </mat-form-field>
 
               <mat-form-field class="w-full">
@@ -46,7 +46,7 @@
     </div>
     <div class="flex justify-end mb-4">
         <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onSubmit()" [disabled]="professionalForm.invalid">
-          {{ t('Add Para-Professional') }}
+          {{ t('Add Animal-Health Professional') }}
         </button>
       </div>
 </form>

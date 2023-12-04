@@ -94,6 +94,8 @@ export class ViewReportComponent implements OnInit {
     }
 
     initData() {
+        this.canVerify = false;
+        this.canNotify = false;
         this.store.dispatch(loadReport({ payload: this.reportId }));
         this.authStore.select(getRoles).subscribe((roles) => {
             if (roles) {

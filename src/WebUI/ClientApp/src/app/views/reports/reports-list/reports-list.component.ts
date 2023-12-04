@@ -51,6 +51,8 @@ export class ReportsListComponent {
 
     roles: string[];
     canCreateReport: boolean;
+    canCommentOnReport: boolean;
+    canDeleteReport: boolean;
     reports$: Observable<ReportListDto[] | null | undefined>;
     loading$: Observable<boolean>;
     loaded$: Observable<boolean>;
@@ -75,6 +77,14 @@ export class ReportsListComponent {
                     this.roles.includes('Admim') ||
                     this.roles.includes('Super Admin') ||
                     this.roles.includes('Reporter');
+
+                this.canCommentOnReport =
+                    this.roles.includes('Chief Veterinary Officer') ||
+                    this.roles.includes('Regional Animal Health Officer');
+
+                this.canDeleteReport =
+                    this.roles.includes('Admim') ||
+                    this.roles.includes('Super Admin');
 
                 let verified: boolean | null | undefined = undefined;
                 // if (user.roles.includes('Chief Veterinary Officer'))

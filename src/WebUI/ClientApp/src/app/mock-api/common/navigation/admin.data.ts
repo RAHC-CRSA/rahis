@@ -117,13 +117,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'para-professionals',
-        title: 'Para-Professionals',
+        title: 'Health Professionals',
         type: 'collapsable',
         icon: 'heroicons_outline:identification',
         children: [
             {
                 id: 'para-professionals.create',
-                title: 'Add Para-Professional',
+                title: 'Add Health Professional',
                 type: 'basic',
                 link: '/dashboard/para-professionals/create',
             },

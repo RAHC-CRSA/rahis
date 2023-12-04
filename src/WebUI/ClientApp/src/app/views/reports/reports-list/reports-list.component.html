@@ -113,7 +113,7 @@
             <a [routerLink]="['/dashboard/reports/view/', row.id]" mat-icon-button>
               <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
             </a>
-            <button type="button" mat-icon-button (click)="onDelete(row.id)">
+            <button *ngIf="canDeleteReport" type="button" mat-icon-button (click)="onDelete(row.id)">
               <mat-icon color="warn" svgIcon="heroicons_outline:trash"></mat-icon>
             </button>
           </td>
