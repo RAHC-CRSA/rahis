@@ -3,7 +3,7 @@
 
     <mat-form-field class="w-full mb-4">
       <mat-label>{{ t('What is the affected species') }}?</mat-label>
-      <input type="text" aria-label="Species" matInput [formControl]="speciesControl" [(ngModel)]="selectedSpecies"
+      <input type="text" aria-label="Species" matInput [formControl]="speciesControl"
         [matAutocomplete]="speciesAutocomplete">
       <mat-autocomplete #speciesAutocomplete="matAutocomplete" [displayWith]="displaySpeciesFn"
         (optionSelected)="updateSelectedSpecies($event)" >
@@ -23,7 +23,7 @@
 
     <mat-form-field class="w-full mb-4">
       <mat-label>{{ t('What is the name of the disease') }}?</mat-label>
-      <input type="text" aria-label="Disease" matInput [formControl]="diseaseControl" [(ngModel)]="selectedDisease"
+      <input type="text" aria-label="Disease" matInput [formControl]="diseaseControl"
         [matAutocomplete]="diseaseAutocomplete">
       <mat-autocomplete #diseaseAutocomplete="matAutocomplete" [displayWith]="displayDiseaseFn"
         (optionSelected)="updateSelectedDisease($event)">
