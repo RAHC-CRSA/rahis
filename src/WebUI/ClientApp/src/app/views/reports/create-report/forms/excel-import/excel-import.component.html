@@ -1,1 +1,34 @@
-<p>excel-import works!</p>
+<div class="p-2 md:p-6" *transloco="let t">
+  <fieldset>
+    <div>
+      <div class="md:p-3">
+        <p class="mb-4">Upload Excel file to complete the report, or click 'Skip' to enter the data manually.
+        </p>
+        <div class="w-full mb-8">
+          <button type="button" mat-button [color]="'accent'" (click)="fileInput.click()" class="mat-small">Click here
+            to upload an
+            Excel file</button>
+          <input hidden type="file" aria-label="Excel Upload" #fileInput accept=".xlsx"
+            (change)="onFileChange($event)" />
+          <button (click)="generateTemplate()" mat-button [color]="'primary'">or click here to download the Excel
+            template</button>
+        </div>
+
+        <div class="flex justify-between my-4">
+          <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
+            {{ t('Back') }}
+          </button>
+          <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onSubmit()">
+            {{ t('Skip') }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>
