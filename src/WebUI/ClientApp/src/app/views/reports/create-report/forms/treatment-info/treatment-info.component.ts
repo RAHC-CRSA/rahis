@@ -22,10 +22,28 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
     wasQuarantined: boolean;
     movementControlled: boolean;
     administeredMeds: boolean;
+    controlMeasure: string;
 
     displayedColumns: string[] = ['name', 'dosage', 'actions'];
 
     durations: string[] = ['hours', 'days', 'weeks', 'months'];
+    controlMeasures: string[] =
+    [
+        'Sanitary slaughter',
+        'Official destruction of carcasses, by-products and waste',
+        'Disinfection',
+        'Process for inactivating the pathogen in products or by-products',
+        'Movement restrictions',
+        'Surveillance inside the restriction zone',
+        'Surveillance outside the restriction zone',
+        'Official destruction of animal products',
+        'Official vaccination',
+        'Pre and post-mortem inspection',
+        'Selective slaughter and disposal',
+        'Border control',
+        'Zoning',
+        'Compartmentalization',
+    ];
 
     @Input() formData: any;
 
@@ -60,11 +78,14 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             stampingOut: [this.formData.stampingOut, Validators.required],
             destructionOfCorpses: [
                 this.formData.destructionOfCorpses,
-                Validators.required,
+              //  Validators.required,
             ],
             corpsesDestroyed: [this.formData.corpsesDestroyed],
             disinfection: [this.formData.disinfection, Validators.required],
-            observation: [this.formData.observation, Validators.required],
+            observation: [
+                this.formData.observation,
+             //   Validators.required
+            ],
             observationDuration: [this.formData.observationDuration],
             observationDurationSuffix: [
                 this.formData.observationDurationSuffix,
@@ -74,10 +95,13 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             quarantineDurationSuffix: [this.formData.quarantineDurationSuffix],
             movementControl: [
                 this.formData.movementControl,
-                Validators.required,
+              //  Validators.required,
             ],
             movementControlMeasures: [this.formData.movementControlMeasures],
-            treatment: [this.formData.treatment, Validators.required],
+            treatment: [
+                this.formData.treatment,
+                Validators.required
+            ],
             treatmentDetails: [this.formData.treatmentDetails],
             medications: [
                 this.formData.medications?.length
@@ -222,5 +246,39 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                 { emitEvent: true }
             );
         this.submit.emit(this.treatmentInfo.value);
+    }
+
+    updateControlMeasure(event: any) {
+        this.controlMeasure = event.option.value;
+        const controlMeasure: string = event.option.value;
+        console.log({controlMeasure})
+        if(controlMeasure === this.controlMeasures[1]){
+            this.corpseDestruction = true;
+            this.treatmentInfo.get('destructionOfCorpses').setValue(true);
+        }
+
+        if(controlMeasure === this.controlMeasures[2]){
+            this.treatmentInfo.get('disinfection').setValue(true);
+        }
+
+        if(controlMeasure === this.controlMeasures[4] || controlMeasure === this.controlMeasures[11]){
+            this.movementControlled = true;
+            this.treatmentInfo.get('movementControl').setValue(true);
+        }
+
+        if(controlMeasure === this.controlMeasures[5] || controlMeasure === this.controlMeasures[6] ){
+            this.wasObservation = true;
+            this.treatmentInfo.get('observation').setValue(true);
+        }
+
+        // if(controlMeasure == this.controlMeasures[5] || controlMeasure == this.controlMeasures[6] ){
+        //     this.wasQuarantined = true;
+        // }
+
+        // this.wasObservation = this.formData.observation;
+        // this.wasQuarantined = this.formData.quarantine;
+        // this.movementControlled = this.formData.movementControl;
+        // this.administeredMeds = this.formData.treatment;
+
     }
 }

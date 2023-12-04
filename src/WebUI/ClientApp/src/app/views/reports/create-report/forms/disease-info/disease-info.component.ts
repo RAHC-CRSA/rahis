@@ -9,7 +9,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
 import { loadDiseases, loadSpecies } from 'app/modules/reports/store/actions';
-import { getDiseases, getSpecies } from 'app/modules/reports/store/selectors';
+import { getDiseases, getReportsLoaded, getSpecies } from 'app/modules/reports/store/selectors';
 import { DiseaseDto, SpeciesDto } from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
@@ -43,6 +43,8 @@ export class DiseaseInfoComponent implements OnInit {
     @Output() previous = new EventEmitter();
     @Output() submit = new EventEmitter();
 
+    loaded$: Observable<boolean>;
+
     diseaseInfo: FormGroup;
 
     constructor(
@@ -64,8 +66,12 @@ export class DiseaseInfoComponent implements OnInit {
 
     initData() {
         this.store.dispatch(loadDiseases());
+        this.store.dispatch(loadSpecies());
 
         this.diseases$ = this.store.select(getDiseases);
+        this.species$ = this.store.select(getSpecies);
+        this.loaded$ = this.store.select(getReportsLoaded);
+
         this.diseases$.subscribe((diseases) => {
             this.diseases = [
                 ...diseases,
@@ -83,11 +89,11 @@ export class DiseaseInfoComponent implements OnInit {
                     name ? this._filterDisease(name) : this.diseases.slice()
                 )
             );
+            if(this.formData.disease && this.formData.disease >= 0){
+                this.selectedDisease = this.diseases[this.formData.disease == 0 ? this.formData.disease : --this.formData.disease];
+            }
         });
 
-        this.store.dispatch(loadSpecies());
-
-        this.species$ = this.store.select(getSpecies);
         this.species$.subscribe((species) => {
             this.species = [
                 ...species,
@@ -105,6 +111,9 @@ export class DiseaseInfoComponent implements OnInit {
                     name ? this._filterSpecies(name) : this.species.slice()
                 )
             );
+            if(this.formData.species && this.formData.species >= 0){
+                this.selectedSpecies = this.species[this.formData.species == 0 ? this.formData.species : --this.formData.species];
+            }
         });
     }
 
@@ -177,9 +186,9 @@ export class DiseaseInfoComponent implements OnInit {
     }
 
     onAddSpeciesClosed() {
-        this.onCheckSpecies(false);
-        this.speciesControl.setValue('', { emitEvent: true });
-        this.diseaseInfo.patchValue({ species: '' }, { emitEvent: true });
+        // this.onCheckSpecies(false);
+        // this.speciesControl.setValue('', { emitEvent: true });
+        // this.diseaseInfo.patchValue({ species: '' }, { emitEvent: true });
     }
 
     onPrevious() {

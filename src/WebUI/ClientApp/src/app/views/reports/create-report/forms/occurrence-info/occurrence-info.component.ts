@@ -18,7 +18,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
 import { loadOccurrences } from 'app/modules/reports/store/actions';
-import { getOccurrences } from 'app/modules/reports/store/selectors';
+import { getOccurrences, getReportsLoaded } from 'app/modules/reports/store/selectors';
 import { OccurrenceDto } from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
@@ -36,6 +36,7 @@ export class OccurrenceInfoComponent implements OnInit, AfterContentChecked {
 
     occurrenceControl = new FormControl();
     selectedOccurrence: OccurrenceDto;
+    loaded$: Observable<boolean>;
 
     occurrences$: Observable<OccurrenceDto[] | null | undefined>;
     occurrences: OccurrenceDto[];
@@ -74,6 +75,10 @@ export class OccurrenceInfoComponent implements OnInit, AfterContentChecked {
     initData() {
         this.store.dispatch(loadOccurrences(this.formData.country));
         this.occurrences$ = this.store.select(getOccurrences);
+        this.loaded$ = this.store.select(getReportsLoaded);
+        console.log("form data here is ", this.formData)
+
+
         this.occurrences$.subscribe((occurrences) => {
             this.occurrences = [
                 ...occurrences,
@@ -93,6 +98,10 @@ export class OccurrenceInfoComponent implements OnInit, AfterContentChecked {
                         : this.occurrences.slice()
                 )
             );
+            if(this.formData.occurrence && this.formData.occurrence >= 0){
+               this.selectedOccurrence = this.occurrences[this.formData.occurrence == 0 ? this.formData.occurrence : --this.formData.occurrence];
+               // this.selectedOccurrence = this.occurrences[this.formData.occurrence];
+            }
         });
     }
 

@@ -1,11 +1,11 @@
 <form [formGroup]="treatmentInfo" class="p-2 md:p-6" *transloco="let t">
 
     <div class="w-full mb-4">
-        <mat-label>{{ t('Fong') }} What control measures did you take?</mat-label>
+        <mat-label>{{ t('What control measures did you take') }}?</mat-label>
         <mat-form-field class="w-full">
-        <mat-select formControlName="observationDurationSuffix">
-            <mat-option *ngFor="let duration of durations" [value]="duration">
-            {{ duration }}
+        <mat-select formControlName="observationDurationSuffix" (change)="updateControlMeasure($event)">
+            <mat-option *ngFor="let controlMeasure of controlMeasures" [value]="controlMeasure">
+            {{ controlMeasure | transloco }}
             </mat-option>
         </mat-select>
         </mat-form-field>
@@ -21,13 +21,13 @@
   </div>
 
   <div class="w-full mb-4">
-    <mat-label>{{ t('Did you destroy infected carcass') }}?</mat-label>
+    <!-- <mat-label>{{ t('Did you destroy infected carcass') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="destructionOfCorpses" aria-label="Destruction of carcass">
       <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
       <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
     </mat-radio-group>
     <ng-container [ngTemplateOutlet]="formError"
-      [ngTemplateOutletContext]="{validation: 'required', message: 'Destruction of carcass is required', control: treatmentInfo.controls['destructionOfCorpses']}"></ng-container>
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Destruction of carcass is required', control: treatmentInfo.controls['destructionOfCorpses']}"></ng-container> -->
 
     <div *ngIf="corpseDestruction" @expandCollapse>
       <mat-form-field class="w-full mt-4">
@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="w-full mb-4">
+  <!-- <div class="w-full mb-4">
     <mat-label>{{ t('Did you disinfect infected species') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="disinfection" aria-label="Disinfection">
       <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
@@ -48,16 +48,16 @@
     </mat-radio-group>
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Disinfection is required', control: treatmentInfo.controls['disinfection']}"></ng-container>
-  </div>
+  </div> -->
 
   <div class="w-full mb-4">
-    <mat-label>{{ t('Did you observe infected species') }}?</mat-label>
+    <!-- <mat-label>{{ t('Did you observe infected species') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="observation" aria-label="Observation">
       <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
       <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
     </mat-radio-group>
     <ng-container [ngTemplateOutlet]="formError"
-      [ngTemplateOutletContext]="{validation: 'required', message: 'Observation is required', control: treatmentInfo.controls['observation']}"></ng-container>
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Observation is required', control: treatmentInfo.controls['observation']}"></ng-container> -->
 
     <div *ngIf="wasObservation" @expandCollapse>
       <mat-label>{{ t('For how long') }}?</mat-label>
@@ -112,7 +112,7 @@
     </div>
   </div>
 
-  <div class="w-full mb-4">
+  <!-- <div class="w-full mb-4">
     <mat-label> {{ t('Did you control movement') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="movementControl" aria-label="Movement control">
       <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
@@ -130,7 +130,7 @@
       <ng-container [ngTemplateOutlet]="formError"
         [ngTemplateOutletContext]="{validation: 'required', message: 'Movement control measures is required', control: treatmentInfo.controls['movementControlMeasures']}"></ng-container>
     </div>
-  </div>
+  </div> -->
 
   <div class="w-full mb-4">
     <mat-label>{{ t('Did you administer medication') }}?</mat-label>
@@ -182,17 +182,19 @@
           </div>
         </div>
 
-        <h4 class="text-2xl mb-4">{{ t('Treatment Details') }}</h4>
-        <mat-form-field class="w-full mt-4">
-          <mat-label> {{ t('Provide details of the treatment') }}</mat-label>
-          <textarea aria-label="{{ t('Treatment Details') }}" matInput formControlName="treatmentDetails"
-            placeholder="{{ t('Treatment Details') }}"></textarea>
-          <ng-container [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{validation: 'required', message: 'Treatment details is required', control: treatmentInfo.controls['treatmentDetails']}"></ng-container>
-
-        </mat-form-field>
       </div>
     </div>
+  </div>
+
+  <div class="w-full mb-4">
+    <h4 class="text-2xl mb-4">{{ t('Other Details') }}</h4>
+    <mat-form-field class="w-full mt-4">
+      <mat-label> {{ t('Provide other details of the measures taken') }}</mat-label>
+      <textarea aria-label="{{ t('Other Details') }}" matInput formControlName="treatmentDetails"
+        placeholder="{{ t('Other Details') }}"></textarea>
+      <ng-container [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{validation: 'required', message: 'Other details is required', control: treatmentInfo.controls['treatmentDetails']}"></ng-container>
+    </mat-form-field>
   </div>
 
   <div class="flex justify-between my-4">

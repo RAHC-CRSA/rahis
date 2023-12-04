@@ -3,7 +3,7 @@
 
     <mat-form-field class="w-full">
       <mat-label>{{ t('Select an occurrence') }}</mat-label>
-      <input type="text" aria-label="Occurrence" matInput [formControl]="occurrenceControl"
+      <input type="text" aria-label="Occurrence" matInput [formControl]="occurrenceControl" [(ngModel)]="selectedOccurrence"
         [matAutocomplete]="occurrenceAutocomplete" placeholder="{{ t('Select an occurrence') }}">
       <mat-autocomplete #occurrenceAutocomplete="matAutocomplete" [displayWith]="displayOccurrenceFn"
         (optionSelected)="updateSelectedOccurrence($event)">
