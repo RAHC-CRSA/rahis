@@ -61,14 +61,14 @@
 
         <form [formGroup]="testForm">
           <mat-form-field class="w-full mb-4">
-            <mat-label>{{ t('What is the name of the test') }}?</mat-label>
+            <mat-label>{{ t('Type of tests performed') }}?</mat-label>
             <input aria-label="{{ t('Test name') }}" formControlName="name" matInput placeholder="{{ t('Test name') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Test name is required', control: testForm.controls['name']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>{{ t('How many subjects were the test carried out on') }}?</mat-label>
+            <mat-label>{{ t('Number of tests performed') }}?</mat-label>
             <input type="number" aria-label="{{ t('Number Tested') }}" formControlName="numberTested" matInput
               placeholder="{{ t('Number Tested') }}" />
           </mat-form-field>
@@ -76,7 +76,7 @@
             [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested is required', control: testForm.controls['numberTested']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>{{ t('How many subjects tested positive') }}?</mat-label>
+            <mat-label>{{ t('Number of positive tests') }}?</mat-label>
             <input type="number" aria-label="{{ t('Number Positive') }}" formControlName="numberPositive" matInput
               placeholder="{{ t('Number Positive') }}" />
           </mat-form-field>
@@ -84,19 +84,19 @@
             [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested positive is required', control: testForm.controls['numberPositive']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>{{ t('Which para-professional carried out the tests') }}?</mat-label>
-            <input type="text" aria-label="{{ t('Select para-professional') }}" matInput [formControl]="professionalControl"
-              [matAutocomplete]="professionalAutocomplete" placeholder="{{ t('Select para-professional') }}">
+            <mat-label>{{ t('Which animal-health professional carried out the tests') }}?</mat-label>
+            <input type="text" aria-label="{{ t('Select animal-health professional') }}" matInput [formControl]="professionalControl"
+              [matAutocomplete]="professionalAutocomplete" placeholder="{{ t('Select animal-health professional') }}">
             <mat-autocomplete #professionalAutocomplete="matAutocomplete" [displayWith]="displayProfessionalFn"
               (optionSelected)="updateSelectedProfessional($event)">
               <mat-option *ngFor="let professional of filteredProfessionals | async" [value]="professional">
                 {{ professional.name }}
               </mat-option>
             </mat-autocomplete>
-            <mat-hint>{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new Para-Professional') }}</mat-hint>
+            <mat-hint>{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new Animal-Health Professional') }}</mat-hint>
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{validation: 'required', message: 'Para-professional is required', control: testForm.controls['professionalId']}"></ng-container>
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Animal-Health professional is required', control: testForm.controls['professionalId']}"></ng-container>
 
           <div *ngIf="newProfessional" @expandCollapse>
             <app-add-para-professional (close)="onAddProfessionalClosed()"></app-add-para-professional>

@@ -38,6 +38,7 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
                         .ThenInclude(e => e.Country)
                 .Include(x => x.Disease)
                 .Include(x => x.Species)
+                // .Include(x => x.ReportStatus)
                 .Include(x => x.DiagnosticTests.Where(t => !t.IsDeleted))
                     .ThenInclude(t => t.Professional)
                 .Include(x => x.Medications.Where(m => !m.IsDeleted))
@@ -79,6 +80,8 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
             HumansMortality = e.HumansMortality,
             IsOngoing = e.IsOngoing,
             IsVerified = e.IsVerified,
+            CvoComment = e.CvoComment,
+            ReportStatus = e.ReportStatus,
             StampingOut = e.StampingOut,
             DestructionOfCorpses = e.DestructionOfCorpses,
             Disinfection = e.Disinfection,

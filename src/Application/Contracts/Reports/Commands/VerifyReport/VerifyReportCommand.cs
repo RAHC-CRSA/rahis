@@ -3,11 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
+using RegionalAnimalHealth.Domain.Enums;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.VerifyReport;
 public class VerifyReportCommand : IRequest<Result>
 {
     public long Id { get; set; }
+    public string? CvoComment { get; set; }
+    public bool IsVerified { get; set; }
+    public ReportStatus ReportStatus { get; set; }
 }
 
 public class VerifyReportCommandHandler : IRequestHandler<VerifyReportCommand, Result>
@@ -29,7 +33,7 @@ public class VerifyReportCommandHandler : IRequestHandler<VerifyReportCommand, R
             if (report == null)
                 return Result.Failure(new List<string> { "Report not found." });
 
-            report.Verify();
+            report.Verify(request.CvoComment, request.IsVerified, request.ReportStatus);
             _context.Reports.Update(report);
             await _context.SaveChangesAsync(cancellationToken);
 

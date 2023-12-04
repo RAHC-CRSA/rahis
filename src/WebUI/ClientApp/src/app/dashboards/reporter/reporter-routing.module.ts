@@ -32,6 +32,13 @@ const routes: Routes = [
                             ).then((m) => m.CreateReportModule),
                     },
                     {
+                        path: 'create/:id',
+                        loadChildren: () =>
+                            import(
+                                'app/views/reports/create-report/create-report.module'
+                            ).then((m) => m.CreateReportModule),
+                    },
+                    {
                         path: 'create-confirmation',
                         loadChildren: () =>
                             import(
@@ -39,11 +46,18 @@ const routes: Routes = [
                             ).then((m) => m.CreateConfirmationModule),
                     },
                     {
-                        path: 'review',
+                        path: 'list',
                         loadChildren: () =>
                             import(
-                                'app/views/reports/review/review.module'
-                            ).then((m) => m.ReviewModule),
+                                'app/views/reports/reports-list/reports-list.module'
+                            ).then((m) => m.ReportsListModule),
+                    },
+                    {
+                        path: 'view/:id',
+                        loadChildren: () =>
+                            import(
+                                'app/views/reports/view-report/view-report.module'
+                            ).then((m) => m.ViewReportModule),
                     },
                 ],
             },

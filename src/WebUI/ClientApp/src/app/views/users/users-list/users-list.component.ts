@@ -67,6 +67,7 @@ export class UsersListComponent {
             this.dataSource = new MatTableDataSource(items);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+            console.log({users: items})
         });
 
         this.loading$ = this.store.select(getUsersLoading);

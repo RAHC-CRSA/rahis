@@ -12,6 +12,7 @@ import { ReportState } from 'app/modules/reports/store';
 import { deleteReport, loadReports } from 'app/modules/reports/store/actions';
 import {
     getFeedback,
+    getRejectedReports,
     getReports,
     getReportsLoaded,
     getReportsLoading,
@@ -20,6 +21,7 @@ import {
 import {
     IDeleteReportCommand,
     ReportListDto,
+    ReportStatus,
     ServerResponse,
 } from 'app/web-api-client';
 import { Observable } from 'rxjs';
@@ -36,10 +38,11 @@ export class ReportsListComponent {
         'occurrenceTitle',
         'location',
         'isVerified',
+        'reportStatus',
         'exposed',
         'infected',
         'mortality',
-        'created',
+        'updated',
         'actions',
     ];
     dataSource: MatTableDataSource<ReportListDto>;
@@ -48,10 +51,13 @@ export class ReportsListComponent {
 
     roles: string[];
     canCreateReport: boolean;
+    canCommentOnReport: boolean;
+    canDeleteReport: boolean;
     reports$: Observable<ReportListDto[] | null | undefined>;
     loading$: Observable<boolean>;
     loaded$: Observable<boolean>;
     feedback$: Observable<ServerResponse | null | undefined>;
+    ReportStatus: ReportStatus;
 
     constructor(
         private store: Store<ReportState>,
@@ -72,11 +78,19 @@ export class ReportsListComponent {
                     this.roles.includes('Super Admin') ||
                     this.roles.includes('Reporter');
 
+                this.canCommentOnReport =
+                    this.roles.includes('Chief Veterinary Officer') ||
+                    this.roles.includes('Regional Animal Health Officer');
+
+                this.canDeleteReport =
+                    this.roles.includes('Admim') ||
+                    this.roles.includes('Super Admin');
+
                 let verified: boolean | null | undefined = undefined;
-                if (user.roles.includes('Chief Veterinary Officer'))
-                    verified = false;
-                else if (user.roles.includes('Regional Animal Health Officer'))
-                    verified = true;
+                // if (user.roles.includes('Chief Veterinary Officer'))
+                //     verified = false;
+                // else if (user.roles.includes('Regional Animal Health Officer'))
+                //     verified = true;
 
                 const payload = {
                     isVerified: verified,
@@ -84,12 +98,19 @@ export class ReportsListComponent {
                 };
 
                 this.store.dispatch(loadReports({ payload }));
-                this.reports$ = user.roles.includes('Chief Veterinary Officer')
+                this.reports$ = this.store.select(getReports);
+                this.reports$ = user.roles.includes('Reporter')
+                    ? this.store.select(getRejectedReports)
+                    : user.roles.includes('Chief Veterinary Officer')
                     ? this.store.select(getUnverifiedReports)
                     : this.store.select(getReports);
+                // this.reports$ = user.roles.includes('Chief Veterinary Officer')
+                //     ? this.store.select(getUnverifiedReports)
+                //     : this.store.select(getReports);
             }
         });
         this.reports$.subscribe((items) => {
+            console.log({reports: items})
             this.dataSource = new MatTableDataSource(items);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;

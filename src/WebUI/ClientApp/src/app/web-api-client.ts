@@ -5011,6 +5011,8 @@ export class ReportDto implements IReportDto {
     humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
+    reportStatus?: ReportStatus | undefined;
+    cvoComment?: string | undefined;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
     disinfection?: boolean;
@@ -5061,6 +5063,8 @@ export class ReportDto implements IReportDto {
             this.humansMortality = _data["humansMortality"];
             this.isOngoing = _data["isOngoing"];
             this.isVerified = _data["isVerified"];
+            this.reportStatus = _data["reportStatus"];
+            this.cvoComment = _data["cvoComment"];
             this.stampingOut = _data["stampingOut"];
             this.destructionOfCorpses = _data["destructionOfCorpses"];
             this.disinfection = _data["disinfection"];
@@ -5123,6 +5127,8 @@ export class ReportDto implements IReportDto {
         data["humansMortality"] = this.humansMortality;
         data["isOngoing"] = this.isOngoing;
         data["isVerified"] = this.isVerified;
+        data["reportStatus"] = this.reportStatus;
+        data["cvoComment"] = this.cvoComment;
         data["stampingOut"] = this.stampingOut;
         data["destructionOfCorpses"] = this.destructionOfCorpses;
         data["disinfection"] = this.disinfection;
@@ -5178,6 +5184,8 @@ export interface IReportDto {
     humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
+    reportStatus?: ReportStatus | undefined;
+    cvoComment?: string | undefined;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
     disinfection?: boolean;
@@ -5194,6 +5202,12 @@ export interface IReportDto {
     diagnosticTests?: DiagnosticTestDto[];
     vaccinated?: boolean;
     vaccinations?: VaccinationDto[];
+}
+
+export enum ReportStatus {
+    Pending = 0,
+    Approved = 1,
+    Rejected = 2,
 }
 
 export class MedicationDto implements IMedicationDto {
@@ -5326,7 +5340,7 @@ export class CreateReportCommand implements ICreateReportCommand {
     humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
-    reportType?: ReportType;
+    reportType?: ReportType | undefined;
     longitude?: number | undefined;
     latitude?: number | undefined;
     stampingOut?: boolean;
@@ -5487,7 +5501,7 @@ export interface ICreateReportCommand {
     humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
-    reportType?: ReportType;
+    reportType?: ReportType | undefined;
     longitude?: number | undefined;
     latitude?: number | undefined;
     stampingOut?: boolean;
@@ -5709,11 +5723,13 @@ export class ReportListDto implements IReportListDto {
     id?: number;
     occurrenceTitle?: string;
     isVerified?: boolean;
+    reportStatus?: ReportStatus | undefined;
     exposed?: number;
     infected?: number;
     mortality?: number;
     location?: string;
     created?: string;
+    lastModified?: string;
 
     constructor(data?: IReportListDto) {
         if (data) {
@@ -5729,11 +5745,13 @@ export class ReportListDto implements IReportListDto {
             this.id = _data["id"];
             this.occurrenceTitle = _data["occurrenceTitle"];
             this.isVerified = _data["isVerified"];
+            this.reportStatus = _data["reportStatus"];
             this.exposed = _data["exposed"];
             this.infected = _data["infected"];
             this.mortality = _data["mortality"];
             this.location = _data["location"];
             this.created = _data["created"];
+            this.lastModified = _data["lastModified"];
         }
     }
 
@@ -5749,11 +5767,13 @@ export class ReportListDto implements IReportListDto {
         data["id"] = this.id;
         data["occurrenceTitle"] = this.occurrenceTitle;
         data["isVerified"] = this.isVerified;
+        data["reportStatus"] = this.reportStatus;
         data["exposed"] = this.exposed;
         data["infected"] = this.infected;
         data["mortality"] = this.mortality;
         data["location"] = this.location;
         data["created"] = this.created;
+        data["lastModified"] = this.lastModified;
         return data;
     }
 }
@@ -5762,11 +5782,13 @@ export interface IReportListDto {
     id?: number;
     occurrenceTitle?: string;
     isVerified?: boolean;
+    reportStatus?: ReportStatus | undefined;
     exposed?: number;
     infected?: number;
     mortality?: number;
     location?: string;
     created?: string;
+    lastModified?: string;
 }
 
 export class ReportsAnalyticsDto implements IReportsAnalyticsDto {
@@ -5927,6 +5949,9 @@ export interface ISendNotificationCommand {
 
 export class VerifyReportCommand implements IVerifyReportCommand {
     id?: number;
+    cvoComment?: string | undefined;
+    isVerified?: boolean;
+    reportStatus?: ReportStatus;
 
     constructor(data?: IVerifyReportCommand) {
         if (data) {
@@ -5940,6 +5965,9 @@ export class VerifyReportCommand implements IVerifyReportCommand {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.cvoComment = _data["cvoComment"];
+            this.isVerified = _data["isVerified"];
+            this.reportStatus = _data["reportStatus"];
         }
     }
 
@@ -5953,12 +5981,18 @@ export class VerifyReportCommand implements IVerifyReportCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["cvoComment"] = this.cvoComment;
+        data["isVerified"] = this.isVerified;
+        data["reportStatus"] = this.reportStatus;
         return data;
     }
 }
 
 export interface IVerifyReportCommand {
     id?: number;
+    cvoComment?: string | undefined;
+    isVerified?: boolean;
+    reportStatus?: ReportStatus;
 }
 
 export class CommunityDto implements ICommunityDto {

@@ -122,9 +122,9 @@ public class ApplicationDbContextInitialiser
                 var transboundaryDiseases = new List<TransboundaryDisease>();
 
                 // Common diseases
-                classification = "Common Diseases";
+                classification = "Caprine Diseases";
 
-                var commonSpecies = Species.Create("Common");
+                var commonSpecies = Species.Create("Caprine");
                 var commonDiseases = new List<Disease>
                 {
                     Disease.Create("Foot-and-mouth disease", "", classification),
@@ -142,9 +142,9 @@ public class ApplicationDbContextInitialiser
                 await _context.Diseases.AddRangeAsync(commonDiseases);
 
                 // Bovidae diseases
-                classification = "Bovidae Diseases";
+                classification = "Bovine Diseases";
 
-                var bovidaeSpecies = Species.Create("Bovidae");
+                var bovidaeSpecies = Species.Create("Bovine");
                 var bovidaeDiseases = new List<Disease>
                 {
                     Disease.Create("Blackleg", "", classification),
@@ -176,9 +176,9 @@ public class ApplicationDbContextInitialiser
                 await _context.Diseases.AddRangeAsync(lagomorphsDiseases);
 
                 // Sheep and goats diseases
-                classification = "Sheep and goats diseases";
+                classification = "Ovine";
 
-                var sheepAndGoatsSpecies = Species.Create("Sheep and Goats");
+                var sheepAndGoatsSpecies = Species.Create("Ovine");
                 var sheepAndGoatsDiseases = new List<Disease>
                 {
                     Disease.Create("Ovine brucellosis", "", classification),
@@ -213,9 +213,9 @@ public class ApplicationDbContextInitialiser
                 await _context.Diseases.AddRangeAsync(equineDiseases);
 
                 // Pigs diseases
-                classification = "Pigs diseases";
+                classification = "Swine diseases";
 
-                var pigsSpecies = Species.Create("Pigs");
+                var pigsSpecies = Species.Create("Swine");
                 var pigsDiseases = new List<Disease>
                 {
                     Disease.Create("Classical swine fever", "", classification),
@@ -326,15 +326,17 @@ public class ApplicationDbContextInitialiser
             {
                 var species = new List<Species>();
                 species.AddRange(new List<Species> {
-                    Species.Create("Common"),
-                    Species.Create("Bovidae"),
+                    Species.Create("Caprine"),
+                    Species.Create("Bovine"),
                     Species.Create("Lagomorphs"),
-                    Species.Create("Sheep and Goats"),
+                    Species.Create("Ovine"),
                     Species.Create("Equine"),
-                    Species.Create("Pigs"),
+                    Species.Create("Swine"),
                     Species.Create("Fish"),
                     Species.Create("Poultry"),
-                    Species.Create("Bees"),
+                    Species.Create("Avidae"),
+                    Species.Create("Camelidae"),
+                    Species.Create("Canine"),
                 });
 
                 species = species.OrderBy(e => e.Name).ToList();

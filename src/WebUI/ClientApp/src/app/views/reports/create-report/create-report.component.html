@@ -76,8 +76,8 @@
               (submit)="next($event)"></app-infection-info>
           </mat-step>
 
-          <mat-step #reportFormTreatmentInfo *ngIf="formStep == 7">
-            <ng-template matStepLabel>{{ t('Treatment') }}</ng-template>
+          <mat-step #reportFormTreatmentInfo *ngIf="formStep == 6">
+            <ng-template matStepLabel>{{ t('Control Measures') }}</ng-template>
 
             <app-treatment-info [formData]="formValues" (previous)="previous()"
               (submit)="next($event)"></app-treatment-info>
@@ -95,6 +95,13 @@
 
             <app-vaccinations [formData]="formValues" (previous)="previous()"
               (submit)="next($event)"></app-vaccinations>
+          </mat-step>
+
+          <mat-step #reportFormSummary *ngIf="formStep == 9">
+            <ng-template matStepLabel>{{ t('Confirmation') }}</ng-template>
+
+            <app-report-summary [formData]="formValues" (previous)="previous()"
+              (submit)="next($event)"></app-report-summary>
           </mat-step>
 
         </mat-vertical-stepper>

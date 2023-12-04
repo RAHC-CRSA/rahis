@@ -5,12 +5,14 @@ using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Domain.Entities.Reports;
+using RegionalAnimalHealth.Domain.Enums;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReports;
 public class GetReportsQuery : IRequest<(Result, List<ReportListDto>?)>
 {
     public bool? IsVerified { get; set; }
     public long? CountryId { get; set; }
+    // public ReportStatus? ReportStatus { get; set; }
 }
 
 public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, List<ReportListDto>?)>
@@ -32,6 +34,7 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, 
                 .Include(x => x.Occurrence)
                     .ThenInclude(x => x.Reports.Where(r => !r.IsDeleted))
                         .ThenInclude(e => e.Disease)
+                // .Include(x => x.ReportStatus)
                 .Include(x => x.Occurrence)
                     .ThenInclude(o => o.Region)
                         .ThenInclude(e => e.Country)
@@ -60,9 +63,11 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, 
             IsVerified = e.IsVerified,
             Exposed = e.NumberExposed,
             Infected = e.NumberInfected,
+            ReportStatus = e.ReportStatus,
             Mortality = e.Mortality,
             Location = $"{e.Occurrence.Region.Name}, {e.Occurrence.Region.Country.Name}",
-            Created = DateOnly.FromDateTime(e.Created).ToString("MMMM dd, yyyy")
+            Created = DateOnly.FromDateTime(e.Created).ToString("MMMM dd, yyyy"),
+            LastModified = DateOnly.FromDateTime(e.LastModified ?? e.Created).ToString("MMMM dd, yyyy"),
         };
     }
 }

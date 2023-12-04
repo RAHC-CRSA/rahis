@@ -16,6 +16,7 @@ public class Report : BaseAuditableEntity<long>
     public bool IsNotified { get; private set; }
     public DateTime NotificationSent { get; private set; }
     public ReportType ReportType { get; private set; }
+    public ReportStatus ReportStatus { get; private set; }
     public decimal? Longitude { get; private set; }
     public decimal? Latitude { get; private set; }
     public bool StampingOut { get; private set; }
@@ -30,6 +31,7 @@ public class Report : BaseAuditableEntity<long>
     public string? MovementControlMeasures { get; private set; }
     public bool Treatment { get; private set; }
     public string? TreatmentDetails { get; private set; }
+    public string? CvoComment { get; private set; }
 
     public long OccurrenceId { get; private set; }
     public Occurrence Occurrence { get; private set; }
@@ -141,10 +143,12 @@ public class Report : BaseAuditableEntity<long>
         Treatment = treatment;
     }
 
-    public void Verify()
+    public void Verify(string? cvoComment, bool verified, ReportStatus? reportStatus)
     {
-        IsVerified = true;
         LastModified = DateTime.UtcNow;
+        CvoComment = cvoComment;
+        IsVerified = verified;
+        ReportStatus = reportStatus ?? ReportStatus.Pending;
     }
 
     public void Delete()

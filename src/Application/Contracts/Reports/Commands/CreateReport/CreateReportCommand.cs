@@ -28,7 +28,7 @@ public class CreateReportCommand : IRequest<(Result, ReportDto?)>
     public int? HumansMortality { get; set; }
     public bool IsOngoing { get; set; }
     public bool IsVerified { get; set; }
-    public ReportType ReportType { get; set; }
+    public ReportType? ReportType { get; set; }
     public decimal? Longitude { get; set; }
     public decimal? Latitude { get; set; }
     public bool StampingOut { get; set; }
