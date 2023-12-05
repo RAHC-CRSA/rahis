@@ -6444,8 +6444,7 @@
     "Country": "Gambia",
     "Code": "GM",
     "Flag": "https://flagsapi.com/GM/flat/64.png",
-    "Regions": 
-    [
+    "Regions": [
     {"Country": "Gambia","Region": "Banjul","Municipality": "Banjul City","District": "Half Die"},
     {"Country": "Gambia","Region": "Banjul","Municipality": "Banjul City","District": "Jollof Town"},
     {"Country": "Gambia","Region": "Banjul","Municipality": "Banjul City","District": "Portugiese Town"},
@@ -9787,1717 +9786,526 @@
     "Country": "Cote d'Ivoire",
     "Code": "CI",
     "Flag": "https://flagsapi.com/CI/flat/64.png",
-    "Regions": [
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Abidjan",
-        "Community": "Abobo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Abidjan",
-        "Community": "Adjame"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Abidjan",
-        "Community": "attecoube"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Abidjan",
-        "Community": "Cocody"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Abidjan",
-        "Community": "Koumassi"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Abidjan",
-        "Community": "Marcory"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Abidjan",
-        "Community": "Plateau"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Abidjan",
-        "Community": "Port Bouet"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Abidjan",
-        "Community": "Treichville"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Abidjan",
-        "Community": "Yopougon"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Anyama",
-        "Community": "Anyama"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Bingerville",
-        "Community": "Bingerville"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ABIDJAN",
-        "District": "Songon",
-        "Community": "Songon"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ALEPE",
-        "District": "Aleppo",
-        "Community": "Alepe"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "ALEPE",
-        "District": "Oghwyapo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "DABOU",
-        "District": "Dabu",
-        "Community": "Dabu"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "DABOU",
-        "District": "Sikensi",
-        "Community": "Sikensi"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "GRAND LAHOU",
-        "District": "Grand Lahou",
-        "Community": "Grand Lahou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "JACQUEVILLE",
-        "District": "Jacqueville",
-        "Community": "Jacqueville"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "TIASSALE",
-        "District": "Tiassale",
-        "Community": "Tiassalé"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAGOONS",
-        "Municipality": "TIASSALE",
-        "District": "Taabo",
-        "Community": "Taabo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Dikodougou",
-        "Community": "Dikodougou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Guiembe",
-        "Community": "Guiembe"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Karakoro",
-        "Community": "Karakoro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Korhogo",
-        "Community": "Korhogo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Komborodougou",
-        "Community": "Komborodougou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "M'bengue",
-        "Community": "M'bengue"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Napieledougou",
-        "Community": "Napieledougou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Niofoin",
-        "Community": "Niofoin"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Tioroniaradougou",
-        "Community": "Tioroniaradougou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Sinematiali",
-        "Community": "Sinematiali"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Sirasso",
-        "Community": "Sirasso"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "gbon",
-        "Community": "gbon"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Boundiali",
-        "Community": "Boundiali"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "Kassere",
-        "Community": "Kassere"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "kolia",
-        "Community": "kolia"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "BOUNDIALI",
-        "District": "kuto",
-        "Community": "kuto"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "FERKESSEDOUGOU",
-        "District": "Diawala",
-        "Community": "Diawala"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "FERKESSEDOUGOU",
-        "District": "Ferkessedougou",
-        "Community": "Ferkessedougou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "FERKESSEDOUGOU",
-        "District": "Kong",
-        "Community": "Kong"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "FERKESSEDOUGOU",
-        "District": "kumbala",
-        "Community": "kumbala"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "FERKESSEDOUGOU",
-        "District": "niello",
-        "Community": "niello"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "FERKESSEDOUGOU",
-        "District": "Ouangolodougou",
-        "Community": "Ouangolodougou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "TENGERLA",
-        "District": "Kanakono",
-        "Community": "Kanakono"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SAVANNES",
-        "Municipality": "TENGERLA",
-        "District": "Tengrela",
-        "Community": "Tengrela"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-COMOE",
-        "Municipality": "ABOISSO",
-        "District": "Aboisso",
-        "Community": "Aboisso"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-COMOE",
-        "Municipality": "ABOISSO",
-        "District": "Ayame",
-        "Community": "Ayame"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-COMOE",
-        "Municipality": "ABOISSO",
-        "District": "Bianouan"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-COMOE",
-        "Municipality": "ABOISSO",
-        "District": "Mafere",
-        "Community": "Maféré"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-COMOE",
-        "Municipality": "ABOISSO",
-        "District": "Tiapoum",
-        "Community": "Tiapoum"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-COMOE",
-        "Municipality": "ADIAKE",
-        "District": "Adiake",
-        "Community": "Adiake"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-COMOE",
-        "Municipality": "ADIAKE",
-        "District": "Assinie-mafia"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-COMOE",
-        "Municipality": "ADIAKE",
-        "District": "Etuemud",
-        "Community": "etueboue"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-COMOE",
-        "Municipality": "GRAND BASSAM",
-        "District": "Grand Bassam",
-        "Community": "Grand Bassam"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-COMOE",
-        "Municipality": "GRAND BASSAM",
-        "District": "Bonua",
-        "Community": "Bonua"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "DALOA",
-        "District": "Bediala",
-        "Community": "Bediala"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "DALOA",
-        "District": "daloa",
-        "Community": "daloa"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "DALOA",
-        "District": "Gadouan"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "DALOA",
-        "District": "Gboguhe",
-        "Community": "Gboguhe"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "DALOA",
-        "District": "Zaibo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "DALOA",
-        "District": "Zoukougbeu",
-        "Community": "Zoukougbeu"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "ISSIA",
-        "District": "Boguedia"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "ISSIA",
-        "District": "Iboguhe"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "ISSIA",
-        "District": "issia",
-        "Community": "issia"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "ISSIA",
-        "District": "Saoua",
-        "Community": "Saoua"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "WOW",
-        "District": "Dania"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "WOW",
-        "District": "Seitifla"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "HAUT-SASSANDRA",
-        "Municipality": "WOW",
-        "District": "vavua",
-        "Community": "vavua"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "AGBOVILLE",
-        "District": "Agboville",
-        "Community": "Agboville"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "AGBOVILLE",
-        "District": "Azagie",
-        "Community": "Azaguie"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "AGBOVILLE",
-        "District": "cechi"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "AGBOVILLE",
-        "District": "Great Morie"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "AGBOVILLE",
-        "District": "Oress-krobou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "AGBOVILLE",
-        "District": "Rubino",
-        "Community": "Rubino"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "ADZOPE",
-        "District": "adzope",
-        "Community": "Adzope"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "ADZOPE",
-        "District": "Agou",
-        "Community": "Agou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "ADZOPE",
-        "District": "Affery",
-        "Community": "Affery"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "ADZOPE",
-        "District": "Becedi Brignan"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "ADZOPE",
-        "District": "Akoupe",
-        "Community": "Akoupe"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "ADZOPE",
-        "District": "Assikoi"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "AGNEBY",
-        "Municipality": "ADZOPE",
-        "District": "Yakasse-attobrou",
-        "Community": "Yakasse-Attobrou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM COMOE",
-        "Municipality": "ABENGOUROU",
-        "District": "Abengourou",
-        "Community": "Abengourou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM COMOE",
-        "Municipality": "ABENGOUROU",
-        "District": "Bettie",
-        "Community": "Bettie"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM COMOE",
-        "Municipality": "ABENGOUROU",
-        "District": "deniable",
-        "Community": "Niable"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM COMOE",
-        "Municipality": "AGNIBILEKROU",
-        "District": "Agnibilekrou",
-        "Community": "Agnibilekrou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "BOUAKE",
-        "District": "diabo",
-        "Community": "diabo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "BOUAKE",
-        "District": "Djebonoua",
-        "Community": "Djebonoua"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "BOUAKE",
-        "District": "Brobo",
-        "Community": "Brobo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "BOUAKE",
-        "District": "Botro",
-        "Community": "Botro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "BOUAKE",
-        "District": "Bouake",
-        "Community": "Bouake"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "BOUAKE",
-        "District": "Languibonou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "BEOUMI",
-        "District": "Beoumi",
-        "Community": "Beoumi"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "BEOUMI",
-        "District": "Bodokro",
-        "Community": "Bodokro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "BEOUMI",
-        "District": "Ando-kekrenou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "BEOUMI",
-        "District": "Kondrobo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "DABAKALA",
-        "District": "Bassawa",
-        "Community": "Bassawa"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "DABAKALA",
-        "District": "bonieredougou",
-        "Community": "bonieredougou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "DABAKALA",
-        "District": "Dabakala",
-        "Community": "Dabakala"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "DABAKALA",
-        "District": "Foumbolo",
-        "Community": "Foumbolo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "DABAKALA",
-        "District": "Satama-sokoro",
-        "Community": "Satama-Sokoro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "DABAKALA",
-        "District": "Satama-sokouro",
-        "Community": "Satama-Sokouro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "KATIOLA",
-        "District": "Fronan",
-        "Community": "Fronan"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "KATIOLA",
-        "District": "Katiola",
-        "Community": "Katiola"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "KATIOLA",
-        "District": "niakaramandougou",
-        "Community": "niakaramandougou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "KATIOLA",
-        "District": "Tafire",
-        "Community": "Tafire"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "KATIOLA",
-        "District": "tortiya",
-        "Community": "tortiya"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "KATIOLA",
-        "District": "stamp"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "SAKASSOU",
-        "District": "Sakasou",
-        "Community": "Sakasou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BANDAMA VALLEY",
-        "Municipality": "SAKASSOU",
-        "District": "Tomoudi-sakassou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "MAN",
-        "District": "Man",
-        "Community": "Man"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "MAN",
-        "District": "facobly",
-        "Community": "facobly"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "MAN",
-        "District": "Kouibly",
-        "Community": "Kouibly"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "MAN",
-        "District": "Logouale",
-        "Community": "Logoualé"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "MAN",
-        "District": "Sanguine",
-        "Community": "Bloody"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "MAN",
-        "District": "Semian"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "MAN",
-        "District": "Niadrou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "MAN",
-        "District": "Totrodrou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "BANGOLO",
-        "District": "bangolo",
-        "Community": "bangolo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "BANGOLO",
-        "District": "dieouzon"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "BANGOLO",
-        "District": "Zeo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "BANGOLO",
-        "District": "Zou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "BIANKOUMA",
-        "District": "Biankouma",
-        "Community": "Biankouma"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "BIANKOUMA",
-        "District": "Gbonne",
-        "Community": "Gbonné"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "BIANKOUMA",
-        "District": "Sipilou",
-        "Community": "Sipilou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "DANANE",
-        "District": "danane",
-        "Community": "Danane"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "DANANE",
-        "District": "Bin-houye",
-        "Community": "Bin-Houye"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "DANANE",
-        "District": "Zouan-hounien",
-        "Community": "Zouan-Hounien"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MOUNTAINS",
-        "Municipality": "DANANE",
-        "District": "mapleu"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-BANDAMA",
-        "Municipality": "DIVO",
-        "District": "DIVO",
-        "Community": "Divo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-BANDAMA",
-        "Municipality": "DIVO",
-        "District": "FRESCO",
-        "Community": "Fresco"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-BANDAMA",
-        "Municipality": "DIVO",
-        "District": "GUITRY",
-        "Community": "Guitry"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-BANDAMA",
-        "Municipality": "DIVO",
-        "District": "HIRE",
-        "Community": "Hire"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-BANDAMA",
-        "Municipality": "DIVO",
-        "District": "YOCOBOUE"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-BANDAMA",
-        "Municipality": "LAKOTA",
-        "District": "LAKOTA",
-        "Community": "Lakota"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-BANDAMA",
-        "Municipality": "LAKOTA",
-        "District": "NIAMBEZARIA"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "SOUTH-BANDAMA",
-        "Municipality": "LAKOTA",
-        "District": "ZIKISSO",
-        "Community": "Zikisso"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "CHEESE",
-        "Municipality": "GAGNOA",
-        "District": "Bayota"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "CHEESE",
-        "Municipality": "GAGNOA",
-        "District": "Gagnoa",
-        "Community": "Gagnoa"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "CHEESE",
-        "Municipality": "GAGNOA",
-        "District": "Gnagbodougnoa"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "CHEESE",
-        "Municipality": "GAGNOA",
-        "District": "Guiberoua",
-        "Community": "Guiberoua"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "CHEESE",
-        "Municipality": "GAGNOA",
-        "District": "Ouragahio",
-        "Community": "Ouragahio"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "CHEESE",
-        "Municipality": "OUME",
-        "District": "dienefla",
-        "Community": "Diegonefla"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "CHEESE",
-        "Municipality": "OUME",
-        "District": "Oume",
-        "Community": "Oume"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAKES",
-        "Municipality": "YAMOUSSOUKRO",
-        "District": "Yamoussoukro",
-        "Community": "Yamoussoukro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAKES",
-        "Municipality": "YAMOUSSOUKRO",
-        "District": "Didievi",
-        "Community": "Didievi"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAKES",
-        "Municipality": "YAMOUSSOUKRO",
-        "District": "Attiegouakro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAKES",
-        "Municipality": "TIEBISSOU",
-        "District": "Tiebissou",
-        "Community": "Tiebissou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAKES",
-        "Municipality": "TIEBISSOU",
-        "District": "Tie-n'diekro",
-        "Community": "Tié-N'diekro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAKES",
-        "Municipality": "TOUMODI",
-        "District": "Toumodi",
-        "Community": "Toumodi"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAKES",
-        "Municipality": "TOUMODI",
-        "District": "Jekanou",
-        "Community": "Djekanou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAKES",
-        "Municipality": "TOUMODI",
-        "District": "Angola"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAKES",
-        "Municipality": "TOUMODI",
-        "District": "Kpouebo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "LAKES",
-        "Municipality": "TOUMODI",
-        "District": "Kokoumbo",
-        "Community": "Kokoumbo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "DUEKOUE",
-        "District": "DUEKOUE",
-        "Community": "Duekoue"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "DUEKOUE",
-        "District": "BAGOHOUO"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "DUEKOUE",
-        "District": "GBAPLEU"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "DUEKOUE",
-        "District": "GUEHIEBLY"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "DUEKOUE",
-        "District": "GUEZON"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "GUIGLO",
-        "District": "BLOLEQUIN",
-        "Community": "Bloléquin"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "GUIGLO",
-        "District": "GUIGLO",
-        "Community": "Guiglo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "GUIGLO",
-        "District": "TAI",
-        "Community": "Tai"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "TOULEPLEU",
-        "District": "TOULEPLEU",
-        "Community": "Toulepleu"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "TOULEPLEU",
-        "District": "BAKOUBLY"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "TOULEPLEU",
-        "District": "PEHE"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MEDIUM CAVALLY",
-        "Municipality": "TOULEPLEU",
-        "District": "TIOBLY"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BONDOUKOU",
-        "District": "Bondoukou",
-        "Community": "Bondoukou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BONDOUKOU",
-        "District": "Goumere"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BONDOUKOU",
-        "District": "Tobacco"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BONDOUKOU",
-        "District": "Taoudi"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BONDOUKOU",
-        "District": "Sorobango"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BONDOUKOU",
-        "District": "Sapli"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BONDOUKOU",
-        "District": "Sandegue",
-        "Community": "Sandegue"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BOUNA",
-        "District": "Bouna",
-        "Community": "Bouna"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BOUNA",
-        "District": "Doropo",
-        "Community": "Doropo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BOUNA",
-        "District": "nassian",
-        "Community": "nassian"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "BOUNA",
-        "District": "Tehini",
-        "Community": "Tehini"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "TANDA",
-        "District": "Tanda",
-        "Community": "Tanda"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "TANDA",
-        "District": "Assuefry",
-        "Community": "Assuefry"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "TANDA",
-        "District": "Kouassi Datekro",
-        "Community": "Kouassi Datekro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "TANDA",
-        "District": "Transua",
-        "Community": "Transua"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "ZANZAN",
-        "Municipality": "TANDA",
-        "District": "Tankess"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAFFING",
-        "Municipality": "TOUBA",
-        "District": "BOOKO",
-        "Community": "Booko"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAFFING",
-        "Municipality": "TOUBA",
-        "District": "BOROTOU",
-        "Community": "Borotou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAFFING",
-        "Municipality": "TOUBA",
-        "District": "GUINTEGUELA",
-        "Community": "Guinteguela"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAFFING",
-        "Municipality": "TOUBA",
-        "District": "KOONAN",
-        "Community": "Koonan"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAFFING",
-        "Municipality": "TOUBA",
-        "District": "KORO",
-        "Community": "Koro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAFFING",
-        "Municipality": "TOUBA",
-        "District": "OUANINOU",
-        "Community": "Ouaninou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAFFING",
-        "Municipality": "TOUBA",
-        "District": "TOUBA",
-        "Community": "Touba"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAFFING",
-        "Municipality": "TOUBA",
-        "District": "FOUNGBESSO"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "SAN PEDRO",
-        "District": "GRAND BEREBY",
-        "Community": "Grand Bereby"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "SAN PEDRO",
-        "District": "SAN PEDRO",
-        "Community": "San Pedro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "SASSANDRA",
-        "District": "GUEYO"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "SASSANDRA",
-        "District": "SASSANDRA",
-        "Community": "Sassandra"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "SASSANDRA",
-        "District": "SAGO"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "SOUBER",
-        "District": "BUYO",
-        "Community": "Buyo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "SOUBER",
-        "District": "GRAND ZATTRY",
-        "Community": "Grand Zattry"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "SOUBER",
-        "District": "MEAGUI",
-        "Community": "Meagui"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "SOUBER",
-        "District": "OKROUYO"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "SOUBER",
-        "District": "SOUBER",
-        "Community": "Soubre"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "TABOO",
-        "District": "GRABO",
-        "Community": "Grabo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "BAS-SASSANDRA",
-        "Municipality": "TABOO",
-        "District": "TABOO",
-        "Community": "Taboo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "DIMBOKRO",
-        "District": "Dimbokro",
-        "Community": "Dimbokro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "BONGOUANOU",
-        "District": "Anoumaba",
-        "Community": "Anoumaba"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "BONGOUANOU",
-        "District": "arrah",
-        "Community": "arrah"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "BONGOUANOU",
-        "District": "Bongouanou",
-        "Community": "Bongouanou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "BONGOUANOU",
-        "District": "M'batto",
-        "Community": "M'batto"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "BONGOUANOU",
-        "District": "Tiemelekro",
-        "Community": "Tiemelekro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "BOCANDA",
-        "District": "Bocanda",
-        "Community": "Bocanda"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "DAOUKRO",
-        "District": "Daoukro",
-        "Community": "Daoukro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "DAOUKRO",
-        "District": "Ettrokro",
-        "Community": "Ettrokro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "DAOUKRO",
-        "District": "Kouassi Kouassikro",
-        "Community": "Kouassi-Kouassikro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "DAOUKRO",
-        "District": "Or her",
-        "Community": "Or her"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "M'BAHIAKRO",
-        "District": "Mbahiakro",
-        "Community": "Mbahiakro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "M'BAHIAKRO",
-        "District": "Banguera",
-        "Community": "Banguera"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "M'BAHIAKRO",
-        "District": "Koffi Amonkro",
-        "Community": "Koffi Amonkro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "N'ZI COMOE",
-        "Municipality": "M'BAHIAKRO",
-        "District": "Prikro",
-        "Community": "Prikro"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MARAHOUE",
-        "Municipality": "MUFFLE",
-        "District": "Bonon",
-        "Community": "Bonon"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MARAHOUE",
-        "Municipality": "MUFFLE",
-        "District": "Gobbler",
-        "Community": "puffed up"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MARAHOUE",
-        "Municipality": "SINFRA",
-        "District": "Sinfra",
-        "Community": "Sinfra"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MARAHOUE",
-        "Municipality": "SINFRA",
-        "District": "Kouetinfla"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MARAHOUE",
-        "Municipality": "SINFRA",
-        "District": "Bazre"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MARAHOUE",
-        "Municipality": "SINFRA",
-        "District": "Konefla"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MARAHOUE",
-        "Municipality": "ZUENOULA",
-        "District": "Gohitafla",
-        "Community": "Gohitafla"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "MARAHOUE",
-        "Municipality": "ZUENOULA",
-        "District": "Zuenoula",
-        "Community": "Zuenoula"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "MANKONO",
-        "District": "dianra",
-        "Community": "dianra"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "MANKONO",
-        "District": "Kongasso",
-        "Community": "Kongasso"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "MANKONO",
-        "District": "Kounahiri",
-        "Community": "Kounahiri"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "MANKONO",
-        "District": "Mankono",
-        "Community": "Mankono"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "MANKONO",
-        "District": "Marandallah",
-        "Community": "Marandallah"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "MANKONO",
-        "District": "Sarhala",
-        "Community": "Sarhala"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "MANKONO",
-        "District": "Tieningmud",
-        "Community": "Tieningmud"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "SEGUELA",
-        "District": "Djibrosso",
-        "Community": "Djibrosso"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "SEGUELA",
-        "District": "Dualla",
-        "Community": "Dualla"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "SEGUELA",
-        "District": "Kani",
-        "Community": "Kani"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "SEGUELA",
-        "District": "masala",
-        "Community": "masala"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "SEGUELA",
-        "District": "Morondo",
-        "Community": "Morondo"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "SEGUELA",
-        "District": "Seguela",
-        "Community": "Seguela"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "SEGUELA",
-        "District": "Sify",
-        "Community": "Sified"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "WORODOUGOU",
-        "Municipality": "SEGUELA",
-        "District": "Worofla",
-        "Community": "Worofla"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Bako",
-        "Community": "Bako"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "dioulatiedougou",
-        "Community": "Dioulatiédougou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Gbeleban"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Goulia",
-        "Community": "Goulia"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Kaniasso",
-        "Community": "Kaniasso"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Madinani",
-        "Community": "Madinani"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Minignan",
-        "Community": "Minignan"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Odienne",
-        "Community": "Odienne"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Samatiguila",
-        "Community": "Samatiguila"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Seguelon",
-        "Community": "Seguelon"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Seydougou",
-        "Community": "Seydougou"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Tieme",
-        "Community": "Tieme"
-      },
-      {
-        "Country": "Cote d'Ivoire",
-        "Region": "DENGUEL",
-        "Municipality": "ODIAN",
-        "District": "Tienko",
-        "Community": "Tienko"
-      }
+    "Regions":[
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "ABOBO"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "ADJAME"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "ATTECOUBE"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "COCODY"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "KOUMASSI"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "MARCORY"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "PLATEAU"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "PORT-BOUET"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "TREICHVILLE"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "YOPOUGON"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "ANYAMA"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "BINGERVILLE"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "BROFODOUME"},
+    {"Country": "Cote d'Ivoire","Region": "ABIDJAN","Municipality": "ABIDJAN","District": "SONGON"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "ABOUDE"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "ANANGUIE"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "AGBOVILLE"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "ATTOBROU"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "AZAGUIE"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "CECHI"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "GRAND-MORIE"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "GUESSIGUIE"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "LOVIGUIE"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "ORESS-KROBOU"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "AGBOVILLE","District": "RUBINO"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "SIKENSI","District": "GOMON"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "SIKENSI","District": "SIKENSI"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "TAABO","District": "PACOBO"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "TAABO","District": "TAABO"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "TIASSALE","District": "GBOLOUVILLE"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "TIASSALE","District": "MOROKRO"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "TIASSALE","District": "N'DOUCI"},
+    {"Country": "Cote d'Ivoire","Region": "AGNEBY-TIASSA","Municipality": "TIASSALE","District": "TIASSALE"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "OUANINOU","District": "GBELO"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "OUANINOU","District": "GOUEKAN"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "OUANINOU","District": "KOONAN"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "OUANINOU","District": "OUANINOU"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "OUANINOU","District": "SABOUDOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "OUANINOU","District": "SANTA (DE OUANINOU)"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "TOUBA","District": "DIOMAN"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "TOUBA","District": "FOUNGBESSO"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "TOUBA","District": "GUINTEGUELA"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "TOUBA","District": "TOUBA"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "KORO","District": "BOOKO"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "KORO","District": "BOROTOU"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "KORO","District": "KORO"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "KORO","District": "MAHANDOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "BAFING","Municipality": "KORO","District": "NIOKOSSO"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "BOUNDIALI","District": "BAYA"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "BOUNDIALI","District": "BOUNDIALI"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "BOUNDIALI","District": "GANAONI"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "BOUNDIALI","District": "KASSERE"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "BOUNDIALI","District": "SIEMPURGO"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "KOUTO","District": "BLESSEGUE"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "KOUTO","District": "GBON"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "KOUTO","District": "KOLIA"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "KOUTO","District": "KOUTO"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "KOUTO","District": "SIANHALA"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "TENGRELA","District": "DEBETE"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "TENGRELA","District": "KANAKONO"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "TENGRELA","District": "PAPARA"},
+    {"Country": "Cote d'Ivoire","Region": "BAGOUE","Municipality": "TENGRELA","District": "TENGRELA"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "DIDIEVI","District": "BOLI"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "DIDIEVI","District": "DIDIEVI"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "DIDIEVI","District": "MOLONOU-BLE"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "DIDIEVI","District": "RAVIART"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "DIDIEVI","District": "TIE-N’DIEKRO"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "DJEKANOU","District": "BONIKRO"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "DJEKANOU","District": "DJEKANOU"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "TIEBISSOU","District": "LOMOKANKRO"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "TIEBISSOU","District": "MOLONOU"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "TIEBISSOU","District": "TIEBISSOU"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "TIEBISSOU","District": "YAKPABO-SAKASSOU"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "TOUMODI","District": "ANGODA"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "TOUMODI","District": "KOKOUMBO"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "TOUMODI","District": "KPOUEBO"},
+    {"Country": "Cote d'Ivoire","Region": "BELIER","Municipality": "TOUMODI","District": "TOUMODI"},
+    {"Country": "Cote d'Ivoire","Region": "BERE","Municipality": "DIANRA","District": "DIANRA"},
+    {"Country": "Cote d'Ivoire","Region": "BERE","Municipality": "DIANRA","District": "DIANRA-VILLAGE"},
+    {"Country": "Cote d'Ivoire","Region": "BERE","Municipality": "KOUNAHIRI","District": "KONGASSO"},
+    {"Country": "Cote d'Ivoire","Region": "BERE","Municipality": "KOUNAHIRI","District": "KOUNAHIRI"},
+    {"Country": "Cote d'Ivoire","Region": "BERE","Municipality": "MANKONO","District": "BOUANDOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "BERE","Municipality": "MANKONO","District": "MANKONO"},
+    {"Country": "Cote d'Ivoire","Region": "BERE","Municipality": "MANKONO","District": "MARANDALAH"},
+    {"Country": "Cote d'Ivoire","Region": "BERE","Municipality": "MANKONO","District": "SARHALA"},
+    {"Country": "Cote d'Ivoire","Region": "BERE","Municipality": "MANKONO","District": "TIENINGBOUE"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "BOUNA","District": "BOUKO"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "BOUNA","District": "BOUNA"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "BOUNA","District": "ONDEFIDOUO"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "BOUNA","District": "YOUNDOUO"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "DOROPO","District": "DANOA"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "DOROPO","District": "DOROPO"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "DOROPO","District": "KALAMON"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "DOROPO","District": "NIAMOUE"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "NASSIAN","District": "BOGOFA"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "NASSIAN","District": "KAKPIN"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "NASSIAN","District": "KOTOUBA"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "NASSIAN","District": "NASSIAN"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "NASSIAN","District": "SOMINASSE"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "TEHINI","District": "GOGO"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "TEHINI","District": "TEHINI"},
+    {"Country": "Cote d'Ivoire","Region": "BOUNKANI","Municipality": "TEHINI","District": "TOUGBO"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "BLOLEQUIN","District": "BLOLEQUIN"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "BLOLEQUIN","District": "DIBOKE"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "BLOLEQUIN","District": "DOKE"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "BLOLEQUIN","District": "TINHOU"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "BLOLEQUIN","District": "ZEAGLO"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "GUIGLO","District": "BEDY-GOAZON"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "GUIGLO","District": "GUIGLO"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "GUIGLO","District": "KAADE"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "GUIGLO","District": "NIZAHON"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "TAÏ","District": "TAÏ"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "TAÏ","District": "ZAGNE"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "TOULEPLEU","District": "BAKOUBLY"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "TOULEPLEU","District": "MEO"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "TOULEPLEU","District": "NEZOBLY"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "TOULEPLEU","District": "PEHE"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "TOULEPLEU","District": "TIOBLY"},
+    {"Country": "Cote d'Ivoire","Region": "CAVALLY","Municipality": "TOULEPLEU","District": "TOULEPLEU"},
+    {"Country": "Cote d'Ivoire","Region": "FOLON","Municipality": "KANIASSO","District": "GOULIA"},
+    {"Country": "Cote d'Ivoire","Region": "FOLON","Municipality": "KANIASSO","District": "KANIASSO"},
+    {"Country": "Cote d'Ivoire","Region": "FOLON","Municipality": "KANIASSO","District": "MAHANDIANA-SOKOURANI"},
+    {"Country": "Cote d'Ivoire","Region": "FOLON","Municipality": "MINIGNAN","District": "KIMBIRILA-NORD"},
+    {"Country": "Cote d'Ivoire","Region": "FOLON","Municipality": "MINIGNAN","District": "MINIGNAN"},
+    {"Country": "Cote d'Ivoire","Region": "FOLON","Municipality": "MINIGNAN","District": "SOKORO"},
+    {"Country": "Cote d'Ivoire","Region": "FOLON","Municipality": "MINIGNAN","District": "TIENKO"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BEOUMI","District": "ANDO-KEKRENOU"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BEOUMI","District": "BEOUMI"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BEOUMI","District": "BODOKRO"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BEOUMI","District": "KONDROBO"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BEOUMI","District": "LOLOBO (DE BEOUMI)"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BEOUMI","District": "MARABADIASSA"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BEOUMI","District": "N'GUESSANKRO (DE BEOUMI)"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BOTRO","District": "BOTRO"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BOTRO","District": "DIABO"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BOTRO","District": "KROFOINSOU"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BOTRO","District": "LANGUIBONOU"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BOUAKE","District": "BOUAKE"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BOUAKE","District": "BOUNDA"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BOUAKE","District": "BROBO"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BOUAKE","District": "DJEBONOUA"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "BOUAKE","District": "MAMINI"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "SAKASSOU","District": "AYAOU-SRAN"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "SAKASSOU","District": "DIBRI-ASSIRIKRO"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "SAKASSOU","District": "SAKASSOU"},
+    {"Country": "Cote d'Ivoire","Region": "GBÊKÊ","Municipality": "SAKASSOU","District": "TOUMODI-SAKASSOU"},
+    {"Country": "Cote d'Ivoire","Region": "GBÔCLE","Municipality": "FRESCO","District": "DAHIRI"},
+    {"Country": "Cote d'Ivoire","Region": "GBÔCLE","Municipality": "FRESCO","District": "FRESCO"},
+    {"Country": "Cote d'Ivoire","Region": "GBÔCLE","Municipality": "FRESCO","District": "GBAGBAM"},
+    {"Country": "Cote d'Ivoire","Region": "GBÔCLE","Municipality": "SASSANDRA","District": "DAKPADOU"},
+    {"Country": "Cote d'Ivoire","Region": "GBÔCLE","Municipality": "SASSANDRA","District": "GRIHIRI"},
+    {"Country": "Cote d'Ivoire","Region": "GBÔCLE","Municipality": "SASSANDRA","District": "LOBAKUYA"},
+    {"Country": "Cote d'Ivoire","Region": "GBÔCLE","Municipality": "SASSANDRA","District": "MEDON"},
+    {"Country": "Cote d'Ivoire","Region": "GBÔCLE","Municipality": "SASSANDRA","District": "SAGO"},
+    {"Country": "Cote d'Ivoire","Region": "GBÔCLE","Municipality": "SASSANDRA","District": "SASSANDRA"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "BAYOTA"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "DAHIEPA-KEHI"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "DIGNAGO"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "DOUGROUPALEGONAO"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "DOUKOUYO"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "GAGNOA"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "GALEBRE / GALEBOUO"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "GNAGBODOUGNOA"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "GUIBEROUA"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "OURAGAHIO"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "SERIHIO"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "GAGNOA","District": "YOPOHUE"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "OUME","District": "DIEGONEFLA"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "OUME","District": "GUEPAHOUO"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "OUME","District": "OUME"},
+    {"Country": "Cote d'Ivoire","Region": "GÔH","Municipality": "OUME","District": "TONLA"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "APPIMANDOUM"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "PINDA-BOROKO"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "BONDO"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "BONDOUKOU"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "GOUMERE"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "LAOUDI-BA"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "SAPLI-SEPINGO"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "SOROBANGO"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "TABAGNE"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "TAGADI"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "TAOUDI"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "BONDOUKOU","District": "YEZIMALA"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "KOUN-FAO","District": "BOAHIA"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "KOUN-FAO","District": "KOKOMIAN"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "KOUN-FAO","District": "KOUASSI-DATEKRO"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "KOUN-FAO","District": "KOUN-FAO"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "KOUN-FAO","District": "TANKESSE"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "KOUN-FAO","District": "TIENKOIKRO"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "SANDEGUE","District": "BANDAKAGNI-TOMORA"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "SANDEGUE","District": "DIMANDOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "SANDEGUE","District": "SANDEGUE"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "SANDEGUE","District": "YOROBODI"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "TRANSUA","District": "ASSUEFRY"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "TRANSUA","District": "KOUASSI-NIAGUINI"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "TRANSUA","District": "TRANSUA"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "TANDA","District": "AMANVI"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "TANDA","District": "DIAMBA"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "TANDA","District": "TANDA"},
+    {"Country": "Cote d'Ivoire","Region": "GONTOUGO","Municipality": "TANDA","District": "TCHEDIO"},
+    {"Country": "Cote d'Ivoire","Region": "GRANDS PONTS","Municipality": "DABOU","District": "DABOU"},
+    {"Country": "Cote d'Ivoire","Region": "GRANDS PONTS","Municipality": "DABOU","District": "LOPOU"},
+    {"Country": "Cote d'Ivoire","Region": "GRANDS PONTS","Municipality": "DABOU","District": "TOUPAH"},
+    {"Country": "Cote d'Ivoire","Region": "GRANDS PONTS","Municipality": "GRAND-LAHOU","District": "AHOUANOU"},
+    {"Country": "Cote d'Ivoire","Region": "GRANDS PONTS","Municipality": "GRAND-LAHOU","District": "BACANDA"},
+    {"Country": "Cote d'Ivoire","Region": "GRANDS PONTS","Municipality": "GRAND-LAHOU","District": "EBONOU"},
+    {"Country": "Cote d'Ivoire","Region": "GRANDS PONTS","Municipality": "GRAND-LAHOU","District": "GRAND-LAHOU"},
+    {"Country": "Cote d'Ivoire","Region": "GRANDS PONTS","Municipality": "GRAND-LAHOU","District": "TOUKOUZOU"},
+    {"Country": "Cote d'Ivoire","Region": "GRANDS PONTS","Municipality": "JACQUEVILLE","District": "ATTOUTOU"},
+    {"Country": "Cote d'Ivoire","Region": "GRANDS PONTS","Municipality": "JACQUEVILLE","District": "JACQUEVILLE"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "BANGOLO","District": "BANGOLO"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "BANGOLO","District": "BEOUE-ZIBIAO"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "BANGOLO","District": "BLENIMEOUIN"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "BANGOLO","District": "DIEOUZON"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "BANGOLO","District": "GOHOUO-ZAGNA"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "BANGOLO","District": "GUINGLO-TAHOUAKE"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "BANGOLO","District": "KAHIN-ZARABAON"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "BANGOLO","District": "ZEO"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "BANGOLO","District": "ZOU"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "DUEKOUE","District": "BAGOHOUO"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "DUEKOUE","District": "DUEKOUE"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "DUEKOUE","District": "GBAPLEU"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "DUEKOUE","District": "GUEHIEBLY"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "DUEKOUE","District": "GUEZON-DUEKOUE"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "FACOBLY","District": "FACOBLY"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "FACOBLY","District": "GUEZON (DE FACOBLY)"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "FACOBLY","District": "KOUA"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "FACOBLY","District": "SEMIEN"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "FACOBLY","District": "TIENY-SIABLY"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "KOUIBLY","District": "KOUIBLY"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "KOUIBLY","District": "NIDROU"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "KOUIBLY","District": "OUYABLY-GNONDROU"},
+    {"Country": "Cote d'Ivoire","Region": "GUEMON","Municipality": "KOUIBLY","District": "TOTRODROU"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "DABAKALA","District": "BASSAWA"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "DABAKALA","District": "BONIEREDOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "DABAKALA","District": "DABAKALA"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "DABAKALA","District": "FOUMBOLO"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "DABAKALA","District": "NIEMENE"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "DABAKALA","District": "SATAMA-SOKORO"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "DABAKALA","District": "SATAMA-SOKOURA"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "DABAKALA","District": "SOKALA-SOBARA"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "DABAKALA","District": "TENDENE-BAMBARASSO"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "DABAKALA","District": "YAOSSEDOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "KATIOLA","District": "FRONAN"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "KATIOLA","District": "KATIOLA"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "KATIOLA","District": "TIMBE"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "NIAKARAMADOUGOU","District": "ARIKOKAHA"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "NIAKARAMADOUGOU","District": "BADIKAHA"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "NIAKARAMADOUGOU","District": "NIAKARAMADOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "NIAKARAMADOUGOU","District": "NIEDEKAHA"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "NIAKARAMADOUGOU","District": "TAFIRE"},
+    {"Country": "Cote d'Ivoire","Region": "HAMBOL","Municipality": "NIAKARAMADOUGOU","District": "TORTIYA"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "DALOA","District": "BEDIALA"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "DALOA","District": "DALOA"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "DALOA","District": "GADOUAN"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "DALOA","District": "GBOGUHE"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "DALOA","District": "GONATE"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "DALOA","District": "ZAÏBO"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ISSIA","District": "BOGUEDIA"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ISSIA","District": "IBOGUHE"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ISSIA","District": "ISSIA"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ISSIA","District": "NAHIO"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ISSIA","District": "NAMANE"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ISSIA","District": "SAÏOUA"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ISSIA","District": "TAPEGUIA"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "VAVOUA","District": "BAZRA-NATTIS"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "VAVOUA","District": "DANANON"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "VAVOUA","District": "DANIA"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "VAVOUA","District": "KETTRO-BASSAM"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "VAVOUA","District": "SEITIFLA"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "VAVOUA","District": "VAVOUA"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ZOUKOUGBEU","District": "DOMANGBEU"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ZOUKOUGBEU","District": "GREGBEU"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ZOUKOUGBEU","District": "GUESSABO"},
+    {"Country": "Cote d'Ivoire","Region": "HAUT-SASSANDRA","Municipality": "ZOUKOUGBEU","District": "ZOUKOUGBEU"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "DAOUKRO","District": "DAOUKRO"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "DAOUKRO","District": "ETTROKRO"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "DAOUKRO","District": "N'GATTAKRO"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "DAOUKRO","District": "SAMANZA"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "M'BAHIAKRO","District": "BONGUERA"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "M'BAHIAKRO","District": "KONDOSSOU"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "M'BAHIAKRO","District": "M'BAHIAKRO"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "M'BAHIAKRO","District": "AKPASSANOU"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "OUELLE","District": "ANANDA"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "OUELLE","District": "OUELLE"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "PRIKRO","District": "ANIANOU"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "PRIKRO","District": "FAMIENKRO"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "PRIKRO","District": "KOFFI-AMONKRO"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "PRIKRO","District": "NAFANA-PRIKRO"},
+    {"Country": "Cote d'Ivoire","Region": "IFFOU","Municipality": "PRIKRO","District": "PRIKRO"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "ABENGOUROU","District": "ABENGOUROU"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "ABENGOUROU","District": "AMELEKIA"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "ABENGOUROU","District": "ANIASSUE"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "ABENGOUROU","District": "EBILASSOKRO"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "ABENGOUROU","District": "NIABLE"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "ABENGOUROU","District": "YAKASSE-FEYASSE"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "ABENGOUROU","District": "ZARANOU"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "AGNIBILEKROU","District": "AGNIBILEKROU"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "AGNIBILEKROU","District": "AKOBOISSUE"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "AGNIBILEKROU","District": "DAME"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "AGNIBILEKROU","District": "DUFFREBO"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "AGNIBILEKROU","District": "TANGUELAN"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "BETTIE","District": "BETTIE"},
+    {"Country": "Cote d'Ivoire","Region": "INDENIE-DJUABLIN","Municipality": "BETTIE","District": "DIAMARAKRO"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "SEGUELON","District": "GBONGAHA"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "SEGUELON","District": "SEGUELON"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "GBELEBAN","District": "GBELEBAN"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "GBELEBAN","District": "SAMANGO"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "GBELEBAN","District": "SEYDOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "MADINANI","District": "FENGOLO"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "MADINANI","District": "MADINANI"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "MADINANI","District": "N’GOLOBLASSO"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "ODIENNE","District": "BAKO"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "ODIENNE","District": "BOUGOUSSO"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "ODIENNE","District": "DIOULATIEDOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "ODIENNE","District": "ODIENNE"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "ODIENNE","District": "TIEME"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "SAMATIGUILA","District": "KIMBIRILA-SUD"},
+    {"Country": "Cote d'Ivoire","Region": "KABADOUGOU","Municipality": "SAMATIGUILA","District": "SAMATIGUILA"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ADZOPE","District": "ADZOPE"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ADZOPE","District": "AGOU"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ADZOPE","District": "ANNEPE"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ADZOPE","District": "ASSIKOI"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ADZOPE","District": "BECEDI-BRIGNAN"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ADZOPE","District": "YAKASSE-ME"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "AKOUPE","District": "AFFERY"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "AKOUPE","District": "AKOUPE"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "AKOUPE","District": "BECOUEFIN"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ALEPE","District": "ABOISSO-COMOE"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ALEPE","District": "ALEPE"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ALEPE","District": "ALLOSSO"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ALEPE","District": "DANGUIRA"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "ALEPE","District": "OGHLWAPO"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "YAKASSE-ATTOBROU","District": "ABONGOUA"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "YAKASSE-ATTOBROU","District": "BIEBY"},
+    {"Country": "Cote d'Ivoire","Region": "LA ME","Municipality": "YAKASSE-ATTOBROU","District": "YAKASSE-ATTOBROU"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "DIVO","District": "CHIEPO"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "DIVO","District": "DIDOKO"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "DIVO","District": "DIVO"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "DIVO","District": "HIRE"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "DIVO","District": "NEBO"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "DIVO","District": "OGOUDOU"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "DIVO","District": "ZEGO"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "GUITRY","District": "DAIRO-DIDIZO"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "GUITRY","District": "GUITRY"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "GUITRY","District": "LAUZOUA"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "GUITRY","District": "YOCOBOUE"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "LAKOTA","District": "DJIDJI"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "LAKOTA","District": "GAGORE"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "LAKOTA","District": "GOUDOUKO"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "LAKOTA","District": "LAKOTA"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "LAKOTA","District": "NIAMBEZARIA"},
+    {"Country": "Cote d'Ivoire","Region": "LÔH-DJIBOUA","Municipality": "LAKOTA","District": "ZIKISSO"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "BONON","District": "BONON"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "BONON","District": "ZAGUIETA"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "BOUAFLE","District": "BEGBESSOU"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "BOUAFLE","District": "BOUAFLE"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "BOUAFLE","District": "N'DOUFFOUKANKRO"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "BOUAFLE","District": "PAKOUABO"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "BOUAFLE","District": "TIBEITA"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "GOHITAFLA","District": "GOHITAFLA"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "GOHITAFLA","District": "IRIEFLA"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "GOHITAFLA","District": "MAMINIGUI"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "SINFRA","District": "BAZRE"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "SINFRA","District": "KONONFLA"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "SINFRA","District": "KOUETINFLA"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "SINFRA","District": "SINFRA"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "ZUENOULA","District": "KANZRA"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "ZUENOULA","District": "VOUEBOUFLA"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "ZUENOULA","District": "ZANZRA"},
+    {"Country": "Cote d'Ivoire","Region": "MARAHOUE","Municipality": "ZUENOULA","District": "ZUENOULA"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "ARRAH","District": "ARRAH"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "ARRAH","District": "KOTOBI"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "ARRAH","District": "KREGBE"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "BONGOUANOU","District": "ANDE"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "BONGOUANOU","District": "ASSIE-KOUMASSI"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "BONGOUANOU","District": "BONGOUANOU"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "BONGOUANOU","District": "N’GUESSANKRO-BONGOUANOU"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "M'BATTO","District": "ANOUMABA"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "M'BATTO","District": "ASSAHARA"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "M'BATTO","District": "M'BATTO"},
+    {"Country": "Cote d'Ivoire","Region": "MORONOU","Municipality": "M'BATTO","District": "TIEMELEKRO"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "MEAGUI","District": "GNAMANGUI"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "MEAGUI","District": "MEAGUI"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "MEAGUI","District": "OUPOYO"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "SOUBRE","District": "GRAND-ZATTRY"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "SOUBRE","District": "LILIYO"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "SOUBRE","District": "OKROUYO"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "SOUBRE","District": "SOUBRE"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "BUYO","District": "BUYO"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "BUYO","District": "DAPEOUA"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "GUEYO","District": "DABOUYO"},
+    {"Country": "Cote d'Ivoire","Region": "NAWA","Municipality": "GUEYO","District": "GUEYO"},
+    {"Country": "Cote d'Ivoire","Region": "N'ZI","Municipality": "BOCANDA","District": "BENGASSOU"},
+    {"Country": "Cote d'Ivoire","Region": "N'ZI","Municipality": "BOCANDA","District": "BOCANDA"},
+    {"Country": "Cote d'Ivoire","Region": "N'ZI","Municipality": "BOCANDA","District": "KOUADIOBLEKRO"},
+    {"Country": "Cote d'Ivoire","Region": "N'ZI","Municipality": "BOCANDA","District": "N'ZEKREZESSOU"},
+    {"Country": "Cote d'Ivoire","Region": "N'ZI","Municipality": "DIMBOKRO","District": "ABIGUI"},
+    {"Country": "Cote d'Ivoire","Region": "N'ZI","Municipality": "DIMBOKRO","District": "DIANGOKRO"},
+    {"Country": "Cote d'Ivoire","Region": "N'ZI","Municipality": "DIMBOKRO","District": "DIMBOKRO"},
+    {"Country": "Cote d'Ivoire","Region": "N'ZI","Municipality": "DIMBOKRO","District": "NOFOU"},
+    {"Country": "Cote d'Ivoire","Region": "N'ZI","Municipality": "KOUASSI-KOUASSIKRO","District": "KOUASSI-KOUASSIKRO"},
+    {"Country": "Cote d'Ivoire","Region": "N'ZI","Municipality": "KOUASSI-KOUASSIKRO","District": "MEKRO"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "DIKODOUGOU","District": "BORON"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "DIKODOUGOU","District": "DIKODOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "DIKODOUGOU","District": "GUIEMBE"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "DASSOUNGBOHO"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "KANOROBA"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "KARAKORO"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "KIEMOU"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "KOMBOLOKOURA"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "KOMBORODOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "KONI"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "KORHOGO"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "LATAHA"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "NAFOUN"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "NAPIELEODOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "N'GANON"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "NIOFOIN"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "SIRASSO"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "SOHOUO"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "KORHOGO","District": "TIORONIARADOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "M'BENGUE","District": "BOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "M'BENGUE","District": "KATIALI"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "M'BENGUE","District": "KATOGO"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "M'BENGUE","District": "M'BENGUE"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "SINEMATIALI","District": "BAHOUAKAHA"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "SINEMATIALI","District": "KAGBOLODOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "SINEMATIALI","District": "SEDIEGO"},
+    {"Country": "Cote d'Ivoire","Region": "PORO","Municipality": "SINEMATIALI","District": "SINEMATIALI"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "SAN-PEDRO","District": "DOBA"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "SAN-PEDRO","District": "DOGBO"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "SAN-PEDRO","District": "GABIADJI"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "SAN-PEDRO","District": "GRAND-BEREBY"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "SAN-PEDRO","District": "SAN-PEDRO"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "TABOU","District": "DAPO-IBOKE"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "TABOU","District": "DJAMANDIOKE"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "TABOU","District": "DJOUROUTOU"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "TABOU","District": "GRABO"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "TABOU","District": "OLODIO"},
+    {"Country": "Cote d'Ivoire","Region": "SAN-PEDRO","Municipality": "TABOU","District": "TABOU"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ABOISSO","District": "ABOISSO"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ABOISSO","District": "ADAOU"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ABOISSO","District": "ADJOUAN"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ABOISSO","District": "AYAME"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ABOISSO","District": "BIANOUAN"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ABOISSO","District": "KOUAKRO"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ABOISSO","District": "MAFERE"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ABOISSO","District": "YAOU"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ADIAKE","District": "ADIAKE"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ADIAKE","District": "ASSINIE-MAFIA"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "ADIAKE","District": "ETUEBOUE"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "GRAND-BASSAM","District": "BONGO"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "GRAND-BASSAM","District": "BONOUA"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "GRAND-BASSAM","District": "GRAND-BASSAM"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "TIAPOUM","District": "NOE"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "TIAPOUM","District": "NOUAMOU"},
+    {"Country": "Cote d'Ivoire","Region": "SUD-COMOE","Municipality": "TIAPOUM","District": "TIAPOUM"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "FERKESSEDOUGOU","District": "FERKESSEDOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "FERKESSEDOUGOU","District": "KOUMBALA"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "FERKESSEDOUGOU","District": "TOGONIERE"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "KONG","District": "BILIMONO"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "KONG","District": "KONG"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "KONG","District": "NAFANA(DE KONG)"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "KONG","District": "SIKOLO"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "OUANGOLODOUGOU","District": "DIAWALA"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "OUANGOLODOUGOU","District": "KAOUARA"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "OUANGOLODOUGOU","District": "NIELLE"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "OUANGOLODOUGOU","District": "OUANGOLODOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "TCHOLOGO","Municipality": "OUANGOLODOUGOU","District": "TOUMOUKORO"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "BIANKOUMA","District": "BIANKOUMA"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "BIANKOUMA","District": "BLAPLEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "BIANKOUMA","District": "GBANGBEGOUINE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "BIANKOUMA","District": "GBONNE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "BIANKOUMA","District": "GOUINE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "BIANKOUMA","District": "KPATA"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "BIANKOUMA","District": "SANTA-BIANKOUMA"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "DANANE","District": "DALEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "DANANE","District": "DANANE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "DANANE","District": "GBON-HOUYE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "DANANE","District": "KOUAN-HOULE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "DANANE","District": "MAHAPLEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "DANANE","District": "SEILEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "DANANE","District": "ZONNEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "BOGOUINE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "FAGNAMPLEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "GBANGBEGOUINE YATI"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "LOGOUALE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "MAN"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "PODIAGOUINE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "SANDOUGOU-SOBA"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "SANGOUINE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "YAPLEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "ZAGOUE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "MAN","District": "ZIOGOUINE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "SIPILOU","District": "SIPILOU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "SIPILOU","District": "YORODOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "ZOUAN-HOUNIEN","District": "BANNEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "ZOUAN-HOUNIEN","District": "BIN-HOUYE"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "ZOUAN-HOUNIEN","District": "GOULALEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "ZOUAN-HOUNIEN","District": "TEAPLEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "ZOUAN-HOUNIEN","District": "YELLEU"},
+    {"Country": "Cote d'Ivoire","Region": "TONKPI","Municipality": "ZOUAN-HOUNIEN","District": "ZOUAN-HOUNIEN"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "KANI","District": "DJIBROSSO"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "KANI","District": "FADIADOUGOU"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "KANI","District": "KANI"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "KANI","District": "MORONDO"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "SEGUELA","District": "BOBI"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "SEGUELA","District": "DIARABANA"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "SEGUELA","District": "DUALLA"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "SEGUELA","District": "KAMALO"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "SEGUELA","District": "MASSALA"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "SEGUELA","District": "SEGUELA"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "SEGUELA","District": "SIFIE"},
+    {"Country": "Cote d'Ivoire","Region": "WORODOUGOU","Municipality": "SEGUELA","District": "WOROFLA"},
+    {"Country": "Cote d'Ivoire","Region": "YAMOUSSOUKRO","Municipality": "ATTIEGOUAKRO","District": "ATTIEGOUAKRO"},
+    {"Country": "Cote d'Ivoire","Region": "YAMOUSSOUKRO","Municipality": "ATTIEGOUAKRO","District": "LOLOBO (D'ATTIEGOUAKRO)"},
+    {"Country": "Cote d'Ivoire","Region": "YAMOUSSOUKRO","Municipality": "YAMOUSSOUKRO","District": "YAMOUSSOUKRO"},
+    {"Country": "Cote d'Ivoire","Region": "YAMOUSSOUKRO","Municipality": "YAMOUSSOUKRO","District": "KOSSOU"}
     ]
   },
   {

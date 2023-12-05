@@ -192,8 +192,8 @@
       <mat-label> {{ t('Provide other details of the measures taken') }}</mat-label>
       <textarea aria-label="{{ t('Other Details') }}" matInput formControlName="treatmentDetails"
         placeholder="{{ t('Other Details') }}"></textarea>
-      <ng-container [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{validation: 'required', message: 'Other details is required', control: treatmentInfo.controls['treatmentDetails']}"></ng-container>
+      <!-- <ng-container [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{validation: 'required', message: 'Other details is required', control: treatmentInfo.controls['treatmentDetails']}"></ng-container> -->
     </mat-form-field>
   </div>
 
