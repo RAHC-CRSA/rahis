@@ -32,9 +32,10 @@ export class ReportsEffects {
             ofType(ReportsActions.createReport),
             exhaustMap((action) =>
                 this.reportsService.createReport(action.payload).pipe(
-                    map((payload) =>
-                        ReportsActions.createReportSuccess({ payload: payload })
-                    ),
+                    map((payload) => {
+                        this.router.navigateByUrl('/dashboard/reports/create-confirmation');
+                        return ReportsActions.createReportSuccess({ payload: payload })
+                    }),
                     catchError((error) =>
                         of(
                             ReportsActions.setFeedback({

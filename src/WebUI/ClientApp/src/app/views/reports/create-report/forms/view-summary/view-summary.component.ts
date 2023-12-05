@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
+import { observeProperty$ } from 'app/common/helpers/observable-property';
 import { ReportState } from 'app/modules/reports/store';
 import {
     addParaProfessional,
@@ -42,6 +43,10 @@ export class ViewSummaryComponent implements OnInit {
 
     @Output() previous = new EventEmitter();
     @Output() submit = new EventEmitter();
+
+    @Input()loading: boolean;
+    // and here you convert the input to an observable one
+    loading$ = observeProperty$(this, "loading");
 
     diagnosticTestColumns: string[] = [
         'id',

@@ -243,7 +243,12 @@
     </button>
     <button class="px-8" mat-flat-button [color]="'primary'" type="button"
       (click)="onSubmit()">
-      {{ t('Submit') }}
+      <span *ngIf="!( loading$ | async )">
+        {{ t('Submit') }}
+      </span>
+      <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+        [mode]="'indeterminate'"></mat-progress-spinner>
+
     </button>
   </div>
 </div>

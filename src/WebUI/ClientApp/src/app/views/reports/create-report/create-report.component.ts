@@ -4,7 +4,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
-import { createReport, loadReport } from 'app/modules/reports/store/actions';
+import { createReport, createReportSuccess, loadReport } from 'app/modules/reports/store/actions';
 import {
     getFeedback,
     getReport,
@@ -49,8 +49,7 @@ export class CreateReportComponent implements OnInit {
     }
 
     initData() {
-        this.feedback$ = this.store.select(getFeedback);
-        this.loading$ = this.store.select(getReportsLoading);
+
         if (this.reportId) {
             this.updatingReport = true;
             this.formStep = 5;
@@ -65,6 +64,8 @@ export class CreateReportComponent implements OnInit {
                 }
             });
         }
+        this.feedback$ = this.store.select(getFeedback);
+        this.loading$ = this.store.select(getReportsLoading);
     }
 
     next(formData: any) {
@@ -124,20 +125,20 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
+        // if (this.formStep == 5) {
+        //     if (formData.skip) {
+        //         this.formStep++;
+
+        //         this.reportFormStepper.selected.completed = true;
+        //         this.reportFormStepper.next();
+        //         return;
+        //     }
+
+        //     this.formValues = formData;
+        //     this.submit();
+        // }
+
         if (this.formStep == 5) {
-            if (formData.skip) {
-                this.formStep++;
-
-                this.reportFormStepper.selected.completed = true;
-                this.reportFormStepper.next();
-                return;
-            }
-
-            this.formValues = formData;
-            this.submit();
-        }
-
-        if (this.formStep == 6) {
             // Capture form values
             this.formValues.exposed = formData.numberExposed;
             this.formValues.infected = formData.numberInfected;
@@ -160,7 +161,7 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        if (this.formStep == 7) {
+        if (this.formStep == 6) {
             // Capture form values
             this.formValues.stampingOut = formData.stampingOut;
             this.formValues.destructionOfCorpses =
@@ -185,7 +186,7 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        if (this.formStep == 8) {
+        if (this.formStep == 7) {
             this.formValues.diagnosticTests = formData.tests;
 
             this.formStep++;
@@ -195,7 +196,7 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        if (this.formStep == 9) {
+        if (this.formStep == 8) {
             this.formValues.vaccinations = formData.vaccinations;
 
             this.formStep++;
@@ -245,11 +246,11 @@ export class CreateReportComponent implements OnInit {
                 : undefined,
             numberExposed: this.formValues.exposed ?? 0,
             numberInfected: this.formValues.infected ?? 0,
-            mortality: this.formValues.mortality ?? 0,
+            mortality: this.formValues.mortality >= 0 ? this.formValues.mortality : 0,
             humanInfection: this.formValues.humanInfection,
             humansExposed: this.formValues.humansExposed ?? 0,
             humansInfected: this.formValues.humansInfected ?? 0,
-            humansMortality: this.formValues.humansMortality ?? 0,
+            humansMortality: 0,
             stampingOut: this.formValues.stampingOut,
             destructionOfCorpses: this.formValues.destructionOfCorpses,
             corpsesDestroyed: this.formValues.corpsesDestroyed
@@ -271,8 +272,11 @@ export class CreateReportComponent implements OnInit {
 
         console.log({ payload });
 
-        this.store.dispatch(createReport({ payload }));
-        this.router.navigateByUrl('/dashboard/reports/create-confirmation');
+        this.store.dispatch(createReport({ payload }))
+        // this.store.select(getReportsLoaded).subscribe((loaded) => {
+        //     if(loaded)  this.router.navigateByUrl('/dashboard/reports/create-confirmation')
+        // });
+        // this.feedback$ = this.store.select(getFeedback);
     }
 
     private _getFormValues() {
