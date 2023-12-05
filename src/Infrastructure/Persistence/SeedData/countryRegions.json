@@ -8323,81 +8323,43 @@
     "Code": "GW",
     "Flag": "https://flagsapi.com/GW/flat/64.png",
     "Regions": [
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Bissau",
-        "Municipality": "Bissau"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Bafata",
-        "Municipality": "Bafata"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Gabu",
-        "Municipality": "Gabu"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Oio",
-        "Municipality": "Bissora"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Bolama",
-        "Municipality": "Bolama"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "cache",
-        "Municipality": "cache"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Bolama",
-        "Municipality": "Bubaque"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "tombali",
-        "Municipality": "Catio"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Oio",
-        "Municipality": "Mansoa"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Quinara",
-        "Municipality": "Buba"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Quinara",
-        "Municipality": "Quebo"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "cache",
-        "Municipality": "Canchungo"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Oio",
-        "Municipality": "Farmim"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Biombo",
-        "Municipality": "Quinhamel"
-      },
-      {
-        "Country": "Guinea-Bissau",
-        "Region": "Quinara",
-        "Municipality": "Fulacunda"
-      }
+      {"Country": "Guinea-Bissau","Region": "BAFATA","Municipality": "BAFATA"},
+      {"Country": "Guinea-Bissau","Region": "BAFATA","Municipality": "CONTUBOEL"},
+      {"Country": "Guinea-Bissau","Region": "BAFATA","Municipality": "COSSE"},
+      {"Country": "Guinea-Bissau","Region": "BAFATA","Municipality": "GANADU"},
+      {"Country": "Guinea-Bissau","Region": "BAFATA","Municipality": "BAMBADINCA"},
+      {"Country": "Guinea-Bissau","Region": "BAFATA","Municipality": "XITOLI"},
+      {"Country": "Guinea-Bissau","Region": "BAFATA","Municipality": "GABU"},
+      {"Country": "Guinea-Bissau","Region": "GABU","Municipality": "PITCHE"},
+      {"Country": "Guinea-Bissau","Region": "GABU","Municipality": "PIRADA"},
+      {"Country": "Guinea-Bissau","Region": "GABU","Municipality": "SONACO"},
+      {"Country": "Guinea-Bissau","Region": "QUINARA","Municipality": "BUBA"},
+      {"Country": "Guinea-Bissau","Region": "QUINARA","Municipality": "FULACUNDA"},
+      {"Country": "Guinea-Bissau","Region": "QUINARA","Municipality": "TITE"},
+      {"Country": "Guinea-Bissau","Region": "QUINARA","Municipality": "EMPADA"},
+      {"Country": "Guinea-Bissau","Region": "TOMBALI","Municipality": "CATIO"},
+      {"Country": "Guinea-Bissau","Region": "TOMBALI","Municipality": "BEDANDA"},
+      {"Country": "Guinea-Bissau","Region": "TOMBALI","Municipality": "CACINE"},
+      {"Country": "Guinea-Bissau","Region": "TOMBALI","Municipality": "QUEBO"},
+      {"Country": "Guinea-Bissau","Region": "OIO","Municipality": "FARIM"},
+      {"Country": "Guinea-Bissau","Region": "OIO","Municipality": "MANSABA"},
+      {"Country": "Guinea-Bissau","Region": "OIO","Municipality": "BISSORÃ"},
+      {"Country": "Guinea-Bissau","Region": "OIO","Municipality": "MANSOA"},
+      {"Country": "Guinea-Bissau","Region": "OIO","Municipality": "NHACRA"},
+      {"Country": "Guinea-Bissau","Region": "CACHEU","Municipality": "CANCHUNGO"},
+      {"Country": "Guinea-Bissau","Region": "CACHEU","Municipality": "CAIO"},
+      {"Country": "Guinea-Bissau","Region": "CACHEU","Municipality": "BULA"},
+      {"Country": "Guinea-Bissau","Region": "CACHEU","Municipality": "BIGENE"},
+      {"Country": "Guinea-Bissau","Region": "CACHEU","Municipality": "SÃO DOMINGOS"},
+      {"Country": "Guinea-Bissau","Region": "BIOMBO","Municipality": "QUINHAMEL"},
+      {"Country": "Guinea-Bissau","Region": "BIOMBO","Municipality": "PRABIS"},
+      {"Country": "Guinea-Bissau","Region": "BIOMBO","Municipality": "SAFIM"},
+      {"Country": "Guinea-Bissau","Region": "BIOMBO","Municipality": "ONDAM"},
+      {"Country": "Guinea-Bissau","Region": "BOLAMA/BIJAGÓS","Municipality": "UNO"},
+      {"Country": "Guinea-Bissau","Region": "BOLAMA/BIJAGÓS","Municipality": "BOLAMA"},
+      {"Country": "Guinea-Bissau","Region": "BOLAMA/BIJAGÓS","Municipality": "BUBAQUE"},
+      {"Country": "Guinea-Bissau","Region": "BOLAMA/BIJAGÓS","Municipality": "CARAVELA"},
+      {"Country": "Guinea-Bissau","Region": "BISSAU","Municipality": "BISSAU"}
     ]
   },
   {

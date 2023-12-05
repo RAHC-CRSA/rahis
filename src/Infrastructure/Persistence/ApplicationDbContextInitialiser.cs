@@ -54,7 +54,7 @@ public class ApplicationDbContextInitialiser
             await SeedRegionsAsync();
 
           //--- ONLY USE WHEN YOU HAVE SEED DATA SETUP
-          //await SeedUserAsync();
+          await SeedUserAsync();
         }
         catch (Exception ex)
         {
@@ -130,15 +130,19 @@ public class ApplicationDbContextInitialiser
                 var commonSpecies = Species.Create("Caprine");
                 var commonDiseases = new List<Disease>
                 {
-                    Disease.Create("Foot-and-mouth disease", "", classification),
-                    Disease.Create("Rift Valley fever", "", classification),
-                    Disease.Create("Q fever", "", classification),
-                    Disease.Create("Rabies", "", classification, true),
-                    Disease.Create("Heartwater", "", classification),
-                    Disease.Create("Anthrax", "", classification, true),
-                    Disease.Create("Dermatophilosis", "", classification),
-                    Disease.Create("Nodular contagious dermatosis", "", classification),
-                    Disease.Create("Highly pathogenic avian influenza", "", classification)
+                    Disease.Create("Caprine arthritis/encephalitis", "", classification),
+                    Disease.Create("Crimean Congo hemorrhagic fever", "", classification),
+                    Disease.Create("Contagious agalactia", "", classification),
+                    Disease.Create("Contagious caprine pleuropneumonia", "", classification),
+                    Disease.Create("Echinococcosis", "", classification),
+                    Disease.Create("Ovine chlamydiosis", "", classification),
+                    Disease.Create("Peste des Petits Ruminants", "", classification),
+                    Disease.Create("Theileriosis", "", classification),
+                    Disease.Create("Ovine Brucellosis", "", classification),
+                    Disease.Create("Salmonellosis", "", classification),
+                    Disease.Create("Scrapie", "", classification),
+                    Disease.Create("Sheep pox", "", classification),
+                    Disease.Create("Trypanosomiasis", "", classification)
                 }.OrderBy(d => d.Name);
 
                 await _context.Species.AddAsync(commonSpecies);
@@ -150,29 +154,36 @@ public class ApplicationDbContextInitialiser
                 var bovidaeSpecies = Species.Create("Bovine");
                 var bovidaeDiseases = new List<Disease>
                 {
-                    Disease.Create("Blackleg", "", classification),
-                    Disease.Create("Rinderpest", "", classification),
-                    Disease.Create("Contagious bovine pleuropneumonia", "", classification),
-                    Disease.Create("Bovine tuberculosis", "", classification),
-                    Disease.Create("Cattle gangrenous coryza", "", classification),
-                    Disease.Create("Enzootic bovine leukosis", "", classification),
-                    Disease.Create("Septicaemic pasteurellosis of bovids", "", classification),
-                    Disease.Create("Bovine brucellosis", "", classification),
-                    Disease.Create("Bovine actinobacillosis", "", classification)
+                    Disease.Create("Anthrax", "", classification),
+                    Disease.Create("Crimean Congo hemorrhagic fever", "", classification),
+                    Disease.Create("Bluetongue Virus", "", classification),
+                    Disease.Create("Bovine anaplasmosis", "", classification),
+                    Disease.Create("Bovine babesiosis", "", classification),
+                    Disease.Create("Bovine genital campylobacteriosis", "", classification),
+                    Disease.Create("Bovine spongiform encephalopathy", "", classification),
+                    Disease.Create("Bovine Trypanosomiasis", "", classification),
+                    Disease.Create("Bovine Viral Diarrhoea", "", classification),
+                    Disease.Create("Enzootic Bovine Leukosis", "", classification),
+                    Disease.Create("Echinococcosis", "", classification),
+                    Disease.Create("Haemorrhagic Septicaemia", "", classification),
+                    Disease.Create("Lumpy skin disease virus", "", classification),
+                    Disease.Create("Contagious Bovine Pleuropneumonia", "", classification),
+                    Disease.Create("Infectious Bovine Rhinotracheitis/infectious pustular vulvovaginitis", "", classification),
+                    Disease.Create("Theileriosis", "", classification),
+                    Disease.Create("Trichomonosis", "", classification)
                 }.OrderBy(d => d.Name);
 
                 await _context.Species.AddAsync(bovidaeSpecies);
                 await _context.Diseases.AddRangeAsync(bovidaeDiseases);
 
                 // Lagomorphs diseases
-                classification = "Lagomorphs diseases";
+                classification = "Leporids diseases";
 
-                var lagomorphsSpecies = Species.Create("Lagomorphs");
+                var lagomorphsSpecies = Species.Create("Leporids");
                 var lagomorphsDiseases = new List<Disease>
                 {
-                    Disease.Create("Myxomatosis", "", classification),
-                    Disease.Create("Tularemia", "", classification),
-                    Disease.Create("Viral hemorrhagic disease of rabbits", "", classification)
+                    Disease.Create("The Myxomatosis", "", classification),
+                    Disease.Create("Rabbit haemorrhagic disease", "", classification)
                 }.OrderBy(d => d.Name);
 
                 await _context.Species.AddAsync(lagomorphsSpecies);
@@ -186,13 +197,22 @@ public class ApplicationDbContextInitialiser
                 {
                     Disease.Create("Ovine brucellosis", "", classification),
                     Disease.Create("Ovine and caprine brucellosis", "", classification),
-                    Disease.Create("Peste des petits ruminants", "", classification),
                     Disease.Create("Pasteurellosis of small ruminants", "", classification),
                     Disease.Create("Grassy", "", classification),
                     Disease.Create("Goat pox", "", classification),
                     Disease.Create("Contagious pleuropneumonia of small ruminants", "", classification),
                     Disease.Create("Chlamydia", "", classification),
-                    Disease.Create("Salmonellosis", "", classification)
+                    Disease.Create("Salmonellosis", "", classification),
+                    //
+                    Disease.Create("Caprine arthritis/encephalitis", "", classification),
+                    Disease.Create("Crimean Congo hemorrhagic fever", "", classification),
+                    Disease.Create("Contagious agalactia", "", classification),
+                    Disease.Create("Echinococcosis", "", classification),
+                    Disease.Create("Ovine chlamydiosis", "", classification),
+                    Disease.Create("Theileriosis", "", classification),
+                    Disease.Create("Scrapie", "", classification),
+                    Disease.Create("Sheep pox", "", classification),
+                    Disease.Create("Trypanosomiasis", "", classification)
                 }.OrderBy(d => d.Name);
 
                 await _context.Species.AddAsync(sheepAndGoatsSpecies);
@@ -204,12 +224,17 @@ public class ApplicationDbContextInitialiser
                 var equineSpecies = Species.Create("Equine");
                 var equineDiseases = new List<Disease>
                 {
-                    Disease.Create("African horse sickness", "", classification),
+                    Disease.Create("Contagious equine metritis", "", classification),
                     Disease.Create("Dourine", "", classification),
-                    Disease.Create("Epizootic lymphangitis", "", classification),
-                    Disease.Create("Enzootic meningoencephomyelitis of equidae", "", classification),
+                    Disease.Create("Equine encephalomyelitis", "", classification),
                     Disease.Create("Equine infectious anaemia", "", classification),
-                    Disease.Create("Snot", "", classification)
+                    Disease.Create("Equine piroplasmosis", "", classification),
+                    Disease.Create("Glanders", "", classification),
+                    Disease.Create("African horse sickness ", "", classification),
+                    Disease.Create("Equine rhinopneumonitis", "", classification),
+                    Disease.Create("Infectious equine arteritis virus", "", classification),
+                    Disease.Create("Equine influenza virus", "", classification),
+                    Disease.Create("Trypanosomiasis", "", classification)
                 }.OrderBy(d => d.Name);
 
                 await _context.Species.AddAsync(equineSpecies);
@@ -221,14 +246,55 @@ public class ApplicationDbContextInitialiser
                 var pigsSpecies = Species.Create("Swine");
                 var pigsDiseases = new List<Disease>
                 {
-                    Disease.Create("Classical swine fever", "", classification),
                     Disease.Create("African swine fever", "", classification),
-                    Disease.Create("Porcine brucellosis", "", classification),
-                    Disease.Create("Pork mullet", "", classification)
+                    Disease.Create("Classical swine fever", "", classification),
+                    Disease.Create("Porcine cysticercosis", "", classification),
+                    Disease.Create("Nipah virus encephalitis", "", classification),
+                    Disease.Create("Trypanosomiasis", "", classification)
                 }.OrderBy(d => d.Name);
 
                 await _context.Species.AddAsync(pigsSpecies);
                 await _context.Diseases.AddRangeAsync(pigsDiseases);
+
+                // Canine diseases
+                classification = "Canine diseases";
+
+                var canineSpecies = Species.Create("Canine");
+                var canineDiseases = new List<Disease>
+                {
+                    Disease.Create("Canine distemper", "", classification),
+                    Disease.Create("Canine parvovirus", "", classification),
+                    Disease.Create("Canine influenza", "", classification),
+                    Disease.Create("Canine adenovirus", "", classification),
+                    Disease.Create("Echinococcosis", "", classification),
+                    Disease.Create("Rabies", "", classification),
+                    Disease.Create("Leptospirosis", "", classification),
+                    Disease.Create("Lyme disease", "", classification),
+                    Disease.Create("Borreliosis", "", classification),
+                    Disease.Create("Kennel cough", "", classification),
+                    Disease.Create("Leishmaniasis", "", classification)
+                }.OrderBy(d => d.Name);
+
+                await _context.Species.AddAsync(canineSpecies);
+                await _context.Diseases.AddRangeAsync(canineDiseases);
+
+                // Prioritized Zonotic diseases
+                classification = "Prioritized Zonotic diseases";
+
+                var zonoticSpecies = Species.Create("Zonotic");
+                var zonoticDiseases = new List<Disease>
+                {
+                    Disease.Create("Anthrax", "", classification),
+                    Disease.Create("Rabies", "", classification),
+                    Disease.Create("Ebola and other Viral Haemorrhagic Fevers (Marburg, Lassa fever, Rift Valley fever, and Crimean-Congo hemorrhagic fever)", "", classification),
+                    Disease.Create("Zoonotic Influenza A Viruses", "", classification),
+                    Disease.Create("Zoonotic Tuberculosis", "", classification),
+                    Disease.Create("Trypanosomiasis", "", classification),
+                    Disease.Create("Yellow Fever", "", classification)
+                }.OrderBy(d => d.Name);
+
+                await _context.Species.AddAsync(zonoticSpecies);
+                await _context.Diseases.AddRangeAsync(zonoticDiseases);
 
                 // Fish diseases
                 classification = "Fish diseases";
@@ -246,40 +312,63 @@ public class ApplicationDbContextInitialiser
                 await _context.Diseases.AddRangeAsync(fishDiseases);
 
                 // Poultry diseases
-                classification = "Poultry diseases";
+                classification = "Avian diseases";
 
-                var poultrySpecies = Species.Create("Poultry");
+                var poultrySpecies = Species.Create("Avian");
                 var poultryDiseases = new List<Disease>
                 {
-                    Disease.Create("Avian typhoid", "", classification),
-                    Disease.Create("Highly pathogenic avian infl uenza", "", classification),
+                    Disease.Create("Avian chlamydiosis", "", classification),
+                    Disease.Create("Avian infectious bronchitis", "", classification),
+                    Disease.Create("Avian infectious laryngotracheitis", "", classification),
+                    Disease.Create("Coccidiosis", "", classification),
+                    Disease.Create("Duck virus hepatitis", "", classification),
+                    Disease.Create("Fowl typhoid", "", classification),
+                    Disease.Create("Highly pathogenic avian influenza", "", classification),
+                    Disease.Create("Avian mycoplasmosis", "", classification),
                     Disease.Create("Newcastle disease", "", classification),
-                    Disease.Create("Fowan pullorosis", "", classification),
-                    Disease.Create("Fowl cholera", "", classification),
-                    Disease.Create("Fowlpox", "", classification),
-                    Disease.Create("Mycoplasmosis", "", classification),
-                    Disease.Create("Avian adenorosis", "", classification),
-                    Disease.Create("Gumboro disease", "", classification),
-                    Disease.Create("Psittacosis", "", classification)
+                    Disease.Create("Infectious bursal disease", "", classification),
+                    Disease.Create("Pullorum disease", "", classification),
+                    Disease.Create("Salmonellosis", "", classification),
+                    Disease.Create("Turkey rhinotracheitis", "", classification)
                 }.OrderBy(d => d.Name);
 
                 await _context.Species.AddAsync(poultrySpecies);
                 await _context.Diseases.AddRangeAsync(poultryDiseases);
 
                 // Bee diseases
-                classification = "Bee diseases";
+                classification = "Apidae diseases";
 
-                var beesSpecies = Species.Create("Bees");
+                var beesSpecies = Species.Create("Apidae");
                 var beesDiseases = new List<Disease>
                 {
-                    Disease.Create("Acariosis of bees", "", classification),
-                    Disease.Create("American foulbrood", "", classification),
-                    Disease.Create("European foulbrood", "", classification),
-                    Disease.Create("Nosemosis of bees", "", classification)
+                    Disease.Create("Infection of honey bees with Melissococcus plutonius (European foulbrood)", "", classification),
+                    Disease.Create("Infection of honey bees with Paenibacillus larvae (American foulbrood)", "", classification),
+                    Disease.Create("Infestation of honey bees with Acarapis woodi", "", classification),
+                    Disease.Create("Infestation of honey bees with Tropilaelaps spp", "", classification),
+                    Disease.Create("Infestation of honey bees with Varroa spp. (Varroosis)", "", classification),
+                    Disease.Create("Infestation with Aethina tumida (Small hive beetle)", "", classification)
                 }.OrderBy(d => d.Name);
 
                 await _context.Species.AddAsync(beesSpecies);
                 await _context.Diseases.AddRangeAsync(beesDiseases);
+
+                // Camel diseases
+                classification = "Camelids diseases";
+
+                var camelSpecies = Species.Create("Camelids");
+                var camelDiseases = new List<Disease>
+                {
+                    Disease.Create("Anthrax", "", classification),
+                    Disease.Create("Camelpox", "", classification),
+                    Disease.Create("Contagious skin necrosis", "", classification),
+                    Disease.Create("Brucellosis", "", classification),
+                    Disease.Create("Salmonellosis", "", classification),
+                    Disease.Create("Pasteurellosis", "", classification),
+                    Disease.Create("Rift Valley fever", "", classification)
+                }.OrderBy(d => d.Name);
+
+                await _context.Species.AddAsync(camelSpecies);
+                await _context.Diseases.AddRangeAsync(camelDiseases);
 
                 await _context.SaveChangesAsync();
 
@@ -331,15 +420,16 @@ public class ApplicationDbContextInitialiser
                 species.AddRange(new List<Species> {
                     Species.Create("Caprine"),
                     Species.Create("Bovine"),
-                    Species.Create("Lagomorphs"),
+                    Species.Create("Leporids"),
                     Species.Create("Ovine"),
                     Species.Create("Equine"),
                     Species.Create("Swine"),
                     Species.Create("Fish"),
-                    Species.Create("Poultry"),
-                    Species.Create("Avidae"),
-                    Species.Create("Camelidae"),
+                    Species.Create("Avian"),
+                    Species.Create("Apidae"),
+                    Species.Create("Camelids"),
                     Species.Create("Canine"),
+                    Species.Create("Zonotic"),
                 });
 
                 species = species.OrderBy(e => e.Name).ToList();
@@ -363,8 +453,8 @@ public class ApplicationDbContextInitialiser
                 var fileName = "countryRegions.json";
                 var _filePath = Path.Combine(GetRootPath(), "Infrastructure\\Persistence\\SeedData", fileName);
                 // For when you need to seed directly from your pc
-                // var dataText = File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/countryRegions.json");
-                var dataText = File.ReadAllText(_filePath);
+                var dataText = File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/countryRegions.json");
+                //var dataText = File.ReadAllText(_filePath);
                 var regionSeedData = JsonConvert.DeserializeObject<List<RegionData>>(dataText);
 
                 foreach (var country in regionSeedData)

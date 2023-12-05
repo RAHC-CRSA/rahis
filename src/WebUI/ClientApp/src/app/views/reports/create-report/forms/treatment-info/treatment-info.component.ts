@@ -186,9 +186,9 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                 this.treatmentInfo
                     .get('medications')
                     ?.setValidators([Validators.required]);
-                this.treatmentInfo
-                    .get('treatmentDetails')
-                    ?.setValidators([Validators.required]);
+                // this.treatmentInfo
+                //     .get('treatmentDetails')
+                //     ?.setValidators([Validators.required]);
             } else {
                 this.treatmentInfo.controls.medications?.clearValidators();
                 this.treatmentInfo.controls.treatmentDetails?.clearValidators();
