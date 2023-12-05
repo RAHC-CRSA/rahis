@@ -16,10 +16,10 @@
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Species is required', control: diseaseInfo.controls['species']}"></ng-container>
 
-    <div *ngIf="newSpecies || !species.length" @expandCollapse>
+    <!-- <div *ngIf="newSpecies || !species.length" @expandCollapse>
       <app-add-species (close)="onAddSpeciesClosed()"></app-add-species>
       <hr>
-    </div>
+    </div> -->
 
     <mat-form-field class="w-full mb-4">
       <mat-label>{{ t('What is the name of the disease') }}?</mat-label>
@@ -36,10 +36,10 @@
     <ng-container [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{validation: 'required', message: 'Disease is required', control: diseaseInfo.controls['disease']}"></ng-container>
 
-    <div *ngIf="newDisease || !diseases.length" @expandCollapse>
+    <!-- <div *ngIf="newDisease || !diseases.length" @expandCollapse>
       <app-add-disease [species]="selectedSpecies.id" (close)="onAddDiseaseClosed()"></app-add-disease>
       <hr>
-    </div>
+    </div> -->
   </div>
 
   <div class="flex justify-between my-4">

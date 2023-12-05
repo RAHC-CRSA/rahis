@@ -253,6 +253,7 @@ src/WebUI/ClientApp/package-lock.json
 src/WebUI/appsettings.Development.json
 /src/WebUI/appsettings.Development.json
 /src/Infrastructure/Persistence/Migrations/ApplicationDbContextModelSnapshot.cs
+/src/Infrastructure/Persistence/SeedData/userSeed.json
 
 .vscode/
 .DS_Store

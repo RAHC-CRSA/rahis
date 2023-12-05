@@ -52,6 +52,9 @@ public class ApplicationDbContextInitialiser
             await SeedAdminsAsync();
             await SeedDiseasesAndSpeciesAsync();
             await SeedRegionsAsync();
+
+          //--- ONLY USE WHEN YOU HAVE SEED DATA SETUP
+          //await SeedUserAsync();
         }
         catch (Exception ex)
         {
@@ -376,12 +379,78 @@ public class ApplicationDbContextInitialiser
         }
     }
 
+    private async Task SeedUserAsync()
+    {
+
+        try
+        {
+            // Parse json into data class
+            var fileName = "userSeed.json";
+            var _filePath = Path.Combine(GetRootPath(), "Infrastructure\\Persistence\\SeedData", fileName);
+            // For when you need to seed directly from your pc
+            var dataText = File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/userSeed.json");
+            //var dataText = File.ReadAllText(_filePath);
+            var userSeedData = JsonConvert.DeserializeObject<List<UserData>>(dataText);
+
+
+            var administratorRole = new IdentityRole(SecurityRoles.SuperAdmin);
+            var reporterRole = new IdentityRole(SecurityRoles.Reporter);
+            var cvoRole = new IdentityRole(SecurityRoles.ChiefVeterinaryOfficer);
+
+            foreach (var user in userSeedData)
+            {
+        
+                if (string.IsNullOrEmpty(user.email)) continue;
+                
+                _logger.LogInformation("user here is ", user);
+                var country = await _context.Countries.Where(x => !x.IsDeleted && x.Name.Equals(user.country)).FirstOrDefaultAsync();
+                
+                if (country == null) continue;
+
+                char[] separators = { ' ' };
+                string firstName= user.name.Split(separators, 2)[0];
+                string lastName = user.name.Split(separators, 2)[1];
+
+                var newUser = new ApplicationUser
+                {
+                    UserName = user.email,
+                    Email = user.email,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    CountryId = country.Id
+                };
+
+
+                if (_userManager.Users.All(u => !u.UserName.Equals(user.email)))
+                {
+                    await _userManager.CreateAsync(newUser, "Admin321!");
+                    if ( user.roles.Equals("Reporter"))
+                    {
+                        await _userManager.AddToRolesAsync(newUser, new[] {reporterRole.Name});
+                    } else if (user.roles.Equals("Chief Veterinary Officer"))
+                    {
+                        await _userManager.AddToRolesAsync(newUser, new[] {cvoRole.Name});
+                    } else if (user.roles.Equals("Super Admin"))
+                    {
+                        await _userManager.AddToRolesAsync(newUser, new[] {administratorRole.Name});
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new BusinessRuleException("DbInitializer", ex.Message ?? "Error occured while seeding users.");
+        }
+    }
+
     private async Task SeedCountryAsync(RegionData country)
     {
         var regions = country.Regions;
         var regionData = country.Regions.DistinctBy(r => r.Region).SelectMany(RegionsSelectorExpression(regions)).ToList();
 
-        var countryEntry = Country.Create(country.Country, country.Code, country.Flag);        
+        var countryEntry = Country.Create(country.Country, country.Code, country.Flag);
 
         foreach (var region in regionData)
         {

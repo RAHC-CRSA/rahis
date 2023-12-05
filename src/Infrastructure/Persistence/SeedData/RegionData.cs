@@ -1,4 +1,12 @@
 ﻿namespace RegionalAnimalHealth.Infrastructure.Persistence.SeedData;
+public class UserData
+{
+    public string country { get; set; }
+    public string name { get; set; }
+    public string email { get; set; }
+    public string roles { get; set; }
+
+}
 public class RegionData
 {
     public string Country { get; set; }
