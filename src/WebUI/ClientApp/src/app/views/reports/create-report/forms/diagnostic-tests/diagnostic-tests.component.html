@@ -68,20 +68,20 @@
             [ngTemplateOutletContext]="{validation: 'required', message: 'Test name is required', control: testForm.controls['name']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>{{ t('Number of tests performed') }}?</mat-label>
+            <mat-label>{{ t('Number of samples tested') }}?</mat-label>
             <input type="number" aria-label="{{ t('Number Tested') }}" formControlName="numberTested" matInput
-              placeholder="{{ t('Number Tested') }}" />
+              placeholder="{{ t('Number of samples tested') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested is required', control: testForm.controls['numberTested']}"></ng-container>
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Number of samples tested is required', control: testForm.controls['numberTested']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
-            <mat-label>{{ t('Number of positive tests') }}?</mat-label>
-            <input type="number" aria-label="{{ t('Number Positive') }}" formControlName="numberPositive" matInput
-              placeholder="{{ t('Number Positive') }}" />
+            <mat-label>{{ t('Number of positive results') }}?</mat-label>
+            <input type="number" aria-label="{{ t('Number of positive results') }}" formControlName="numberPositive" matInput
+              placeholder="{{ t('Number of positive results') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{validation: 'required', message: 'Number tested positive is required', control: testForm.controls['numberPositive']}"></ng-container>
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Number positive results is required', control: testForm.controls['numberPositive']}"></ng-container>
 
           <mat-form-field class="w-full mb-4">
             <mat-label>{{ t('Which animal-health professional carried out the tests') }}?</mat-label>

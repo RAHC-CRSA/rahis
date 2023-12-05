@@ -22,6 +22,7 @@ public class CreateReportCommand : IRequest<(Result, ReportDto?)>
     public int NumberExposed { get; set; }
     public int NumberInfected { get; set; }
     public int Mortality { get; set; }
+    public int MortalityRate { get; set; }
     public bool HumanInfection { get; set; }
     public int? HumansInfected { get; set; }
     public int? HumansExposed { get; set; }
@@ -116,8 +117,8 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             var report = Report.Create(occurrence.Id, request.DiseaseId, request.SpeciesId, DateOnly.FromDateTime(DateTime.UtcNow));
 
             // Update infection info
-            report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Mortality, request.HumanInfection,
-                request.HumansExposed, request.HumansInfected, request.HumansMortality);
+            report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Dead, request.Mortality, request.HumanInfection,
+                request.HumansExposed);
 
             // Update treatment info
             report.UpdateTreatmentInfo(request.StampingOut, request.DestructionOfCorpses, request.CorpsesDestroyed, request.Disinfection,

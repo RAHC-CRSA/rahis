@@ -6,11 +6,10 @@ public class Report : BaseAuditableEntity<long>
     public DateOnly OccurrenceDate { get; private set; }
     public int NumberInfected { get; private set; }
     public int NumberExposed { get; private set; }
+    public int Dead { get; private set; }
     public int Mortality { get; private set; }
     public bool HumanInfection { get; private set; }
-    public int? HumansInfected { get; private set; }
     public int? HumansExposed { get; private set; }
-    public int? HumansMortality { get; private set; }
     public bool IsOngoing { get; private set; }
     public bool IsVerified { get; private set; }
     public bool IsNotified { get; private set; }
@@ -117,18 +116,16 @@ public class Report : BaseAuditableEntity<long>
         TreatmentDetails = treatmentDetails;
     }
 
-    public void UpdateInfectionInfo(int numberExposed, int numberInfected, int mortality, bool humanInfection, int? humansExposed, int? humansInfected, int? humansMortality)
+    public void UpdateInfectionInfo(int numberExposed, int numberInfected, int dead, int mortality, bool humanInfection, int? humansExposed)
     {
         NumberExposed = numberExposed;
         NumberInfected = numberInfected;
         Mortality = mortality;
         HumanInfection = humanInfection;
         HumansExposed = humansExposed;
-        HumansInfected = humansInfected;
-        HumansMortality = humansMortality;
     }
 
-    public void UpdateTreatmentInfo(bool stampingOut, bool destructionOfCorpses, int? corpsesDestroyed, bool disinfection, bool observation, string? observationDuration, bool quarantine, string? quarantineDuration, bool movementControl, string? movementControlMeasures, bool treatment)
+    public void UpdateTreatmentInfo(bool stampingOut, bool destructionOfCorpses, int? corpsesDestroyed, bool disinfection, bool observation, string? observationDuration, bool quarantine, string? quarantineDuration, bool movementControl, string? movementControlMeasures, bool treatment, string? treatmentDetails)
     {
         StampingOut = stampingOut;
         DestructionOfCorpses = destructionOfCorpses;
@@ -141,6 +138,7 @@ public class Report : BaseAuditableEntity<long>
         MovementControl = movementControl;
         MovementControlMeasures = movementControlMeasures;
         Treatment = treatment;
+        TreatmentDetails = treatmentDetails;
     }
 
     public void Verify(string? cvoComment, bool verified, ReportStatus? reportStatus)
@@ -149,6 +147,12 @@ public class Report : BaseAuditableEntity<long>
         CvoComment = cvoComment;
         IsVerified = verified;
         ReportStatus = reportStatus ?? ReportStatus.Pending;
+    }
+
+    public void ReSubmit()
+    {
+        LastModified = DateTime.UtcNow;
+        ReportStatus = ReportStatus.Pending;
     }
 
     public void Delete()

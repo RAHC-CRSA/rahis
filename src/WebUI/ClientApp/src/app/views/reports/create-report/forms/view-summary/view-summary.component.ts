@@ -81,6 +81,7 @@ export class ViewSummaryComponent implements OnInit {
     reportInfoColumns: string[] = [
         'animalsExposed',
         'animalsInfected',
+        'animalsDead',
         'animalMortality',
         'humansExposed',
     ];
@@ -105,7 +106,8 @@ export class ViewSummaryComponent implements OnInit {
                 {
                     animalsExposed: data.exposed ?? 0,
                     animalsInfected: data.infected ?? 0,
-                    animalMortality: data.mortality ?? 0,
+                    animalsDead: data.dead ?? 0,
+                    animalsMortality: data.mortality ?? 0,
                     humansExposed: data.humansExposed ?? 0,
                 };
 

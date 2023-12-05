@@ -54,7 +54,7 @@ public class ApplicationDbContextInitialiser
             await SeedRegionsAsync();
 
           //--- ONLY USE WHEN YOU HAVE SEED DATA SETUP
-          await SeedUserAsync();
+          /// await SeedUserAsync();
         }
         catch (Exception ex)
         {

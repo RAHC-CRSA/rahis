@@ -271,12 +271,7 @@ export class CreateReportComponent implements OnInit {
         };
 
         console.log({ payload });
-
         this.store.dispatch(createReport({ payload }))
-        // this.store.select(getReportsLoaded).subscribe((loaded) => {
-        //     if(loaded)  this.router.navigateByUrl('/dashboard/reports/create-confirmation')
-        // });
-        // this.feedback$ = this.store.select(getFeedback);
     }
 
     private _getFormValues() {

@@ -77,7 +77,7 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, R
             request.Observation ?? report.Observation, request.ObservationDuration,
             request.Quarantine, request.QuarantineDuration,
             request.MovementControl,
-                request.MovementControlMeasures, request.Treatment);
+                request.MovementControlMeasures, request.Treatment, request.TreatmentDetails);
 
 
             // TODO: Add treatments, tests and vaccinations

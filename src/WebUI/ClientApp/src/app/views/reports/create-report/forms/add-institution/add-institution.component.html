@@ -1,4 +1,5 @@
 <form [formGroup]="institutionForm" *transloco="let t">
+    <h3>{{ t('Add Institution') }}</h3>
     <mat-form-field class="w-full mb-4">
       <mat-label>{{ t('Name') }}</mat-label>
       <input aria-label="{{ t('Institution name') }}" matInput formControlName="name" placeholder="{{ t('Institution name') }}" />
