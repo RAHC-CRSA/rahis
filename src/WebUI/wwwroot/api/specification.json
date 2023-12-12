@@ -2917,6 +2917,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "dead": {
+            "type": "integer",
+            "format": "int32"
+          },
           "humansInfected": {
             "type": "integer",
             "format": "int32",
@@ -3132,6 +3136,14 @@
             "format": "int32"
           },
           "mortality": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dead": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mortalityRate": {
             "type": "integer",
             "format": "int32"
           },

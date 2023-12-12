@@ -5006,6 +5006,7 @@ export class ReportDto implements IReportDto {
     infected?: number;
     exposed?: number;
     mortality?: number;
+    dead?: number;
     humansInfected?: number | undefined;
     humansExposed?: number | undefined;
     humansMortality?: number | undefined;
@@ -5058,6 +5059,7 @@ export class ReportDto implements IReportDto {
             this.infected = _data["infected"];
             this.exposed = _data["exposed"];
             this.mortality = _data["mortality"];
+            this.dead = _data["dead"];
             this.humansInfected = _data["humansInfected"];
             this.humansExposed = _data["humansExposed"];
             this.humansMortality = _data["humansMortality"];
@@ -5122,6 +5124,7 @@ export class ReportDto implements IReportDto {
         data["infected"] = this.infected;
         data["exposed"] = this.exposed;
         data["mortality"] = this.mortality;
+        data["dead"] = this.dead;
         data["humansInfected"] = this.humansInfected;
         data["humansExposed"] = this.humansExposed;
         data["humansMortality"] = this.humansMortality;
@@ -5179,6 +5182,7 @@ export interface IReportDto {
     infected?: number;
     exposed?: number;
     mortality?: number;
+    dead?: number;
     humansInfected?: number | undefined;
     humansExposed?: number | undefined;
     humansMortality?: number | undefined;
@@ -5334,6 +5338,8 @@ export class CreateReportCommand implements ICreateReportCommand {
     numberExposed?: number;
     numberInfected?: number;
     mortality?: number;
+    dead?: number;
+    mortalityRate?: number;
     humanInfection?: boolean;
     humansInfected?: number | undefined;
     humansExposed?: number | undefined;
@@ -5382,6 +5388,8 @@ export class CreateReportCommand implements ICreateReportCommand {
             this.numberExposed = _data["numberExposed"];
             this.numberInfected = _data["numberInfected"];
             this.mortality = _data["mortality"];
+            this.dead = _data["dead"];
+            this.mortalityRate = _data["mortalityRate"];
             this.humanInfection = _data["humanInfection"];
             this.humansInfected = _data["humansInfected"];
             this.humansExposed = _data["humansExposed"];
@@ -5442,6 +5450,8 @@ export class CreateReportCommand implements ICreateReportCommand {
         data["numberExposed"] = this.numberExposed;
         data["numberInfected"] = this.numberInfected;
         data["mortality"] = this.mortality;
+        data["dead"] = this.dead;
+        data["mortalityRate"] = this.mortalityRate;
         data["humanInfection"] = this.humanInfection;
         data["humansInfected"] = this.humansInfected;
         data["humansExposed"] = this.humansExposed;
@@ -5495,6 +5505,8 @@ export interface ICreateReportCommand {
     numberExposed?: number;
     numberInfected?: number;
     mortality?: number;
+    dead?: number;
+    mortalityRate?: number;
     humanInfection?: boolean;
     humansInfected?: number | undefined;
     humansExposed?: number | undefined;

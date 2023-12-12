@@ -13,6 +13,7 @@ public class UpdateReportCommand : IRequest<Result>
     public long Id { get; set; }
     public int NumberExposed { get; set; }
     public int NumberInfected { get; set; }
+    public int Dead { get; set; }
     public int Mortality { get; set; }
     public bool HumanInfection { get; set; }
     public int? HumansInfected { get; set; }
@@ -66,8 +67,11 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, R
 
 
             // Update infection info
-            report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Mortality, request.HumanInfection,
-                request.HumansExposed, request.HumansInfected, request.HumansMortality);
+            // report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Mortality, request.HumanInfection,
+            //     request.HumansExposed, request.HumansInfected, request.HumansMortality);
+
+                            report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Dead, request.Mortality, request.HumanInfection,
+                request.HumansExposed);
 
             // Update treatment info
             report.UpdateTreatmentInfo(request.StampingOut ?? report.StampingOut,
