@@ -17,7 +17,7 @@
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-            {{ t('View report') }}
+          {{ t('View report') }}
         </h2>
       </div>
     </div>
@@ -45,10 +45,10 @@
             </div>
             <div class="w-full">
               <div class="flex gap-2 mb-1">
-                <span *ngIf="(report$ | async)?.isOngoing"
-                  class="bg-yellow-500 text-white px-3 py-1 rounded-xl">{{ t('Ongoing') }}</span>
-                <span *ngIf="(report$ | async)?.isVerified"
-                  class="bg-green-500 text-white px-3 py-1 rounded-xl">{{ t('Verified') }}</span>
+                <span *ngIf="(report$ | async)?.isOngoing" class="bg-yellow-500 text-white px-3 py-1 rounded-xl">{{
+                  t('Ongoing') }}</span>
+                <span *ngIf="(report$ | async)?.isVerified" class="bg-green-500 text-white px-3 py-1 rounded-xl">{{
+                  t('Verified') }}</span>
               </div>
               <h3 class="text-3xl">{{ (report$ | async)?.occurrenceTitle }}</h3>
               <h4 class="text-2xl">{{ (report$ | async)?.occurrenceRegion }}</h4>
@@ -59,7 +59,8 @@
           <div *ngIf="canNotify" class="w-full my-4">
             <fuse-alert *ngIf="(report$ | async)?.notifiabilityPoints >= 7" [type]="'error'" [appearance]="'outline'">
               <span fuseAlertTitle>{{ t('Notification Recommended') }}</span>
-              {{ t('We recommend an immediate notification click the button to send email notifications to relevant parties') }}.
+              {{ t('We recommend an immediate notification click the button to send email notifications to relevant
+              parties') }}.
               <div class="my-3">
                 <button *ngIf="canNotify" class="px-8" mat-flat-button [color]="'error'" type="button"
                   (click)="sendNotification()">
@@ -141,20 +142,6 @@
                 </td>
               </ng-container>
 
-              <!-- Humans Infected Column
-              <ng-container matColumnDef="humansInfected">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Humans Infected </th>
-                <td mat-cell *matCellDef="let el" class="text-center">{{ el.humansInfected }}
-                </td>
-              </ng-container>
-
-              <-- Animals Mortality Column -->
-              <!-- <ng-container matColumnDef="humanMortality">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Human Mortality </th>
-                <td mat-cell *matCellDef="let el" class="text-center">{{ el.humanMortality }}
-                </td>
-              </ng-container> -->
-
               <tr mat-header-row *matHeaderRowDef="reportInfoColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: reportInfoColumns;"></tr>
 
@@ -210,7 +197,8 @@
 
               <!-- Observation Column -->
               <ng-container matColumnDef="observation">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Observation (in case of bite)') }} </th>
+                <th mat-header-cell *matHeaderCellDef class="text-center"> {{ t('Observation (in case of bite)') }}
+                </th>
                 <td mat-cell *matCellDef="let el" class="text-center">
                   <mat-icon *ngIf="el.observation" color="primary" svgIcon="heroicons_solid:check-circle"></mat-icon>
                   <mat-icon *ngIf="!el.observation" color="danger" svgIcon="heroicons_solid:minus-circle"></mat-icon>
@@ -352,11 +340,12 @@
           <div class="mb-8">
             <mat-form-field class="w-full mt-4" *ngIf="(canVerify)">
               <mat-label>Comment:</mat-label>
-              <textarea aria-label="Cvo Comment" formControlName="cvoComment" matInput placeholder="Additional comment to for this report"></textarea>
+              <textarea aria-label="Cvo Comment" formControlName="cvoComment" matInput
+                placeholder="Additional comment to for this report"></textarea>
             </mat-form-field>
             <div *ngIf="(!canVerify)">
-                <p>Comment:</p> <br />
-                <p>{{(report$ | async)?.cvoComment}}</p>
+              <p>Comment:</p> <br />
+              <p>{{(report$ | async)?.cvoComment}}</p>
             </div>
             <!-- <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Movement control measures is required', control: treatmentInfo.controls['movementControlMeasures']}"></ng-container> -->
@@ -372,19 +361,19 @@
           </a>
           <div class="flex justify-between my-4">
             <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="'warn'"
-                type="button" [disabled]="!canVerify" (click)="reject()">
-                <span *ngIf="!( loading$ | async )">
-                    {{ t('Reject Report') }}
-                </span>
-                <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+              type="button" [disabled]="!canVerify" (click)="reject()">
+              <span *ngIf="!( loading$ | async )">
+                {{ t('Reject Report') }}
+              </span>
+              <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>
             </button>
-            <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="'primary'"
-                type="button" [disabled]="!canVerify" (click)="validate()">
-                <span *ngIf="!( loading$ | async )">
-                    {{ t('Validate Report') }}
-                </span>
-                <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+            <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button
+              [color]="'primary'" type="button" [disabled]="!canVerify" (click)="validate()">
+              <span *ngIf="!( loading$ | async )">
+                {{ t('Validate Report') }}
+              </span>
+              <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>
             </button>
           </div>

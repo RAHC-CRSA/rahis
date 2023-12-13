@@ -21,6 +21,7 @@ public class CreateReportCommand : IRequest<(Result, ReportDto?)>
     public long SpeciesId { get; set; }
     public int NumberExposed { get; set; }
     public int NumberInfected { get; set; }
+    public int Dead { get; set; }
     public int Mortality { get; set; }
     public int MortalityRate { get; set; }
     public bool HumanInfection { get; set; }
@@ -123,7 +124,7 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             // Update treatment info
             report.UpdateTreatmentInfo(request.StampingOut, request.DestructionOfCorpses, request.CorpsesDestroyed, request.Disinfection,
                 request.Observation, request.ObservationDuration, request.Quarantine, request.QuarantineDuration, request.MovementControl,
-                request.MovementControlMeasures, request.Treatment);
+                request.MovementControlMeasures, request.Treatment, request.TreatmentDetails);
 
 
             // TODO: Add treatments, tests and vaccinations
@@ -174,12 +175,12 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             // Mortality points
             if (latestReport != null)
             {
-                // Human mortality points
-                notifiabilityPoints += request.HumansMortality > latestReport.HumansMortality ? request.HumansMortality > (latestReport.HumansMortality / 2) ? 2 : 1 : 0;
-
                 // Animal mortality points
                 notifiabilityPoints += request.Mortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
             }
+
+            // Calculate notifiability points out of 10
+            notifiabilityPoints = (int) Math.Round(notifiabilityPoints / 8.0 * 10);
 
             // Set notifiable points for report
             report.SetNotifiabilityPoints(notifiabilityPoints);

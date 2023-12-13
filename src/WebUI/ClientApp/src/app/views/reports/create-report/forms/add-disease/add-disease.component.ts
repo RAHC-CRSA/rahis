@@ -68,7 +68,7 @@ export class AddDiseaseComponent {
             name: this.f.name.value,
             code: this.f.code.value,
             classification: this.f.classification.value,
-            zoonotic: this.f.zoonotic.value,
+            isZoonotic: this.f.zoonotic.value,
             speciesId: this.f.species.value,
         };
 

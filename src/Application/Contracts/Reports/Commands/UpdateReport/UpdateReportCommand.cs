@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
-using RegionalAnimalHealth.Domain.Enums;
 using RegionalAnimalHealth.Domain.Models.Messaging;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.UpdateReport;
@@ -13,6 +12,7 @@ public class UpdateReportCommand : IRequest<Result>
     public long Id { get; set; }
     public int NumberExposed { get; set; }
     public int NumberInfected { get; set; }
+    public int Deceased { get; set; }
     public int Mortality { get; set; }
     public bool HumanInfection { get; set; }
     public int? HumansInfected { get; set; }
@@ -66,8 +66,8 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, R
 
 
             // Update infection info
-            report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Mortality, request.HumanInfection,
-                request.HumansExposed, request.HumansInfected, request.HumansMortality);
+            report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Deceased, request.Mortality, request.HumanInfection,
+                request.HumansExposed);
 
             // Update treatment info
             report.UpdateTreatmentInfo(request.StampingOut ?? report.StampingOut,

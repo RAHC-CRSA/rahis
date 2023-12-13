@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Diagnostics;
+using RegionalAnimalHealth.Domain.Entities.Regions;
 
 namespace RegionalAnimalHealth.Domain.Entities.Reports;
 public class NotificationRecipient : BaseAuditableEntity<long>
@@ -7,6 +8,9 @@ public class NotificationRecipient : BaseAuditableEntity<long>
     public string EmailAddress { get; private set; }
     public string? Institution { get; private set; }
     public bool IsEnabled { get; private set; }
+
+    public long CountryId { get; private set; }
+    public Country Country { get; set; }
 
     private NotificationRecipient() : base()
     {

@@ -16,6 +16,7 @@ public class Report : BaseAuditableEntity<long>
     public DateTime NotificationSent { get; private set; }
     public ReportType ReportType { get; private set; }
     public ReportStatus ReportStatus { get; private set; }
+    public string? ReportSubmissionComments { get;private set; }
     public decimal? Longitude { get; private set; }
     public decimal? Latitude { get; private set; }
     public bool StampingOut { get; private set; }
@@ -116,7 +117,7 @@ public class Report : BaseAuditableEntity<long>
         TreatmentDetails = treatmentDetails;
     }
 
-    public void UpdateInfectionInfo(int numberExposed, int numberInfected, int dead, int mortality, bool humanInfection, int? humansExposed)
+    public void UpdateInfectionInfo(int numberExposed, int numberInfected, int deceased, int mortality, bool humanInfection, int? humansExposed)
     {
         NumberExposed = numberExposed;
         NumberInfected = numberInfected;

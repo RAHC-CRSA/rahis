@@ -7,28 +7,31 @@ using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Domain.Entities.Reports;
 
-namespace RegionalAnimalHealth.Application.Contracts.Diseases.Queries.GetDiseases;
-public class GetCrossBoundaryDiseasesQuery : IRequest<(Result, List<DiseaseDto>?)>
+namespace RegionalAnimalHealth.Application.Contracts.Diseases.Queries.GetTransBoundaryDiseases;
+public class GetTransBoundaryDiseasesQuery : IRequest<(Result, List<DiseaseDto>?)>
 {
+    public long SpeciesId { get; set; }
 }
 
-public class GetDiseasesQueryHandler : IRequestHandler<GetCrossBoundaryDiseasesQuery, (Result, List<DiseaseDto>?)>
+public class GetTransBoundaryDiseasesQueryHandler : IRequestHandler<GetTransBoundaryDiseasesQuery, (Result, List<DiseaseDto>?)>
 {
     private readonly IApplicationDbContext _context;
-    private readonly ILogger<GetCrossBoundaryDiseasesQuery> _logger;
+    private readonly ILogger<GetTransBoundaryDiseasesQuery> _logger;
 
-    public GetDiseasesQueryHandler(IApplicationDbContext context, ILogger<GetCrossBoundaryDiseasesQuery> logger)
+    public GetTransBoundaryDiseasesQueryHandler(IApplicationDbContext context, ILogger<GetTransBoundaryDiseasesQuery> logger)
     {
         _context = context;
         _logger = logger;
     }
 
-    public async Task<(Result, List<DiseaseDto>?)> Handle(GetCrossBoundaryDiseasesQuery request, CancellationToken cancellationToken)
+    public async Task<(Result, List<DiseaseDto>?)> Handle(GetTransBoundaryDiseasesQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            var diseases = await _context.Diseases
-                .Where(x => !x.IsDeleted)
+            var diseases = await _context.TransboundaryDiseases
+                .Where(x => !x.IsDeleted && x.SpeciesId == request.SpeciesId)
+                .Include(x => x.Disease)
+                .Select(x => x.Disease)
                 .Select(DiseaseSelectorExpression())
                 .ToListAsync();
 

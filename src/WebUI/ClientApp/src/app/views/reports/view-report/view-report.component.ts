@@ -119,8 +119,6 @@ export class ViewReportComponent implements OnInit {
                         animalsInfected: data.infected ?? 0,
                         animalMortality: data.mortality ?? 0,
                         humansExposed: data.humansExposed ?? 0,
-                        humansInfected: data.humansInfected ?? 0,
-                        humanMortality: data.humansMortality ?? 0,
                     },
                 ]);
 
@@ -139,18 +137,31 @@ export class ViewReportComponent implements OnInit {
     }
 
     reject() {
-        const payload: IVerifyReportCommand = { id: this.reportId, cvoComment: this.cvoComment, isVerified: false, reportStatus: ReportStatus.Rejected };
-        console.log("cvo comment is ", this.cvoComment)
+        const payload: IVerifyReportCommand = {
+            id: this.reportId,
+            cvoComment: this.cvoComment,
+            isVerified: false,
+            reportStatus: ReportStatus.Rejected,
+        };
+        console.log('cvo comment is ', this.cvoComment);
         this.store.dispatch(verifyReport({ payload }));
     }
 
     validate() {
-        const payload: IVerifyReportCommand = { id: this.reportId, isVerified: true, reportStatus: ReportStatus.Approved };
+        const payload: IVerifyReportCommand = {
+            id: this.reportId,
+            isVerified: true,
+            reportStatus: ReportStatus.Approved,
+        };
         this.store.dispatch(verifyReport({ payload }));
     }
 
     submit() {
-        const payload: IVerifyReportCommand = { id: this.reportId, cvoComment: "GUY WHY?", reportStatus: ReportStatus.Rejected };
+        const payload: IVerifyReportCommand = {
+            id: this.reportId,
+            cvoComment: 'GUY WHY?',
+            reportStatus: ReportStatus.Rejected,
+        };
         this.store.dispatch(verifyReport({ payload }));
     }
 

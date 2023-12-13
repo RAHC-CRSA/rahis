@@ -2364,6 +2364,62 @@
         ]
       }
     },
+    "/api/trans-boundary-diseases": {
+      "get": {
+        "tags": [
+          "Diseases"
+        ],
+        "summary": "Gets a list of trans-boundary diseases",
+        "description": "Gets a list of trans-boundary diseases in the system",
+        "operationId": "GetTransBoundaryDiseases_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetTransBoundaryDiseasesQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiseaseDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
+          }
+        ]
+      }
+    },
     "/api/auth": {
       "post": {
         "tags": [
@@ -2917,17 +2973,10 @@
             "type": "integer",
             "format": "int32"
           },
-          "humansInfected": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
+          "humanInfection": {
+            "type": "boolean"
           },
           "humansExposed": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "humansMortality": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -3131,7 +3180,15 @@
             "type": "integer",
             "format": "int32"
           },
+          "dead": {
+            "type": "integer",
+            "format": "int32"
+          },
           "mortality": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mortalityRate": {
             "type": "integer",
             "format": "int32"
           },
@@ -3820,6 +3877,10 @@
           "name": {
             "type": "string"
           },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
+          },
           "publicSector": {
             "type": "boolean"
           },
@@ -3849,6 +3910,10 @@
             "type": "integer",
             "format": "int64",
             "nullable": true
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -3882,6 +3947,10 @@
           },
           "name": {
             "type": "string"
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
           },
           "publicSector": {
             "type": "boolean"
@@ -3922,7 +3991,10 @@
           "name": {
             "type": "string"
           },
-          "zoonotic": {
+          "isZoonotic": {
+            "type": "boolean"
+          },
+          "isPriority": {
             "type": "boolean"
           },
           "code": {
@@ -3950,7 +4022,7 @@
           "classification": {
             "type": "string"
           },
-          "zoonotic": {
+          "isZoonotic": {
             "type": "boolean"
           },
           "speciesId": {
@@ -3964,6 +4036,16 @@
         "additionalProperties": false,
         "properties": {
           "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "GetTransBoundaryDiseasesQuery": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "speciesId": {
             "type": "integer",
             "format": "int64"
           }

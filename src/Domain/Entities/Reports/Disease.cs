@@ -5,12 +5,13 @@ namespace RegionalAnimalHealth.Domain.Entities.Reports;
 public class Disease : BaseAuditableEntity<long>
 {
     public string Name { get; private set; }
-    public bool Zoonotic { get; private set; }
+    public bool IsZoonotic { get; private set; }
     public string Code { get; private set; }
     public string Classification { get; private set; }
 
-    public bool IsNotifiable { get; set; }
-    public bool IsMonitored { get; set; }
+    public bool IsNotifiable { get; private set; }
+    public bool IsMonitored { get; private set; }
+    public bool IsPriority { get; private set; }
 
     private readonly List<TransboundaryDisease> _transboundaryDiseases = new();
     public IReadOnlyCollection<TransboundaryDisease> TransboundaryDiseases => _transboundaryDiseases.AsReadOnly();
@@ -20,12 +21,12 @@ public class Disease : BaseAuditableEntity<long>
     {
     }
 
-    private Disease(string name, string code, string classification, bool zoonotic = false) : this()
+    private Disease(string name, string code, string classification, bool isZoonotic = false) : this()
     {
         Name = name;
         Code = code;
         Classification = classification;
-        Zoonotic = zoonotic;
+        IsZoonotic = isZoonotic;
     }
 
     public static Disease Create(string name, string code, string classification, bool zoonotic = false)
