@@ -13,8 +13,8 @@ public class DiagnosticTest : BaseAuditableEntity<long>
     public long ProfessionalId { get; private set; }
     public virtual ParaProfessional Professional { get; private set; }
     public DateTime? ResultConfirmationDate { get; private set; }
-    public long TestResultFileId { get; private set; }
-    public File TestResultFile { get; private set; }
+    public long? TestResultFileId { get; private set; }
+    public virtual File TestResultFile { get; private set; }
 
     private DiagnosticTest() : base()
     {

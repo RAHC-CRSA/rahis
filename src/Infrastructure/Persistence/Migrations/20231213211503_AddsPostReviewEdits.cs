@@ -41,22 +41,19 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                 name: "CountryId",
                 table: "ParaProfessionals",
                 type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
+                nullable: true);
 
             migrationBuilder.AddColumn<long>(
                 name: "CountryId",
                 table: "NotificationRecipients",
                 type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
+                nullable: true);
 
             migrationBuilder.AddColumn<long>(
                 name: "CountryId",
                 table: "Institutions",
                 type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
+                nullable: true);
 
             migrationBuilder.AddColumn<bool>(
                 name: "IsPriority",
@@ -75,8 +72,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                 name: "TestResultFileId",
                 table: "DiagnosticTests",
                 type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Files",
@@ -124,32 +120,28 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                 table: "DiagnosticTests",
                 column: "TestResultFileId",
                 principalTable: "Files",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Institutions_Countries_CountryId",
                 table: "Institutions",
                 column: "CountryId",
                 principalTable: "Countries",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_NotificationRecipients_Countries_CountryId",
                 table: "NotificationRecipients",
                 column: "CountryId",
                 principalTable: "Countries",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ParaProfessionals_Countries_CountryId",
                 table: "ParaProfessionals",
                 column: "CountryId",
                 principalTable: "Countries",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />

@@ -9,8 +9,8 @@ public class NotificationRecipient : BaseAuditableEntity<long>
     public string? Institution { get; private set; }
     public bool IsEnabled { get; private set; }
 
-    public long CountryId { get; private set; }
-    public Country Country { get; set; }
+    public long? CountryId { get; private set; }
+    public virtual Country Country { get; set; }
 
     private NotificationRecipient() : base()
     {

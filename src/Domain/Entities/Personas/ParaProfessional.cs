@@ -10,8 +10,8 @@ public class ParaProfessional : BaseAuditableEntity<long>
     public string Position { get; private set; }
     public long? InstitutionId { get; private set; }
     public virtual Institution Institution { get; set; }
-    public long CountryId { get; private set; }
-    public Country Country { get; private set; }
+    public long? CountryId { get; private set; }
+    public virtual Country Country { get; private set; }
 
     private ParaProfessional() : base()
     {

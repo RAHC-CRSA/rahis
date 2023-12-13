@@ -38,6 +38,33 @@ export class DiseaseEffects {
         )
     );
 
+    loadTransboundaryDiseases$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(DiseaseActions.loadTransBoundaryDiseases),
+            exhaustMap((action) =>
+                this.diseaseService
+                    .getTransBoundaryDiseases(action.payload)
+                    .pipe(
+                        map((payload) =>
+                            DiseaseActions.loadDiseasesSuccess({
+                                payload: payload,
+                            })
+                        ),
+                        catchError((error) =>
+                            of(
+                                DiseaseActions.setFeedback({
+                                    payload:
+                                        this.feedbackService.processResponse(
+                                            error
+                                        ),
+                                })
+                            )
+                        )
+                    )
+            )
+        )
+    );
+
     addDisease$ = createEffect(() =>
         this.actions$.pipe(
             ofType(DiseaseActions.addDisease),

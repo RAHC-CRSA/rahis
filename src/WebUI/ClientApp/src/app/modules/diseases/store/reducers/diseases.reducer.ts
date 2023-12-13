@@ -47,6 +47,11 @@ export const diseaseReducer = createReducer(
         feedback: null,
         loading: true,
     })),
+    on(actions.loadTransBoundaryDiseases, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
     on(actions.loadDiseasesSuccess, (state, { payload }) => ({
         ...state,
         feedback: null,

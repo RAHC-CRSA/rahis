@@ -12,7 +12,7 @@ using RegionalAnimalHealth.Infrastructure.Persistence;
 namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231213200626_AddsPostReviewEdits")]
+    [Migration("20231213211503_AddsPostReviewEdits")]
     partial class AddsPostReviewEdits
     {
         /// <inheritdoc />
@@ -311,7 +311,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CountryId")
+                    b.Property<long?>("CountryId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created")
@@ -357,7 +357,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CountryId")
+                    b.Property<long?>("CountryId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created")
@@ -661,7 +661,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                     b.Property<DateTime?>("ResultConfirmationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("TestResultFileId")
+                    b.Property<long?>("TestResultFileId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -824,7 +824,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CountryId")
+                    b.Property<long?>("CountryId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created")
@@ -1336,9 +1336,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("RegionalAnimalHealth.Domain.Entities.Regions.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });
@@ -1347,9 +1345,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("RegionalAnimalHealth.Domain.Entities.Regions.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.HasOne("RegionalAnimalHealth.Domain.Entities.Personas.Institution", "Institution")
                         .WithMany("ParaProfessionals")
@@ -1420,9 +1416,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
 
                     b.HasOne("RegionalAnimalHealth.Domain.Entities.Reports.File", "TestResultFile")
                         .WithMany()
-                        .HasForeignKey("TestResultFileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TestResultFileId");
 
                     b.Navigation("Professional");
 
@@ -1444,9 +1438,7 @@ namespace RegionalAnimalHealth.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("RegionalAnimalHealth.Domain.Entities.Regions.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });

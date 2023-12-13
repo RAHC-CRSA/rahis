@@ -8,8 +8,8 @@ public class Institution : BaseAuditableEntity<long>, IAggregateRoot
     public string Name { get; private set; }
     public bool PublicSector { get; private set; }
     public string? Type { get; private set; }
-    public long CountryId { get; private set; }
-    public Country Country { get; private set; }
+    public long? CountryId { get; private set; }
+    public virtual Country Country { get; private set; }
 
     private readonly List<ParaProfessional> _paraProfessionals = new();
     public IReadOnlyCollection<ParaProfessional> ParaProfessionals => _paraProfessionals.AsReadOnly();

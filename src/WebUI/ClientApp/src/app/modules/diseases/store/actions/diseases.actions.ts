@@ -3,6 +3,7 @@ import {
     DiseaseDto,
     IAddDiseaseCommand,
     IDeleteDiseaseCommand,
+    IGetTransBoundaryDiseasesQuery,
     ServerResponse,
     SpeciesDto,
 } from '../../../../../app/web-api-client';
@@ -18,6 +19,15 @@ export const loadDiseases = createAction(LOAD_DISEASES);
 export const loadDiseasesSuccess = createAction(
     LOAD_DISEASES_SUCCESS,
     props<{ payload: DiseaseDto[] }>()
+);
+
+// Load transboundary diseases
+export const LOAD_TRANSBOUNDARY_DISEASES = `[Diseases] Load TransBoundary Diseases`;
+export const LOAD_TRANSBOUNDARY_DISEASES_SUCCESS = `[Diseases] Load TransBoundary Diseases Success`;
+
+export const loadTransBoundaryDiseases = createAction(
+    LOAD_TRANSBOUNDARY_DISEASES,
+    props<{ payload: IGetTransBoundaryDiseasesQuery }>()
 );
 
 // Add disease
