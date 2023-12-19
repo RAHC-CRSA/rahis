@@ -8,8 +8,16 @@ import {
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
-import { loadDiseases, loadSpecies } from 'app/modules/reports/store/actions';
-import { getDiseases, getReportsLoaded, getSpecies } from 'app/modules/reports/store/selectors';
+import {
+    loadDiseases,
+    loadSpecies,
+    loadTransBoundaryDiseases,
+} from 'app/modules/reports/store/actions';
+import {
+    getDiseases,
+    getReportsLoaded,
+    getSpecies,
+} from 'app/modules/reports/store/selectors';
 import { DiseaseDto, SpeciesDto } from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
@@ -22,7 +30,6 @@ import { Observable, map, startWith } from 'rxjs';
 export class DiseaseInfoComponent implements OnInit {
     @Input() formData: any;
 
-    otherOption: string = 'Other';
     newSpecies: boolean = false;
     newDisease: boolean = false;
 
@@ -73,10 +80,7 @@ export class DiseaseInfoComponent implements OnInit {
         this.loaded$ = this.store.select(getReportsLoaded);
 
         this.diseases$.subscribe((diseases) => {
-            this.diseases = [
-                ...diseases,
-                new DiseaseDto({ id: null, name: this.otherOption }),
-            ];
+            this.diseases = diseases;
 
             this.filteredDiseases = this.diseaseControl.valueChanges.pipe(
                 startWith({} as DiseaseDto),
@@ -89,16 +93,18 @@ export class DiseaseInfoComponent implements OnInit {
                     name ? this._filterDisease(name) : this.diseases.slice()
                 )
             );
-            if(this.formData.disease && this.formData.disease >= 0){
-                this.selectedDisease = this.diseases[this.formData.disease == 0 ? this.formData.disease : --this.formData.disease];
+            if (this.formData.disease && this.formData.disease >= 0) {
+                this.selectedDisease =
+                    this.diseases[
+                        this.formData.disease == 0
+                            ? this.formData.disease
+                            : --this.formData.disease
+                    ];
             }
         });
 
         this.species$.subscribe((species) => {
-            this.species = [
-                ...species,
-                new SpeciesDto({ id: null, name: this.otherOption }),
-            ];
+            this.species = species;
 
             this.filteredSpecies = this.speciesControl.valueChanges.pipe(
                 startWith({} as SpeciesDto),
@@ -111,8 +117,13 @@ export class DiseaseInfoComponent implements OnInit {
                     name ? this._filterSpecies(name) : this.species.slice()
                 )
             );
-            if(this.formData.species && this.formData.species >= 0){
-                this.selectedSpecies = this.species[this.formData.species == 0 ? this.formData.species : --this.formData.species];
+            if (this.formData.species && this.formData.species >= 0) {
+                this.selectedSpecies =
+                    this.species[
+                        this.formData.species == 0
+                            ? this.formData.species
+                            : --this.formData.species
+                    ];
             }
         });
     }
@@ -132,12 +143,7 @@ export class DiseaseInfoComponent implements OnInit {
         this.selectedDisease = event.option.value;
         const disease: DiseaseDto = event.option.value;
 
-        this.newDisease =
-            disease.name.toLowerCase() == this.otherOption.toLowerCase();
-
         this.diseaseInfo.patchValue({ disease: disease.id });
-
-        if (this.newDisease) this.diseaseControl.disable();
     }
 
     onCheckDisease(isNew: boolean) {
@@ -169,12 +175,14 @@ export class DiseaseInfoComponent implements OnInit {
         this.selectedSpecies = event.option.value;
         const species: SpeciesDto = event.option.value;
 
-        this.newSpecies =
-            species.name.toLowerCase() == this.otherOption.toLowerCase();
+        this.diseaseControl.setValue('', { emitEvent: true });
+        this.diseaseInfo.patchValue(
+            { disease: undefined },
+            { emitEvent: true }
+        );
 
         this.diseaseInfo.patchValue({ species: species.id });
-
-        if (this.newSpecies) this.speciesControl.disable();
+        this.store.dispatch(loadTransBoundaryDiseases({ payload: species.id }));
     }
 
     onCheckSpecies(isNew: boolean) {

@@ -3954,8 +3954,9 @@ export class GetDiseasesClient implements IGetDiseasesClient {
 export interface IGetTransBoundaryDiseasesClient {
     /**
      * Gets a list of trans-boundary diseases
+     * @param speciesId (optional) 
      */
-    handle(request: GetTransBoundaryDiseasesQuery): Observable<DiseaseDto[]>;
+    handle(speciesId: number | null | undefined): Observable<DiseaseDto[]>;
 }
 
 @Injectable({
@@ -3973,19 +3974,18 @@ export class GetTransBoundaryDiseasesClient implements IGetTransBoundaryDiseases
 
     /**
      * Gets a list of trans-boundary diseases
+     * @param speciesId (optional) 
      */
-    handle(request: GetTransBoundaryDiseasesQuery): Observable<DiseaseDto[]> {
-        let url_ = this.baseUrl + "/api/trans-boundary-diseases";
+    handle(speciesId: number | null | undefined): Observable<DiseaseDto[]> {
+        let url_ = this.baseUrl + "/api/trans-boundary-diseases?";
+        if (speciesId !== undefined && speciesId !== null)
+            url_ += "speciesId=" + encodeURIComponent("" + speciesId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(request);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
@@ -7230,6 +7230,7 @@ export class DiseaseDto implements IDiseaseDto {
     name?: string;
     isZoonotic?: boolean;
     isPriority?: boolean;
+    isNotifiable?: boolean;
     code?: string;
     classification?: string;
     speciesId?: number;
@@ -7249,6 +7250,7 @@ export class DiseaseDto implements IDiseaseDto {
             this.name = _data["name"];
             this.isZoonotic = _data["isZoonotic"];
             this.isPriority = _data["isPriority"];
+            this.isNotifiable = _data["isNotifiable"];
             this.code = _data["code"];
             this.classification = _data["classification"];
             this.speciesId = _data["speciesId"];
@@ -7268,6 +7270,7 @@ export class DiseaseDto implements IDiseaseDto {
         data["name"] = this.name;
         data["isZoonotic"] = this.isZoonotic;
         data["isPriority"] = this.isPriority;
+        data["isNotifiable"] = this.isNotifiable;
         data["code"] = this.code;
         data["classification"] = this.classification;
         data["speciesId"] = this.speciesId;
@@ -7280,6 +7283,7 @@ export interface IDiseaseDto {
     name?: string;
     isZoonotic?: boolean;
     isPriority?: boolean;
+    isNotifiable?: boolean;
     code?: string;
     classification?: string;
     speciesId?: number;
@@ -7371,42 +7375,6 @@ export class DeleteDiseaseCommand implements IDeleteDiseaseCommand {
 
 export interface IDeleteDiseaseCommand {
     id?: number;
-}
-
-export class GetTransBoundaryDiseasesQuery implements IGetTransBoundaryDiseasesQuery {
-    speciesId?: number;
-
-    constructor(data?: IGetTransBoundaryDiseasesQuery) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.speciesId = _data["speciesId"];
-        }
-    }
-
-    static fromJS(data: any): GetTransBoundaryDiseasesQuery {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetTransBoundaryDiseasesQuery();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["speciesId"] = this.speciesId;
-        return data;
-    }
-}
-
-export interface IGetTransBoundaryDiseasesQuery {
-    speciesId?: number;
 }
 
 export class AuthResponseDto implements IAuthResponseDto {

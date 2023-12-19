@@ -10,7 +10,7 @@ using RegionalAnimalHealth.Domain.Entities.Reports;
 namespace RegionalAnimalHealth.Application.Contracts.Diseases.Queries.GetTransBoundaryDiseases;
 public class GetTransBoundaryDiseasesQuery : IRequest<(Result, List<DiseaseDto>?)>
 {
-    public long SpeciesId { get; set; }
+    public long? SpeciesId { get; set; }
 }
 
 public class GetTransBoundaryDiseasesQueryHandler : IRequestHandler<GetTransBoundaryDiseasesQuery, (Result, List<DiseaseDto>?)>
@@ -29,7 +29,7 @@ public class GetTransBoundaryDiseasesQueryHandler : IRequestHandler<GetTransBoun
         try
         {
             var diseases = await _context.TransboundaryDiseases
-                .Where(x => !x.IsDeleted && x.SpeciesId == request.SpeciesId)
+                .Where(x => !x.IsDeleted && request.SpeciesId != null ? x.SpeciesId == request.SpeciesId : true)
                 .Include(x => x.Disease)
                 .Select(x => x.Disease)
                 .Select(DiseaseSelectorExpression())
@@ -51,6 +51,8 @@ public class GetTransBoundaryDiseasesQueryHandler : IRequestHandler<GetTransBoun
             Id = e.Id,
             Name = e.Name,
             IsZoonotic = e.IsZoonotic,
+            IsPriority = e.IsPriority,
+            IsNotifiable = e.IsNotifiable,
             Code = e.Code,
             Classification = e.Classification
         };

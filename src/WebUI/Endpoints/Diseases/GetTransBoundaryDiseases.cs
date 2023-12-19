@@ -14,7 +14,7 @@ namespace WebUI.Endpoints.Diseases;
 
 [OpenApiTag("Diseases")]
 [Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class GetTransBoundaryDiseases : EndpointBaseAsync.WithRequest<GetTransBoundaryDiseasesQuery>.WithActionResult<List<DiseaseDto>>
+public class GetTransBoundaryDiseases : EndpointBaseAsync.WithRequest<long?>.WithActionResult<List<DiseaseDto>>
 {
     private readonly IMediator _mediator;
 
@@ -31,9 +31,9 @@ public class GetTransBoundaryDiseases : EndpointBaseAsync.WithRequest<GetTransBo
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult<List<DiseaseDto>>> HandleAsync(GetTransBoundaryDiseasesQuery request, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<List<DiseaseDto>>> HandleAsync(long? speciesId, CancellationToken cancellationToken = default)
     {
-        var (result, data) = await _mediator.Send(request);
+        var (result, data) = await _mediator.Send(new GetTransBoundaryDiseasesQuery { SpeciesId = speciesId });
         if (result.Succeeded)
             return Ok(data);
 

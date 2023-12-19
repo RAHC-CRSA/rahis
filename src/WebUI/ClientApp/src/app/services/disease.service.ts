@@ -7,10 +7,8 @@ import {
     DeleteDiseaseCommand,
     GetDiseasesClient,
     GetTransBoundaryDiseasesClient,
-    GetTransBoundaryDiseasesQuery,
     IAddDiseaseCommand,
     IDeleteDiseaseCommand,
-    IGetTransBoundaryDiseasesQuery,
 } from '../web-api-client';
 
 @Injectable({
@@ -35,10 +33,8 @@ export class DiseaseService {
         return this.getDiseasesClient.handle();
     }
 
-    getTransBoundaryDiseases(payload: IGetTransBoundaryDiseasesQuery) {
-        const request = new GetTransBoundaryDiseasesQuery(payload);
-
-        return this.getTransBoundaryDiseasesClient.handle(request);
+    getTransBoundaryDiseases(payload: number | undefined) {
+        return this.getTransBoundaryDiseasesClient.handle(payload);
     }
 
     addDisease(payload: IAddDiseaseCommand) {

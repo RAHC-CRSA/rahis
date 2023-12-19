@@ -232,6 +232,20 @@ export const addDiseaseSuccess = createAction(
     props<{ payload: DiseaseDto }>()
 );
 
+// Load transboundary diseases
+export const LOAD_TRANSBOUNDARY_DISEASES = `[Reports] Load TransBoundary Diseases`;
+export const LOAD_TRANSBOUNDARY_DISEASES_SUCCESS = `[Reports] Load TransBoundary Diseases Success`;
+
+export const loadTransBoundaryDiseases = createAction(
+    LOAD_TRANSBOUNDARY_DISEASES,
+    props<{ payload: number | undefined }>()
+);
+
+// Clear diseases
+export const CLEAR_DISEASES = `[Reports] Clear Diseases`;
+
+export const clearDiseases = createAction(CLEAR_DISEASES);
+
 // Load species
 export const LOAD_SPECIES = `[Reports] Load Species`;
 export const LOAD_SPECIES_SUCCESS = `[Reports] Load Species Success`;

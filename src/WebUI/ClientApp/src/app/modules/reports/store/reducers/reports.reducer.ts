@@ -262,6 +262,11 @@ export const reducer = createReducer(
         loading: false,
         species: [...state.species, payload],
     })),
+    on(actions.loadTransBoundaryDiseases, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
     on(actions.verifyReport, (state) => ({
         ...state,
         feedback: null,

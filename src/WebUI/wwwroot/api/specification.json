@@ -2372,18 +2372,18 @@
         "summary": "Gets a list of trans-boundary diseases",
         "description": "Gets a list of trans-boundary diseases in the system",
         "operationId": "GetTransBoundaryDiseases_Handle",
-        "requestBody": {
-          "x-name": "request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetTransBoundaryDiseasesQuery"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
+        "parameters": [
+          {
+            "name": "speciesId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -3997,6 +3997,9 @@
           "isPriority": {
             "type": "boolean"
           },
+          "isNotifiable": {
+            "type": "boolean"
+          },
           "code": {
             "type": "string"
           },
@@ -4036,16 +4039,6 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int64"
-          }
-        }
-      },
-      "GetTransBoundaryDiseasesQuery": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "speciesId": {
             "type": "integer",
             "format": "int64"
           }

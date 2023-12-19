@@ -6,7 +6,7 @@
       <input type="text" aria-label="Species" matInput [formControl]="speciesControl"
         [matAutocomplete]="speciesAutocomplete">
       <mat-autocomplete #speciesAutocomplete="matAutocomplete" [displayWith]="displaySpeciesFn"
-        (optionSelected)="updateSelectedSpecies($event)" >
+        (optionSelected)="updateSelectedSpecies($event)">
         <mat-option *ngFor="let species of filteredSpecies | async" [value]="species">
           {{ species.name }}
         </mat-option>
@@ -29,6 +29,7 @@
         (optionSelected)="updateSelectedDisease($event)">
         <mat-option *ngFor="let disease of filteredDiseases | async" [value]="disease">
           {{ disease.name }}
+          <mat-icon *ngIf="disease.isPriority" color="warn" svgIcon="heroicons_outline:exclamation-circle" />
         </mat-option>
       </mat-autocomplete>
       <!-- <mat-hint *ngIf="!newDisease">{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new disease') }}.</mat-hint> -->
@@ -44,11 +45,11 @@
 
   <div class="flex justify-between my-4">
     <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
-        {{ t('Back') }}
+      {{ t('Back') }}
     </button>
     <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="diseaseInfo.invalid"
       (click)="onSubmit()">
-    {{ t('Next') }}
+      {{ t('Next') }}
     </button>
   </div>
 </form>
