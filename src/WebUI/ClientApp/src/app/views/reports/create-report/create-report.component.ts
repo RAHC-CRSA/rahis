@@ -4,7 +4,11 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
-import { createReport, createReportSuccess, loadReport } from 'app/modules/reports/store/actions';
+import {
+    createReport,
+    createReportSuccess,
+    loadReport,
+} from 'app/modules/reports/store/actions';
 import {
     getFeedback,
     getReport,
@@ -39,7 +43,11 @@ export class CreateReportComponent implements OnInit {
     formStep: number = 1;
     formValues = this._getFormValues();
 
-    constructor(private router: Router, private store: Store<ReportState>, private route: ActivatedRoute) {}
+    constructor(
+        private router: Router,
+        private store: Store<ReportState>,
+        private route: ActivatedRoute
+    ) {}
 
     ngOnInit() {
         this.route.paramMap.subscribe((params: ParamMap) => {
@@ -49,7 +57,6 @@ export class CreateReportComponent implements OnInit {
     }
 
     initData() {
-
         if (this.reportId) {
             this.updatingReport = true;
             this.formStep = 5;
@@ -60,7 +67,6 @@ export class CreateReportComponent implements OnInit {
             this.savedReport$.subscribe((data) => {
                 if (data) {
                     console.log({ data });
-
                 }
             });
         }
@@ -206,7 +212,6 @@ export class CreateReportComponent implements OnInit {
         }
 
         if (this.formStep == 9) {
-
             this.submit();
         }
     }
@@ -246,7 +251,8 @@ export class CreateReportComponent implements OnInit {
                 : undefined,
             numberExposed: this.formValues.exposed ?? 0,
             numberInfected: this.formValues.infected ?? 0,
-            mortality: this.formValues.mortality >= 0 ? this.formValues.mortality : 0,
+            mortality:
+                this.formValues.mortality >= 0 ? this.formValues.mortality : 0,
             humanInfection: this.formValues.humanInfection,
             humansExposed: this.formValues.humansExposed ?? 0,
             humansInfected: this.formValues.humansInfected ?? 0,
@@ -271,18 +277,18 @@ export class CreateReportComponent implements OnInit {
         };
 
         console.log({ payload });
-        this.store.dispatch(createReport({ payload }))
+        this.store.dispatch(createReport({ payload }));
     }
 
     private _getFormValues() {
         return {
             reportId: null,
             reportType: '',
-            country: '',
-            region: '',
-            municipality: '',
-            district: '',
-            community: '',
+            country: undefined,
+            region: undefined,
+            municipality: undefined,
+            district: undefined,
+            community: undefined,
             disease: '',
             species: '',
             newOccurrence: false,

@@ -25,6 +25,7 @@ import {
     ISendNotificationCommand,
     DataQueryTimeSpan,
     PublicReportDto,
+    IGetOccurrencesQuery,
 } from '../../../../web-api-client';
 
 // Create report
@@ -162,7 +163,7 @@ export const LOAD_OCCURRENCES_SUCCESS = `[Reports] Load Occurrences Success`;
 
 export const loadOccurrences = createAction(
     LOAD_OCCURRENCES,
-    props<{ payload?: number | undefined }>()
+    props<{ payload?: IGetOccurrencesQuery }>()
 );
 export const loadOccurrencesSuccess = createAction(
     LOAD_OCCURRENCES_SUCCESS,

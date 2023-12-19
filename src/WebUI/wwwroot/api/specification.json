@@ -624,25 +624,25 @@
           }
         ]
       },
-      "get": {
+      "post": {
         "tags": [
           "Reports"
         ],
         "summary": "Gets the list of occurrences",
         "description": "Gets the list of occurrences in the system",
         "operationId": "GetOccurrences_Handle",
-        "parameters": [
-          {
-            "name": "CountryId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "nullable": true
-            },
-            "x-position": 1
-          }
-        ],
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetOccurrencesQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
         "responses": {
           "200": {
             "description": "",
@@ -3356,6 +3356,37 @@
           "reports": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "GetOccurrencesQuery": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "countryId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "regionId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "communityId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "districtId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "municipalityId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
           }
         }
       },

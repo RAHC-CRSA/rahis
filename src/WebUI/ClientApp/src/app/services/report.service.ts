@@ -9,6 +9,7 @@ import {
     DeleteReportClient,
     DeleteReportCommand,
     GetOccurrencesClient,
+    GetOccurrencesQuery,
     GetPublicReportsClient,
     GetReportClient,
     GetReportsAnalyticsClient,
@@ -16,6 +17,7 @@ import {
     ICreateReportCommand,
     IDeleteOccurrenceCommand,
     IDeleteReportCommand,
+    IGetOccurrencesQuery,
     ISendNotificationCommand,
     IVerifyReportCommand,
     SendNotificationClient,
@@ -53,8 +55,10 @@ export class ReportService {
         this.getPublicReportsClient = new GetPublicReportsClient(http);
     }
 
-    getAllOccurrences(countryId: number | undefined) {
-        return this.getOccurrencesClient.handle(countryId);
+    getAllOccurrences(payload: IGetOccurrencesQuery) {
+        const request = new GetOccurrencesQuery(payload);
+
+        return this.getOccurrencesClient.handle(request);
     }
 
     createReport(payload: ICreateReportCommand) {
@@ -64,7 +68,7 @@ export class ReportService {
     getAllReports(payload) {
         return this.getReportsClient.handle(
             payload.isVerified,
-          //  payload.reportStatus,
+            //  payload.reportStatus,
             payload.countryId
         );
     }

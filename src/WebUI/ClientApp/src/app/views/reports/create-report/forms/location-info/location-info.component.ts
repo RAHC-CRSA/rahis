@@ -38,6 +38,7 @@ import {
     CountryDto,
     DistrictDto,
     IAddRegionCommand,
+    IGetOccurrencesQuery,
     MunicipalityDto,
     RegionDto,
 } from 'app/web-api-client';
@@ -148,7 +149,6 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
 
                 this.locationInfo.patchValue({ country: country.id });
                 this.store.dispatch(loadRegions({ payload: country.id }));
-                this.store.dispatch(loadOccurrences({ payload: country.id }));
             }
         });
 
@@ -273,7 +273,6 @@ export class LocationInfoComponent implements OnInit, AfterContentChecked {
 
         this.locationInfo.patchValue({ country: country.id });
         this.store.dispatch(loadRegions({ payload: country.id }));
-        this.store.dispatch(loadOccurrences({ payload: country.id }));
     }
 
     // Municipality field

@@ -18,8 +18,11 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
 import { loadOccurrences } from 'app/modules/reports/store/actions';
-import { getOccurrences, getReportsLoaded } from 'app/modules/reports/store/selectors';
-import { OccurrenceDto } from 'app/web-api-client';
+import {
+    getOccurrences,
+    getReportsLoaded,
+} from 'app/modules/reports/store/selectors';
+import { IGetOccurrencesQuery, OccurrenceDto } from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
 
 @Component({
@@ -73,11 +76,16 @@ export class OccurrenceInfoComponent implements OnInit, AfterContentChecked {
     }
 
     initData() {
-        this.store.dispatch(loadOccurrences(this.formData.country));
+        const payload: IGetOccurrencesQuery = {
+            countryId: this.formData.country,
+            regionId: this.formData.district,
+            municipalityId: this.formData.municipality,
+            districtId: this.formData.district,
+            communityId: this.formData.community,
+        };
+        this.store.dispatch(loadOccurrences({ payload }));
         this.occurrences$ = this.store.select(getOccurrences);
         this.loaded$ = this.store.select(getReportsLoaded);
-        console.log("form data here is ", this.formData)
-
 
         this.occurrences$.subscribe((occurrences) => {
             this.occurrences = [
@@ -98,9 +106,14 @@ export class OccurrenceInfoComponent implements OnInit, AfterContentChecked {
                         : this.occurrences.slice()
                 )
             );
-            if(this.formData.occurrence && this.formData.occurrence >= 0){
-               this.selectedOccurrence = this.occurrences[this.formData.occurrence == 0 ? this.formData.occurrence : --this.formData.occurrence];
-               // this.selectedOccurrence = this.occurrences[this.formData.occurrence];
+            if (this.formData.occurrence && this.formData.occurrence >= 0) {
+                this.selectedOccurrence =
+                    this.occurrences[
+                        this.formData.occurrence == 0
+                            ? this.formData.occurrence
+                            : --this.formData.occurrence
+                    ];
+                // this.selectedOccurrence = this.occurrences[this.formData.occurrence];
             }
         });
     }

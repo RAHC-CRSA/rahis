@@ -1045,9 +1045,8 @@ export class DeleteOccurrenceClient implements IDeleteOccurrenceClient {
 export interface IGetOccurrencesClient {
     /**
      * Gets the list of occurrences
-     * @param countryId (optional) 
      */
-    handle(countryId: number | null | undefined): Observable<OccurrenceDto[]>;
+    handle(request: GetOccurrencesQuery): Observable<OccurrenceDto[]>;
 }
 
 @Injectable({
@@ -1065,23 +1064,24 @@ export class GetOccurrencesClient implements IGetOccurrencesClient {
 
     /**
      * Gets the list of occurrences
-     * @param countryId (optional) 
      */
-    handle(countryId: number | null | undefined): Observable<OccurrenceDto[]> {
-        let url_ = this.baseUrl + "/api/reports/occurrences?";
-        if (countryId !== undefined && countryId !== null)
-            url_ += "CountryId=" + encodeURIComponent("" + countryId) + "&";
+    handle(request: GetOccurrencesQuery): Observable<OccurrenceDto[]> {
+        let url_ = this.baseUrl + "/api/reports/occurrences";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(request);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
             return this.processHandle(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
@@ -5747,6 +5747,58 @@ export interface IOccurrenceDto {
     dateEnded?: string;
     location?: string;
     reports?: number;
+}
+
+export class GetOccurrencesQuery implements IGetOccurrencesQuery {
+    countryId?: number | undefined;
+    regionId?: number | undefined;
+    communityId?: number | undefined;
+    districtId?: number | undefined;
+    municipalityId?: number | undefined;
+
+    constructor(data?: IGetOccurrencesQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.countryId = _data["countryId"];
+            this.regionId = _data["regionId"];
+            this.communityId = _data["communityId"];
+            this.districtId = _data["districtId"];
+            this.municipalityId = _data["municipalityId"];
+        }
+    }
+
+    static fromJS(data: any): GetOccurrencesQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetOccurrencesQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["countryId"] = this.countryId;
+        data["regionId"] = this.regionId;
+        data["communityId"] = this.communityId;
+        data["districtId"] = this.districtId;
+        data["municipalityId"] = this.municipalityId;
+        return data;
+    }
+}
+
+export interface IGetOccurrencesQuery {
+    countryId?: number | undefined;
+    regionId?: number | undefined;
+    communityId?: number | undefined;
+    districtId?: number | undefined;
+    municipalityId?: number | undefined;
 }
 
 export class PublicReportDto implements IPublicReportDto {
