@@ -146,8 +146,8 @@ public class Report : BaseAuditableEntity<long>
     {
         LastModified = DateTime.UtcNow;
         CvoComment = cvoComment;
-        IsVerified = verified;
         ReportStatus = reportStatus ?? ReportStatus.Pending;
+        IsVerified = verified;
     }
 
     public void ReSubmit()

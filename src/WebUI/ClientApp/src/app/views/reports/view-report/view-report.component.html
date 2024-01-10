@@ -59,7 +59,8 @@
           <div *ngIf="canNotify" class="w-full my-4">
             <fuse-alert *ngIf="(report$ | async)?.notifiabilityPoints >= 7" [type]="'error'" [appearance]="'outline'">
               <span fuseAlertTitle>{{ t('Notification Recommended') }}</span>
-              {{ t('We recommend an immediate notification click the button to send email notifications to relevant
+              {{
+              t('We recommend an immediate notification click the button to send email notifications to relevant
               parties') }}.
               <div class="my-3">
                 <button *ngIf="canNotify" class="px-8" mat-flat-button [color]="'error'" type="button"
@@ -336,23 +337,30 @@
             </mat-tab>
           </mat-tab-group>
 
-
-          <div class="mb-8">
-            <mat-form-field class="w-full mt-4" *ngIf="(canVerify)">
-              <mat-label>Comment:</mat-label>
-              <textarea aria-label="Cvo Comment" formControlName="cvoComment" matInput
-                placeholder="Additional comment to for this report"></textarea>
-            </mat-form-field>
-            <div *ngIf="(!canVerify)">
-              <p>Comment:</p> <br />
-              <p>{{(report$ | async)?.cvoComment}}</p>
-            </div>
-            <!-- <ng-container [ngTemplateOutlet]="formError"
+          <form [formGroup]="verificationForm">
+            <div class="mb-8">
+              <mat-form-field class="w-full mt-4" *ngIf="(canVerify)">
+                <mat-label>Comment:</mat-label>
+                <textarea aria-label="Cvo Comment" formControlName="cvoComment" matInput
+                  placeholder="Additional comment to for this report"></textarea>
+              </mat-form-field>
+              <fuse-alert [type]="'warning'" [appearance]="'outline'" *ngIf="(!canVerify)">
+                <p><strong>Comment:</strong> <br />
+                  {{(report$ | async)?.cvoComment}}</p>
+                <a [routerLink]="['/dashboard/reports/create/', (report$ | async)?.id]"
+                  *ngIf="canEdit && !( report$ | async)?.isVerified" class="px-8 my-3" mat-flat-button
+                  [color]="'accent'" [disabled]="!canEdit">
+                  <span *ngIf="!( loading$ | async )">
+                    {{ t('Edit Report') }}
+                  </span>
+                  <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
+                    [mode]="'indeterminate'"></mat-progress-spinner>
+                </a>
+              </fuse-alert>
+              <!-- <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Movement control measures is required', control: treatmentInfo.controls['movementControlMeasures']}"></ng-container> -->
-          </div>
-          <!-- <pre>
-            {{ (report$ | async) | json }}
-          </pre> -->
+            </div>
+          </form>
         </div>
 
         <div class="flex justify-between my-4">
@@ -360,8 +368,8 @@
             {{ t('Back') }}
           </a>
           <div class="flex justify-between my-4">
-            <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button [color]="'warn'"
-              type="button" [disabled]="!canVerify" (click)="reject()">
+            <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8 mr-2" mat-flat-button
+              [color]="'warn'" type="button" [disabled]="!canVerify" (click)="reject()">
               <span *ngIf="!( loading$ | async )">
                 {{ t('Reject Report') }}
               </span>

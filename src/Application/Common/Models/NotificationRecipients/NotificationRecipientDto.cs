@@ -6,4 +6,5 @@ public class NotificationRecipientDto
     public string Email { get; set; }
     public string Institution { get; set; }
     public bool IsEnabled { get; set; }
+    public long? CountryId { get; set; }
 }

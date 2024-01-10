@@ -7,14 +7,16 @@ const routes: Routes = [
         path: '',
         component: ChiefVeterinaryOfficerComponent,
         data: {
-            roles: ['Verifier'],
-            title: 'Verifier Dashboard',
+            roles: ['Chief Veterinary Officer'],
+            title: 'Chief Veterinary Officer Dashboard',
         },
         children: [
             {
                 path: '',
-                redirectTo: 'reports',
-                pathMatch: 'full',
+                loadChildren: () =>
+                    import(
+                        'app/views/dashboards/chief-veterinary-officer/chief-veterinary-officer.module'
+                    ).then((m) => m.ChiefVeterinaryOfficerModule),
             },
             {
                 path: 'reports',

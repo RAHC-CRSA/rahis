@@ -12,6 +12,7 @@ public class AddRecipientCommand : IRequest<(Result, NotificationRecipientDto?)>
     public string Email { get; set; }
     public string Institution { get; set; }
     public bool IsEnabled { get; set; }
+    public long CountryId { get; set; }
 }
 
 public class AddRecipientCommandHandler : IRequestHandler<AddRecipientCommand, (Result, NotificationRecipientDto?)>
@@ -29,7 +30,7 @@ public class AddRecipientCommandHandler : IRequestHandler<AddRecipientCommand, (
     {
         try
         {
-            var recipient = NotificationRecipient.Create(request.Name, request.Email, request.Institution);
+            var recipient = NotificationRecipient.Create(request.Name, request.Email, request.CountryId, request.Institution);
             await _context.NotificationRecipients.AddAsync(recipient);
             await _context.SaveChangesAsync(cancellationToken);
 
@@ -38,7 +39,8 @@ public class AddRecipientCommandHandler : IRequestHandler<AddRecipientCommand, (
                 Id = recipient.Id,
                 Name = recipient.FullName,
                 Email = recipient.EmailAddress,
-                Institution = recipient.Institution
+                Institution = recipient.Institution,
+                CountryId = recipient.CountryId,
             };
 
             return (Result.Success(), data);

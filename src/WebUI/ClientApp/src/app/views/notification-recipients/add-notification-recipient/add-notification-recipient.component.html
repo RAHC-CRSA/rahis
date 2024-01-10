@@ -37,7 +37,8 @@
           <div class="mb-4">
             <mat-form-field class="w-full">
               <mat-label>{{ t('Full Name') }}</mat-label>
-              <input aria-label="{{ t('Full Name') }}" matInput formControlName="name" placeholder="{{ t('Full Name') }}" />
+              <input aria-label="{{ t('Full Name') }}" matInput formControlName="name"
+                placeholder="{{ t('Full Name') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Full name is required', control: notificationRecipientForm.controls['name']}"></ng-container>
@@ -74,8 +75,26 @@
           <div class="mb-4">
             <mat-form-field class="w-full mb-4">
               <mat-label>{{ t('Institution') }}</mat-label>
-              <input aria-label="{{ t('Institution') }}" matInput formControlName="institution" placeholder="{{ t('Institution') }}" />
+              <input aria-label="{{ t('Institution') }}" matInput formControlName="institution"
+                placeholder="{{ t('Institution') }}" />
             </mat-form-field>
+          </div>
+
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>{{ t('Country') }}</mat-label>
+              <input type="text" aria-label="{{ t('Country') }}" matInput [formControl]="countryControl"
+                [matAutocomplete]="countryAutocomplete">
+              <mat-autocomplete #countryAutocomplete="matAutocomplete" [displayWith]="displayCountryFn"
+                (optionSelected)="updateSelectedCountry($event)">
+                <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                  <img [src]="country.flag" class="w-6 m-1 inline-block">
+                  {{ country.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Country is required', control: notificationRecipientForm.controls['country']}"></ng-container>
           </div>
 
           <div class="w-full mb-4">

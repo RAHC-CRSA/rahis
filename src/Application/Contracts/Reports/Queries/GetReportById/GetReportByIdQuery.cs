@@ -83,6 +83,7 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
             ReportStatus = e.ReportStatus,
             StampingOut = e.StampingOut,
             DestructionOfCorpses = e.DestructionOfCorpses,
+            CorpsesDestroyed = e.CorpsesDestroyed,
             Disinfection = e.Disinfection,
             Observation = e.Observation,
             ObservationDuration = e.ObservationDuration,

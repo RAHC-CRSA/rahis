@@ -17,7 +17,10 @@ import {
     getInstitutions,
     getParaProfessionalsLoading,
 } from 'app/modules/professionals/store/selectors';
+import { loadCountries } from 'app/modules/regions/store/actions';
+import { getCountries } from 'app/modules/regions/store/selectors/regions.selectors';
 import {
+    CountryDto,
     IAddParaProfessionalCommand,
     InstitutionDto,
     ServerResponse,
@@ -42,6 +45,14 @@ export class AddProfessionalComponent {
     institutions$: Observable<InstitutionDto[] | null | undefined>;
     institutions: InstitutionDto[];
     filteredInstitutions: Observable<InstitutionDto[]>;
+
+    countryControl = new FormControl();
+
+    selectedCountry: CountryDto;
+
+    countries$: Observable<CountryDto[] | null | undefined>;
+    countries: CountryDto[];
+    filteredCountries: Observable<CountryDto[]>;
 
     constructor(
         private formBuilder: FormBuilder,

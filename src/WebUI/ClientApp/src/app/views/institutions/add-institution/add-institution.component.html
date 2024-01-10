@@ -17,7 +17,7 @@
       <!-- Title -->
       <div class="mt-2">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-           {{ t('Add an Institution') }}
+          {{ t('Add an Institution') }}
         </h2>
       </div>
     </div>
@@ -37,7 +37,8 @@
           <div class="mb-4">
             <mat-form-field class="w-full">
               <mat-label>{{ t('Name') }}</mat-label>
-              <input aria-label="{{ t('Institution name ') }}" matInput formControlName="name" placeholder="{{ t('Institution name ') }}" />
+              <input aria-label="{{ t('Institution name ') }}" matInput formControlName="name"
+                placeholder="{{ t('Institution name ') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Institution name is required', control: institutionForm.controls['name']}"></ng-container>
@@ -46,7 +47,8 @@
           <div class="mb-4">
             <mat-form-field class="w-full mb-4">
               <mat-label> {{ t('Type') }}</mat-label>
-              <input aria-label="{{ t('Institution type') }}" matInput formControlName="type" placeholder="{{ t('Institution type') }}" />
+              <input aria-label="{{ t('Institution type') }}" matInput formControlName="type"
+                placeholder="{{ t('Institution type') }}" />
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Institution type is required', control: institutionForm.controls['type']}"></ng-container>
@@ -64,14 +66,31 @@
               [ngTemplateOutletContext]="{validation: 'required', message: 'Public sector is required', control: institutionForm.controls['publicSector']}"></ng-container>
           </div>
 
+          <div class="mb-4">
+            <mat-form-field class="w-full">
+              <mat-label>{{ t('Country') }}</mat-label>
+              <input type="text" aria-label="{{ t('Country') }}" matInput [formControl]="countryControl"
+                [matAutocomplete]="countryAutocomplete">
+              <mat-autocomplete #countryAutocomplete="matAutocomplete" [displayWith]="displayCountryFn"
+                (optionSelected)="updateSelectedCountry($event)">
+                <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                  <img [src]="country.flag" class="w-6 m-1 inline-block">
+                  {{ country.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <ng-container [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{validation: 'required', message: 'Country is required', control: institutionForm.controls['country']}"></ng-container>
+          </div>
+
           <div class="flex justify-between my-4">
             <a [routerLink]="['/dashboard/institutions']" class="px-8" mat-flat-button [color]="'secondary'">
-               {{ t('Cancel') }}
+              {{ t('Cancel') }}
             </a>
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="institutionForm.invalid"
               (click)="submit()">
               <span *ngIf="!( loading$ | async )">
-                 {{ t('Add Institution') }}
+                {{ t('Add Institution') }}
               </span>
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>

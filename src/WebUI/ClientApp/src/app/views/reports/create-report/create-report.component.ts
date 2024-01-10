@@ -19,6 +19,7 @@ import {
     DiagnosticTestDto,
     ICreateReportCommand,
     MedicationDto,
+    ReportDto,
     ServerResponse,
     VaccinationDto,
 } from 'app/web-api-client';
@@ -32,6 +33,7 @@ import { Observable } from 'rxjs';
 })
 export class CreateReportComponent implements OnInit {
     reportId: number;
+    formValues: any;
     updatingReport: boolean;
     loading$: Observable<boolean>;
     feedback$: Observable<ServerResponse | null | undefined>;
@@ -41,7 +43,6 @@ export class CreateReportComponent implements OnInit {
     @ViewChild('reportFormStepper') private reportFormStepper: MatStepper;
 
     formStep: number = 1;
-    formValues = this._getFormValues();
 
     constructor(
         private router: Router,
@@ -67,8 +68,13 @@ export class CreateReportComponent implements OnInit {
             this.savedReport$.subscribe((data) => {
                 if (data) {
                     console.log({ data });
+                    this.formValues = this._mapFormValues(data);
+
+                    console.log('Form values', this.formValues);
                 }
             });
+        } else {
+            this.formValues = this._getFormValues();
         }
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getReportsLoading);
@@ -317,6 +323,36 @@ export class CreateReportComponent implements OnInit {
             medications: [],
             vaccinations: [],
             diagnosticTests: [],
+        };
+    }
+
+    private _mapFormValues(data: ReportDto): any {
+        return {
+            reportId: data.id,
+            disease: data.diseaseId,
+            species: data.speciesId,
+            newOccurrence: data.occurrenceId != undefined,
+            occurrence: data.occurrenceId,
+            exposed: data.exposed,
+            infected: data.infected,
+            mortality: data.mortality,
+            humanInfection: data.humanInfection,
+            humansExposed: data.humansExposed,
+            stampingOut: data.stampingOut,
+            destructionOfCorpses: data.destructionOfCorpses,
+            corpsesDestroyed: data.corpsesDestroyed,
+            disinfection: data.disinfection,
+            observation: data.observation,
+            observationDuration: data.observationDuration,
+            quarantine: data.quarantine,
+            quarantineDuration: data.quarantineDuration,
+            movementControl: data.movementControl,
+            movementControlMeasures: data.movementControlMeasures,
+            treatment: data.treatment,
+            treatmentDetails: data.treatmentDetails,
+            medications: data.medications,
+            vaccinations: data.vaccinations,
+            diagnosticTests: data.diagnosticTests,
         };
     }
 }

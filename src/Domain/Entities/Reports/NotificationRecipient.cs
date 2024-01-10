@@ -16,20 +16,22 @@ public class NotificationRecipient : BaseAuditableEntity<long>
     {
     }
 
-    private NotificationRecipient(string fullName, string emailAddress, string? institution) : this()
+    private NotificationRecipient(string fullName, string emailAddress, long countryId, string? institution) : this()
     {
         FullName = fullName;
         EmailAddress = emailAddress;
         Institution = institution;
         IsEnabled = true;
+        CountryId = countryId;
     }
 
-    public static NotificationRecipient Create(string fullName, string email, string? institution = null)
+    public static NotificationRecipient Create(string fullName, string email, long countryId, string? institution = null)
     {
         Guard.IsNotNullOrEmpty(fullName, nameof(fullName));
         Guard.IsNotNullOrEmpty(email, nameof(email));
+        Guard.IsNotNull(countryId, nameof(countryId));
 
-        return new NotificationRecipient(fullName, email, institution);
+        return new NotificationRecipient(fullName, email, countryId, institution);
     }
 
     public void Update(string fullName, string email, string? institution, bool enabled)

@@ -34,6 +34,7 @@ public class ReportDto
 
     public bool StampingOut { get; set; }
     public bool DestructionOfCorpses { get; set; }
+    public int? CorpsesDestroyed { get; set; }
     public bool Disinfection { get; set; }
     public bool Observation { get; set; }
     public string? ObservationDuration { get; set; }

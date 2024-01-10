@@ -5104,6 +5104,7 @@ export class ReportDto implements IReportDto {
     cvoComment?: string | undefined;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
+    corpsesDestroyed?: number | undefined;
     disinfection?: boolean;
     observation?: boolean;
     observationDuration?: string | undefined;
@@ -5155,6 +5156,7 @@ export class ReportDto implements IReportDto {
             this.cvoComment = _data["cvoComment"];
             this.stampingOut = _data["stampingOut"];
             this.destructionOfCorpses = _data["destructionOfCorpses"];
+            this.corpsesDestroyed = _data["corpsesDestroyed"];
             this.disinfection = _data["disinfection"];
             this.observation = _data["observation"];
             this.observationDuration = _data["observationDuration"];
@@ -5218,6 +5220,7 @@ export class ReportDto implements IReportDto {
         data["cvoComment"] = this.cvoComment;
         data["stampingOut"] = this.stampingOut;
         data["destructionOfCorpses"] = this.destructionOfCorpses;
+        data["corpsesDestroyed"] = this.corpsesDestroyed;
         data["disinfection"] = this.disinfection;
         data["observation"] = this.observation;
         data["observationDuration"] = this.observationDuration;
@@ -5274,6 +5277,7 @@ export interface IReportDto {
     cvoComment?: string | undefined;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
+    corpsesDestroyed?: number | undefined;
     disinfection?: boolean;
     observation?: boolean;
     observationDuration?: string | undefined;
@@ -6751,6 +6755,7 @@ export class NotificationRecipientDto implements INotificationRecipientDto {
     email?: string;
     institution?: string;
     isEnabled?: boolean;
+    countryId?: number | undefined;
 
     constructor(data?: INotificationRecipientDto) {
         if (data) {
@@ -6768,6 +6773,7 @@ export class NotificationRecipientDto implements INotificationRecipientDto {
             this.email = _data["email"];
             this.institution = _data["institution"];
             this.isEnabled = _data["isEnabled"];
+            this.countryId = _data["countryId"];
         }
     }
 
@@ -6785,6 +6791,7 @@ export class NotificationRecipientDto implements INotificationRecipientDto {
         data["email"] = this.email;
         data["institution"] = this.institution;
         data["isEnabled"] = this.isEnabled;
+        data["countryId"] = this.countryId;
         return data;
     }
 }
@@ -6795,6 +6802,7 @@ export interface INotificationRecipientDto {
     email?: string;
     institution?: string;
     isEnabled?: boolean;
+    countryId?: number | undefined;
 }
 
 export class AddRecipientCommand implements IAddRecipientCommand {
@@ -6802,6 +6810,7 @@ export class AddRecipientCommand implements IAddRecipientCommand {
     email?: string;
     institution?: string;
     isEnabled?: boolean;
+    countryId?: number;
 
     constructor(data?: IAddRecipientCommand) {
         if (data) {
@@ -6818,6 +6827,7 @@ export class AddRecipientCommand implements IAddRecipientCommand {
             this.email = _data["email"];
             this.institution = _data["institution"];
             this.isEnabled = _data["isEnabled"];
+            this.countryId = _data["countryId"];
         }
     }
 
@@ -6834,6 +6844,7 @@ export class AddRecipientCommand implements IAddRecipientCommand {
         data["email"] = this.email;
         data["institution"] = this.institution;
         data["isEnabled"] = this.isEnabled;
+        data["countryId"] = this.countryId;
         return data;
     }
 }
@@ -6843,6 +6854,7 @@ export interface IAddRecipientCommand {
     email?: string;
     institution?: string;
     isEnabled?: boolean;
+    countryId?: number;
 }
 
 export class DeleteRecipientCommand implements IDeleteRecipientCommand {

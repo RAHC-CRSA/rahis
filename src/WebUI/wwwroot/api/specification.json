@@ -899,7 +899,7 @@
         "security": [
           {
             "JWT": [
-              "Regional Animal Health Officer"
+              "Chief Veterinary Officer"
             ]
           }
         ]
@@ -941,7 +941,7 @@
         "security": [
           {
             "JWT": [
-              "Chief Veterinary Officer"
+              "Regional Animal Health Officer"
             ]
           }
         ]
@@ -3005,6 +3005,11 @@
           "destructionOfCorpses": {
             "type": "boolean"
           },
+          "corpsesDestroyed": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "disinfection": {
             "type": "boolean"
           },
@@ -3813,6 +3818,11 @@
           },
           "isEnabled": {
             "type": "boolean"
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
           }
         }
       },
@@ -3831,6 +3841,10 @@
           },
           "isEnabled": {
             "type": "boolean"
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
