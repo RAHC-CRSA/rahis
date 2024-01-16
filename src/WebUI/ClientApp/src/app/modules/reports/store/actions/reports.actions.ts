@@ -27,6 +27,7 @@ import {
     PublicReportDto,
     IGetOccurrencesQuery,
     IUpdateReportCommand,
+    IGetParaProfessionalsQuery,
 } from '../../../../web-api-client';
 
 // Create report
@@ -204,7 +205,7 @@ export const LOAD_PARA_PROFESSIONALS_SUCCESS = `[Reports] Load Para-Professional
 
 export const loadParaProfessionals = createAction(
     LOAD_PARA_PROFESSIONALS,
-    props<{ payload: number | undefined }>()
+    props<{ payload: IGetParaProfessionalsQuery }>()
 );
 export const loadParaProfessionalsSuccess = createAction(
     LOAD_PARA_PROFESSIONALS_SUCCESS,

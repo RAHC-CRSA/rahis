@@ -11,6 +11,7 @@ namespace RegionalAnimalHealth.Application.Contracts.Institutions.Queries.GetPar
 public class GetParaProfessionalsQuery : IRequest<(Result, List<ParaProfessionalDto>?)>
 {
     public long? InstitutionId { get; set; }
+    public long? CountryId { get; set; }
 }
 
 public class GetParaProfessionalsQueryHandler : IRequestHandler<GetParaProfessionalsQuery, (Result, List<ParaProfessionalDto>?)>
@@ -30,8 +31,7 @@ public class GetParaProfessionalsQueryHandler : IRequestHandler<GetParaProfessio
         {
             var data = await _context.ParaProfessionals
                 .Include(e => e.Institution)
-                .Where(x => !x.IsDeleted && (request.InstitutionId != null ? x.InstitutionId == request.InstitutionId : true))
-                .Where(x => !x.IsDeleted)
+                .Where(x => !x.IsDeleted && (request.InstitutionId != null ? x.InstitutionId == request.InstitutionId && (request.CountryId != null ? x.Institution.CountryId == request.CountryId : true) : request.CountryId != null ? x.Institution.CountryId == request.CountryId : true))
                 .Select(ParaProfessionalSelectorExpression())
                 .ToListAsync();
 

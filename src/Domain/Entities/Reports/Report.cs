@@ -194,5 +194,6 @@ public class Report : BaseAuditableEntity<long>
     public void UpdateReportStatus(ReportStatus status = ReportStatus.Pending)
     {
         ReportStatus = status;
+        CvoComment = null;
     }
 }

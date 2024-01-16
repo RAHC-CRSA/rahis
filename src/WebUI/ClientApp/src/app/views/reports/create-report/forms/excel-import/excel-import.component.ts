@@ -30,8 +30,6 @@ export class ExcelImportComponent {
             'Deceased',
             'Human Infection',
             'Humans Exposed',
-            'Humans Infected',
-            'Humans Deceased',
             'Stamping Out',
             'Destruction of Corpses',
             'Corpses Destroyed',
@@ -91,7 +89,6 @@ export class ExcelImportComponent {
             this.excelService
                 .readExcelFile(file)
                 .then((data) => {
-                    console.log('Excel data:', data);
                     const importData = data[1];
                     const formData = {
                         country: '',
@@ -106,12 +103,8 @@ export class ExcelImportComponent {
                         exposed: 0,
                         infected: 0,
                         dead: 0,
-                        mortality: 0,
                         humanInfection: false,
                         humansExposed: 0,
-                        humansInfected: 0,
-                        humansDead: 0,
-                        humansMortality: 0,
                         stampingOut: false,
                         destructionOfCorpses: false,
                         corpsesDestroyed: '',
@@ -130,7 +123,6 @@ export class ExcelImportComponent {
                         formData[property] = importData[index];
                     });
 
-                    console.log('Form Data', formData);
                     this.submit.emit(formData);
                 })
                 .catch((error) => {

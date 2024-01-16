@@ -33,78 +33,84 @@
         <!-- Alert -->
         <app-feedback-display *ngIf="feedback$ | async" [feedback]="feedback$"></app-feedback-display>
 
-        <mat-vertical-stepper *ngIf="formValues" [linear]="true" #reportFormStepper>
+        <ng-container *ngIf="!reviewingReport">
+          <mat-vertical-stepper *ngIf="formValues" [linear]="true" #reportFormStepper>
 
-          <mat-step #reportFormReportType *ngIf="formStep == 1">
-            <ng-template matStepLabel>{{ t('Report Type') }}</ng-template>
+            <mat-step #reportFormReportType *ngIf="formStep == 1">
+              <ng-template matStepLabel>{{ t('Report Type') }}</ng-template>
 
-            <app-report-type [formData]="formValues" (previous)="cancel()" (submit)="next($event)"></app-report-type>
-          </mat-step>
+              <app-report-type [formData]="formValues" (previous)="cancel()" (submit)="next($event)"></app-report-type>
+            </mat-step>
 
-          <mat-step #reportFormLocationInfo *ngIf="formStep == 2">
-            <ng-template matStepLabel>{{ t('Location') }}</ng-template>
+            <mat-step #reportFormLocationInfo *ngIf="formStep == 2">
+              <ng-template matStepLabel>{{ t('Location') }}</ng-template>
 
-            <app-location-info [formData]="formValues" (previous)="previous()"
-              (submit)="next($event)"></app-location-info>
-          </mat-step>
+              <app-location-info [formData]="formValues" (previous)="previous()"
+                (submit)="next($event)"></app-location-info>
+            </mat-step>
 
-          <mat-step #reportFormDiseaseInfo *ngIf="formStep == 3">
-            <ng-template matStepLabel>{{ t('Disease') }}</ng-template>
+            <mat-step #reportFormDiseaseInfo *ngIf="formStep == 3">
+              <ng-template matStepLabel>{{ t('Disease') }}</ng-template>
 
-            <app-disease-info [formData]="formValues" (previous)="previous()"
-              (submit)="next($event)"></app-disease-info>
-          </mat-step>
+              <app-disease-info [formData]="formValues" (previous)="previous()"
+                (submit)="next($event)"></app-disease-info>
+            </mat-step>
 
-          <mat-step #reportFormOccurrenceInfo *ngIf="formStep == 4">
-            <ng-template matStepLabel>{{ t('Occurrence') }}</ng-template>
+            <mat-step #reportFormOccurrenceInfo *ngIf="formStep == 4">
+              <ng-template matStepLabel>{{ t('Occurrence') }}</ng-template>
 
-            <app-occurrence-info [formData]="formValues" (previous)="previous()"
-              (submit)="next($event)"></app-occurrence-info>
-          </mat-step>
+              <app-occurrence-info [formData]="formValues" (previous)="previous()"
+                (submit)="next($event)"></app-occurrence-info>
+            </mat-step>
 
-          <!-- <mat-step #reportFormExcelImport *ngIf="formStep == 5">
-            <ng-template matStepLabel>Excel Import</ng-template>
+            <mat-step #reportFormExcelImport *ngIf="formStep == 5">
+              <ng-template matStepLabel>Excel Import</ng-template>
 
-            <app-excel-import [formData]="formValues" (previous)="previous()"
-              (submit)="next($event)"></app-excel-import>
-          </mat-step> -->
+              <app-excel-import [formData]="formValues" (previous)="previous()"
+                (submit)="next($event)"></app-excel-import>
+            </mat-step>
 
-          <mat-step #reportFormInfectionInfo *ngIf="formStep == 5">
-            <ng-template matStepLabel>{{ t('Infection') }}</ng-template>
+            <mat-step #reportFormInfectionInfo *ngIf="formStep == 5">
+              <ng-template matStepLabel>{{ t('Infection') }}</ng-template>
 
-            <app-infection-info [formData]="formValues" (previous)="previous()"
-              (submit)="next($event)"></app-infection-info>
-          </mat-step>
+              <app-infection-info [formData]="formValues" (previous)="previous()"
+                (submit)="next($event)"></app-infection-info>
+            </mat-step>
 
-          <mat-step #reportFormTreatmentInfo *ngIf="formStep == 6">
-            <ng-template matStepLabel>{{ t('Control Measures') }}</ng-template>
+            <mat-step #reportFormTreatmentInfo *ngIf="formStep == 6">
+              <ng-template matStepLabel>{{ t('Control Measures') }}</ng-template>
 
-            <app-treatment-info [formData]="formValues" (previous)="previous()"
-              (submit)="next($event)"></app-treatment-info>
-          </mat-step>
+              <app-treatment-info [formData]="formValues" (previous)="previous()"
+                (submit)="next($event)"></app-treatment-info>
+            </mat-step>
 
-          <mat-step #reportFormTests *ngIf="formStep == 7">
-            <ng-template matStepLabel>{{ t('Tests') }}</ng-template>
+            <mat-step #reportFormTests *ngIf="formStep == 7">
+              <ng-template matStepLabel>{{ t('Tests') }}</ng-template>
 
-            <app-diagnostic-tests [formData]="formValues" (previous)="previous()"
-              (submit)="next($event)"></app-diagnostic-tests>
-          </mat-step>
+              <app-diagnostic-tests [formData]="formValues" (previous)="previous()"
+                (submit)="next($event)"></app-diagnostic-tests>
+            </mat-step>
 
-          <mat-step #reportFormVaccinations *ngIf="formStep == 8">
-            <ng-template matStepLabel> {{ t('Vaccinations') }}</ng-template>
+            <mat-step #reportFormVaccinations *ngIf="formStep == 8">
+              <ng-template matStepLabel> {{ t('Vaccinations') }}</ng-template>
 
-            <app-vaccinations [formData]="formValues" (previous)="previous()"
-              (submit)="next($event)"></app-vaccinations>
-          </mat-step>
+              <app-vaccinations [formData]="formValues" (previous)="previous()"
+                (submit)="next($event)"></app-vaccinations>
+            </mat-step>
 
-          <mat-step #reportFormSummary *ngIf="formStep == 9">
-            <ng-template matStepLabel>{{ t('Confirmation') }}</ng-template>
+            <mat-step #reportFormSummary *ngIf="formStep == 9">
+              <ng-template matStepLabel>{{ t('Confirmation') }}</ng-template>
 
-            <app-report-summary [loading]="loading$ | async" [formData]="formValues" (previous)="previous()"
-              (submit)="next($event)"></app-report-summary>
-          </mat-step>
+              <app-report-summary [loading]="loading$ | async" [formData]="formValues" (previous)="previous()"
+                (submit)="next($event)"></app-report-summary>
+            </mat-step>
 
-        </mat-vertical-stepper>
+          </mat-vertical-stepper>
+        </ng-container>
+
+        <ng-container *ngIf="reviewingReport">
+          <app-review [formData]="formValues" (submit)="submit($event)"></app-review>
+        </ng-container>
       </div>
     </div>
   </div>

@@ -23,7 +23,7 @@ import { AddSpeciesComponent } from './forms/add-species/add-species.component';
 import { AddDiseaseComponent } from './forms/add-disease/add-disease.component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { ExcelImportComponent } from './forms/excel-import/excel-import.component';
-
+import { ReviewComponent } from './forms/review/review.component';
 
 export const routes: Route[] = [
     {
@@ -51,8 +51,14 @@ export const routes: Route[] = [
         AddSpeciesComponent,
         AddDiseaseComponent,
         ExcelImportComponent,
-        ViewSummaryComponent
+        ViewSummaryComponent,
+        ReviewComponent,
     ],
-    imports: [ReportsModule, SharedModule, RouterModule.forChild(routes), TranslocoModule],
+    imports: [
+        ReportsModule,
+        SharedModule,
+        RouterModule.forChild(routes),
+        TranslocoModule,
+    ],
 })
 export class CreateReportModule {}

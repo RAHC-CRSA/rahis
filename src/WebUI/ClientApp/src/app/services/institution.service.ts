@@ -10,10 +10,12 @@ import {
     DeleteParaProfessionalCommand,
     GetInstitutionsClient,
     GetParaProfessionalsClient,
+    GetParaProfessionalsQuery,
     IAddInstitutionCommand,
     IAddParaProfessionalCommand,
     IDeleteInstitutionCommand,
     IDeleteParaProfessionalCommand,
+    IGetParaProfessionalsQuery,
     IUpdateInstitutionCommand,
     IUpdateParaProfessionalCommand,
     InstitutionDto,
@@ -55,8 +57,10 @@ export class InstitutionService {
         this.deleteInstitutionClient = new DeleteInstitutionClient(http);
     }
 
-    getAllParaProfessionals(institutionId: number | undefined) {
-        return this.getParaProfessionalsClient.handle(institutionId);
+    getAllParaProfessionals(payload: IGetParaProfessionalsQuery) {
+        console.log({ payload });
+        const request = new GetParaProfessionalsQuery(payload);
+        return this.getParaProfessionalsClient.handle(request);
     }
 
     addParaProfessional(
@@ -81,8 +85,8 @@ export class InstitutionService {
         );
     }
 
-    getAllInstitutions() {
-        return this.getInstitutionsClient.handle();
+    getAllInstitutions(countryId: number = undefined) {
+        return this.getInstitutionsClient.handle(countryId);
     }
 
     addInstitution(

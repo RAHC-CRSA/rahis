@@ -1995,6 +1995,18 @@
         "summary": "Gets the list of institutions",
         "description": "Gets the list of institutions in the system",
         "operationId": "GetInstitutions_Handle",
+        "parameters": [
+          {
+            "name": "countryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -2181,18 +2193,18 @@
         "summary": "Gets the list of para-professionals",
         "description": "Gets the list of para-professionals in the system",
         "operationId": "GetParaProfessionals_Handle",
-        "parameters": [
-          {
-            "name": "institutionId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "nullable": true
-            },
-            "x-position": 1
-          }
-        ],
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetParaProfessionalsQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
         "responses": {
           "200": {
             "description": "",
@@ -4160,6 +4172,22 @@
           "id": {
             "type": "integer",
             "format": "int64"
+          }
+        }
+      },
+      "GetParaProfessionalsQuery": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "institutionId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
           }
         }
       },
