@@ -12,6 +12,10 @@ namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetOccurren
 public class GetOccurrencesQuery : IRequest<(Result, List<OccurrenceDto>?)>
 {
     public long? CountryId { get; set; }
+    public long? RegionId { get; set; }
+    public long? CommunityId { get; set; }
+    public long? DistrictId { get; set; }
+    public long? MunicipalityId { get; set; }
 }
 
 public class GetOccurrencesQueryHandler : IRequestHandler<GetOccurrencesQuery, (Result, List<OccurrenceDto>?)>
@@ -35,6 +39,10 @@ public class GetOccurrencesQueryHandler : IRequestHandler<GetOccurrencesQuery, (
                 .Include(x => x.Region)
                     .ThenInclude(e => e.Country)
                 .Where(x => !x.IsDeleted && (request.CountryId != null ? x.CountryId == request.CountryId : true))
+                .Where(x => !x.IsDeleted && (request.RegionId != null ? x.RegionId == request.CountryId : true))
+                .Where(x => !x.IsDeleted && (request.MunicipalityId != null ? x.MunicipalityId == request.CountryId : true))
+                .Where(x => !x.IsDeleted && (request.DistrictId != null ? x.DistrictId == request.CountryId : true))
+                .Where(x => !x.IsDeleted && (request.CommunityId != null ? x.CommunityId == request.CountryId : true))
                 .Select(OccurrencesSelectorExpression())
                 .ToListAsync();
 

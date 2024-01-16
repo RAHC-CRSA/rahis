@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace RegionalAnimalHealth.Application.Contracts.Institutions.Commands.AddParaProfessional;
 public class AddParaProfessionalCommandValidator : AbstractValidator<AddParaProfessionalCommand>
@@ -22,5 +17,8 @@ public class AddParaProfessionalCommandValidator : AbstractValidator<AddParaProf
 
         RuleFor(x => x.Position)
             .NotEmpty().WithMessage("Position is required.");
+
+        RuleFor(x => x.CountryId)
+            .NotEmpty().WithMessage("Country id is required.");
     }
 }

@@ -7,12 +7,12 @@ import { AuthResponseDto } from 'app/web-api-client';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-verifier',
-    templateUrl: './verifier.component.html',
-    styleUrls: ['./verifier.component.scss'],
+    selector: 'app-rah-officer',
+    templateUrl: './rah-officer.component.html',
+    styleUrls: ['./rah-officer.component.scss'],
     animations: fuseAnimations,
 })
-export class VerifierComponent {
+export class RahOfficerComponent {
     user$: Observable<AuthResponseDto | null | undefined>;
 
     constructor(private store: Store<AuthState>) {}

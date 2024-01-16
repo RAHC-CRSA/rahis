@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from 'app/core/auth/store';
@@ -31,14 +32,18 @@ import { Observable, of } from 'rxjs';
     styleUrls: ['./view-report.component.scss'],
 })
 export class ViewReportComponent implements OnInit {
+    verificationForm: FormGroup;
+    loading$: Observable<boolean>;
+    feedback$: Observable<ServerResponse | null | undefined>;
+
     canVerify: boolean;
     canNotify: boolean;
+    canEdit: boolean;
     reportId: number;
     cvoComment: string;
+
     reportStatus: ReportStatus;
     report$: Observable<ReportDto | null | undefined>;
-    feedback$: Observable<ServerResponse | null | undefined>;
-    loading$: Observable<boolean>;
     loaded$: Observable<boolean>;
     reportInfoData$: Observable<any[] | null | undefined>;
     actionsInfoData$: Observable<any[] | null | undefined>;
@@ -81,6 +86,7 @@ export class ViewReportComponent implements OnInit {
     ];
 
     constructor(
+        private formBuilder: FormBuilder,
         private store: Store<ReportState>,
         private authStore: Store<AuthState>,
         private route: ActivatedRoute
@@ -91,6 +97,7 @@ export class ViewReportComponent implements OnInit {
             this.reportId = +params.get('id');
         });
         this.initData();
+        this.initForm();
     }
 
     initData() {
@@ -99,10 +106,11 @@ export class ViewReportComponent implements OnInit {
         this.store.dispatch(loadReport({ payload: this.reportId }));
         this.authStore.select(getRoles).subscribe((roles) => {
             if (roles) {
-                this.canVerify = roles.includes('Chief Veterinary Officer');
-                this.canNotify = roles.includes(
+                this.canNotify = roles.includes('Chief Veterinary Officer');
+                this.canVerify = roles.includes(
                     'Regional Animal Health Officer'
                 );
+                this.canEdit = roles.includes('Reporter');
             }
         });
         this.report$ = this.store.select(getReport);
@@ -113,14 +121,14 @@ export class ViewReportComponent implements OnInit {
         this.report$.subscribe((data) => {
             if (data) {
                 console.log({ data });
+
+                this.cvoComment = data.cvoComment;
                 this.reportInfoData$ = of([
                     {
                         animalsExposed: data.exposed ?? 0,
                         animalsInfected: data.infected ?? 0,
                         animalMortality: data.mortality ?? 0,
                         humansExposed: data.humansExposed ?? 0,
-                        humansInfected: data.humansInfected ?? 0,
-                        humanMortality: data.humansMortality ?? 0,
                     },
                 ]);
 
@@ -138,19 +146,33 @@ export class ViewReportComponent implements OnInit {
         });
     }
 
+    initForm() {
+        this.verificationForm = this.formBuilder.group({
+            cvoComment: [this.cvoComment],
+        });
+    }
+
+    get f() {
+        return this.verificationForm?.controls;
+    }
+
     reject() {
-        const payload: IVerifyReportCommand = { id: this.reportId, cvoComment: this.cvoComment, isVerified: false, reportStatus: ReportStatus.Rejected };
-        console.log("cvo comment is ", this.cvoComment)
+        const payload: IVerifyReportCommand = {
+            id: this.reportId,
+            cvoComment: this.f.cvoComment.value,
+            isVerified: false,
+            reportStatus: ReportStatus.Rejected,
+        };
+        console.log('cvo comment is ', this.f.cvoComment.value);
         this.store.dispatch(verifyReport({ payload }));
     }
 
     validate() {
-        const payload: IVerifyReportCommand = { id: this.reportId, isVerified: true, reportStatus: ReportStatus.Approved };
-        this.store.dispatch(verifyReport({ payload }));
-    }
-
-    submit() {
-        const payload: IVerifyReportCommand = { id: this.reportId, cvoComment: "GUY WHY?", reportStatus: ReportStatus.Rejected };
+        const payload: IVerifyReportCommand = {
+            id: this.reportId,
+            isVerified: true,
+            reportStatus: ReportStatus.Approved,
+        };
         this.store.dispatch(verifyReport({ payload }));
     }
 

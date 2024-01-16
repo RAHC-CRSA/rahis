@@ -965,6 +965,90 @@ export class GetReportsClient implements IGetReportsClient {
     }
 }
 
+export interface IUpdateReportClient {
+    /**
+     * Updates a report
+     */
+    handle(request: UpdateReportCommand): Observable<ReportDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class UpdateReportClient implements IUpdateReportClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Updates a report
+     */
+    handle(request: UpdateReportCommand): Observable<ReportDto> {
+        let url_ = this.baseUrl + "/api/reports";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("patch", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ReportDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ReportDto>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ReportDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ReportDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result400 = resultData400 !== undefined ? resultData400 : <any>null;
+    
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IDeleteOccurrenceClient {
     /**
      * Deletes an occurrence
@@ -1045,9 +1129,8 @@ export class DeleteOccurrenceClient implements IDeleteOccurrenceClient {
 export interface IGetOccurrencesClient {
     /**
      * Gets the list of occurrences
-     * @param countryId (optional) 
      */
-    handle(countryId: number | null | undefined): Observable<OccurrenceDto[]>;
+    handle(request: GetOccurrencesQuery): Observable<OccurrenceDto[]>;
 }
 
 @Injectable({
@@ -1065,23 +1148,24 @@ export class GetOccurrencesClient implements IGetOccurrencesClient {
 
     /**
      * Gets the list of occurrences
-     * @param countryId (optional) 
      */
-    handle(countryId: number | null | undefined): Observable<OccurrenceDto[]> {
-        let url_ = this.baseUrl + "/api/reports/occurrences?";
-        if (countryId !== undefined && countryId !== null)
-            url_ += "CountryId=" + encodeURIComponent("" + countryId) + "&";
+    handle(request: GetOccurrencesQuery): Observable<OccurrenceDto[]> {
+        let url_ = this.baseUrl + "/api/reports/occurrences";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(request);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
             return this.processHandle(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
@@ -3951,6 +4035,96 @@ export class GetDiseasesClient implements IGetDiseasesClient {
     }
 }
 
+export interface IGetTransBoundaryDiseasesClient {
+    /**
+     * Gets a list of trans-boundary diseases
+     * @param speciesId (optional) 
+     */
+    handle(speciesId: number | null | undefined): Observable<DiseaseDto[]>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class GetTransBoundaryDiseasesClient implements IGetTransBoundaryDiseasesClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Gets a list of trans-boundary diseases
+     * @param speciesId (optional) 
+     */
+    handle(speciesId: number | null | undefined): Observable<DiseaseDto[]> {
+        let url_ = this.baseUrl + "/api/trans-boundary-diseases?";
+        if (speciesId !== undefined && speciesId !== null)
+            url_ += "speciesId=" + encodeURIComponent("" + speciesId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<DiseaseDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<DiseaseDto[]>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<DiseaseDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(DiseaseDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IGetAuthTokenClient {
     /**
      * Authenticates a user
@@ -5007,15 +5181,15 @@ export class ReportDto implements IReportDto {
     exposed?: number;
     mortality?: number;
     dead?: number;
-    humansInfected?: number | undefined;
+    humanInfection?: boolean;
     humansExposed?: number | undefined;
-    humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
     reportStatus?: ReportStatus | undefined;
     cvoComment?: string | undefined;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
+    corpsesDestroyed?: number | undefined;
     disinfection?: boolean;
     observation?: boolean;
     observationDuration?: string | undefined;
@@ -5060,15 +5234,15 @@ export class ReportDto implements IReportDto {
             this.exposed = _data["exposed"];
             this.mortality = _data["mortality"];
             this.dead = _data["dead"];
-            this.humansInfected = _data["humansInfected"];
+            this.humanInfection = _data["humanInfection"];
             this.humansExposed = _data["humansExposed"];
-            this.humansMortality = _data["humansMortality"];
             this.isOngoing = _data["isOngoing"];
             this.isVerified = _data["isVerified"];
             this.reportStatus = _data["reportStatus"];
             this.cvoComment = _data["cvoComment"];
             this.stampingOut = _data["stampingOut"];
             this.destructionOfCorpses = _data["destructionOfCorpses"];
+            this.corpsesDestroyed = _data["corpsesDestroyed"];
             this.disinfection = _data["disinfection"];
             this.observation = _data["observation"];
             this.observationDuration = _data["observationDuration"];
@@ -5125,15 +5299,15 @@ export class ReportDto implements IReportDto {
         data["exposed"] = this.exposed;
         data["mortality"] = this.mortality;
         data["dead"] = this.dead;
-        data["humansInfected"] = this.humansInfected;
+        data["humanInfection"] = this.humanInfection;
         data["humansExposed"] = this.humansExposed;
-        data["humansMortality"] = this.humansMortality;
         data["isOngoing"] = this.isOngoing;
         data["isVerified"] = this.isVerified;
         data["reportStatus"] = this.reportStatus;
         data["cvoComment"] = this.cvoComment;
         data["stampingOut"] = this.stampingOut;
         data["destructionOfCorpses"] = this.destructionOfCorpses;
+        data["corpsesDestroyed"] = this.corpsesDestroyed;
         data["disinfection"] = this.disinfection;
         data["observation"] = this.observation;
         data["observationDuration"] = this.observationDuration;
@@ -5183,15 +5357,15 @@ export interface IReportDto {
     exposed?: number;
     mortality?: number;
     dead?: number;
-    humansInfected?: number | undefined;
+    humanInfection?: boolean;
     humansExposed?: number | undefined;
-    humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
     reportStatus?: ReportStatus | undefined;
     cvoComment?: string | undefined;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
+    corpsesDestroyed?: number | undefined;
     disinfection?: boolean;
     observation?: boolean;
     observationDuration?: string | undefined;
@@ -5337,13 +5511,12 @@ export class CreateReportCommand implements ICreateReportCommand {
     speciesId?: number;
     numberExposed?: number;
     numberInfected?: number;
-    mortality?: number;
     dead?: number;
+    mortality?: number;
     mortalityRate?: number;
     humanInfection?: boolean;
     humansInfected?: number | undefined;
     humansExposed?: number | undefined;
-    humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
     reportType?: ReportType | undefined;
@@ -5387,13 +5560,12 @@ export class CreateReportCommand implements ICreateReportCommand {
             this.speciesId = _data["speciesId"];
             this.numberExposed = _data["numberExposed"];
             this.numberInfected = _data["numberInfected"];
-            this.mortality = _data["mortality"];
             this.dead = _data["dead"];
+            this.mortality = _data["mortality"];
             this.mortalityRate = _data["mortalityRate"];
             this.humanInfection = _data["humanInfection"];
             this.humansInfected = _data["humansInfected"];
             this.humansExposed = _data["humansExposed"];
-            this.humansMortality = _data["humansMortality"];
             this.isOngoing = _data["isOngoing"];
             this.isVerified = _data["isVerified"];
             this.reportType = _data["reportType"];
@@ -5449,13 +5621,12 @@ export class CreateReportCommand implements ICreateReportCommand {
         data["speciesId"] = this.speciesId;
         data["numberExposed"] = this.numberExposed;
         data["numberInfected"] = this.numberInfected;
-        data["mortality"] = this.mortality;
         data["dead"] = this.dead;
+        data["mortality"] = this.mortality;
         data["mortalityRate"] = this.mortalityRate;
         data["humanInfection"] = this.humanInfection;
         data["humansInfected"] = this.humansInfected;
         data["humansExposed"] = this.humansExposed;
-        data["humansMortality"] = this.humansMortality;
         data["isOngoing"] = this.isOngoing;
         data["isVerified"] = this.isVerified;
         data["reportType"] = this.reportType;
@@ -5504,13 +5675,12 @@ export interface ICreateReportCommand {
     speciesId?: number;
     numberExposed?: number;
     numberInfected?: number;
-    mortality?: number;
     dead?: number;
+    mortality?: number;
     mortalityRate?: number;
     humanInfection?: boolean;
     humansInfected?: number | undefined;
     humansExposed?: number | undefined;
-    humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
     reportType?: ReportType | undefined;
@@ -5665,6 +5835,58 @@ export interface IOccurrenceDto {
     dateEnded?: string;
     location?: string;
     reports?: number;
+}
+
+export class GetOccurrencesQuery implements IGetOccurrencesQuery {
+    countryId?: number | undefined;
+    regionId?: number | undefined;
+    communityId?: number | undefined;
+    districtId?: number | undefined;
+    municipalityId?: number | undefined;
+
+    constructor(data?: IGetOccurrencesQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.countryId = _data["countryId"];
+            this.regionId = _data["regionId"];
+            this.communityId = _data["communityId"];
+            this.districtId = _data["districtId"];
+            this.municipalityId = _data["municipalityId"];
+        }
+    }
+
+    static fromJS(data: any): GetOccurrencesQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetOccurrencesQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["countryId"] = this.countryId;
+        data["regionId"] = this.regionId;
+        data["communityId"] = this.communityId;
+        data["districtId"] = this.districtId;
+        data["municipalityId"] = this.municipalityId;
+        return data;
+    }
+}
+
+export interface IGetOccurrencesQuery {
+    countryId?: number | undefined;
+    regionId?: number | undefined;
+    communityId?: number | undefined;
+    districtId?: number | undefined;
+    municipalityId?: number | undefined;
 }
 
 export class PublicReportDto implements IPublicReportDto {
@@ -5957,6 +6179,182 @@ export class SendNotificationCommand implements ISendNotificationCommand {
 
 export interface ISendNotificationCommand {
     reportId?: number;
+}
+
+export class UpdateReportCommand implements IUpdateReportCommand {
+    id?: number;
+    numberExposed?: number;
+    numberInfected?: number;
+    dead?: number;
+    mortality?: number;
+    mortalityRate?: number;
+    humanInfection?: boolean;
+    humansInfected?: number | undefined;
+    humansExposed?: number | undefined;
+    isOngoing?: boolean;
+    isVerified?: boolean;
+    reportType?: ReportType | undefined;
+    longitude?: number | undefined;
+    latitude?: number | undefined;
+    stampingOut?: boolean;
+    destructionOfCorpses?: boolean;
+    corpsesDestroyed?: number | undefined;
+    disinfection?: boolean;
+    observation?: boolean;
+    observationDuration?: string | undefined;
+    quarantine?: boolean;
+    quarantineDuration?: string | undefined;
+    movementControl?: boolean;
+    movementControlMeasures?: string | undefined;
+    treatment?: boolean;
+    treatmentDetails?: string | undefined;
+    occurenceDate?: Date;
+    diagnosticTests?: DiagnosticTestDto[];
+    medications?: MedicationDto[];
+    vaccinations?: VaccinationDto[];
+
+    constructor(data?: IUpdateReportCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.numberExposed = _data["numberExposed"];
+            this.numberInfected = _data["numberInfected"];
+            this.dead = _data["dead"];
+            this.mortality = _data["mortality"];
+            this.mortalityRate = _data["mortalityRate"];
+            this.humanInfection = _data["humanInfection"];
+            this.humansInfected = _data["humansInfected"];
+            this.humansExposed = _data["humansExposed"];
+            this.isOngoing = _data["isOngoing"];
+            this.isVerified = _data["isVerified"];
+            this.reportType = _data["reportType"];
+            this.longitude = _data["longitude"];
+            this.latitude = _data["latitude"];
+            this.stampingOut = _data["stampingOut"];
+            this.destructionOfCorpses = _data["destructionOfCorpses"];
+            this.corpsesDestroyed = _data["corpsesDestroyed"];
+            this.disinfection = _data["disinfection"];
+            this.observation = _data["observation"];
+            this.observationDuration = _data["observationDuration"];
+            this.quarantine = _data["quarantine"];
+            this.quarantineDuration = _data["quarantineDuration"];
+            this.movementControl = _data["movementControl"];
+            this.movementControlMeasures = _data["movementControlMeasures"];
+            this.treatment = _data["treatment"];
+            this.treatmentDetails = _data["treatmentDetails"];
+            this.occurenceDate = _data["occurenceDate"] ? new Date(_data["occurenceDate"].toString()) : <any>undefined;
+            if (Array.isArray(_data["diagnosticTests"])) {
+                this.diagnosticTests = [] as any;
+                for (let item of _data["diagnosticTests"])
+                    this.diagnosticTests!.push(DiagnosticTestDto.fromJS(item));
+            }
+            if (Array.isArray(_data["medications"])) {
+                this.medications = [] as any;
+                for (let item of _data["medications"])
+                    this.medications!.push(MedicationDto.fromJS(item));
+            }
+            if (Array.isArray(_data["vaccinations"])) {
+                this.vaccinations = [] as any;
+                for (let item of _data["vaccinations"])
+                    this.vaccinations!.push(VaccinationDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UpdateReportCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateReportCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["numberExposed"] = this.numberExposed;
+        data["numberInfected"] = this.numberInfected;
+        data["dead"] = this.dead;
+        data["mortality"] = this.mortality;
+        data["mortalityRate"] = this.mortalityRate;
+        data["humanInfection"] = this.humanInfection;
+        data["humansInfected"] = this.humansInfected;
+        data["humansExposed"] = this.humansExposed;
+        data["isOngoing"] = this.isOngoing;
+        data["isVerified"] = this.isVerified;
+        data["reportType"] = this.reportType;
+        data["longitude"] = this.longitude;
+        data["latitude"] = this.latitude;
+        data["stampingOut"] = this.stampingOut;
+        data["destructionOfCorpses"] = this.destructionOfCorpses;
+        data["corpsesDestroyed"] = this.corpsesDestroyed;
+        data["disinfection"] = this.disinfection;
+        data["observation"] = this.observation;
+        data["observationDuration"] = this.observationDuration;
+        data["quarantine"] = this.quarantine;
+        data["quarantineDuration"] = this.quarantineDuration;
+        data["movementControl"] = this.movementControl;
+        data["movementControlMeasures"] = this.movementControlMeasures;
+        data["treatment"] = this.treatment;
+        data["treatmentDetails"] = this.treatmentDetails;
+        data["occurenceDate"] = this.occurenceDate ? formatDate(this.occurenceDate) : <any>undefined;
+        if (Array.isArray(this.diagnosticTests)) {
+            data["diagnosticTests"] = [];
+            for (let item of this.diagnosticTests)
+                data["diagnosticTests"].push(item.toJSON());
+        }
+        if (Array.isArray(this.medications)) {
+            data["medications"] = [];
+            for (let item of this.medications)
+                data["medications"].push(item.toJSON());
+        }
+        if (Array.isArray(this.vaccinations)) {
+            data["vaccinations"] = [];
+            for (let item of this.vaccinations)
+                data["vaccinations"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IUpdateReportCommand {
+    id?: number;
+    numberExposed?: number;
+    numberInfected?: number;
+    dead?: number;
+    mortality?: number;
+    mortalityRate?: number;
+    humanInfection?: boolean;
+    humansInfected?: number | undefined;
+    humansExposed?: number | undefined;
+    isOngoing?: boolean;
+    isVerified?: boolean;
+    reportType?: ReportType | undefined;
+    longitude?: number | undefined;
+    latitude?: number | undefined;
+    stampingOut?: boolean;
+    destructionOfCorpses?: boolean;
+    corpsesDestroyed?: number | undefined;
+    disinfection?: boolean;
+    observation?: boolean;
+    observationDuration?: string | undefined;
+    quarantine?: boolean;
+    quarantineDuration?: string | undefined;
+    movementControl?: boolean;
+    movementControlMeasures?: string | undefined;
+    treatment?: boolean;
+    treatmentDetails?: string | undefined;
+    occurenceDate?: Date;
+    diagnosticTests?: DiagnosticTestDto[];
+    medications?: MedicationDto[];
+    vaccinations?: VaccinationDto[];
 }
 
 export class VerifyReportCommand implements IVerifyReportCommand {
@@ -6617,6 +7015,7 @@ export class NotificationRecipientDto implements INotificationRecipientDto {
     email?: string;
     institution?: string;
     isEnabled?: boolean;
+    countryId?: number | undefined;
 
     constructor(data?: INotificationRecipientDto) {
         if (data) {
@@ -6634,6 +7033,7 @@ export class NotificationRecipientDto implements INotificationRecipientDto {
             this.email = _data["email"];
             this.institution = _data["institution"];
             this.isEnabled = _data["isEnabled"];
+            this.countryId = _data["countryId"];
         }
     }
 
@@ -6651,6 +7051,7 @@ export class NotificationRecipientDto implements INotificationRecipientDto {
         data["email"] = this.email;
         data["institution"] = this.institution;
         data["isEnabled"] = this.isEnabled;
+        data["countryId"] = this.countryId;
         return data;
     }
 }
@@ -6661,6 +7062,7 @@ export interface INotificationRecipientDto {
     email?: string;
     institution?: string;
     isEnabled?: boolean;
+    countryId?: number | undefined;
 }
 
 export class AddRecipientCommand implements IAddRecipientCommand {
@@ -6668,6 +7070,7 @@ export class AddRecipientCommand implements IAddRecipientCommand {
     email?: string;
     institution?: string;
     isEnabled?: boolean;
+    countryId?: number;
 
     constructor(data?: IAddRecipientCommand) {
         if (data) {
@@ -6684,6 +7087,7 @@ export class AddRecipientCommand implements IAddRecipientCommand {
             this.email = _data["email"];
             this.institution = _data["institution"];
             this.isEnabled = _data["isEnabled"];
+            this.countryId = _data["countryId"];
         }
     }
 
@@ -6700,6 +7104,7 @@ export class AddRecipientCommand implements IAddRecipientCommand {
         data["email"] = this.email;
         data["institution"] = this.institution;
         data["isEnabled"] = this.isEnabled;
+        data["countryId"] = this.countryId;
         return data;
     }
 }
@@ -6709,6 +7114,7 @@ export interface IAddRecipientCommand {
     email?: string;
     institution?: string;
     isEnabled?: boolean;
+    countryId?: number;
 }
 
 export class DeleteRecipientCommand implements IDeleteRecipientCommand {
@@ -6869,6 +7275,7 @@ export interface IParaProfessionalDto {
 
 export class AddInstitutionCommand implements IAddInstitutionCommand {
     name?: string;
+    countryId?: number;
     publicSector?: boolean;
     type?: string | undefined;
 
@@ -6884,6 +7291,7 @@ export class AddInstitutionCommand implements IAddInstitutionCommand {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.countryId = _data["countryId"];
             this.publicSector = _data["publicSector"];
             this.type = _data["type"];
         }
@@ -6899,6 +7307,7 @@ export class AddInstitutionCommand implements IAddInstitutionCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["countryId"] = this.countryId;
         data["publicSector"] = this.publicSector;
         data["type"] = this.type;
         return data;
@@ -6907,6 +7316,7 @@ export class AddInstitutionCommand implements IAddInstitutionCommand {
 
 export interface IAddInstitutionCommand {
     name?: string;
+    countryId?: number;
     publicSector?: boolean;
     type?: string | undefined;
 }
@@ -6917,6 +7327,7 @@ export class AddParaProfessionalCommand implements IAddParaProfessionalCommand {
     phone?: string;
     position?: string;
     institutionId?: number | undefined;
+    countryId?: number;
 
     constructor(data?: IAddParaProfessionalCommand) {
         if (data) {
@@ -6934,6 +7345,7 @@ export class AddParaProfessionalCommand implements IAddParaProfessionalCommand {
             this.phone = _data["phone"];
             this.position = _data["position"];
             this.institutionId = _data["institutionId"];
+            this.countryId = _data["countryId"];
         }
     }
 
@@ -6951,6 +7363,7 @@ export class AddParaProfessionalCommand implements IAddParaProfessionalCommand {
         data["phone"] = this.phone;
         data["position"] = this.position;
         data["institutionId"] = this.institutionId;
+        data["countryId"] = this.countryId;
         return data;
     }
 }
@@ -6961,6 +7374,7 @@ export interface IAddParaProfessionalCommand {
     phone?: string;
     position?: string;
     institutionId?: number | undefined;
+    countryId?: number;
 }
 
 export class DeleteInstitutionCommand implements IDeleteInstitutionCommand {
@@ -7038,6 +7452,7 @@ export interface IDeleteParaProfessionalCommand {
 export class UpdateInstitutionCommand implements IUpdateInstitutionCommand {
     institutionId?: number;
     name?: string;
+    countryId?: number;
     publicSector?: boolean;
     type?: string | undefined;
 
@@ -7054,6 +7469,7 @@ export class UpdateInstitutionCommand implements IUpdateInstitutionCommand {
         if (_data) {
             this.institutionId = _data["institutionId"];
             this.name = _data["name"];
+            this.countryId = _data["countryId"];
             this.publicSector = _data["publicSector"];
             this.type = _data["type"];
         }
@@ -7070,6 +7486,7 @@ export class UpdateInstitutionCommand implements IUpdateInstitutionCommand {
         data = typeof data === 'object' ? data : {};
         data["institutionId"] = this.institutionId;
         data["name"] = this.name;
+        data["countryId"] = this.countryId;
         data["publicSector"] = this.publicSector;
         data["type"] = this.type;
         return data;
@@ -7079,6 +7496,7 @@ export class UpdateInstitutionCommand implements IUpdateInstitutionCommand {
 export interface IUpdateInstitutionCommand {
     institutionId?: number;
     name?: string;
+    countryId?: number;
     publicSector?: boolean;
     type?: string | undefined;
 }
@@ -7134,7 +7552,9 @@ export interface IUpdateParaProfessionalCommand {
 export class DiseaseDto implements IDiseaseDto {
     id?: number;
     name?: string;
-    zoonotic?: boolean;
+    isZoonotic?: boolean;
+    isPriority?: boolean;
+    isNotifiable?: boolean;
     code?: string;
     classification?: string;
     speciesId?: number;
@@ -7152,7 +7572,9 @@ export class DiseaseDto implements IDiseaseDto {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
-            this.zoonotic = _data["zoonotic"];
+            this.isZoonotic = _data["isZoonotic"];
+            this.isPriority = _data["isPriority"];
+            this.isNotifiable = _data["isNotifiable"];
             this.code = _data["code"];
             this.classification = _data["classification"];
             this.speciesId = _data["speciesId"];
@@ -7170,7 +7592,9 @@ export class DiseaseDto implements IDiseaseDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
-        data["zoonotic"] = this.zoonotic;
+        data["isZoonotic"] = this.isZoonotic;
+        data["isPriority"] = this.isPriority;
+        data["isNotifiable"] = this.isNotifiable;
         data["code"] = this.code;
         data["classification"] = this.classification;
         data["speciesId"] = this.speciesId;
@@ -7181,7 +7605,9 @@ export class DiseaseDto implements IDiseaseDto {
 export interface IDiseaseDto {
     id?: number;
     name?: string;
-    zoonotic?: boolean;
+    isZoonotic?: boolean;
+    isPriority?: boolean;
+    isNotifiable?: boolean;
     code?: string;
     classification?: string;
     speciesId?: number;
@@ -7191,7 +7617,7 @@ export class AddDiseaseCommand implements IAddDiseaseCommand {
     name?: string;
     code?: string;
     classification?: string;
-    zoonotic?: boolean;
+    isZoonotic?: boolean;
     speciesId?: number;
 
     constructor(data?: IAddDiseaseCommand) {
@@ -7208,7 +7634,7 @@ export class AddDiseaseCommand implements IAddDiseaseCommand {
             this.name = _data["name"];
             this.code = _data["code"];
             this.classification = _data["classification"];
-            this.zoonotic = _data["zoonotic"];
+            this.isZoonotic = _data["isZoonotic"];
             this.speciesId = _data["speciesId"];
         }
     }
@@ -7225,7 +7651,7 @@ export class AddDiseaseCommand implements IAddDiseaseCommand {
         data["name"] = this.name;
         data["code"] = this.code;
         data["classification"] = this.classification;
-        data["zoonotic"] = this.zoonotic;
+        data["isZoonotic"] = this.isZoonotic;
         data["speciesId"] = this.speciesId;
         return data;
     }
@@ -7235,7 +7661,7 @@ export interface IAddDiseaseCommand {
     name?: string;
     code?: string;
     classification?: string;
-    zoonotic?: boolean;
+    isZoonotic?: boolean;
     speciesId?: number;
 }
 

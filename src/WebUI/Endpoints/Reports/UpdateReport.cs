@@ -8,34 +8,34 @@ using NSwag.Annotations;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
 using RegionalAnimalHealth.Application.Common.Security;
-using RegionalAnimalHealth.Application.Contracts.Diseases.Queries.GetDiseases;
+using RegionalAnimalHealth.Application.Contracts.Reports.Commands.CreateReport;
+using RegionalAnimalHealth.Application.Contracts.Reports.Commands.UpdateReport;
 
-namespace WebUI.Endpoints.Diseases;
+namespace WebUI.Endpoints.Reports;
 
-[OpenApiTag("Diseases")]
+[OpenApiTag("Reports")]
 [Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class GetDiseases : EndpointBaseAsync.WithoutRequest.WithActionResult<List<DiseaseDto>>
+public class UpdateReport : EndpointBaseAsync.WithRequest<UpdateReportCommand>.WithActionResult<ReportDto>
 {
     private readonly IMediator _mediator;
 
-    public GetDiseases(IMediator mediator)
+    public UpdateReport(IMediator mediator)
     {
         _mediator = mediator;
     }
 
-    [HttpGet("api/diseases")]
+    [HttpPatch("api/reports")]
     [OpenApiOperation(
-            "Gets the list of diseases",
-            "Gets the list of diseases in the system")
+            "Updates a report",
+            "Updates a new report")
         ]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult<List<DiseaseDto>>> HandleAsync(CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<ReportDto>> HandleAsync(UpdateReportCommand request, CancellationToken cancellationToken = default)
     {
-        var (result, data) = await _mediator.Send(new GetCrossBoundaryDiseasesQuery());
+        var (result, report) = await _mediator.Send(request);
         if (result.Succeeded)
-            return Ok(data);
+            return Ok(report);
 
         return BadRequest(new ServerResponse(result.Errors));
     }

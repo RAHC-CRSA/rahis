@@ -8,17 +8,10 @@ using RegionalAnimalHealth.Domain.Entities.Reports;
 using RegionalAnimalHealth.Domain.Enums;
 using RegionalAnimalHealth.Domain.Models.Messaging;
 
-namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.CreateReport;
-public class CreateReportCommand : IRequest<(Result, ReportDto?)>
+namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.UpdateReport;
+public class UpdateReportCommand : IRequest<(Result, ReportDto?)>
 {
-    public long? OccurrenceId { get; set; }
-    public long CountryId { get; set; }
-    public long RegionId { get; set; }
-    public long? CommunityId { get; set; }
-    public long? DistrictId { get; set; }
-    public long? MunicipalityId { get; set; }
-    public long DiseaseId { get; set; }
-    public long SpeciesId { get; set; }
+    public long Id { get; set; }
     public int NumberExposed { get; set; }
     public int NumberInfected { get; set; }
     public int Dead { get; set; }
@@ -51,15 +44,16 @@ public class CreateReportCommand : IRequest<(Result, ReportDto?)>
     public List<VaccinationDto> Vaccinations { get; set; }
 }
 
-public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (Result, ReportDto?)>
+public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (Result, ReportDto?)>
 {
     private readonly IApplicationDbContext _context;
-    private readonly ILogger<CreateReportCommand> _logger;
+    private readonly ILogger<UpdateReportCommand> _logger;
     private readonly IIdentityService _identityService;
     private readonly ICurrentUserService _currentUserService;
     private readonly IEmailService _emailService;
+    
 
-    public CreateReportCommandHandler(IApplicationDbContext context, IIdentityService identityService, ICurrentUserService currentUserService, IEmailService emailService, ILogger<CreateReportCommand> logger)
+    public UpdateReportCommandHandler(IApplicationDbContext context,  IIdentityService identityService, ICurrentUserService currentUserService, IEmailService emailService, ILogger<UpdateReportCommand> logger)
     {
         _context = context;
         _logger = logger;
@@ -68,53 +62,24 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
         _emailService = emailService;
     }
 
-    public async Task<(Result, ReportDto?)> Handle(CreateReportCommand request, CancellationToken cancellationToken)
+    public async Task<(Result, ReportDto?)> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
     {
         try
         {
+            var report = await _context.Reports.Where(x => !x.IsDeleted && x.Id == request.Id).FirstOrDefaultAsync();
+            if (report == null)
+                return (Result.Failure(new List<string> { "Report not found." }), null);
+
             // Get latest report if any
-            Report? latestReport = request.OccurrenceId != null ? await _context.Reports.Where(x => !x.IsDeleted && x.OccurrenceId == request.OccurrenceId).OrderByDescending(r => r.Created).FirstOrDefaultAsync() : null;
+            Report? latestReport = await _context.Reports.Where(x => !x.IsDeleted && x.OccurrenceId == report.OccurrenceId).OrderByDescending(r => r.Created).FirstOrDefaultAsync();
 
             // Get transboundary disease if any
             TransboundaryDisease? transboundaryDisease = await _context.TransboundaryDiseases
-                .Where(x => !x.IsDeleted && x.SpeciesId == request.SpeciesId && x.DiseaseId == request.DiseaseId)
+                .Where(x => !x.IsDeleted && x.SpeciesId == report.SpeciesId && x.DiseaseId == report.DiseaseId)
                 .FirstOrDefaultAsync();
 
-            int notifiabilityPoints = 0;
-            Occurrence? occurrence;
-            
-            if (request.OccurrenceId == null)
-            {
-               
-                // TODO: Get occurrence date from request
-                occurrence = Occurrence.Create(request.CountryId, request.RegionId, request.MunicipalityId, request.DistrictId, request.CommunityId, DateOnly.FromDateTime(DateTime.UtcNow));
-
-                if (transboundaryDisease != null)
-                {
-                    occurrence.SetTransboundaryDisease(transboundaryDisease.Id);
-                }
-
-                await _context.Occurrences.AddAsync(occurrence);
-            }
-            else
-            {
-                occurrence = await _context.Occurrences
-                    .Include(o => o.Reports.Where(r => !r.IsDeleted))
-                    .Where(x => !x.IsDeleted && x.Id == request.OccurrenceId)
-                    .FirstOrDefaultAsync();
-            }
-
-            if (occurrence == null)
-            {
-                var msg = "Failed to create or find occurrence.";
-                _logger.LogDebug(msg, request.OccurrenceId);
-                return (Result.Failure(new List<string> { msg }), null);
-            }
-
-            // TODO: Get occurrence date from request
-
-            // Create report
-            var report = Report.Create(occurrence.Id, request.DiseaseId, request.SpeciesId, DateOnly.FromDateTime(DateTime.UtcNow));
+            // Update report status
+            report.UpdateReportStatus();
 
             // Update infection info
             report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Dead, request.Mortality, request.HumanInfection,
@@ -156,11 +121,12 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             }
 
             // Calculate notifiable points
+            var notifiabilityPoints = 0;
             // Get report disease
-            var disease = await _context.Diseases.Where(x => !x.IsDeleted && x.Id == request.DiseaseId).FirstOrDefaultAsync();
+            var disease = await _context.Diseases.Where(x => !x.IsDeleted && x.Id == report.DiseaseId).FirstOrDefaultAsync();
 
             // Immediate notification points
-            notifiabilityPoints += request.ReportType == ReportType.Immediate ? 1 : 0;
+            notifiabilityPoints += report.ReportType == ReportType.Immediate ? 1 : 0;
 
             // Notifiable disease points
             notifiabilityPoints += disease != null && disease.IsNotifiable ? 2 : 0;
@@ -175,28 +141,25 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             if (latestReport != null)
             {
                 // Animal mortality points
-               // notifiabilityPoints += request.Mortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
+                notifiabilityPoints += request.Mortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
             }
 
             // Calculate notifiability points out of 10
-            notifiabilityPoints = (int) Math.Round(notifiabilityPoints / 8.0 * 10);
+            notifiabilityPoints = (int)Math.Round(notifiabilityPoints / 8.0 * 10);
 
             // Set notifiable points for report
             report.SetNotifiabilityPoints(notifiabilityPoints);
 
             // TODO: Send email notifications
 
-            // Add report to occurrence
-            occurrence.AddReport(report);
-
             // Save changes
-            await _context.SaveChangesAsync(cancellationToken); 
+            await _context.SaveChangesAsync(cancellationToken);
 
             // Notify reporter
-            var (_, user) = await  _identityService.GetUserAsync(_currentUserService?.UserId);
+            var (_, user) = await _identityService.GetUserAsync(_currentUserService?.UserId);
 
-            var subject = $"Report Submitted";
-            var content = $"You have successfully submitted a report.";
+            var subject = $"Report Updated";
+            var content = $"You have successfully updated a report.";
             var message = EmailNotification.Create(content, user.Email, subject, user.FirstName);
 
             var emailResult = await _emailService.SendEmailAsync(message, EmailNotification.TemplateId);

@@ -23,7 +23,7 @@ public class GetOccurrences : EndpointBaseAsync.WithRequest<GetOccurrencesQuery>
         _mediator = mediator;
     }
 
-    [HttpGet("api/reports/occurrences")]
+    [HttpPost("api/reports/occurrences")]
     [OpenApiOperation(
             "Gets the list of occurrences",
             "Gets the list of occurrences in the system")
@@ -31,7 +31,7 @@ public class GetOccurrences : EndpointBaseAsync.WithRequest<GetOccurrencesQuery>
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
     [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult<List<OccurrenceDto>>> HandleAsync([FromQuery] GetOccurrencesQuery request, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<List<OccurrenceDto>>> HandleAsync(GetOccurrencesQuery request, CancellationToken cancellationToken = default)
     {
         var (result, data) = await _mediator.Send(request, cancellationToken);
         if (result.Succeeded)

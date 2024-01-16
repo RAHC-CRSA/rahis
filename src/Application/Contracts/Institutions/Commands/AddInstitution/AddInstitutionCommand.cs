@@ -9,6 +9,7 @@ namespace RegionalAnimalHealth.Application.Contracts.Institutions.Commands.AddIn
 public class AddInstitutionCommand : IRequest<(Result, InstitutionDto?)>
 {
     public string Name { get; set; }
+    public long CountryId { get; set; }
     public bool PublicSector { get; set; }
     public string? Type { get; set; }
 }
@@ -28,7 +29,7 @@ public class AddInstitutionCommandHandler : IRequestHandler<AddInstitutionComman
     {
         try
         {
-            var institution = Institution.Create(request.Name, request.PublicSector, request.Type);
+            var institution = Institution.Create(request.Name, request.CountryId, request.PublicSector, request.Type);
             await _context.Institutions.AddAsync(institution);
             await _context.SaveChangesAsync(cancellationToken);
 

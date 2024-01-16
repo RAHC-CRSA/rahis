@@ -10,6 +10,7 @@ public class UpdateInstitutionCommand : IRequest<(Result, InstitutionDto?)>
 {
     public long InstitutionId { get; set; }
     public string Name { get; set; }
+    public long CountryId { get; set; }
     public bool PublicSector { get; set; }
     public string? Type { get; set; }
 }
@@ -36,7 +37,7 @@ public class UpdateInstitutionCommandHandler : IRequestHandler<UpdateInstitution
                 return (Result.Failure(new List<string> { "Institution not found" }), null);
             }
 
-            institution.Update(request.Name, request.Type, request.PublicSector);
+            institution.Update(request.Name, request.CountryId, request.Type, request.PublicSector);
 
             _context.Institutions.Update(institution);
             await _context.SaveChangesAsync(cancellationToken);

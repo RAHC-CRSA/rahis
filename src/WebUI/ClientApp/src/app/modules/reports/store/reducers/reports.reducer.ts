@@ -71,6 +71,17 @@ export const reducer = createReducer(
         feedback: null,
         data: [...state.data, payload],
     })),
+    on(actions.updateReport, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
+    })),
+    on(actions.updateReportSuccess, (state, { payload }) => ({
+        ...state,
+        loading: false,
+        feedback: null,
+        data: state.data.filter((e) => (e.id == payload.id ? payload : e)),
+    })),
     on(actions.deleteReport, (state) => ({
         ...state,
         feedback: null,
@@ -261,6 +272,11 @@ export const reducer = createReducer(
         feedback: null,
         loading: false,
         species: [...state.species, payload],
+    })),
+    on(actions.loadTransBoundaryDiseases, (state) => ({
+        ...state,
+        feedback: null,
+        loading: true,
     })),
     on(actions.verifyReport, (state) => ({
         ...state,

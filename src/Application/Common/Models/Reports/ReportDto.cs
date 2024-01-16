@@ -25,9 +25,8 @@ public class ReportDto
     public int Mortality { get; set; }
     public int Dead { get; set; }
 
-    public int? HumansInfected { get; set; }
+    public bool HumanInfection { get; set; }
     public int? HumansExposed { get; set; }
-    public int? HumansMortality { get; set; }
 
     public bool IsOngoing { get; set; }
     public bool IsVerified { get; set; }
@@ -36,6 +35,7 @@ public class ReportDto
 
     public bool StampingOut { get; set; }
     public bool DestructionOfCorpses { get; set; }
+    public int? CorpsesDestroyed { get; set; }
     public bool Disinfection { get; set; }
     public bool Observation { get; set; }
     public string? ObservationDuration { get; set; }

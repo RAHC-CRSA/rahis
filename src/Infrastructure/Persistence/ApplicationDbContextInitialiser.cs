@@ -453,7 +453,7 @@ public class ApplicationDbContextInitialiser
                 var fileName = "countryRegions.json";
                 var _filePath = Path.Combine(GetRootPath(), "Infrastructure\\Persistence\\SeedData", fileName);
                 // For when you need to seed directly from your pc
-                var dataText = File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/countryRegions.json");
+                var dataText = System.IO.File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/countryRegions.json");
                 //var dataText = File.ReadAllText(_filePath);
                 var regionSeedData = JsonConvert.DeserializeObject<List<RegionData>>(dataText);
 
@@ -478,7 +478,7 @@ public class ApplicationDbContextInitialiser
             var fileName = "userSeed.json";
             var _filePath = Path.Combine(GetRootPath(), "Infrastructure\\Persistence\\SeedData", fileName);
             // For when you need to seed directly from your pc
-            var dataText = File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/userSeed.json");
+            var dataText = System.IO.File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/userSeed.json");
             //var dataText = File.ReadAllText(_filePath);
             var userSeedData = JsonConvert.DeserializeObject<List<UserData>>(dataText);
 

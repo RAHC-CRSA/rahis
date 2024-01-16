@@ -21,6 +21,7 @@ import {
 } from 'app/modules/reports/store/selectors';
 import {
     IDeleteOccurrenceCommand,
+    IGetOccurrencesQuery,
     OccurrenceDto,
     ServerResponse,
 } from 'app/web-api-client';
@@ -72,7 +73,11 @@ export class OccurrencesListComponent {
                     countryId = user.countryId;
                 }
 
-                this.store.dispatch(loadOccurrences({ payload: countryId }));
+                const payload: IGetOccurrencesQuery = {
+                    countryId,
+                };
+
+                this.store.dispatch(loadOccurrences({ payload }));
             }
         });
 

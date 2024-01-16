@@ -25,6 +25,8 @@ import {
     ISendNotificationCommand,
     DataQueryTimeSpan,
     PublicReportDto,
+    IGetOccurrencesQuery,
+    IUpdateReportCommand,
 } from '../../../../web-api-client';
 
 // Create report
@@ -65,6 +67,19 @@ export const loadReport = createAction(
 );
 export const loadReportSuccess = createAction(
     LOAD_REPORT_SUCCESS,
+    props<{ payload: ReportDto }>()
+);
+
+// Update report
+export const UPDATE_REPORT = `[Reports] Update Report`;
+export const UPDATE_REPORT_SUCCESS = `[Reports] Update Report Success`;
+
+export const updateReport = createAction(
+    UPDATE_REPORT,
+    props<{ payload: IUpdateReportCommand }>()
+);
+export const updateReportSuccess = createAction(
+    UPDATE_REPORT_SUCCESS,
     props<{ payload: ReportDto }>()
 );
 
@@ -162,7 +177,7 @@ export const LOAD_OCCURRENCES_SUCCESS = `[Reports] Load Occurrences Success`;
 
 export const loadOccurrences = createAction(
     LOAD_OCCURRENCES,
-    props<{ payload?: number | undefined }>()
+    props<{ payload?: IGetOccurrencesQuery }>()
 );
 export const loadOccurrencesSuccess = createAction(
     LOAD_OCCURRENCES_SUCCESS,
@@ -231,6 +246,20 @@ export const addDiseaseSuccess = createAction(
     ADD_DISEASE_SUCCESS,
     props<{ payload: DiseaseDto }>()
 );
+
+// Load transboundary diseases
+export const LOAD_TRANSBOUNDARY_DISEASES = `[Reports] Load TransBoundary Diseases`;
+export const LOAD_TRANSBOUNDARY_DISEASES_SUCCESS = `[Reports] Load TransBoundary Diseases Success`;
+
+export const loadTransBoundaryDiseases = createAction(
+    LOAD_TRANSBOUNDARY_DISEASES,
+    props<{ payload: number | undefined }>()
+);
+
+// Clear diseases
+export const CLEAR_DISEASES = `[Reports] Clear Diseases`;
+
+export const clearDiseases = createAction(CLEAR_DISEASES);
 
 // Load species
 export const LOAD_SPECIES = `[Reports] Load Species`;

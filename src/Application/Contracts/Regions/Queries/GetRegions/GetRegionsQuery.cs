@@ -22,7 +22,7 @@ public class GetRegionsQueryHandler : IRequestHandler<GetRegionsQuery, (Result, 
     {
         _context = context;
         _logger = logger;
-    }
+    }       
 
     public async Task<(Result, List<RegionDto>?)> Handle(GetRegionsQuery request, CancellationToken cancellationToken)
     {

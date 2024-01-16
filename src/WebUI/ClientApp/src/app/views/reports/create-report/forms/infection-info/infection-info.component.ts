@@ -31,7 +31,7 @@ export class InfectionInfoComponent {
     ) {}
 
     ngOnInit() {
-        this.humanInfection = this.formData.humanInfection;
+        this.humanInfection = this.formData?.humanInfection;
         this.initForm();
 
         this.infectionInfo

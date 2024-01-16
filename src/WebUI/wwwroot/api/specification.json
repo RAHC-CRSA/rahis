@@ -580,6 +580,57 @@
             ]
           }
         ]
+      },
+      "patch": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Updates a report",
+        "description": "Updates a new report",
+        "operationId": "UpdateReport_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReportCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
+          }
+        ]
       }
     },
     "/api/reports/occurrences": {
@@ -624,25 +675,25 @@
           }
         ]
       },
-      "get": {
+      "post": {
         "tags": [
           "Reports"
         ],
         "summary": "Gets the list of occurrences",
         "description": "Gets the list of occurrences in the system",
         "operationId": "GetOccurrences_Handle",
-        "parameters": [
-          {
-            "name": "CountryId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "nullable": true
-            },
-            "x-position": 1
-          }
-        ],
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetOccurrencesQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
         "responses": {
           "200": {
             "description": "",
@@ -899,7 +950,7 @@
         "security": [
           {
             "JWT": [
-              "Regional Animal Health Officer"
+              "Chief Veterinary Officer"
             ]
           }
         ]
@@ -941,7 +992,7 @@
         "security": [
           {
             "JWT": [
-              "Chief Veterinary Officer"
+              "Regional Animal Health Officer"
             ]
           }
         ]
@@ -2364,6 +2415,62 @@
         ]
       }
     },
+    "/api/trans-boundary-diseases": {
+      "get": {
+        "tags": [
+          "Diseases"
+        ],
+        "summary": "Gets a list of trans-boundary diseases",
+        "description": "Gets a list of trans-boundary diseases in the system",
+        "operationId": "GetTransBoundaryDiseases_Handle",
+        "parameters": [
+          {
+            "name": "speciesId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiseaseDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
+          }
+        ]
+      }
+    },
     "/api/auth": {
       "post": {
         "tags": [
@@ -2921,17 +3028,10 @@
             "type": "integer",
             "format": "int32"
           },
-          "humansInfected": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
+          "humanInfection": {
+            "type": "boolean"
           },
           "humansExposed": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "humansMortality": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -2959,6 +3059,11 @@
           },
           "destructionOfCorpses": {
             "type": "boolean"
+          },
+          "corpsesDestroyed": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "disinfection": {
             "type": "boolean"
@@ -3135,11 +3240,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "mortality": {
+          "dead": {
             "type": "integer",
             "format": "int32"
           },
-          "dead": {
+          "mortality": {
             "type": "integer",
             "format": "int32"
           },
@@ -3156,11 +3261,6 @@
             "nullable": true
           },
           "humansExposed": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "humansMortality": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -3311,6 +3411,37 @@
           "reports": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "GetOccurrencesQuery": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "countryId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "regionId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "communityId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "districtId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "municipalityId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
           }
         }
       },
@@ -3476,6 +3607,137 @@
           "reportId": {
             "type": "integer",
             "format": "int64"
+          }
+        }
+      },
+      "UpdateReportCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "numberExposed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberInfected": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dead": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mortality": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mortalityRate": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "humanInfection": {
+            "type": "boolean"
+          },
+          "humansInfected": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "humansExposed": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isOngoing": {
+            "type": "boolean"
+          },
+          "isVerified": {
+            "type": "boolean"
+          },
+          "reportType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ReportType"
+              }
+            ]
+          },
+          "longitude": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "stampingOut": {
+            "type": "boolean"
+          },
+          "destructionOfCorpses": {
+            "type": "boolean"
+          },
+          "corpsesDestroyed": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "disinfection": {
+            "type": "boolean"
+          },
+          "observation": {
+            "type": "boolean"
+          },
+          "observationDuration": {
+            "type": "string",
+            "nullable": true
+          },
+          "quarantine": {
+            "type": "boolean"
+          },
+          "quarantineDuration": {
+            "type": "string",
+            "nullable": true
+          },
+          "movementControl": {
+            "type": "boolean"
+          },
+          "movementControlMeasures": {
+            "type": "string",
+            "nullable": true
+          },
+          "treatment": {
+            "type": "boolean"
+          },
+          "treatmentDetails": {
+            "type": "string",
+            "nullable": true
+          },
+          "occurenceDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "diagnosticTests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiagnosticTestDto"
+            }
+          },
+          "medications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MedicationDto"
+            }
+          },
+          "vaccinations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VaccinationDto"
+            }
           }
         }
       },
@@ -3737,6 +3999,11 @@
           },
           "isEnabled": {
             "type": "boolean"
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
           }
         }
       },
@@ -3755,6 +4022,10 @@
           },
           "isEnabled": {
             "type": "boolean"
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -3832,6 +4103,10 @@
           "name": {
             "type": "string"
           },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
+          },
           "publicSector": {
             "type": "boolean"
           },
@@ -3861,6 +4136,10 @@
             "type": "integer",
             "format": "int64",
             "nullable": true
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -3894,6 +4173,10 @@
           },
           "name": {
             "type": "string"
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64"
           },
           "publicSector": {
             "type": "boolean"
@@ -3934,7 +4217,13 @@
           "name": {
             "type": "string"
           },
-          "zoonotic": {
+          "isZoonotic": {
+            "type": "boolean"
+          },
+          "isPriority": {
+            "type": "boolean"
+          },
+          "isNotifiable": {
             "type": "boolean"
           },
           "code": {
@@ -3962,7 +4251,7 @@
           "classification": {
             "type": "string"
           },
-          "zoonotic": {
+          "isZoonotic": {
             "type": "boolean"
           },
           "speciesId": {

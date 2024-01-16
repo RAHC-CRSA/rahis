@@ -4,7 +4,11 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { ReportState } from 'app/modules/reports/store';
-import { createReport, createReportSuccess, loadReport } from 'app/modules/reports/store/actions';
+import {
+    createReport,
+    loadReport,
+    updateReport,
+} from 'app/modules/reports/store/actions';
 import {
     getFeedback,
     getReport,
@@ -14,7 +18,9 @@ import {
 import {
     DiagnosticTestDto,
     ICreateReportCommand,
+    IUpdateReportCommand,
     MedicationDto,
+    ReportDto,
     ServerResponse,
     VaccinationDto,
 } from 'app/web-api-client';
@@ -28,41 +34,48 @@ import { Observable } from 'rxjs';
 })
 export class CreateReportComponent implements OnInit {
     reportId: number;
+    formValues: any;
     updatingReport: boolean;
     loading$: Observable<boolean>;
     feedback$: Observable<ServerResponse | null | undefined>;
     loaded$: Observable<boolean>;
-    savedReport$: Observable<any | null | undefined>;
+    report$: Observable<any | null | undefined>;
 
     @ViewChild('reportFormStepper') private reportFormStepper: MatStepper;
 
     formStep: number = 1;
-    formValues = this._getFormValues();
 
-    constructor(private router: Router, private store: Store<ReportState>, private route: ActivatedRoute) {}
+    constructor(
+        private router: Router,
+        private store: Store<ReportState>,
+        private route: ActivatedRoute
+    ) {}
 
     ngOnInit() {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.reportId = +params.get('id');
+            if (this.reportId) {
+                this.updatingReport = true;
+                this.formStep = 5;
+                this.store.dispatch(loadReport({ payload: this.reportId }));
+            }
+            this.initData();
         });
-        this.initData();
     }
 
     initData() {
-
         if (this.reportId) {
-            this.updatingReport = true;
-            this.formStep = 5;
-            this.store.dispatch(loadReport({ payload: this.reportId }));
-            this.savedReport$ = this.store.select(getReport);
+            this.report$ = this.store.select(getReport);
             this.loaded$ = this.store.select(getReportsLoaded);
 
-            this.savedReport$.subscribe((data) => {
+            this.report$.subscribe((data) => {
                 if (data) {
                     console.log({ data });
-
+                    this.formValues = this._mapFormValues(data);
                 }
             });
+        } else {
+            this.formValues = this._getFormValues();
         }
         this.feedback$ = this.store.select(getFeedback);
         this.loading$ = this.store.select(getReportsLoading);
@@ -149,10 +162,6 @@ export class CreateReportComponent implements OnInit {
             this.formValues.humanInfection = formData.humanInfection;
             this.formValues.humansExposed = formData.humansExposed;
             this.formValues.humansInfected = formData.humansInfected;
-            this.formValues.humansDead = formData.humansDead;
-            this.formValues.humansMortality = Math.round(
-                (formData.humansDead / formData.humansExposed) * 100
-            );
 
             this.formStep++;
 
@@ -206,7 +215,6 @@ export class CreateReportComponent implements OnInit {
         }
 
         if (this.formStep == 9) {
-
             this.submit();
         }
     }
@@ -223,6 +231,7 @@ export class CreateReportComponent implements OnInit {
     }
 
     submit() {
+        console.log({ formValues: this.formValues });
         const medications =
             this.formValues.medications?.map((e) => new MedicationDto(e)) ?? [];
         const vaccinations =
@@ -234,11 +243,21 @@ export class CreateReportComponent implements OnInit {
             ) ?? [];
 
         const payload: ICreateReportCommand = {
-            countryId: parseInt(this.formValues.country) ?? undefined,
-            regionId: parseInt(this.formValues.region) ?? undefined,
-            municipalityId: parseInt(this.formValues.municipality) ?? undefined,
-            districtId: parseInt(this.formValues.district) ?? undefined,
-            communityId: parseInt(this.formValues.community) ?? undefined,
+            countryId: this.formValues.country
+                ? parseInt(this.formValues.country)
+                : undefined,
+            regionId: this.formValues.region
+                ? parseInt(this.formValues.region)
+                : undefined,
+            municipalityId: this.formValues.municipality
+                ? parseInt(this.formValues.municipality)
+                : undefined,
+            districtId: this.formValues.district
+                ? parseInt(this.formValues.district)
+                : undefined,
+            communityId: this.formValues.community
+                ? parseInt(this.formValues.community)
+                : undefined,
             diseaseId: parseInt(this.formValues.disease) ?? undefined,
             speciesId: parseInt(this.formValues.species) ?? undefined,
             occurrenceId: this.formValues.occurrence
@@ -246,11 +265,11 @@ export class CreateReportComponent implements OnInit {
                 : undefined,
             numberExposed: this.formValues.exposed ?? 0,
             numberInfected: this.formValues.infected ?? 0,
-            mortality: this.formValues.mortality >= 0 ? this.formValues.mortality : 0,
+            mortality:
+                this.formValues.mortality >= 0 ? this.formValues.mortality : 0,
             humanInfection: this.formValues.humanInfection,
             humansExposed: this.formValues.humansExposed ?? 0,
             humansInfected: this.formValues.humansInfected ?? 0,
-            humansMortality: 0,
             stampingOut: this.formValues.stampingOut,
             destructionOfCorpses: this.formValues.destructionOfCorpses,
             corpsesDestroyed: this.formValues.corpsesDestroyed
@@ -271,18 +290,28 @@ export class CreateReportComponent implements OnInit {
         };
 
         console.log({ payload });
-        this.store.dispatch(createReport({ payload }))
+
+        if (this.reportId) {
+            const updatePayload: IUpdateReportCommand = {
+                ...payload,
+                id: this.formValues.reportId,
+            };
+            console.log({ updatePayload });
+            this.store.dispatch(updateReport({ payload: updatePayload }));
+        } else {
+            this.store.dispatch(createReport({ payload }));
+        }
     }
 
     private _getFormValues() {
         return {
-            reportId: null,
+            reportId: undefined,
             reportType: '',
-            country: '',
-            region: '',
-            municipality: '',
-            district: '',
-            community: '',
+            country: undefined,
+            region: undefined,
+            municipality: undefined,
+            district: undefined,
+            community: undefined,
             disease: '',
             species: '',
             newOccurrence: false,
@@ -294,8 +323,6 @@ export class CreateReportComponent implements OnInit {
             humanInfection: false,
             humansExposed: 0,
             humansInfected: 0,
-            humansDead: 0,
-            humansMortality: 0,
             stampingOut: false,
             destructionOfCorpses: false,
             corpsesDestroyed: '',
@@ -311,6 +338,43 @@ export class CreateReportComponent implements OnInit {
             medications: [],
             vaccinations: [],
             diagnosticTests: [],
+        };
+    }
+
+    private _mapFormValues(data: ReportDto): any {
+        return {
+            reportId: data.id,
+            disease: data.diseaseId,
+            species: data.speciesId,
+            newOccurrence: data.occurrenceId != undefined,
+            occurrence: data.occurrenceId,
+            exposed: data.exposed,
+            infected: data.infected,
+            mortality: data.mortality,
+            humanInfection: data.humanInfection,
+            humansExposed: data.humansExposed,
+            stampingOut: data.stampingOut,
+            destructionOfCorpses: data.destructionOfCorpses,
+            corpsesDestroyed: data.corpsesDestroyed,
+            disinfection: data.disinfection,
+            observation: data.observation,
+            observationDuration: data.observationDuration,
+            quarantine: data.quarantine,
+            quarantineDuration: data.quarantineDuration,
+            movementControl: data.movementControl,
+            movementControlMeasures: data.movementControlMeasures,
+            treatment: data.treatment,
+            treatmentDetails: data.treatmentDetails,
+            medications: data.medications,
+            vaccinations: data.vaccinations,
+            diagnosticTests: data.diagnosticTests,
+            // retain original location and occurrence info
+            occurrenceId: data.occurrenceId,
+            country: undefined,
+            region: undefined,
+            municipality: undefined,
+            district: undefined,
+            community: undefined,
         };
     }
 }

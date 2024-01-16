@@ -33,8 +33,38 @@ export class ReportsEffects {
             exhaustMap((action) =>
                 this.reportsService.createReport(action.payload).pipe(
                     map((payload) => {
-                        this.router.navigateByUrl('/dashboard/reports/create-confirmation');
-                        return ReportsActions.createReportSuccess({ payload: payload })
+                        this.router.navigateByUrl(
+                            '/dashboard/reports/create-confirmation'
+                        );
+                        return ReportsActions.createReportSuccess({
+                            payload: payload,
+                        });
+                    }),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    updateReport$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.updateReport),
+            exhaustMap((action) =>
+                this.reportsService.updateReport(action.payload).pipe(
+                    map((payload) => {
+                        this.router.navigateByUrl(
+                            '/dashboard/reports/create-confirmation'
+                        );
+                        return ReportsActions.updateReportSuccess({
+                            payload: payload,
+                        });
                     }),
                     catchError((error) =>
                         of(
@@ -477,6 +507,33 @@ export class ReportsEffects {
                         )
                     )
                 )
+            )
+        )
+    );
+
+    loadTransboundaryDiseases$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.loadTransBoundaryDiseases),
+            exhaustMap((action) =>
+                this.diseaseService
+                    .getTransBoundaryDiseases(action.payload)
+                    .pipe(
+                        map((payload) =>
+                            ReportsActions.loadDiseasesSuccess({
+                                payload: payload,
+                            })
+                        ),
+                        catchError((error) =>
+                            of(
+                                ReportsActions.setFeedback({
+                                    payload:
+                                        this.feedbackService.processResponse(
+                                            error
+                                        ),
+                                })
+                            )
+                        )
+                    )
             )
         )
     );

@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
-import { VerifierComponent } from './verifier.component';
+import { RahOfficerComponent } from './rah-officer.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { Route, RouterModule } from '@angular/router';
 
 export const routes: Route[] = [
     {
         path: '',
-        component: VerifierComponent,
+        component: RahOfficerComponent,
     },
 ];
 
 @NgModule({
-    declarations: [VerifierComponent],
+    declarations: [RahOfficerComponent],
     imports: [SharedModule, RouterModule.forChild(routes)],
 })
-export class VerifierModule {}
+export class RahOfficerModule {}

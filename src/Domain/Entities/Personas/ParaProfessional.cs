@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Diagnostics;
+using RegionalAnimalHealth.Domain.Entities.Regions;
 
 namespace RegionalAnimalHealth.Domain.Entities.Personas;
 public class ParaProfessional : BaseAuditableEntity<long>
@@ -9,28 +10,32 @@ public class ParaProfessional : BaseAuditableEntity<long>
     public string Position { get; private set; }
     public long? InstitutionId { get; private set; }
     public virtual Institution Institution { get; set; }
+    public long? CountryId { get; private set; }
+    public virtual Country Country { get; private set; }
 
     private ParaProfessional() : base()
     {
     }
 
-    private ParaProfessional(string name, string email, string phone, string position, long? institutionId) : this()
+    private ParaProfessional(string name, string email, string phone, string position, long countryId, long? institutionId) : this()
     {
         Name = name;
         Email = email;
         Phone = phone;
         Position = position;
         InstitutionId = institutionId;
+        CountryId = countryId;
     }
 
-    public static ParaProfessional Create(string name, string email, string phone, string position, long? institutionId = null)
+    public static ParaProfessional Create(string name, string email, string phone, string position, long countryId, long? institutionId = null)
     {
         Guard.IsNotNullOrEmpty(name, nameof(name));
         Guard.IsNotNullOrEmpty(email, nameof(email));
         Guard.IsNotNullOrEmpty(phone, nameof(phone));
         Guard.IsNotNullOrEmpty(position, nameof(position));
+        Guard.IsNotNull(countryId, nameof(countryId));
 
-        return new ParaProfessional(name, email, phone, position, institutionId);
+        return new ParaProfessional(name, email, phone, position, countryId, institutionId);
     }
 
     public void Delete()

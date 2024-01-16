@@ -9,6 +9,7 @@ import {
     DeleteReportClient,
     DeleteReportCommand,
     GetOccurrencesClient,
+    GetOccurrencesQuery,
     GetPublicReportsClient,
     GetReportClient,
     GetReportsAnalyticsClient,
@@ -16,10 +17,14 @@ import {
     ICreateReportCommand,
     IDeleteOccurrenceCommand,
     IDeleteReportCommand,
+    IGetOccurrencesQuery,
     ISendNotificationCommand,
+    IUpdateReportCommand,
     IVerifyReportCommand,
     SendNotificationClient,
     SendNotificationCommand,
+    UpdateReportClient,
+    UpdateReportCommand,
     VerifyReportClient,
     VerifyReportCommand,
 } from '../web-api-client';
@@ -31,6 +36,7 @@ export class ReportService {
     // Clients
     private getOccurrencesClient: GetOccurrencesClient;
     private createReportClient: CreateReportClient;
+    private updateReportClient: UpdateReportClient;
     private getReportsClient: GetReportsClient;
     private getReportClient: GetReportClient;
     private verifyReportClient: VerifyReportClient;
@@ -43,6 +49,7 @@ export class ReportService {
     constructor(http: HttpClient) {
         this.getOccurrencesClient = new GetOccurrencesClient(http);
         this.createReportClient = new CreateReportClient(http);
+        this.updateReportClient = new UpdateReportClient(http);
         this.getReportsClient = new GetReportsClient(http);
         this.getReportClient = new GetReportClient(http);
         this.verifyReportClient = new VerifyReportClient(http);
@@ -53,18 +60,24 @@ export class ReportService {
         this.getPublicReportsClient = new GetPublicReportsClient(http);
     }
 
-    getAllOccurrences(countryId: number | undefined) {
-        return this.getOccurrencesClient.handle(countryId);
+    getAllOccurrences(payload: IGetOccurrencesQuery) {
+        const request = new GetOccurrencesQuery(payload);
+
+        return this.getOccurrencesClient.handle(request);
     }
 
     createReport(payload: ICreateReportCommand) {
         return this.createReportClient.handle(new CreateReportCommand(payload));
     }
 
+    updateReport(payload: IUpdateReportCommand) {
+        return this.updateReportClient.handle(new UpdateReportCommand(payload));
+    }
+
     getAllReports(payload) {
         return this.getReportsClient.handle(
             payload.isVerified,
-          //  payload.reportStatus,
+            //  payload.reportStatus,
             payload.countryId
         );
     }

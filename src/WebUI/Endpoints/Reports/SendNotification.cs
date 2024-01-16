@@ -11,7 +11,7 @@ using RegionalAnimalHealth.Application.Contracts.Reports.Commands.SendNotificati
 namespace WebUI.Endpoints.Reports;
 
 [OpenApiTag("Reports")]
-[Authorize(Roles = SecurityRoles.RahOfficer, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(Roles = SecurityRoles.ChiefVeterinaryOfficer, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class SendNotification: EndpointBaseAsync.WithRequest<SendNotificationCommand>.WithActionResult<ServerResponse>
 {
     private readonly IMediator _mediator;

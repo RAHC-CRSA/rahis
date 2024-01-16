@@ -12,7 +12,7 @@ public class AddDiseaseCommand : IRequest<(Result, DiseaseDto?)>
     public string Name { get; set; }
     public string Code { get; set; }
     public string Classification { get; set; }
-    public bool Zoonotic { get; set; }
+    public bool IsZoonotic { get; set; }
     public long SpeciesId { get; set; }
 }
 
@@ -35,7 +35,7 @@ public class AddDiseaseCommandHandler : IRequestHandler<AddDiseaseCommand, (Resu
             if (species == null)
                 return (Result.Failure(new List<string> { "Associated species was not found." }), null);
 
-            var disease = Disease.Create(request.Name, request.Code, request.Classification, request.Zoonotic);
+            var disease = Disease.Create(request.Name, request.Code, request.Classification, request.IsZoonotic);
             disease.SetTransboundarySpecies(species);
 
             await _context.Diseases.AddAsync(disease);
@@ -46,7 +46,7 @@ public class AddDiseaseCommandHandler : IRequestHandler<AddDiseaseCommand, (Resu
                 Id = disease.Id,
                 Name = disease.Name,
                 Classification = disease.Classification,
-                Zoonotic = disease.Zoonotic,
+                IsZoonotic = disease.IsZoonotic,
                 SpeciesId = request.SpeciesId,
             };
 
