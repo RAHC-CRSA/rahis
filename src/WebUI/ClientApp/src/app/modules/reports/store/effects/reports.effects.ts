@@ -53,6 +53,32 @@ export class ReportsEffects {
         )
     );
 
+    updateReport$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.updateReport),
+            exhaustMap((action) =>
+                this.reportsService.updateReport(action.payload).pipe(
+                    map((payload) => {
+                        this.router.navigateByUrl(
+                            '/dashboard/reports/create-confirmation'
+                        );
+                        return ReportsActions.updateReportSuccess({
+                            payload: payload,
+                        });
+                    }),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     deleteReport$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ReportsActions.deleteReport),

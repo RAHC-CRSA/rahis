@@ -4,25 +4,32 @@ using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Application.Common.Models.Reports;
+using RegionalAnimalHealth.Domain.Entities.Reports;
+using RegionalAnimalHealth.Domain.Enums;
 using RegionalAnimalHealth.Domain.Models.Messaging;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Commands.UpdateReport;
-public class UpdateReportCommand : IRequest<Result>
+public class UpdateReportCommand : IRequest<(Result, ReportDto?)>
 {
     public long Id { get; set; }
     public int NumberExposed { get; set; }
     public int NumberInfected { get; set; }
-    public int Deceased { get; set; }
+    public int Dead { get; set; }
     public int Mortality { get; set; }
+    public int MortalityRate { get; set; }
     public bool HumanInfection { get; set; }
     public int? HumansInfected { get; set; }
     public int? HumansExposed { get; set; }
-    public int? HumansMortality { get; set; }
-    public bool? StampingOut { get; set; }
-    public bool? DestructionOfCorpses { get; set; }
+    public bool IsOngoing { get; set; }
+    public bool IsVerified { get; set; }
+    public ReportType? ReportType { get; set; }
+    public decimal? Longitude { get; set; }
+    public decimal? Latitude { get; set; }
+    public bool StampingOut { get; set; }
+    public bool DestructionOfCorpses { get; set; }
     public int? CorpsesDestroyed { get; set; }
-    public bool? Disinfection { get; set; }
-    public bool? Observation { get; set; }
+    public bool Disinfection { get; set; }
+    public bool Observation { get; set; }
     public string? ObservationDuration { get; set; }
     public bool Quarantine { get; set; }
     public string? QuarantineDuration { get; set; }
@@ -30,13 +37,14 @@ public class UpdateReportCommand : IRequest<Result>
     public string? MovementControlMeasures { get; set; }
     public bool Treatment { get; set; }
     public string? TreatmentDetails { get; set; }
+    public DateOnly OccurenceDate { get; set; }
 
     public List<DiagnosticTestDto> DiagnosticTests { get; set; }
     public List<MedicationDto> Medications { get; set; }
     public List<VaccinationDto> Vaccinations { get; set; }
 }
 
-public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, Result>
+public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (Result, ReportDto?)>
 {
     private readonly IApplicationDbContext _context;
     private readonly ILogger<UpdateReportCommand> _logger;
@@ -54,29 +62,32 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, R
         _emailService = emailService;
     }
 
-    public async Task<Result> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
+    public async Task<(Result, ReportDto?)> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
     {
         try
         {
             var report = await _context.Reports.Where(x => !x.IsDeleted && x.Id == request.Id).FirstOrDefaultAsync();
             if (report == null)
-                return Result.Failure(new List<string> { "Report not found." });
+                return (Result.Failure(new List<string> { "Report not found." }), null);
 
-         //   report.Verify(request.CvoComment, request.IsVerified, request.ReportStatus);
+            // Get latest report if any
+            Report? latestReport = await _context.Reports.Where(x => !x.IsDeleted && x.OccurrenceId == report.OccurrenceId).OrderByDescending(r => r.Created).FirstOrDefaultAsync();
 
+            // Get transboundary disease if any
+            TransboundaryDisease? transboundaryDisease = await _context.TransboundaryDiseases
+                .Where(x => !x.IsDeleted && x.SpeciesId == report.SpeciesId && x.DiseaseId == report.DiseaseId)
+                .FirstOrDefaultAsync();
+
+            // Update report status
+            report.UpdateReportStatus();
 
             // Update infection info
-            report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Deceased, request.Mortality, request.HumanInfection,
+            report.UpdateInfectionInfo(request.NumberExposed, request.NumberInfected, request.Dead, request.Mortality, request.HumanInfection,
                 request.HumansExposed);
 
             // Update treatment info
-            report.UpdateTreatmentInfo(request.StampingOut ?? report.StampingOut,
-            request.DestructionOfCorpses ?? report.DestructionOfCorpses,
-            request.CorpsesDestroyed,
-            request.Disinfection ?? report.Disinfection,
-            request.Observation ?? report.Observation, request.ObservationDuration,
-            request.Quarantine, request.QuarantineDuration,
-            request.MovementControl,
+            report.UpdateTreatmentInfo(request.StampingOut, request.DestructionOfCorpses, request.CorpsesDestroyed, request.Disinfection,
+                request.Observation, request.ObservationDuration, request.Quarantine, request.QuarantineDuration, request.MovementControl,
                 request.MovementControlMeasures, request.Treatment, request.TreatmentDetails);
 
 
@@ -109,27 +120,75 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, R
                 }
             }
 
+            // Calculate notifiable points
+            var notifiabilityPoints = 0;
+            // Get report disease
+            var disease = await _context.Diseases.Where(x => !x.IsDeleted && x.Id == report.DiseaseId).FirstOrDefaultAsync();
 
+            // Immediate notification points
+            notifiabilityPoints += report.ReportType == ReportType.Immediate ? 1 : 0;
 
-            _context.Reports.Update(report);
+            // Notifiable disease points
+            notifiabilityPoints += disease != null && disease.IsNotifiable ? 2 : 0;
+
+            // Monitored disease points
+            notifiabilityPoints += disease != null && disease.IsMonitored ? 1 : 0;
+
+            // Transboundary disease points
+            notifiabilityPoints += transboundaryDisease == null ? 2 : 0;
+
+            // Mortality points
+            if (latestReport != null)
+            {
+                // Animal mortality points
+                notifiabilityPoints += request.Mortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
+            }
+
+            // Calculate notifiability points out of 10
+            notifiabilityPoints = (int)Math.Round(notifiabilityPoints / 8.0 * 10);
+
+            // Set notifiable points for report
+            report.SetNotifiabilityPoints(notifiabilityPoints);
+
+            // TODO: Send email notifications
+
             // Save changes
-            await _context.SaveChangesAsync(cancellationToken); 
+            await _context.SaveChangesAsync(cancellationToken);
 
             // Notify reporter
-            var (_, user) = await  _identityService.GetUserAsync(_currentUserService?.UserId);
+            var (_, user) = await _identityService.GetUserAsync(_currentUserService?.UserId);
 
-            var subject = $"Report Submitted";
-            var content = $"You have successfully submitted a report.";
+            var subject = $"Report Updated";
+            var content = $"You have successfully updated a report.";
             var message = EmailNotification.Create(content, user.Email, subject, user.FirstName);
 
             var emailResult = await _emailService.SendEmailAsync(message, EmailNotification.TemplateId);
 
-            return Result.Success();
+            var data = new ReportDto
+            {
+                Id = report.Id,
+                OccurrenceId = report.OccurrenceId,
+                DiseaseId = report.DiseaseId,
+                SpeciesId = report.SpeciesId,
+                Exposed = report.NumberExposed,
+                Infected = report.NumberInfected,
+                IsOngoing = report.IsOngoing,
+                IsVerified = report.IsVerified,
+                StampingOut = report.StampingOut,
+                DestructionOfCorpses = report.DestructionOfCorpses,
+                Disinfection = report.Disinfection,
+                Observation = report.Observation,
+                Quarantine = report.Quarantine,
+                MovementControl = report.MovementControl,
+                Treatment = report.Treatment,
+            };
+
+            return (Result.Success(), data);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);
-            return Result.Failure(new List<string> { ex.Message });
+            return (Result.Failure(new List<string> { ex.Message }), null);
         }
     }
 }

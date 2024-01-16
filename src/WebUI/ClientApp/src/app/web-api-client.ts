@@ -965,6 +965,90 @@ export class GetReportsClient implements IGetReportsClient {
     }
 }
 
+export interface IUpdateReportClient {
+    /**
+     * Updates a report
+     */
+    handle(request: UpdateReportCommand): Observable<ReportDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class UpdateReportClient implements IUpdateReportClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Updates a report
+     */
+    handle(request: UpdateReportCommand): Observable<ReportDto> {
+        let url_ = this.baseUrl + "/api/reports";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("patch", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ReportDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ReportDto>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ReportDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ReportDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result400 = resultData400 !== undefined ? resultData400 : <any>null;
+    
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IDeleteOccurrenceClient {
     /**
      * Deletes an occurrence
@@ -5429,7 +5513,6 @@ export class CreateReportCommand implements ICreateReportCommand {
     humanInfection?: boolean;
     humansInfected?: number | undefined;
     humansExposed?: number | undefined;
-    humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
     reportType?: ReportType | undefined;
@@ -5479,7 +5562,6 @@ export class CreateReportCommand implements ICreateReportCommand {
             this.humanInfection = _data["humanInfection"];
             this.humansInfected = _data["humansInfected"];
             this.humansExposed = _data["humansExposed"];
-            this.humansMortality = _data["humansMortality"];
             this.isOngoing = _data["isOngoing"];
             this.isVerified = _data["isVerified"];
             this.reportType = _data["reportType"];
@@ -5541,7 +5623,6 @@ export class CreateReportCommand implements ICreateReportCommand {
         data["humanInfection"] = this.humanInfection;
         data["humansInfected"] = this.humansInfected;
         data["humansExposed"] = this.humansExposed;
-        data["humansMortality"] = this.humansMortality;
         data["isOngoing"] = this.isOngoing;
         data["isVerified"] = this.isVerified;
         data["reportType"] = this.reportType;
@@ -5596,7 +5677,6 @@ export interface ICreateReportCommand {
     humanInfection?: boolean;
     humansInfected?: number | undefined;
     humansExposed?: number | undefined;
-    humansMortality?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
     reportType?: ReportType | undefined;
@@ -6095,6 +6175,182 @@ export class SendNotificationCommand implements ISendNotificationCommand {
 
 export interface ISendNotificationCommand {
     reportId?: number;
+}
+
+export class UpdateReportCommand implements IUpdateReportCommand {
+    id?: number;
+    numberExposed?: number;
+    numberInfected?: number;
+    dead?: number;
+    mortality?: number;
+    mortalityRate?: number;
+    humanInfection?: boolean;
+    humansInfected?: number | undefined;
+    humansExposed?: number | undefined;
+    isOngoing?: boolean;
+    isVerified?: boolean;
+    reportType?: ReportType | undefined;
+    longitude?: number | undefined;
+    latitude?: number | undefined;
+    stampingOut?: boolean;
+    destructionOfCorpses?: boolean;
+    corpsesDestroyed?: number | undefined;
+    disinfection?: boolean;
+    observation?: boolean;
+    observationDuration?: string | undefined;
+    quarantine?: boolean;
+    quarantineDuration?: string | undefined;
+    movementControl?: boolean;
+    movementControlMeasures?: string | undefined;
+    treatment?: boolean;
+    treatmentDetails?: string | undefined;
+    occurenceDate?: Date;
+    diagnosticTests?: DiagnosticTestDto[];
+    medications?: MedicationDto[];
+    vaccinations?: VaccinationDto[];
+
+    constructor(data?: IUpdateReportCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.numberExposed = _data["numberExposed"];
+            this.numberInfected = _data["numberInfected"];
+            this.dead = _data["dead"];
+            this.mortality = _data["mortality"];
+            this.mortalityRate = _data["mortalityRate"];
+            this.humanInfection = _data["humanInfection"];
+            this.humansInfected = _data["humansInfected"];
+            this.humansExposed = _data["humansExposed"];
+            this.isOngoing = _data["isOngoing"];
+            this.isVerified = _data["isVerified"];
+            this.reportType = _data["reportType"];
+            this.longitude = _data["longitude"];
+            this.latitude = _data["latitude"];
+            this.stampingOut = _data["stampingOut"];
+            this.destructionOfCorpses = _data["destructionOfCorpses"];
+            this.corpsesDestroyed = _data["corpsesDestroyed"];
+            this.disinfection = _data["disinfection"];
+            this.observation = _data["observation"];
+            this.observationDuration = _data["observationDuration"];
+            this.quarantine = _data["quarantine"];
+            this.quarantineDuration = _data["quarantineDuration"];
+            this.movementControl = _data["movementControl"];
+            this.movementControlMeasures = _data["movementControlMeasures"];
+            this.treatment = _data["treatment"];
+            this.treatmentDetails = _data["treatmentDetails"];
+            this.occurenceDate = _data["occurenceDate"] ? new Date(_data["occurenceDate"].toString()) : <any>undefined;
+            if (Array.isArray(_data["diagnosticTests"])) {
+                this.diagnosticTests = [] as any;
+                for (let item of _data["diagnosticTests"])
+                    this.diagnosticTests!.push(DiagnosticTestDto.fromJS(item));
+            }
+            if (Array.isArray(_data["medications"])) {
+                this.medications = [] as any;
+                for (let item of _data["medications"])
+                    this.medications!.push(MedicationDto.fromJS(item));
+            }
+            if (Array.isArray(_data["vaccinations"])) {
+                this.vaccinations = [] as any;
+                for (let item of _data["vaccinations"])
+                    this.vaccinations!.push(VaccinationDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UpdateReportCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateReportCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["numberExposed"] = this.numberExposed;
+        data["numberInfected"] = this.numberInfected;
+        data["dead"] = this.dead;
+        data["mortality"] = this.mortality;
+        data["mortalityRate"] = this.mortalityRate;
+        data["humanInfection"] = this.humanInfection;
+        data["humansInfected"] = this.humansInfected;
+        data["humansExposed"] = this.humansExposed;
+        data["isOngoing"] = this.isOngoing;
+        data["isVerified"] = this.isVerified;
+        data["reportType"] = this.reportType;
+        data["longitude"] = this.longitude;
+        data["latitude"] = this.latitude;
+        data["stampingOut"] = this.stampingOut;
+        data["destructionOfCorpses"] = this.destructionOfCorpses;
+        data["corpsesDestroyed"] = this.corpsesDestroyed;
+        data["disinfection"] = this.disinfection;
+        data["observation"] = this.observation;
+        data["observationDuration"] = this.observationDuration;
+        data["quarantine"] = this.quarantine;
+        data["quarantineDuration"] = this.quarantineDuration;
+        data["movementControl"] = this.movementControl;
+        data["movementControlMeasures"] = this.movementControlMeasures;
+        data["treatment"] = this.treatment;
+        data["treatmentDetails"] = this.treatmentDetails;
+        data["occurenceDate"] = this.occurenceDate ? formatDate(this.occurenceDate) : <any>undefined;
+        if (Array.isArray(this.diagnosticTests)) {
+            data["diagnosticTests"] = [];
+            for (let item of this.diagnosticTests)
+                data["diagnosticTests"].push(item.toJSON());
+        }
+        if (Array.isArray(this.medications)) {
+            data["medications"] = [];
+            for (let item of this.medications)
+                data["medications"].push(item.toJSON());
+        }
+        if (Array.isArray(this.vaccinations)) {
+            data["vaccinations"] = [];
+            for (let item of this.vaccinations)
+                data["vaccinations"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IUpdateReportCommand {
+    id?: number;
+    numberExposed?: number;
+    numberInfected?: number;
+    dead?: number;
+    mortality?: number;
+    mortalityRate?: number;
+    humanInfection?: boolean;
+    humansInfected?: number | undefined;
+    humansExposed?: number | undefined;
+    isOngoing?: boolean;
+    isVerified?: boolean;
+    reportType?: ReportType | undefined;
+    longitude?: number | undefined;
+    latitude?: number | undefined;
+    stampingOut?: boolean;
+    destructionOfCorpses?: boolean;
+    corpsesDestroyed?: number | undefined;
+    disinfection?: boolean;
+    observation?: boolean;
+    observationDuration?: string | undefined;
+    quarantine?: boolean;
+    quarantineDuration?: string | undefined;
+    movementControl?: boolean;
+    movementControlMeasures?: string | undefined;
+    treatment?: boolean;
+    treatmentDetails?: string | undefined;
+    occurenceDate?: Date;
+    diagnosticTests?: DiagnosticTestDto[];
+    medications?: MedicationDto[];
+    vaccinations?: VaccinationDto[];
 }
 
 export class VerifyReportCommand implements IVerifyReportCommand {

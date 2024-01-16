@@ -190,4 +190,9 @@ public class Report : BaseAuditableEntity<long>
         NotificationSent = DateTime.UtcNow;
         LastModified = DateTime.UtcNow;
     }
+
+    public void UpdateReportStatus(ReportStatus status = ReportStatus.Pending)
+    {
+        ReportStatus = status;
+    }
 }

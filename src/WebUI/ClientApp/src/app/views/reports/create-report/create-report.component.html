@@ -33,7 +33,7 @@
         <!-- Alert -->
         <app-feedback-display *ngIf="feedback$ | async" [feedback]="feedback$"></app-feedback-display>
 
-        <mat-vertical-stepper [linear]="true" #reportFormStepper>
+        <mat-vertical-stepper *ngIf="formValues" [linear]="true" #reportFormStepper>
 
           <mat-step #reportFormReportType *ngIf="formStep == 1">
             <ng-template matStepLabel>{{ t('Report Type') }}</ng-template>

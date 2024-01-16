@@ -27,7 +27,6 @@ public class CreateReportCommand : IRequest<(Result, ReportDto?)>
     public bool HumanInfection { get; set; }
     public int? HumansInfected { get; set; }
     public int? HumansExposed { get; set; }
-    public int? HumansMortality { get; set; }
     public bool IsOngoing { get; set; }
     public bool IsVerified { get; set; }
     public ReportType? ReportType { get; set; }

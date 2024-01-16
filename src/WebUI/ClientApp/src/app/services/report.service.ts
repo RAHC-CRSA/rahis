@@ -19,9 +19,12 @@ import {
     IDeleteReportCommand,
     IGetOccurrencesQuery,
     ISendNotificationCommand,
+    IUpdateReportCommand,
     IVerifyReportCommand,
     SendNotificationClient,
     SendNotificationCommand,
+    UpdateReportClient,
+    UpdateReportCommand,
     VerifyReportClient,
     VerifyReportCommand,
 } from '../web-api-client';
@@ -33,6 +36,7 @@ export class ReportService {
     // Clients
     private getOccurrencesClient: GetOccurrencesClient;
     private createReportClient: CreateReportClient;
+    private updateReportClient: UpdateReportClient;
     private getReportsClient: GetReportsClient;
     private getReportClient: GetReportClient;
     private verifyReportClient: VerifyReportClient;
@@ -45,6 +49,7 @@ export class ReportService {
     constructor(http: HttpClient) {
         this.getOccurrencesClient = new GetOccurrencesClient(http);
         this.createReportClient = new CreateReportClient(http);
+        this.updateReportClient = new UpdateReportClient(http);
         this.getReportsClient = new GetReportsClient(http);
         this.getReportClient = new GetReportClient(http);
         this.verifyReportClient = new VerifyReportClient(http);
@@ -63,6 +68,10 @@ export class ReportService {
 
     createReport(payload: ICreateReportCommand) {
         return this.createReportClient.handle(new CreateReportCommand(payload));
+    }
+
+    updateReport(payload: IUpdateReportCommand) {
+        return this.updateReportClient.handle(new UpdateReportCommand(payload));
     }
 
     getAllReports(payload) {

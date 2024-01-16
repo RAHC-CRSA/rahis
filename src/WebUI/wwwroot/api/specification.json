@@ -580,6 +580,57 @@
             ]
           }
         ]
+      },
+      "patch": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Updates a report",
+        "description": "Updates a new report",
+        "operationId": "UpdateReport_Handle",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReportCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Super Admin",
+              " Admin",
+              " Reporter"
+            ]
+          }
+        ]
       }
     },
     "/api/reports/occurrences": {
@@ -3210,11 +3261,6 @@
             "format": "int32",
             "nullable": true
           },
-          "humansMortality": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
           "isOngoing": {
             "type": "boolean"
           },
@@ -3557,6 +3603,137 @@
           "reportId": {
             "type": "integer",
             "format": "int64"
+          }
+        }
+      },
+      "UpdateReportCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "numberExposed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberInfected": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dead": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mortality": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mortalityRate": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "humanInfection": {
+            "type": "boolean"
+          },
+          "humansInfected": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "humansExposed": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isOngoing": {
+            "type": "boolean"
+          },
+          "isVerified": {
+            "type": "boolean"
+          },
+          "reportType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ReportType"
+              }
+            ]
+          },
+          "longitude": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "stampingOut": {
+            "type": "boolean"
+          },
+          "destructionOfCorpses": {
+            "type": "boolean"
+          },
+          "corpsesDestroyed": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "disinfection": {
+            "type": "boolean"
+          },
+          "observation": {
+            "type": "boolean"
+          },
+          "observationDuration": {
+            "type": "string",
+            "nullable": true
+          },
+          "quarantine": {
+            "type": "boolean"
+          },
+          "quarantineDuration": {
+            "type": "string",
+            "nullable": true
+          },
+          "movementControl": {
+            "type": "boolean"
+          },
+          "movementControlMeasures": {
+            "type": "string",
+            "nullable": true
+          },
+          "treatment": {
+            "type": "boolean"
+          },
+          "treatmentDetails": {
+            "type": "string",
+            "nullable": true
+          },
+          "occurenceDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "diagnosticTests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiagnosticTestDto"
+            }
+          },
+          "medications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MedicationDto"
+            }
+          },
+          "vaccinations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VaccinationDto"
+            }
           }
         }
       },

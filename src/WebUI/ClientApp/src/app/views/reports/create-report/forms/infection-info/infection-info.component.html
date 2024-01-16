@@ -51,7 +51,7 @@
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Humans exposed is required', control: infectionInfo.controls['humansExposed']}"></ng-container>
 
-<!-- REMOVE HUMANS INFECTED AND DIED -->
+          <!-- REMOVE HUMANS INFECTED AND DIED -->
           <!-- <mat-form-field class="w-full mb-4">
             <mat-label>{{ t('How many humans were infected') }} ?</mat-label>
             <input type="number" aria-label="{{ t('Humans infected') }}" matInput formControlName="humansInfected"
@@ -71,11 +71,11 @@
         </div>
         <div class="flex justify-between my-4">
           <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
-             {{ t('Back') }}
+            {{ t('Back') }}
           </button>
           <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="infectionInfo.invalid"
             (click)="onSubmit()">
-             {{ t('Next') }}
+            {{ t('Next') }}
           </button>
         </div>
       </div>

@@ -26,6 +26,7 @@ import {
     DataQueryTimeSpan,
     PublicReportDto,
     IGetOccurrencesQuery,
+    IUpdateReportCommand,
 } from '../../../../web-api-client';
 
 // Create report
@@ -66,6 +67,19 @@ export const loadReport = createAction(
 );
 export const loadReportSuccess = createAction(
     LOAD_REPORT_SUCCESS,
+    props<{ payload: ReportDto }>()
+);
+
+// Update report
+export const UPDATE_REPORT = `[Reports] Update Report`;
+export const UPDATE_REPORT_SUCCESS = `[Reports] Update Report Success`;
+
+export const updateReport = createAction(
+    UPDATE_REPORT,
+    props<{ payload: IUpdateReportCommand }>()
+);
+export const updateReportSuccess = createAction(
+    UPDATE_REPORT_SUCCESS,
     props<{ payload: ReportDto }>()
 );
 
