@@ -3024,6 +3024,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "dead": {
+            "type": "integer",
+            "format": "int32"
+          },
           "humanInfection": {
             "type": "boolean"
           },

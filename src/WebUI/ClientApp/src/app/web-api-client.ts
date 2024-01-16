@@ -5180,6 +5180,7 @@ export class ReportDto implements IReportDto {
     infected?: number;
     exposed?: number;
     mortality?: number;
+    dead?: number;
     humanInfection?: boolean;
     humansExposed?: number | undefined;
     isOngoing?: boolean;
@@ -5232,6 +5233,7 @@ export class ReportDto implements IReportDto {
             this.infected = _data["infected"];
             this.exposed = _data["exposed"];
             this.mortality = _data["mortality"];
+            this.dead = _data["dead"];
             this.humanInfection = _data["humanInfection"];
             this.humansExposed = _data["humansExposed"];
             this.isOngoing = _data["isOngoing"];
@@ -5296,6 +5298,7 @@ export class ReportDto implements IReportDto {
         data["infected"] = this.infected;
         data["exposed"] = this.exposed;
         data["mortality"] = this.mortality;
+        data["dead"] = this.dead;
         data["humanInfection"] = this.humanInfection;
         data["humansExposed"] = this.humansExposed;
         data["isOngoing"] = this.isOngoing;
@@ -5353,6 +5356,7 @@ export interface IReportDto {
     infected?: number;
     exposed?: number;
     mortality?: number;
+    dead?: number;
     humanInfection?: boolean;
     humansExposed?: number | undefined;
     isOngoing?: boolean;
