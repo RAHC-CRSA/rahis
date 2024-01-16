@@ -23,6 +23,7 @@ public class ReportDto
     public int Infected { get; set; }
     public int Exposed { get; set; }
     public int Mortality { get; set; }
+    public int Dead { get; set; }
 
     public bool HumanInfection { get; set; }
     public int? HumansExposed { get; set; }

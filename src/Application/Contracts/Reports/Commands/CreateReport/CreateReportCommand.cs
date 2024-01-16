@@ -23,6 +23,7 @@ public class CreateReportCommand : IRequest<(Result, ReportDto?)>
     public int NumberInfected { get; set; }
     public int Dead { get; set; }
     public int Mortality { get; set; }
+    public int Dead { get; set; }
     public int MortalityRate { get; set; }
     public bool HumanInfection { get; set; }
     public int? HumansInfected { get; set; }
@@ -175,7 +176,7 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             if (latestReport != null)
             {
                 // Animal mortality points
-                notifiabilityPoints += request.Mortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
+               // notifiabilityPoints += request.Mortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
             }
 
             // Calculate notifiability points out of 10
