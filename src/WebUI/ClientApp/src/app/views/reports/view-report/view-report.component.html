@@ -339,12 +339,13 @@
 
           <form [formGroup]="verificationForm">
             <div class="mb-8">
-              <mat-form-field class="w-full mt-4" *ngIf="(canVerify)">
+              <mat-form-field class="w-full mt-4" *ngIf="(canVerify && (report$ | async)?.reportStatus == '0')">
                 <mat-label>Comment:</mat-label>
                 <textarea aria-label="Cvo Comment" formControlName="cvoComment" matInput
                   placeholder="Additional comment to for this report"></textarea>
               </mat-form-field>
-              <fuse-alert [type]="'warning'" [appearance]="'outline'" *ngIf="(!canVerify)">
+              <fuse-alert [type]="'warning'" [appearance]="'outline'"
+                *ngIf="((canVerify || canNotify) && (report$ | async)?.cvoComment)">
                 <p><strong>Comment:</strong> <br />
                   {{(report$ | async)?.cvoComment}}</p>
                 <a [routerLink]="['/dashboard/reports/create/', (report$ | async)?.id]"
@@ -368,7 +369,7 @@
             {{ t('Back') }}
           </a>
           <div class="flex justify-between my-4">
-            <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8 mr-2" mat-flat-button
+            <button *ngIf="canVerify && (report$ | async)?.reportStatus == '0'" class="px-8 mr-2" mat-flat-button
               [color]="'warn'" type="button" [disabled]="!canVerify" (click)="reject()">
               <span *ngIf="!( loading$ | async )">
                 {{ t('Reject Report') }}
@@ -376,7 +377,7 @@
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>
             </button>
-            <button *ngIf="canVerify && !( report$ | async)?.isVerified" class="px-8" mat-flat-button
+            <button *ngIf="canVerify && ( report$ | async)?.reportStatus == '0'" class="px-8" mat-flat-button
               [color]="'primary'" type="button" [disabled]="!canVerify" (click)="validate()">
               <span *ngIf="!( loading$ | async )">
                 {{ t('Validate Report') }}

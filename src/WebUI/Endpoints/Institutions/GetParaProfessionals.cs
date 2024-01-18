@@ -14,7 +14,7 @@ namespace WebUI.Endpoints.Institutions;
 
 [OpenApiTag("ParaProfessionals")]
 [Authorize(Roles = $"{SecurityRoles.SuperAdmin}, {SecurityRoles.Admin}, {SecurityRoles.Reporter}", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class GetParaProfessionals : EndpointBaseAsync.WithRequest<long?>.WithActionResult<List<ParaProfessionalDto>>
+public class GetParaProfessionals : EndpointBaseAsync.WithRequest<GetParaProfessionalsQuery>.WithActionResult<List<ParaProfessionalDto>>
 {
     private readonly IMediator _mediator;
 
@@ -31,9 +31,9 @@ public class GetParaProfessionals : EndpointBaseAsync.WithRequest<long?>.WithAct
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(List<ParaProfessionalDto>), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult<List<ParaProfessionalDto>>> HandleAsync(long? institutionId, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<List<ParaProfessionalDto>>> HandleAsync(GetParaProfessionalsQuery request, CancellationToken cancellationToken = default)
     {
-        var (result, data) = await _mediator.Send(new GetParaProfessionalsQuery { InstitutionId = institutionId });
+        var (result, data) = await _mediator.Send(request);
         if (result.Succeeded)
             return Ok(data);
 

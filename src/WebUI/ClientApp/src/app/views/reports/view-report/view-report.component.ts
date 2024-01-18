@@ -121,7 +121,6 @@ export class ViewReportComponent implements OnInit {
         this.report$.subscribe((data) => {
             if (data) {
                 console.log({ data });
-
                 this.cvoComment = data.cvoComment;
                 this.reportInfoData$ = of([
                     {

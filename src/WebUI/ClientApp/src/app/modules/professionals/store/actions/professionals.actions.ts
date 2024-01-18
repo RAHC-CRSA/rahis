@@ -6,6 +6,7 @@ import {
     ServerResponse,
     IDeleteParaProfessionalCommand,
     IUpdateParaProfessionalCommand,
+    IGetParaProfessionalsQuery,
 } from '../../../../web-api-client';
 
 export const featureKey = 'para-rofessionals';
@@ -16,7 +17,7 @@ export const LOAD_PARA_PROFESSIONALS_SUCCESS = `[ParaProfessionals] Load ParaPro
 
 export const loadParaProfessionals = createAction(
     LOAD_PARA_PROFESSIONALS,
-    props<{ payload?: number | undefined }>()
+    props<{ payload: IGetParaProfessionalsQuery }>()
 );
 export const loadParaProfessionalsSuccess = createAction(
     LOAD_PARA_PROFESSIONALS_SUCCESS,

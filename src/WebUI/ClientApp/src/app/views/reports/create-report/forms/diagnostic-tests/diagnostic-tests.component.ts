@@ -95,7 +95,14 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
     }
 
     initData() {
-        this.store.dispatch(loadParaProfessionals({ payload: undefined }));
+        this.store.dispatch(
+            loadParaProfessionals({
+                payload: {
+                    countryId: this.formData.country,
+                    institutionId: undefined,
+                },
+            })
+        );
         this.professionals$ = this.store.select(getParaProfessionals);
         this.professionals$.subscribe((professionals) => {
             this.professionals = [

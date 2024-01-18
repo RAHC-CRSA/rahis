@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,6 +10,7 @@ using RegionalAnimalHealth.Domain.Entities.Personas;
 namespace RegionalAnimalHealth.Application.Contracts.Institutions.Queries.GetInstitutions;
 public class GetInstitutionsQuery : IRequest<(Result, List<InstitutionDto>?)>
 {
+    public long? CountryId { get; set; }
 }
 
 public class GetInstitutionsQueryHandler : IRequestHandler<GetInstitutionsQuery, (Result, List<InstitutionDto>?)>
@@ -33,7 +29,7 @@ public class GetInstitutionsQueryHandler : IRequestHandler<GetInstitutionsQuery,
         try
         {
             var data = await _context.Institutions
-                .Where(x => !x.IsDeleted)
+                .Where(x => !x.IsDeleted && request.CountryId != null ? x.CountryId == request.CountryId : true)
                 .Select(InstitutionSelectorExpression())
                 .ToListAsync();
 

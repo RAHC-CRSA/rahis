@@ -36,6 +36,7 @@ export class CreateReportComponent implements OnInit {
     reportId: number;
     formValues: any;
     updatingReport: boolean;
+    reviewingReport: boolean = false;
     loading$: Observable<boolean>;
     feedback$: Observable<ServerResponse | null | undefined>;
     loaded$: Observable<boolean>;
@@ -138,20 +139,21 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        // if (this.formStep == 5) {
-        //     if (formData.skip) {
-        //         this.formStep++;
-
-        //         this.reportFormStepper.selected.completed = true;
-        //         this.reportFormStepper.next();
-        //         return;
-        //     }
-
-        //     this.formValues = formData;
-        //     this.submit();
-        // }
-
         if (this.formStep == 5) {
+            if (formData.skip) {
+                this.formStep++;
+
+                this.reportFormStepper.selected.completed = true;
+                this.reportFormStepper.next();
+                return;
+            }
+
+            this.formValues = formData;
+            this.reviewingReport = true;
+            // this.submit();
+        }
+
+        if (this.formStep == 6) {
             // Capture form values
             this.formValues.exposed = formData.numberExposed;
             this.formValues.infected = formData.numberInfected;
@@ -170,7 +172,7 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        if (this.formStep == 6) {
+        if (this.formStep == 7) {
             // Capture form values
             this.formValues.stampingOut = formData.stampingOut;
             this.formValues.destructionOfCorpses =
@@ -195,7 +197,7 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        if (this.formStep == 7) {
+        if (this.formStep == 8) {
             this.formValues.diagnosticTests = formData.tests;
 
             this.formStep++;
@@ -205,7 +207,7 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        if (this.formStep == 8) {
+        if (this.formStep == 9) {
             this.formValues.vaccinations = formData.vaccinations;
 
             this.formStep++;
@@ -214,7 +216,7 @@ export class CreateReportComponent implements OnInit {
             return;
         }
 
-        if (this.formStep == 9) {
+        if (this.formStep == 10) {
             this.submit();
         }
     }
@@ -230,8 +232,8 @@ export class CreateReportComponent implements OnInit {
         this.router.navigateByUrl('/dashboard/reports');
     }
 
-    submit() {
-        console.log({ formValues: this.formValues });
+    submit(formData: any = null) {
+        if (formData) this.formValues = formData;
         const medications =
             this.formValues.medications?.map((e) => new MedicationDto(e)) ?? [];
         const vaccinations =
@@ -288,8 +290,6 @@ export class CreateReportComponent implements OnInit {
             vaccinations: vaccinations,
             diagnosticTests: diagnosticTests,
         };
-
-        console.log({ payload });
 
         if (this.reportId) {
             const updatePayload: IUpdateReportCommand = {
