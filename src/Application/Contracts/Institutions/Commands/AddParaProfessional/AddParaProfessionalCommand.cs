@@ -12,7 +12,7 @@ public class AddParaProfessionalCommand : IRequest<(Result, ParaProfessionalDto?
     public string Email { get; set; }
     public string Phone { get; set; }
     public string Position { get; set; }
-    public long? InstitutionId { get; set; }
+    public long InstitutionId { get; set; }
     public long CountryId { get; set; }
 }
 
@@ -31,7 +31,7 @@ public class AddParaProfessionalCommandHandler : IRequestHandler<AddParaProfessi
     {
         try
         {
-            var professional = ParaProfessional.Create(request.Name, request.Email, request.Phone, request.Position, request.CountryId, request.InstitutionId);
+            var professional = ParaProfessional.Create(request.Name, request.Email, request.Phone, request.Position, request.InstitutionId);
             await _context.ParaProfessionals.AddAsync(professional);
             await _context.SaveChangesAsync(cancellationToken);
 

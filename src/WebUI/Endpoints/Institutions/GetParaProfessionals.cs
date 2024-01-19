@@ -31,7 +31,7 @@ public class GetParaProfessionals : EndpointBaseAsync.WithRequest<GetParaProfess
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(List<ParaProfessionalDto>), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    public override async Task<ActionResult<List<ParaProfessionalDto>>> HandleAsync(GetParaProfessionalsQuery request, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<List<ParaProfessionalDto>>> HandleAsync([FromQuery] GetParaProfessionalsQuery request, CancellationToken cancellationToken = default)
     {
         var (result, data) = await _mediator.Send(request);
         if (result.Succeeded)

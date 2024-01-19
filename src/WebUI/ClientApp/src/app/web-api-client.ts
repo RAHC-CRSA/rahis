@@ -3623,8 +3623,10 @@ export class DeleteParaProfessionalClient implements IDeleteParaProfessionalClie
 export interface IGetParaProfessionalsClient {
     /**
      * Gets the list of para-professionals
+     * @param institutionId (optional) 
+     * @param countryId (optional) 
      */
-    handle(request: GetParaProfessionalsQuery): Observable<ParaProfessionalDto[]>;
+    handle(institutionId: number | null | undefined, countryId: number | null | undefined): Observable<ParaProfessionalDto[]>;
 }
 
 @Injectable({
@@ -3642,19 +3644,21 @@ export class GetParaProfessionalsClient implements IGetParaProfessionalsClient {
 
     /**
      * Gets the list of para-professionals
+     * @param institutionId (optional) 
+     * @param countryId (optional) 
      */
-    handle(request: GetParaProfessionalsQuery): Observable<ParaProfessionalDto[]> {
-        let url_ = this.baseUrl + "/api/para-professionals";
+    handle(institutionId: number | null | undefined, countryId: number | null | undefined): Observable<ParaProfessionalDto[]> {
+        let url_ = this.baseUrl + "/api/para-professionals?";
+        if (institutionId !== undefined && institutionId !== null)
+            url_ += "InstitutionId=" + encodeURIComponent("" + institutionId) + "&";
+        if (countryId !== undefined && countryId !== null)
+            url_ += "CountryId=" + encodeURIComponent("" + countryId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(request);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
@@ -7330,7 +7334,7 @@ export class AddParaProfessionalCommand implements IAddParaProfessionalCommand {
     email?: string;
     phone?: string;
     position?: string;
-    institutionId?: number | undefined;
+    institutionId?: number;
     countryId?: number;
 
     constructor(data?: IAddParaProfessionalCommand) {
@@ -7377,7 +7381,7 @@ export interface IAddParaProfessionalCommand {
     email?: string;
     phone?: string;
     position?: string;
-    institutionId?: number | undefined;
+    institutionId?: number;
     countryId?: number;
 }
 
@@ -7451,46 +7455,6 @@ export class DeleteParaProfessionalCommand implements IDeleteParaProfessionalCom
 
 export interface IDeleteParaProfessionalCommand {
     id?: number;
-}
-
-export class GetParaProfessionalsQuery implements IGetParaProfessionalsQuery {
-    institutionId?: number | undefined;
-    countryId?: number | undefined;
-
-    constructor(data?: IGetParaProfessionalsQuery) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.institutionId = _data["institutionId"];
-            this.countryId = _data["countryId"];
-        }
-    }
-
-    static fromJS(data: any): GetParaProfessionalsQuery {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetParaProfessionalsQuery();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["institutionId"] = this.institutionId;
-        data["countryId"] = this.countryId;
-        return data;
-    }
-}
-
-export interface IGetParaProfessionalsQuery {
-    institutionId?: number | undefined;
-    countryId?: number | undefined;
 }
 
 export class UpdateInstitutionCommand implements IUpdateInstitutionCommand {

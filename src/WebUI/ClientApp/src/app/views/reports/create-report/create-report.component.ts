@@ -83,7 +83,7 @@ export class CreateReportComponent implements OnInit {
     }
 
     next(formData: any) {
-        if (this.formStep == 10) return;
+        if (this.formStep == 11) return;
 
         if (this.formStep == 1) {
             this.formValues.reportType = formData.reportType;
@@ -267,6 +267,7 @@ export class CreateReportComponent implements OnInit {
                 : undefined,
             numberExposed: this.formValues.exposed ?? 0,
             numberInfected: this.formValues.infected ?? 0,
+            dead: this.formValues.dead ?? 0,
             mortality:
                 this.formValues.mortality >= 0 ? this.formValues.mortality : 0,
             humanInfection: this.formValues.humanInfection,
@@ -350,6 +351,7 @@ export class CreateReportComponent implements OnInit {
             occurrence: data.occurrenceId,
             exposed: data.exposed,
             infected: data.infected,
+            dead: data.dead,
             mortality: data.mortality,
             humanInfection: data.humanInfection,
             humansExposed: data.humansExposed,
