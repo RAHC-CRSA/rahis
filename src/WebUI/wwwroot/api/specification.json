@@ -2193,18 +2193,28 @@
         "summary": "Gets the list of para-professionals",
         "description": "Gets the list of para-professionals in the system",
         "operationId": "GetParaProfessionals_Handle",
-        "requestBody": {
-          "x-name": "request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetParaProfessionalsQuery"
-              }
-            }
+        "parameters": [
+          {
+            "name": "InstitutionId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 1
           },
-          "required": true,
-          "x-position": 1
-        },
+          {
+            "name": "CountryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -4146,8 +4156,7 @@
           },
           "institutionId": {
             "type": "integer",
-            "format": "int64",
-            "nullable": true
+            "format": "int64"
           },
           "countryId": {
             "type": "integer",
@@ -4172,22 +4181,6 @@
           "id": {
             "type": "integer",
             "format": "int64"
-          }
-        }
-      },
-      "GetParaProfessionalsQuery": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "institutionId": {
-            "type": "integer",
-            "format": "int64",
-            "nullable": true
-          },
-          "countryId": {
-            "type": "integer",
-            "format": "int64",
-            "nullable": true
           }
         }
       },

@@ -10,12 +10,10 @@ import {
     DeleteParaProfessionalCommand,
     GetInstitutionsClient,
     GetParaProfessionalsClient,
-    GetParaProfessionalsQuery,
     IAddInstitutionCommand,
     IAddParaProfessionalCommand,
     IDeleteInstitutionCommand,
     IDeleteParaProfessionalCommand,
-    IGetParaProfessionalsQuery,
     IUpdateInstitutionCommand,
     IUpdateParaProfessionalCommand,
     InstitutionDto,
@@ -27,6 +25,7 @@ import {
 } from '../web-api-client';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GetParaProfessionalsQuery } from 'app/models';
 
 @Injectable({
     providedIn: 'root',
@@ -57,10 +56,11 @@ export class InstitutionService {
         this.deleteInstitutionClient = new DeleteInstitutionClient(http);
     }
 
-    getAllParaProfessionals(payload: IGetParaProfessionalsQuery) {
-        console.log({ payload });
-        const request = new GetParaProfessionalsQuery(payload);
-        return this.getParaProfessionalsClient.handle(request);
+    getAllParaProfessionals(payload: GetParaProfessionalsQuery) {
+        return this.getParaProfessionalsClient.handle(
+            payload?.institutionId,
+            payload?.countryId
+        );
     }
 
     addParaProfessional(

@@ -18,7 +18,7 @@ public class AddParaProfessionalCommandValidator : AbstractValidator<AddParaProf
         RuleFor(x => x.Position)
             .NotEmpty().WithMessage("Position is required.");
 
-        RuleFor(x => x.CountryId)
-            .NotEmpty().WithMessage("Country id is required.");
+        RuleFor(x => x.InstitutionId)
+            .NotEmpty().WithMessage("Institution id is required.");
     }
 }

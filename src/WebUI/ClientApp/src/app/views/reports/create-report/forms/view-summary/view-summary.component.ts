@@ -44,9 +44,9 @@ export class ViewSummaryComponent implements OnInit {
     @Output() previous = new EventEmitter();
     @Output() submit = new EventEmitter();
 
-    @Input()loading: boolean;
+    @Input() loading: boolean;
     // and here you convert the input to an observable one
-    loading$ = observeProperty$(this, "loading");
+    loading$ = observeProperty$(this, 'loading');
 
     diagnosticTestColumns: string[] = [
         'id',
@@ -102,28 +102,24 @@ export class ViewSummaryComponent implements OnInit {
         const data = this.formData;
 
         if (data) {
-            this.reportInfoData=
-                {
-                    animalsExposed: data.exposed ?? 0,
-                    animalsInfected: data.infected ?? 0,
-                    animalsDead: data.dead ?? 0,
-                    animalsMortality: data.mortality ?? 0,
-                    humansExposed: data.humansExposed ?? 0,
-                };
+            this.reportInfoData = {
+                animalsExposed: data.exposed ?? 0,
+                animalsInfected: data.infected ?? 0,
+                animalsDead: data.dead ?? 0,
+                animalsMortality: data.mortality ?? 0,
+                humansExposed: data.humansExposed ?? 0,
+            };
 
-            this.actionsInfoData =
-                {
-                    stampingOut: data.stampingOut,
-                    destructionOfCorpses: data.destructionOfCorpses,
-                    disinfection: data.disinfection,
-                    quarantine: data.quarantine,
-                    movementControl: data.movementControl,
-                    observation: data.observation,
-                };
+            this.actionsInfoData = {
+                stampingOut: data.stampingOut,
+                destructionOfCorpses: data.destructionOfCorpses,
+                disinfection: data.disinfection,
+                quarantine: data.quarantine,
+                movementControl: data.movementControl,
+                observation: data.observation,
+            };
         }
-
     }
-
 
     displayProfessionalFn(professional: ParaProfessionalDto): string {
         return professional ? professional.name : '';
