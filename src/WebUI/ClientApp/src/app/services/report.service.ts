@@ -8,6 +8,7 @@ import {
     DeleteOccurrenceCommand,
     DeleteReportClient,
     DeleteReportCommand,
+    GetControlMeasuresClient,
     GetOccurrencesClient,
     GetOccurrencesQuery,
     GetPublicReportsClient,
@@ -45,6 +46,7 @@ export class ReportService {
     private sendNotificationClient: SendNotificationClient;
     private getReportsAnalyticsClient: GetReportsAnalyticsClient;
     private getPublicReportsClient: GetPublicReportsClient;
+    private getControlMeasuresClient: GetControlMeasuresClient;
 
     constructor(http: HttpClient) {
         this.getOccurrencesClient = new GetOccurrencesClient(http);
@@ -58,6 +60,7 @@ export class ReportService {
         this.sendNotificationClient = new SendNotificationClient(http);
         this.getReportsAnalyticsClient = new GetReportsAnalyticsClient(http);
         this.getPublicReportsClient = new GetPublicReportsClient(http);
+        this.getControlMeasuresClient = new GetControlMeasuresClient(http);
     }
 
     getAllOccurrences(payload: IGetOccurrencesQuery) {
@@ -112,5 +115,9 @@ export class ReportService {
 
     getPublicReports() {
         return this.getPublicReportsClient.handle();
+    }
+
+    getControlMeasures() {
+        return this.getControlMeasuresClient.handle();
     }
 }

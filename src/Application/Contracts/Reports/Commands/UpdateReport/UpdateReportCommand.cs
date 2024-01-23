@@ -25,6 +25,7 @@ public class UpdateReportCommand : IRequest<(Result, ReportDto?)>
     public ReportType? ReportType { get; set; }
     public decimal? Longitude { get; set; }
     public decimal? Latitude { get; set; }
+    public string? ControlMeasuresCode { get; set; }
     public bool StampingOut { get; set; }
     public bool DestructionOfCorpses { get; set; }
     public int? CorpsesDestroyed { get; set; }
@@ -72,6 +73,18 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (
 
             // Get latest report if any
             Report? latestReport = await _context.Reports.Where(x => !x.IsDeleted && x.OccurrenceId == report.OccurrenceId).OrderByDescending(r => r.Created).FirstOrDefaultAsync();
+
+            // Update control measures
+            ControlMeasure? controlMeasures = null;
+            if (request.ControlMeasuresCode != null)
+            {
+                controlMeasures = await _context.ControlMeasures.Where(x => !x.IsDeleted & x.Code == request.ControlMeasuresCode).FirstOrDefaultAsync();
+
+                if (controlMeasures != null)
+                {
+                    report.UpdateControlMeasures(controlMeasures.Id);
+                }
+            }
 
             // Get transboundary disease if any
             TransboundaryDisease? transboundaryDisease = await _context.TransboundaryDiseases
@@ -181,6 +194,8 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (
                 Quarantine = report.Quarantine,
                 MovementControl = report.MovementControl,
                 Treatment = report.Treatment,
+                ControlMeasuresCode = controlMeasures?.Code,
+                ControlMeasuresId = controlMeasures?.Id,
             };
 
             return (Result.Success(), data);

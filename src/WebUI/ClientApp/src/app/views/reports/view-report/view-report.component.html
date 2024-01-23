@@ -345,7 +345,7 @@
                   placeholder="Additional comment to for this report"></textarea>
               </mat-form-field>
               <fuse-alert [type]="'warning'" [appearance]="'outline'"
-                *ngIf="((canVerify || canNotify) && (report$ | async)?.cvoComment)">
+                *ngIf="((canVerify || canNotify || canEdit) && (report$ | async)?.cvoComment)">
                 <p><strong>Comment:</strong> <br />
                   {{(report$ | async)?.cvoComment}}</p>
                 <a [routerLink]="['/dashboard/reports/create/', (report$ | async)?.id]"

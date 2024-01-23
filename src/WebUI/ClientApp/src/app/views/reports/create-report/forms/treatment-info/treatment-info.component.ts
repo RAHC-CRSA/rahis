@@ -7,8 +7,22 @@ import {
     OnInit,
     Output,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
+import { Store } from '@ngrx/store';
+import { ReportState } from 'app/modules/reports/store';
+import { loadControlMeasures } from 'app/modules/reports/store/actions';
+import {
+    getControlMeasures,
+    getReportsLoaded,
+} from 'app/modules/reports/store/selectors';
+import { ControlMeasureDto } from 'app/web-api-client';
+import { Observable, map, startWith } from 'rxjs';
 
 @Component({
     selector: 'app-treatment-info',
@@ -24,26 +38,17 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
     administeredMeds: boolean;
     controlMeasure: string;
 
+    controlMeasuresControl = new FormControl();
+    selectedControlMeasure: ControlMeasureDto;
+    loaded$: Observable<boolean>;
+
+    controlMeasures$: Observable<ControlMeasureDto[] | null | undefined>;
+    controlMeasures: ControlMeasureDto[];
+    filteredControlMeasures: Observable<ControlMeasureDto[]>;
+
     displayedColumns: string[] = ['name', 'dosage', 'actions'];
 
     durations: string[] = ['hours', 'days', 'weeks', 'months'];
-    controlMeasures: string[] =
-    [
-        'Sanitary slaughter',
-        'Official destruction of carcasses, by-products and waste',
-        'Disinfection',
-        'Process for inactivating the pathogen in products or by-products',
-        'Movement restrictions',
-        'Surveillance inside the restriction zone',
-        'Surveillance outside the restriction zone',
-        'Official destruction of animal products',
-        'Official vaccination',
-        'Pre and post-mortem inspection',
-        'Selective slaughter and disposal',
-        'Border control',
-        'Zoning',
-        'Compartmentalization',
-    ];
 
     @Input() formData: any;
 
@@ -54,6 +59,7 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
 
     constructor(
         private formBuilder: FormBuilder,
+        private store: Store<ReportState>,
         private changeDetector: ChangeDetectorRef
     ) {}
 
@@ -65,6 +71,7 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
         this.administeredMeds = this.formData.treatment;
 
         this.initForm();
+        this.initData();
 
         this.initConditionalValidation();
     }
@@ -78,13 +85,13 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             stampingOut: [this.formData.stampingOut, Validators.required],
             destructionOfCorpses: [
                 this.formData.destructionOfCorpses,
-              //  Validators.required,
+                //  Validators.required,
             ],
             corpsesDestroyed: [this.formData.corpsesDestroyed],
             disinfection: [this.formData.disinfection, Validators.required],
             observation: [
                 this.formData.observation,
-             //   Validators.required
+                //   Validators.required
             ],
             observationDuration: [this.formData.observationDuration],
             observationDurationSuffix: [
@@ -95,19 +102,53 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             quarantineDurationSuffix: [this.formData.quarantineDurationSuffix],
             movementControl: [
                 this.formData.movementControl,
-              //  Validators.required,
+                //  Validators.required,
             ],
             movementControlMeasures: [this.formData.movementControlMeasures],
-            treatment: [
-                this.formData.treatment,
-                Validators.required
-            ],
+            controlMeasuresCode: [this.formData.controlMeasuresCode],
+            treatment: [this.formData.treatment, Validators.required],
             treatmentDetails: [this.formData.treatmentDetails],
             medications: [
                 this.formData.medications?.length
                     ? this.formData.medications
                     : [],
             ],
+        });
+    }
+
+    initData() {
+        this.store.dispatch(loadControlMeasures());
+        this.controlMeasures$ = this.store.select(getControlMeasures);
+        this.loaded$ = this.store.select(getReportsLoaded);
+
+        this.controlMeasures$.subscribe((controlMeasures) => {
+            this.controlMeasures = controlMeasures;
+
+            this.filteredControlMeasures =
+                this.controlMeasuresControl.valueChanges.pipe(
+                    startWith({} as ControlMeasureDto),
+                    map((controlMeasure) =>
+                        controlMeasure && typeof controlMeasure === 'object'
+                            ? controlMeasure.name
+                            : controlMeasure
+                    ),
+                    map((name: string) =>
+                        name
+                            ? this._filterControlMeasures(name)
+                            : this.controlMeasures.slice()
+                    )
+                );
+            if (
+                this.formData.controlMeasuresCode &&
+                this.formData.controlMeasuresCode >= 0
+            ) {
+                this.selectedControlMeasure =
+                    this.controlMeasures[
+                        !this.formData.controlMeasuresCode
+                            ? this.formData.controlMeasuresCode
+                            : ''
+                    ];
+            }
         });
     }
 
@@ -200,6 +241,31 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
         });
     }
 
+    private _filterControlMeasures(name: string): ControlMeasureDto[] {
+        return this.controlMeasures.filter(
+            (option) =>
+                option.name.toLowerCase().indexOf(name.toLowerCase()) === 0
+        );
+    }
+
+    displayControlMeasureFn(controlMeasure: ControlMeasureDto): string {
+        return controlMeasure
+            ? `${controlMeasure.code} | ${controlMeasure.name}`
+            : '';
+    }
+
+    updateSelectedControlMeasure(event: any) {
+        this.selectedControlMeasure = event.option.value;
+        this.updateControlMeasure(this.selectedControlMeasure);
+
+        this.treatmentInfo.patchValue(
+            {
+                controlMeasuresCode: this.selectedControlMeasure.code,
+            },
+            { emitEvent: true }
+        );
+    }
+
     get f() {
         return this.treatmentInfo.controls;
     }
@@ -245,30 +311,46 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                 },
                 { emitEvent: true }
             );
+        console.log({ treatmentInfo: this.treatmentInfo.value });
         this.submit.emit(this.treatmentInfo.value);
     }
 
-    updateControlMeasure(event: any) {
-        this.controlMeasure = event.option.value;
-        const controlMeasure: string = event.option.value;
-        console.log({controlMeasure})
-        if(controlMeasure === this.controlMeasures[1]){
+    updateControlMeasure(controlMeasure: ControlMeasureDto) {
+        if (controlMeasure.code === 'CM002') {
             this.corpseDestruction = true;
-            this.treatmentInfo.get('destructionOfCorpses').setValue(true);
+            this.treatmentInfo.patchValue(
+                { destructionOfCorpses: true },
+                { emitEvent: true }
+            );
         }
 
-        if(controlMeasure === this.controlMeasures[2]){
-            this.treatmentInfo.get('disinfection').setValue(true);
+        if (controlMeasure.code === 'CM003') {
+            this.treatmentInfo.patchValue(
+                { disinfection: true },
+                { emitEvent: true }
+            );
         }
 
-        if(controlMeasure === this.controlMeasures[4] || controlMeasure === this.controlMeasures[11]){
+        if (
+            controlMeasure.code === 'CM005' ||
+            controlMeasure.code === 'CM012'
+        ) {
             this.movementControlled = true;
-            this.treatmentInfo.get('movementControl').setValue(true);
+            this.treatmentInfo.patchValue(
+                { movementControl: true },
+                { emitEvent: true }
+            );
         }
 
-        if(controlMeasure === this.controlMeasures[5] || controlMeasure === this.controlMeasures[6] ){
+        if (
+            controlMeasure.code === 'CM006' ||
+            controlMeasure.code === 'CM007'
+        ) {
             this.wasObservation = true;
-            this.treatmentInfo.get('observation').setValue(true);
+            this.treatmentInfo.patchValue(
+                { observation: true },
+                { emitEvent: true }
+            );
         }
 
         // if(controlMeasure == this.controlMeasures[5] || controlMeasure == this.controlMeasures[6] ){
@@ -279,6 +361,5 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
         // this.wasQuarantined = this.formData.quarantine;
         // this.movementControlled = this.formData.movementControl;
         // this.administeredMeds = this.formData.treatment;
-
     }
 }

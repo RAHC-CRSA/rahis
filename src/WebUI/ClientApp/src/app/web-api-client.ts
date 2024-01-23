@@ -1224,6 +1224,100 @@ export class GetOccurrencesClient implements IGetOccurrencesClient {
     }
 }
 
+export interface IGetControlMeasuresClient {
+    /**
+     * Gets the list of control measures
+     */
+    handle(): Observable<ControlMeasureDto[]>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class GetControlMeasuresClient implements IGetControlMeasuresClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * Gets the list of control measures
+     */
+    handle(): Observable<ControlMeasureDto[]> {
+        let url_ = this.baseUrl + "/api/control-measures";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processHandle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processHandle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ControlMeasureDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ControlMeasureDto[]>;
+        }));
+    }
+
+    protected processHandle(response: HttpResponseBase): Observable<ControlMeasureDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ControlMeasureDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result400 = resultData400 !== undefined ? resultData400 : <any>null;
+    
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IGetPublicReportsClient {
     /**
      * Gets monthly reports
@@ -5191,6 +5285,8 @@ export class ReportDto implements IReportDto {
     dead?: number;
     humanInfection?: boolean;
     humansExposed?: number | undefined;
+    controlMeasuresCode?: string | undefined;
+    controlMeasuresId?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
     reportStatus?: ReportStatus | undefined;
@@ -5244,6 +5340,8 @@ export class ReportDto implements IReportDto {
             this.dead = _data["dead"];
             this.humanInfection = _data["humanInfection"];
             this.humansExposed = _data["humansExposed"];
+            this.controlMeasuresCode = _data["controlMeasuresCode"];
+            this.controlMeasuresId = _data["controlMeasuresId"];
             this.isOngoing = _data["isOngoing"];
             this.isVerified = _data["isVerified"];
             this.reportStatus = _data["reportStatus"];
@@ -5309,6 +5407,8 @@ export class ReportDto implements IReportDto {
         data["dead"] = this.dead;
         data["humanInfection"] = this.humanInfection;
         data["humansExposed"] = this.humansExposed;
+        data["controlMeasuresCode"] = this.controlMeasuresCode;
+        data["controlMeasuresId"] = this.controlMeasuresId;
         data["isOngoing"] = this.isOngoing;
         data["isVerified"] = this.isVerified;
         data["reportStatus"] = this.reportStatus;
@@ -5367,6 +5467,8 @@ export interface IReportDto {
     dead?: number;
     humanInfection?: boolean;
     humansExposed?: number | undefined;
+    controlMeasuresCode?: string | undefined;
+    controlMeasuresId?: number | undefined;
     isOngoing?: boolean;
     isVerified?: boolean;
     reportStatus?: ReportStatus | undefined;
@@ -5530,6 +5632,7 @@ export class CreateReportCommand implements ICreateReportCommand {
     reportType?: ReportType | undefined;
     longitude?: number | undefined;
     latitude?: number | undefined;
+    controlMeasuresCode?: string | undefined;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
     corpsesDestroyed?: number | undefined;
@@ -5579,6 +5682,7 @@ export class CreateReportCommand implements ICreateReportCommand {
             this.reportType = _data["reportType"];
             this.longitude = _data["longitude"];
             this.latitude = _data["latitude"];
+            this.controlMeasuresCode = _data["controlMeasuresCode"];
             this.stampingOut = _data["stampingOut"];
             this.destructionOfCorpses = _data["destructionOfCorpses"];
             this.corpsesDestroyed = _data["corpsesDestroyed"];
@@ -5640,6 +5744,7 @@ export class CreateReportCommand implements ICreateReportCommand {
         data["reportType"] = this.reportType;
         data["longitude"] = this.longitude;
         data["latitude"] = this.latitude;
+        data["controlMeasuresCode"] = this.controlMeasuresCode;
         data["stampingOut"] = this.stampingOut;
         data["destructionOfCorpses"] = this.destructionOfCorpses;
         data["corpsesDestroyed"] = this.corpsesDestroyed;
@@ -5694,6 +5799,7 @@ export interface ICreateReportCommand {
     reportType?: ReportType | undefined;
     longitude?: number | undefined;
     latitude?: number | undefined;
+    controlMeasuresCode?: string | undefined;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
     corpsesDestroyed?: number | undefined;
@@ -5787,6 +5893,50 @@ export class DeleteReportCommand implements IDeleteReportCommand {
 
 export interface IDeleteReportCommand {
     id?: number;
+}
+
+export class ControlMeasureDto implements IControlMeasureDto {
+    id?: number;
+    name?: string;
+    code?: string;
+
+    constructor(data?: IControlMeasureDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.code = _data["code"];
+        }
+    }
+
+    static fromJS(data: any): ControlMeasureDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ControlMeasureDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["code"] = this.code;
+        return data;
+    }
+}
+
+export interface IControlMeasureDto {
+    id?: number;
+    name?: string;
+    code?: string;
 }
 
 export class OccurrenceDto implements IOccurrenceDto {
@@ -6204,6 +6354,7 @@ export class UpdateReportCommand implements IUpdateReportCommand {
     reportType?: ReportType | undefined;
     longitude?: number | undefined;
     latitude?: number | undefined;
+    controlMeasuresCode?: string | undefined;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
     corpsesDestroyed?: number | undefined;
@@ -6246,6 +6397,7 @@ export class UpdateReportCommand implements IUpdateReportCommand {
             this.reportType = _data["reportType"];
             this.longitude = _data["longitude"];
             this.latitude = _data["latitude"];
+            this.controlMeasuresCode = _data["controlMeasuresCode"];
             this.stampingOut = _data["stampingOut"];
             this.destructionOfCorpses = _data["destructionOfCorpses"];
             this.corpsesDestroyed = _data["corpsesDestroyed"];
@@ -6300,6 +6452,7 @@ export class UpdateReportCommand implements IUpdateReportCommand {
         data["reportType"] = this.reportType;
         data["longitude"] = this.longitude;
         data["latitude"] = this.latitude;
+        data["controlMeasuresCode"] = this.controlMeasuresCode;
         data["stampingOut"] = this.stampingOut;
         data["destructionOfCorpses"] = this.destructionOfCorpses;
         data["corpsesDestroyed"] = this.corpsesDestroyed;
@@ -6347,6 +6500,7 @@ export interface IUpdateReportCommand {
     reportType?: ReportType | undefined;
     longitude?: number | undefined;
     latitude?: number | undefined;
+    controlMeasuresCode?: string | undefined;
     stampingOut?: boolean;
     destructionOfCorpses?: boolean;
     corpsesDestroyed?: number | undefined;

@@ -12,7 +12,8 @@ export const getReports = createSelector(
 
 export const getRejectedReports = createSelector(
     reportState,
-    (state: ReportState) => state.data.filter((e) => e.reportStatus === ReportStatus.Rejected)
+    (state: ReportState) =>
+        state.data.filter((e) => e.reportStatus === ReportStatus.Rejected)
 );
 
 export const getUnverifiedReports = createSelector(
@@ -78,6 +79,11 @@ export const getDiseases = createSelector(
 export const getSpecies = createSelector(
     reportState,
     (state: ReportState) => state.species
+);
+
+export const getControlMeasures = createSelector(
+    reportState,
+    (state: ReportState) => state.controlMeasures
 );
 
 export const getPublicReports = createSelector(

@@ -32,6 +32,7 @@ public class CreateReportCommand : IRequest<(Result, ReportDto?)>
     public ReportType? ReportType { get; set; }
     public decimal? Longitude { get; set; }
     public decimal? Latitude { get; set; }
+    public string? ControlMeasuresCode { get; set; }
     public bool StampingOut { get; set; }
     public bool DestructionOfCorpses { get; set; }
     public int? CorpsesDestroyed { get; set; }
@@ -114,6 +115,7 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             // TODO: Get occurrence date from request
 
             // Create report
+            ControlMeasure? controlMeasures = null;
             var report = Report.Create(occurrence.Id, request.DiseaseId, request.SpeciesId, DateOnly.FromDateTime(DateTime.UtcNow));
 
             // Update infection info
@@ -125,6 +127,16 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
                 request.Observation, request.ObservationDuration, request.Quarantine, request.QuarantineDuration, request.MovementControl,
                 request.MovementControlMeasures, request.Treatment, request.TreatmentDetails);
 
+            // Update control measures
+            if (request.ControlMeasuresCode != null)
+            {
+                controlMeasures = await _context.ControlMeasures.Where(x => !x.IsDeleted & x.Code == request.ControlMeasuresCode).FirstOrDefaultAsync();
+
+                if (controlMeasures != null)
+                {
+                    report.UpdateControlMeasures(controlMeasures.Id);
+                }
+            }
 
             // TODO: Add treatments, tests and vaccinations
             if (request.Treatment)
@@ -218,6 +230,8 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
                 Quarantine = report.Quarantine,
                 MovementControl = report.MovementControl,
                 Treatment = report.Treatment,
+                ControlMeasuresCode = controlMeasures?.Code,
+                ControlMeasuresId = controlMeasures?.Id,
             };
 
             return (Result.Success(), data);
