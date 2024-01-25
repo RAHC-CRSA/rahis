@@ -377,6 +377,29 @@ export class ReportsEffects {
         )
     );
 
+    loadControlMeasures$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReportsActions.loadControlMeasures),
+            exhaustMap((action) =>
+                this.reportsService.getControlMeasures().pipe(
+                    map((data) =>
+                        ReportsActions.loadControlMeasuresSuccess({
+                            payload: data,
+                        })
+                    ),
+                    catchError((error) =>
+                        of(
+                            ReportsActions.setFeedback({
+                                payload:
+                                    this.feedbackService.processResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     addParaProfessional$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ReportsActions.addParaProfessional),

@@ -27,6 +27,7 @@ import {
     PublicReportDto,
     IGetOccurrencesQuery,
     IUpdateReportCommand,
+    ControlMeasureDto,
 } from '../../../../web-api-client';
 import { GetParaProfessionalsQuery } from 'app/models';
 
@@ -235,6 +236,16 @@ export const loadDiseases = createAction(LOAD_DISEASES);
 export const loadDiseasesSuccess = createAction(
     LOAD_DISEASES_SUCCESS,
     props<{ payload: DiseaseDto[] }>()
+);
+
+// Load control measures
+export const LOAD_CONTROL_MEASURES = `[Reports] Load Control Measures`;
+export const LOAD_CONTROL_MEASURES_SUCCESS = `[Reports] Load Control Measures Success`;
+
+export const loadControlMeasures = createAction(LOAD_CONTROL_MEASURES);
+export const loadControlMeasuresSuccess = createAction(
+    LOAD_CONTROL_MEASURES_SUCCESS,
+    props<{ payload: ControlMeasureDto[] }>()
 );
 
 // Add disease

@@ -33,6 +33,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     }
 
     public DbSet<Community> Communities => Set<Community>();
+    public DbSet<ControlMeasure> ControlMeasures => Set<ControlMeasure>();
     public DbSet<Country> Countries => Set<Country>();
     public DbSet<District> Districts => Set<District>();
     public DbSet<DiagnosticTest> DiagnosticTests => Set<DiagnosticTest>();

@@ -42,6 +42,7 @@ export class ExcelImportComponent {
             'Movement Control Measures',
             'Treatment',
             'Treatment Details',
+            'Control Measures Code',
         ]; //
         const sheetName = 'Reports';
 
@@ -117,6 +118,7 @@ export class ExcelImportComponent {
                         movementControlMeasures: '',
                         treatment: false,
                         treatmentDetails: '',
+                        controlMeasuresCode: '',
                     };
 
                     Object.keys(formData).forEach((property, index) => {

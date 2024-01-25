@@ -38,6 +38,8 @@ public class Report : BaseAuditableEntity<long>
     public Disease Disease { get; private set; }
     public long SpeciesId { get; private set; }
     public Species Species { get; private set; }
+    public long? ControlMeasureId { get; private set; }
+    public ControlMeasure ControlMeasure { get; private set; }
 
     public int NotifiabilityPoints { get; private set; }
 
@@ -194,5 +196,12 @@ public class Report : BaseAuditableEntity<long>
     {
         ReportStatus = ReportStatus.Pending;
         CvoComment = null;
+    }
+
+    public void UpdateControlMeasures(long id)
+    {
+        Guard.IsNotNull(id, nameof(id));
+
+        ControlMeasureId = id;
     }
 }

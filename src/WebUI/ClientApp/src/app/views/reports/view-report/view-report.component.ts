@@ -106,10 +106,10 @@ export class ViewReportComponent implements OnInit {
         this.store.dispatch(loadReport({ payload: this.reportId }));
         this.authStore.select(getRoles).subscribe((roles) => {
             if (roles) {
-                this.canNotify = roles.includes('Chief Veterinary Officer');
-                this.canVerify = roles.includes(
+                this.canNotify = roles.includes(
                     'Regional Animal Health Officer'
                 );
+                this.canVerify = roles.includes('Chief Veterinary Officer');
                 this.canEdit = roles.includes('Reporter');
             }
         });

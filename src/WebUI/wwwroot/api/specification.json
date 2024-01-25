@@ -742,6 +742,56 @@
         ]
       }
     },
+    "/api/control-measures": {
+      "get": {
+        "tags": [
+          "Control Measures"
+        ],
+        "summary": "Gets the list of control measures",
+        "description": "Gets the list of control measures in the system",
+        "operationId": "GetControlMeasures_Handle",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ControlMeasureDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
     "/api/reports/public": {
       "get": {
         "tags": [
@@ -950,7 +1000,7 @@
         "security": [
           {
             "JWT": [
-              "Chief Veterinary Officer"
+              "Regional Animal Health Officer"
             ]
           }
         ]
@@ -992,7 +1042,7 @@
         "security": [
           {
             "JWT": [
-              "Regional Animal Health Officer"
+              "Chief Veterinary Officer"
             ]
           }
         ]
@@ -3058,6 +3108,15 @@
             "format": "int32",
             "nullable": true
           },
+          "controlMeasuresCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "controlMeasuresId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
           "isOngoing": {
             "type": "boolean"
           },
@@ -3311,6 +3370,10 @@
             "format": "decimal",
             "nullable": true
           },
+          "controlMeasuresCode": {
+            "type": "string",
+            "nullable": true
+          },
           "stampingOut": {
             "type": "boolean"
           },
@@ -3406,6 +3469,22 @@
           "id": {
             "type": "integer",
             "format": "int64"
+          }
+        }
+      },
+      "ControlMeasureDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
           }
         }
       },
@@ -3695,6 +3774,10 @@
           "latitude": {
             "type": "number",
             "format": "decimal",
+            "nullable": true
+          },
+          "controlMeasuresCode": {
+            "type": "string",
             "nullable": true
           },
           "stampingOut": {
@@ -4438,6 +4521,9 @@
     },
     {
       "name": "Reports"
+    },
+    {
+      "name": "Control Measures"
     },
     {
       "name": "Communities"

@@ -8,6 +8,7 @@ namespace RegionalAnimalHealth.Application.Common.Interfaces;
 public interface IApplicationDbContext
 {
     DbSet<Community> Communities { get; }
+    DbSet<ControlMeasure> ControlMeasures { get; }
     DbSet<Country> Countries { get; }
     DbSet<District> Districts { get; }
     DbSet<DiagnosticTest> DiagnosticTests { get; }

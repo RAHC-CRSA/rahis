@@ -1,15 +1,17 @@
 <form [formGroup]="treatmentInfo" class="p-2 md:p-6" *transloco="let t">
 
-    <div class="w-full mb-4">
-        <mat-label>{{ t('What control measures did you take') }}?</mat-label>
-        <mat-form-field class="w-full">
-        <mat-select formControlName="observationDurationSuffix" (change)="updateControlMeasure($event)">
-            <mat-option *ngFor="let controlMeasure of controlMeasures" [value]="controlMeasure">
-            {{ controlMeasure | transloco }}
-            </mat-option>
-        </mat-select>
-        </mat-form-field>
-    </div>
+  <mat-form-field class="w-full mb-4">
+    <mat-label>{{ t('What control measures did you take') }}?</mat-label>
+    <input type="text" aria-label="{{ t('Control Measures') }}" matInput [formControl]="controlMeasuresControl"
+      [matAutocomplete]="controlMeasuresAutocomplete" placeholder="{{ t('Select control measures') }}">
+    <mat-autocomplete #controlMeasuresAutocomplete="matAutocomplete" [displayWith]="displayControlMeasureFn"
+      (optionSelected)="updateSelectedControlMeasure($event)">
+      <mat-option *ngFor="let controlMeasure of filteredControlMeasures | async" [value]="controlMeasure">
+        {{ controlMeasure.code }} | {{ controlMeasure.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
   <div class="w-full mb-4">
     <mat-label> {{ t('Were you able to stamp out the disease') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="stampingOut" aria-label="Stamping out">
@@ -32,8 +34,8 @@
     <div *ngIf="corpseDestruction" @expandCollapse>
       <mat-form-field class="w-full mt-4">
         <mat-label>{{ t('How many carcass were destroyed') }}?</mat-label>
-        <input type="number" aria-label="{{ t('Number of carcass destroyed') }}" matInput formControlName="corpsesDestroyed"
-          placeholder="{{ t('Number of carcass destroyed') }}" />
+        <input type="number" aria-label="{{ t('Number of carcass destroyed') }}" matInput
+          formControlName="corpsesDestroyed" placeholder="{{ t('Number of carcass destroyed') }}" />
       </mat-form-field>
       <ng-container [ngTemplateOutlet]="formError"
         [ngTemplateOutletContext]="{validation: 'required', message: 'Carcass destroyed is required', control: treatmentInfo.controls['corpsesDestroyed']}"></ng-container>
@@ -112,7 +114,7 @@
     </div>
   </div>
 
-  <!-- <div class="w-full mb-4">
+  <div class="w-full mb-4">
     <mat-label> {{ t('Did you control movement') }}?</mat-label>
     <mat-radio-group class="flex" formControlName="movementControl" aria-label="Movement control">
       <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
@@ -130,7 +132,7 @@
       <ng-container [ngTemplateOutlet]="formError"
         [ngTemplateOutletContext]="{validation: 'required', message: 'Movement control measures is required', control: treatmentInfo.controls['movementControlMeasures']}"></ng-container>
     </div>
-  </div> -->
+  </div>
 
   <div class="w-full mb-4">
     <mat-label>{{ t('Did you administer medication') }}?</mat-label>
@@ -199,11 +201,11 @@
 
   <div class="flex justify-between my-4">
     <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
-       {{ t('Back') }}
+      {{ t('Back') }}
     </button>
     <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="treatmentInfo.invalid"
       (click)="onSubmit()">
-       {{ t('Next') }}
+      {{ t('Next') }}
     </button>
   </div>
 </form>

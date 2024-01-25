@@ -52,9 +52,10 @@ public class ApplicationDbContextInitialiser
             await SeedAdminsAsync();
             await SeedDiseasesAndSpeciesAsync();
             await SeedRegionsAsync();
+            await SeedControlMeasuresAsync();
 
-          //--- ONLY USE WHEN YOU HAVE SEED DATA SETUP
-          /// await SeedUserAsync();
+            //--- ONLY USE WHEN YOU HAVE SEED DATA SETUP
+            /// await SeedUserAsync();
         }
         catch (Exception ex)
         {
@@ -453,8 +454,8 @@ public class ApplicationDbContextInitialiser
                 var fileName = "countryRegions.json";
                 var _filePath = Path.Combine(GetRootPath(), "Infrastructure\\Persistence\\SeedData", fileName);
                 // For when you need to seed directly from your pc
-                var dataText = System.IO.File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/countryRegions.json");
-                //var dataText = File.ReadAllText(_filePath);
+                //var dataText = System.IO.File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/countryRegions.json");
+                var dataText = System.IO.File.ReadAllText(_filePath);
                 var regionSeedData = JsonConvert.DeserializeObject<List<RegionData>>(dataText);
 
                 foreach (var country in regionSeedData)
@@ -469,6 +470,41 @@ public class ApplicationDbContextInitialiser
         }
     }
 
+    private async Task SeedControlMeasuresAsync()
+    {
+        if (!_context.ControlMeasures.Any())
+        {
+            try
+            {
+                var controlMeasures = new List<ControlMeasure>();
+                controlMeasures.AddRange(new List<ControlMeasure> {
+                ControlMeasure.Create("Sanitary slaughter", "CM001"),
+                ControlMeasure.Create("Official destruction of carcasses, by-products and waste", "CM002"),
+                ControlMeasure.Create("Disinfection", "CM003"),
+                ControlMeasure.Create("Process for inactivating the pathogen in products or by-products", "CM004"),
+                ControlMeasure.Create("Movement restrictions", "CM005"),
+                ControlMeasure.Create("Surveillance inside the restriction zone", "CM006"),
+                ControlMeasure.Create("Surveillance outside the restriction zone", "CM007"),
+                ControlMeasure.Create("Official destruction of animal products", "CM008"),
+                ControlMeasure.Create("Official vaccination", "CM009"),
+                ControlMeasure.Create("Pre and post-mortem inspection", "CM010"),
+                ControlMeasure.Create("Selective slaughter and disposal", "CM011"),
+                ControlMeasure.Create("Border control", "CM012"),
+                ControlMeasure.Create("Zoning", "CM013"),
+                ControlMeasure.Create("Compartmentalization", "CM014")
+            });
+                controlMeasures = controlMeasures.OrderBy(m => m.Name).ToList();
+
+                await _context.ControlMeasures.AddRangeAsync(controlMeasures);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new BusinessRuleException("DbInitializer", ex.Message ?? "Error occurred while seeding control measures.");
+            }
+        }
+    }
+
     private async Task SeedUserAsync()
     {
 
@@ -478,8 +514,8 @@ public class ApplicationDbContextInitialiser
             var fileName = "userSeed.json";
             var _filePath = Path.Combine(GetRootPath(), "Infrastructure\\Persistence\\SeedData", fileName);
             // For when you need to seed directly from your pc
-            var dataText = System.IO.File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/userSeed.json");
-            //var dataText = File.ReadAllText(_filePath);
+            //var dataText = System.IO.File.ReadAllText("/Users/adaorajiaku/RAHC/rahis/src/Infrastructure/Persistence/SeedData/userSeed.json");
+            var dataText = System.IO.File.ReadAllText(_filePath);
             var userSeedData = JsonConvert.DeserializeObject<List<UserData>>(dataText);
 
 
@@ -489,16 +525,16 @@ public class ApplicationDbContextInitialiser
 
             foreach (var user in userSeedData)
             {
-        
+
                 if (string.IsNullOrEmpty(user.email)) continue;
-                
+
                 _logger.LogInformation("user here is ", user);
                 var country = await _context.Countries.Where(x => !x.IsDeleted && x.Name.Equals(user.country)).FirstOrDefaultAsync();
-                
+
                 if (country == null) continue;
 
                 char[] separators = { ' ' };
-                string firstName= user.name.Split(separators, 2)[0];
+                string firstName = user.name.Split(separators, 2)[0];
                 string lastName = user.name.Split(separators, 2)[1];
 
                 var newUser = new ApplicationUser
@@ -514,15 +550,17 @@ public class ApplicationDbContextInitialiser
                 if (_userManager.Users.All(u => !u.UserName.Equals(user.email)))
                 {
                     await _userManager.CreateAsync(newUser, "Admin321!");
-                    if ( user.roles.Equals("Reporter"))
+                    if (user.roles.Equals("Reporter"))
                     {
-                        await _userManager.AddToRolesAsync(newUser, new[] {reporterRole.Name});
-                    } else if (user.roles.Equals("Chief Veterinary Officer"))
+                        await _userManager.AddToRolesAsync(newUser, new[] { reporterRole.Name });
+                    }
+                    else if (user.roles.Equals("Chief Veterinary Officer"))
                     {
-                        await _userManager.AddToRolesAsync(newUser, new[] {cvoRole.Name});
-                    } else if (user.roles.Equals("Super Admin"))
+                        await _userManager.AddToRolesAsync(newUser, new[] { cvoRole.Name });
+                    }
+                    else if (user.roles.Equals("Super Admin"))
                     {
-                        await _userManager.AddToRolesAsync(newUser, new[] {administratorRole.Name});
+                        await _userManager.AddToRolesAsync(newUser, new[] { administratorRole.Name });
                     }
                 }
 
@@ -537,44 +575,51 @@ public class ApplicationDbContextInitialiser
 
     private async Task SeedCountryAsync(RegionData country)
     {
-        var regions = country.Regions;
-        var regionData = country.Regions.DistinctBy(r => r.Region).SelectMany(RegionsSelectorExpression(regions)).ToList();
-
-        var countryEntry = Country.Create(country.Country, country.Code, country.Flag);
-
-        foreach (var region in regionData)
+        try
         {
-            if (string.IsNullOrEmpty(region.Name)) continue;
+            var regions = country.Regions;
+            var regionData = country.Regions.DistinctBy(r => r.Region).SelectMany(RegionsSelectorExpression(regions)).ToList();
 
-            countryEntry.AddRegion(region.Name, region.Name.ToLower());
-            var regionEntry = countryEntry.Regions.Where(r => r.Name == region.Name).FirstOrDefault();
+            var countryEntry = Country.Create(country.Country, country.Code, country.Flag);
 
-            foreach (var municipality in region.Municipalities)
+            foreach (var region in regionData)
             {
-                if (string.IsNullOrEmpty(municipality.Name)) continue;
+                if (string.IsNullOrEmpty(region.Name)) continue;
 
-                regionEntry?.AddMunicipality(municipality.Name);
-                var municipalityEntry = regionEntry?.Municipalities.Where(m => m.Name == municipality.Name).FirstOrDefault();
+                countryEntry.AddRegion(region.Name, region.Name.ToLower());
+                var regionEntry = countryEntry.Regions.Where(r => r.Name == region.Name).FirstOrDefault();
 
-                foreach (var district in municipality.Districts)
+                foreach (var municipality in region?.Municipalities)
                 {
-                    if (string.IsNullOrEmpty(district.Name)) continue;
+                    if (string.IsNullOrEmpty(municipality.Name)) continue;
 
-                    municipalityEntry?.AddDistrict(district.Name);
-                    var districtEntry = municipalityEntry?.Districts.Where(d => d.Name == district.Name).FirstOrDefault();
+                    regionEntry?.AddMunicipality(municipality.Name);
+                    var municipalityEntry = regionEntry?.Municipalities.Where(m => m.Name == municipality.Name).FirstOrDefault();
 
-                    foreach (var community in district.Communities)
+                    foreach (var district in municipality?.Districts)
                     {
-                        if (string.IsNullOrEmpty(community.Name)) continue;
+                        if (string.IsNullOrEmpty(district.Name)) continue;
 
-                        districtEntry?.AddCommunity(community.Name);
+                        municipalityEntry?.AddDistrict(district.Name);
+                        var districtEntry = municipalityEntry?.Districts.Where(d => d.Name == district.Name).FirstOrDefault();
+
+                        foreach (var community in district?.Communities)
+                        {
+                            if (string.IsNullOrEmpty(community.Name)) continue;
+
+                            districtEntry?.AddCommunity(community.Name);
+                        }
                     }
                 }
             }
-        }
 
-        await _context.Countries.AddAsync(countryEntry);
-        await _context.SaveChangesAsync();
+            await _context.Countries.AddAsync(countryEntry);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new BusinessRuleException("DbInitializer", ex.Message ?? "Error occurred while seeding countries.");
+        }
 
     }
 
@@ -601,7 +646,7 @@ public class ApplicationDbContextInitialiser
             .Select(m => new MunicipalityInsert
             {
                 Name = !string.IsNullOrEmpty(e.Municipality) ? textInfo.ToTitleCase(e.Municipality?.ToLower()) : "",
-                Districts = regions?.DistinctBy(m => m.District).SelectMany(DistrictsSelectorExpression(e.District, regions))?.ToList()
+                Districts = regions?.DistinctBy(m => m.District).SelectMany(DistrictsSelectorExpression(e.Municipality, regions))?.ToList()
             })
             .ToList();
     }

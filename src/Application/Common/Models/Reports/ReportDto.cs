@@ -28,6 +28,9 @@ public class ReportDto
     public bool HumanInfection { get; set; }
     public int? HumansExposed { get; set; }
 
+    public string? ControlMeasuresCode { get; set; }
+    public long? ControlMeasuresId { get; set; }
+
     public bool IsOngoing { get; set; }
     public bool IsVerified { get; set; }
     public ReportStatus? ReportStatus { get; set; }

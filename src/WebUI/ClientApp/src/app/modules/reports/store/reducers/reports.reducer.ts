@@ -2,6 +2,7 @@ import * as actions from '../actions/reports.actions';
 import { createReducer, on } from '@ngrx/store';
 import {
     CommunityDto,
+    ControlMeasureDto,
     CountryDto,
     DiseaseDto,
     DistrictDto,
@@ -33,6 +34,7 @@ export interface ReportState {
     institutions?: InstitutionDto[] | null;
     diseases?: DiseaseDto[] | null;
     species?: SpeciesDto[] | null;
+    controlMeasures?: ControlMeasureDto[] | null;
     loaded: boolean;
     loading: boolean;
     feedback?: ServerResponse | null;
@@ -53,6 +55,7 @@ export const initialState: ReportState = {
     institutions: [],
     diseases: [],
     species: [],
+    controlMeasures: [],
     loaded: false,
     loading: false,
     feedback: null,
@@ -104,6 +107,18 @@ export const reducer = createReducer(
         feedback: null,
         loading: false,
         entry: payload,
+    })),
+    on(actions.loadControlMeasures, (state) => ({
+        ...state,
+        feedback: null,
+        controlMeasures: [],
+        loading: true,
+    })),
+    on(actions.loadControlMeasuresSuccess, (state, { payload }) => ({
+        ...state,
+        feedback: null,
+        loading: false,
+        controlMeasures: payload,
     })),
     on(actions.loadReports, (state) => ({
         ...state,

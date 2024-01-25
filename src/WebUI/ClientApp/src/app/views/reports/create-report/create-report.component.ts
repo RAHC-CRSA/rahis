@@ -189,6 +189,7 @@ export class CreateReportComponent implements OnInit {
             this.formValues.treatment = formData.treatment;
             this.formValues.treatmentDetails = formData.treatmentDetails;
             this.formValues.medications = formData.medications;
+            this.formValues.controlMeasuresCode = formData.controlMeasuresCode;
 
             this.formStep++;
 
@@ -287,6 +288,7 @@ export class CreateReportComponent implements OnInit {
             movementControlMeasures: this.formValues.movementControlMeasures,
             treatment: this.formValues.treatment,
             treatmentDetails: this.formValues.treatmentDetails,
+            controlMeasuresCode: this.formValues.controlMeasuresCode,
             medications: medications,
             vaccinations: vaccinations,
             diagnosticTests: diagnosticTests,
@@ -336,6 +338,7 @@ export class CreateReportComponent implements OnInit {
             movementControlMeasures: '',
             treatment: false,
             treatmentDetails: '',
+            controlMeasuresCode: '',
             medications: [],
             vaccinations: [],
             diagnosticTests: [],
@@ -367,6 +370,7 @@ export class CreateReportComponent implements OnInit {
             movementControlMeasures: data.movementControlMeasures,
             treatment: data.treatment,
             treatmentDetails: data.treatmentDetails,
+            controlMeasuresCode: data.controlMeasuresCode,
             medications: data.medications,
             vaccinations: data.vaccinations,
             diagnosticTests: data.diagnosticTests,
