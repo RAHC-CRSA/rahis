@@ -222,9 +222,10 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
 
         reader.onload = () => {
             console.log({ reader });
+            const fileType = file.type;
             const imageString = reader.result as string;
             this.base64String = imageString.replace(
-                'data:image/jpeg;base64,',
+                `data:${fileType};base64,`,
                 ''
             );
         };
