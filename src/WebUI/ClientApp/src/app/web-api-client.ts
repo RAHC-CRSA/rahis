@@ -868,8 +868,9 @@ export interface IGetReportsClient {
      * Gets the list of reports
      * @param isVerified (optional) 
      * @param countryId (optional) 
+     * @param userId (optional) 
      */
-    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined): Observable<ReportListDto[]>;
+    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined, userId: string | null | undefined): Observable<ReportListDto[]>;
 }
 
 @Injectable({
@@ -889,13 +890,16 @@ export class GetReportsClient implements IGetReportsClient {
      * Gets the list of reports
      * @param isVerified (optional) 
      * @param countryId (optional) 
+     * @param userId (optional) 
      */
-    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined): Observable<ReportListDto[]> {
+    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined, userId: string | null | undefined): Observable<ReportListDto[]> {
         let url_ = this.baseUrl + "/api/reports?";
         if (isVerified !== undefined && isVerified !== null)
             url_ += "IsVerified=" + encodeURIComponent("" + isVerified) + "&";
         if (countryId !== undefined && countryId !== null)
             url_ += "CountryId=" + encodeURIComponent("" + countryId) + "&";
+        if (userId !== undefined && userId !== null)
+            url_ += "UserId=" + encodeURIComponent("" + userId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -5095,6 +5099,7 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
     numberPositive?: number;
     numberNegative?: number;
     professionalId?: number;
+    testResultImage?: string | undefined;
 
     constructor(data?: IAddDiagnosticTestCommand) {
         if (data) {
@@ -5113,6 +5118,7 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
             this.numberPositive = _data["numberPositive"];
             this.numberNegative = _data["numberNegative"];
             this.professionalId = _data["professionalId"];
+            this.testResultImage = _data["testResultImage"];
         }
     }
 
@@ -5131,6 +5137,7 @@ export class AddDiagnosticTestCommand implements IAddDiagnosticTestCommand {
         data["numberPositive"] = this.numberPositive;
         data["numberNegative"] = this.numberNegative;
         data["professionalId"] = this.professionalId;
+        data["testResultImage"] = this.testResultImage;
         return data;
     }
 }
@@ -5142,6 +5149,7 @@ export interface IAddDiagnosticTestCommand {
     numberPositive?: number;
     numberNegative?: number;
     professionalId?: number;
+    testResultImage?: string | undefined;
 }
 
 export class VaccinationDto implements IVaccinationDto {
@@ -5279,6 +5287,9 @@ export class ReportDto implements IReportDto {
     isDiseaseNotifiable?: boolean;
     location?: string;
     created?: string;
+    createdBy?: string | undefined;
+    reporterName?: string;
+    reporterEmail?: string;
     infected?: number;
     exposed?: number;
     mortality?: number;
@@ -5334,6 +5345,9 @@ export class ReportDto implements IReportDto {
             this.isDiseaseNotifiable = _data["isDiseaseNotifiable"];
             this.location = _data["location"];
             this.created = _data["created"];
+            this.createdBy = _data["createdBy"];
+            this.reporterName = _data["reporterName"];
+            this.reporterEmail = _data["reporterEmail"];
             this.infected = _data["infected"];
             this.exposed = _data["exposed"];
             this.mortality = _data["mortality"];
@@ -5401,6 +5415,9 @@ export class ReportDto implements IReportDto {
         data["isDiseaseNotifiable"] = this.isDiseaseNotifiable;
         data["location"] = this.location;
         data["created"] = this.created;
+        data["createdBy"] = this.createdBy;
+        data["reporterName"] = this.reporterName;
+        data["reporterEmail"] = this.reporterEmail;
         data["infected"] = this.infected;
         data["exposed"] = this.exposed;
         data["mortality"] = this.mortality;
@@ -5461,6 +5478,9 @@ export interface IReportDto {
     isDiseaseNotifiable?: boolean;
     location?: string;
     created?: string;
+    createdBy?: string | undefined;
+    reporterName?: string;
+    reporterEmail?: string;
     infected?: number;
     exposed?: number;
     mortality?: number;
@@ -5555,6 +5575,7 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
     numberNegative?: number;
     professionalId?: number;
     professionalName?: string;
+    testResultImage?: string | undefined;
 
     constructor(data?: IDiagnosticTestDto) {
         if (data) {
@@ -5575,6 +5596,7 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
             this.numberNegative = _data["numberNegative"];
             this.professionalId = _data["professionalId"];
             this.professionalName = _data["professionalName"];
+            this.testResultImage = _data["testResultImage"];
         }
     }
 
@@ -5595,6 +5617,7 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
         data["numberNegative"] = this.numberNegative;
         data["professionalId"] = this.professionalId;
         data["professionalName"] = this.professionalName;
+        data["testResultImage"] = this.testResultImage;
         return data;
     }
 }
@@ -5608,6 +5631,7 @@ export interface IDiagnosticTestDto {
     numberNegative?: number;
     professionalId?: number;
     professionalName?: string;
+    testResultImage?: string | undefined;
 }
 
 export class CreateReportCommand implements ICreateReportCommand {
@@ -7489,7 +7513,6 @@ export class AddParaProfessionalCommand implements IAddParaProfessionalCommand {
     phone?: string;
     position?: string;
     institutionId?: number;
-    countryId?: number;
 
     constructor(data?: IAddParaProfessionalCommand) {
         if (data) {
@@ -7507,7 +7530,6 @@ export class AddParaProfessionalCommand implements IAddParaProfessionalCommand {
             this.phone = _data["phone"];
             this.position = _data["position"];
             this.institutionId = _data["institutionId"];
-            this.countryId = _data["countryId"];
         }
     }
 
@@ -7525,7 +7547,6 @@ export class AddParaProfessionalCommand implements IAddParaProfessionalCommand {
         data["phone"] = this.phone;
         data["position"] = this.position;
         data["institutionId"] = this.institutionId;
-        data["countryId"] = this.countryId;
         return data;
     }
 }
@@ -7536,7 +7557,6 @@ export interface IAddParaProfessionalCommand {
     phone?: string;
     position?: string;
     institutionId?: number;
-    countryId?: number;
 }
 
 export class DeleteInstitutionCommand implements IDeleteInstitutionCommand {

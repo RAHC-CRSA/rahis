@@ -80,8 +80,8 @@ export class ReportService {
     getAllReports(payload) {
         return this.getReportsClient.handle(
             payload.isVerified,
-            //  payload.reportStatus,
-            payload.countryId
+            payload.countryId,
+            payload.userId
         );
     }
 

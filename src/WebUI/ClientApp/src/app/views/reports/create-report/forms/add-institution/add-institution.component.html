@@ -1,39 +1,58 @@
 <form [formGroup]="institutionForm" *transloco="let t">
-    <h3>{{ t('Add Institution') }}</h3>
-    <mat-form-field class="w-full mb-4">
-      <mat-label>{{ t('Name') }}</mat-label>
-      <input aria-label="{{ t('Institution name') }}" matInput formControlName="name" placeholder="{{ t('Institution name') }}" />
-      <ng-container [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{validation: 'required', message: 'Institution name is required', control: institutionForm.controls['name']}"></ng-container>
+  <h3>{{ t('Add Institution') }}</h3>
+  <mat-form-field class="w-full mb-4">
+    <mat-label>{{ t('Name') }}</mat-label>
+    <input aria-label="{{ t('Institution name') }}" matInput formControlName="name"
+      placeholder="{{ t('Institution name') }}" />
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Institution name is required', control: institutionForm.controls['name']}"></ng-container>
+  </mat-form-field>
+
+  <mat-form-field class="w-full mb-4">
+    <mat-label>{{ t('Type') }}</mat-label>
+    <input aria-label="{{ t('Institution type') }}" matInput formControlName="type"
+      placeholder="{{ t('Institution type') }}" />
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Institution type is required', control: institutionForm.controls['type']}"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'minlength', message: 'Institution type should have at least 3 characters', control: institutionForm.controls['type']}"></ng-container>
+  </mat-form-field>
+
+  <div class="w-full mb-4">
+    <label>{{ t('Is this a public sector institution') }}?</label>
+    <mat-radio-group class="flex" formControlName="publicSector" aria-label="publicSector">
+      <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
+      <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="mb-4">
+    <mat-form-field class="w-full">
+      <mat-label>{{ t('Country') }}</mat-label>
+      <input type="text" aria-label="{{ t('Country') }}" matInput [formControl]="countryControl"
+        [matAutocomplete]="countryAutocomplete">
+      <mat-autocomplete #countryAutocomplete="matAutocomplete" [displayWith]="displayCountryFn"
+        (optionSelected)="updateSelectedCountry($event)">
+        <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+          <img [src]="country.flag" class="w-6 m-1 inline-block">
+          {{ country.name }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
+    <ng-container [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{validation: 'required', message: 'Country is required', control: institutionForm.controls['country']}"></ng-container>
+  </div>
 
-    <mat-form-field class="w-full mb-4">
-      <mat-label>{{ t('Type') }}</mat-label>
-      <input aria-label="{{ t('Institution type') }}" matInput formControlName="type" placeholder="{{ t('Institution type') }}" />
-      <ng-container [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{validation: 'required', message: 'Institution type is required', control: institutionForm.controls['type']}"></ng-container>
-      <ng-container [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{validation: 'minlength', message: 'Institution type should have at least 3 characters', control: institutionForm.controls['type']}"></ng-container>
-    </mat-form-field>
+  <div class="flex justify-end my-4">
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="institutionForm.invalid"
+      (click)="onSubmit()">
+      {{ t('Add Institution') }}
+    </button>
+  </div>
+</form>
 
-    <div class="w-full mb-4">
-      <label>{{ t('Is this a public sector institution') }}?</label>
-      <mat-radio-group class="flex" formControlName="publicSector" aria-label="publicSector">
-        <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
-        <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
-      </mat-radio-group>
-    </div>
-
-    <div class="flex justify-end my-4">
-      <button class="px-8" mat-flat-button [color]="'primary'" type="button" [disabled]="institutionForm.invalid"
-        (click)="onSubmit()">
-        {{ t('Add Institution') }}
-      </button>
-    </div>
-  </form>
-
-  <ng-template #formError let-control="control" let-message="message" let-validation="validation">
-    <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
-      <mat-error>{{ message }}</mat-error>
-    </ng-container>
-  </ng-template>
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <mat-error>{{ message }}</mat-error>
+  </ng-container>
+</ng-template>

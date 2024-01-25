@@ -13,7 +13,7 @@ public class AddParaProfessionalCommand : IRequest<(Result, ParaProfessionalDto?
     public string Phone { get; set; }
     public string Position { get; set; }
     public long InstitutionId { get; set; }
-    public long CountryId { get; set; }
+    //public long CountryId { get; set; }
 }
 
 public class AddParaProfessionalCommandHandler : IRequestHandler<AddParaProfessionalCommand, (Result, ParaProfessionalDto?)>

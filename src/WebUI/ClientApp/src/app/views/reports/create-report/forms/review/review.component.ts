@@ -15,6 +15,12 @@ export class ReviewComponent implements OnInit {
 
     @Output() submit = new EventEmitter();
 
+    corpseDestruction: boolean;
+    wasObservation: boolean;
+    wasQuarantined: boolean;
+    movementControlled: boolean;
+    administeredMeds: boolean;
+
     loading$: Observable<boolean>;
 
     reviewForm: FormGroup;
@@ -25,6 +31,12 @@ export class ReviewComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.corpseDestruction = this.formData.destructionOfCorpses;
+        this.wasObservation = this.formData.observation;
+        this.wasQuarantined = this.formData.quarantine;
+        this.movementControlled = this.formData.movementControl;
+        this.administeredMeds = this.formData.treatment;
+
         this.initData();
         this.initForm();
     }
@@ -66,12 +78,8 @@ export class ReviewComponent implements OnInit {
                 //   Validators.required
             ],
             observationDuration: [this.formData.observationDuration],
-            observationDurationSuffix: [
-                this.formData.observationDurationSuffix,
-            ],
             quarantine: [this.formData.quarantine, Validators.required],
             quarantineDuration: [this.formData.quarantineDuration],
-            quarantineDurationSuffix: [this.formData.quarantineDurationSuffix],
             movementControl: [
                 this.formData.movementControl,
                 //  Validators.required,

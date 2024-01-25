@@ -17,11 +17,13 @@ public class GetReportByIdQuery : IRequest<(Result, ReportDto?)>
 public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Result, ReportDto?)>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IIdentityService _identityService;
     private readonly ILogger<GetReportByIdQuery> _logger;
 
-    public GetReportByIdQueryHandler(IApplicationDbContext context, ILogger<GetReportByIdQuery> logger)
+    public GetReportByIdQueryHandler(IApplicationDbContext context, IIdentityService identityService, ILogger<GetReportByIdQuery> logger)
     {
         _context = context;
+        _identityService = identityService;
         _logger = logger;
     }
 
@@ -47,6 +49,15 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
                 .Where(x => !x.IsDeleted && x.Id == request.ReportId)
                 .Select(ReportSelectorExpression())
                 .FirstOrDefaultAsync();
+
+            var (result, reporter) = await _identityService.GetUserAsync(report.CreatedBy);
+
+            if (result.Succeeded)
+            {
+                report.ReporterName = reporter.Name;
+                report.ReporterEmail = reporter.Email;
+            }
+
 
             return (Result.Success(), report);
         }
@@ -99,7 +110,8 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
             Vaccinated = e.Vaccinations.Any(),
             Vaccinations = e.Vaccinations.AsQueryable().Select(VaccinationSelectorExpression()).ToList(),
             Location = $"{e.Occurrence.Region.Name}, {e.Occurrence.Region.Country.Name}",
-            Created = DateOnly.FromDateTime(e.Created).ToString("MMMM dd, yyyy")
+            Created = DateOnly.FromDateTime(e.Created).ToString("MMMM dd, yyyy"),
+            CreatedBy = e.CreatedBy
         };
     }
 

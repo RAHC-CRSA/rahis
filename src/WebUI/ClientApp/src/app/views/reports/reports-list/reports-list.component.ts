@@ -95,6 +95,9 @@ export class ReportsListComponent {
                 const payload = {
                     isVerified: verified,
                     countryId: user.countryId,
+                    userId: user.roles.includes('Reporter')
+                        ? user.appUserId
+                        : undefined,
                 };
 
                 this.store.dispatch(loadReports({ payload }));
@@ -110,7 +113,7 @@ export class ReportsListComponent {
             }
         });
         this.reports$.subscribe((items) => {
-            console.log({reports: items})
+            console.log({ reports: items });
             this.dataSource = new MatTableDataSource(items);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;

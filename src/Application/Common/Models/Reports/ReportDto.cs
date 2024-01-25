@@ -19,6 +19,10 @@ public class ReportDto
 
     public string Location { get; set; }
     public string Created { get; set; }
+    public string? CreatedBy { get; set; }
+
+    public string ReporterName { get; set; }
+    public string ReporterEmail { get; set; }
 
     public int Infected { get; set; }
     public int Exposed { get; set; }

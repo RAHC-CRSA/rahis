@@ -532,6 +532,15 @@
               "nullable": true
             },
             "x-position": 2
+          },
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
           }
         ],
         "responses": {
@@ -2966,6 +2975,10 @@
           "professionalId": {
             "type": "integer",
             "format": "int64"
+          },
+          "testResultImage": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -3082,6 +3095,16 @@
             "type": "string"
           },
           "created": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "reporterName": {
+            "type": "string"
+          },
+          "reporterEmail": {
             "type": "string"
           },
           "infected": {
@@ -3270,6 +3293,10 @@
           },
           "professionalName": {
             "type": "string"
+          },
+          "testResultImage": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -4238,10 +4265,6 @@
             "type": "string"
           },
           "institutionId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "countryId": {
             "type": "integer",
             "format": "int64"
           }

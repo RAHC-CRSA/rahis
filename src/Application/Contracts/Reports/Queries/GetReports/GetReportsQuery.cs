@@ -12,6 +12,7 @@ public class GetReportsQuery : IRequest<(Result, List<ReportListDto>?)>
 {
     public bool? IsVerified { get; set; }
     public long? CountryId { get; set; }
+    public string? UserId { get; set; }
     // public ReportStatus? ReportStatus { get; set; }
 }
 
@@ -41,7 +42,8 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, 
                 .Include(x => x.Disease)
                 .Where(x => !x.IsDeleted &&
                     (request.IsVerified != null ? x.IsVerified == request.IsVerified : true) &&
-                    (request.CountryId != null ? x.Occurrence.Country.Id == request.CountryId : true))
+                    (request.CountryId != null ? x.Occurrence.Country.Id == request.CountryId : true) &&
+                    (request.UserId != null ? x.CreatedBy == request.UserId : true))
                 .Select(ReportSelectorExpression())
                 .ToListAsync();
 
