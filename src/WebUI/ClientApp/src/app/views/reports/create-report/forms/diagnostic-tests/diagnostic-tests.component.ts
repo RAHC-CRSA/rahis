@@ -205,8 +205,15 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
             console.log({ files: files.length });
             const selectedFile: File = files[0];
             if (this.isImageFile(selectedFile)) {
-                this.selectedFile = selectedFile;
-                this.convertToBase64(this.selectedFile);
+                if (selectedFile.size > 2097152) {
+                    // Set validation error
+                    this.testForm.controls['testResultImage'].setErrors({
+                        fileSizeExceeded: true,
+                    });
+                } else {
+                    this.selectedFile = selectedFile;
+                    this.convertToBase64(this.selectedFile);
+                }
             }
         }
     }

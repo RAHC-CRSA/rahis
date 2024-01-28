@@ -122,7 +122,8 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
             Id = e.Id,
             Name = e.Name,
             NumberTested = e.NumberTested,
-            ProfessionalName = e.Professional.Name
+            ProfessionalName = e.Professional.Name,
+            TestResultImage = e.TestResultImage,
         };
     }
 

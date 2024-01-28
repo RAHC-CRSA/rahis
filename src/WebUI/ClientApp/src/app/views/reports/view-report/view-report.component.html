@@ -24,7 +24,7 @@
   </div>
 
   <!-- Main -->
-  <div class="flex-auto p-6 sm:p-10">
+  <div class="flex-auto p-6 sm:p-10" *ngIf="(report$ | async)">
 
     <div class="w-full">
 
@@ -262,6 +262,15 @@
                     <td mat-cell *matCellDef="let el"> {{el.professionalName}} </td>
                   </ng-container>
 
+                  <!-- Test result image Column -->
+                  <ng-container matColumnDef="testResultImage">
+                    <th mat-header-cell *matHeaderCellDef> {{ t('Test Result Image') }} </th>
+                    <td mat-cell *matCellDef="let el"> <a *ngIf="el.testResultImage?.length" href="#"
+                        (click)="openTestResultImage('data:image/png;base64,'+ el.testResultImage)" target="_blank"><img
+                          [src]="'data:image/png;base64,'+ el.testResultImage" class="h-[40px] w-auto mx-auto" /></a>
+                    </td>
+                  </ng-container>
+
                   <tr mat-header-row *matHeaderRowDef="diagnosticTestColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: diagnosticTestColumns;"></tr>
 
@@ -395,3 +404,4 @@
       </div>
     </div>
   </div>
+</div>
