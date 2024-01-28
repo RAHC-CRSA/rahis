@@ -56,6 +56,7 @@ export class ViewReportComponent implements OnInit {
         // 'numberNegative',
         // 'numberUndetermined',
         'professionalName',
+        'testResultImage',
     ];
 
     medicationColumns: string[] = ['id', 'name', 'dosage'];
@@ -173,6 +174,14 @@ export class ViewReportComponent implements OnInit {
             reportStatus: ReportStatus.Approved,
         };
         this.store.dispatch(verifyReport({ payload }));
+    }
+
+    openTestResultImage(imgData: string) {
+        let image = new Image();
+        image.src = imgData;
+
+        let w = window.open('');
+        w.document.write(image.outerHTML);
     }
 
     sendNotification() {

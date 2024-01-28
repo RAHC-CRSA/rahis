@@ -86,16 +86,17 @@
 
           <div class="w-full mb-4">
             <mat-label>{{ t('Test result image') }}?</mat-label>
-            <button class="px-5" mat-flat-button [color]="'accent'" type="button" (click)="fileInput.click()">Select a
+            <button class="px-5 mx-3" mat-flat-button [color]="'accent'" type="button"
+              (click)="fileInput.click()">Select a
               file
             </button>
             <input hidden type="file" #fileInput aria-label="{{ t('Test result image') }}"
               (change)="onFileSelected($event)" placeholder="{{ t('Uplodad test result') }}"
               accept=".jpg, .png, .jpeg" />
-            <img *ngIf="base64String?.length" [src]="'data:image/jpeg;base64,'+ base64String" class="w-[80px] h-auto" />
+            <img *ngIf="base64String?.length" [src]="'data:image/png;base64,'+ base64String" class="w-[80px] h-auto" />
           </div>
           <ng-container [ngTemplateOutlet]="formError"
-            [ngTemplateOutletContext]="{validation: 'required', message: 'Test result upload is required', control: testForm.controls['testResultImage']}"></ng-container>
+            [ngTemplateOutletContext]="{validation: 'fileSizeExceeded', message: 'Test result upload file size is too large', control: testForm.controls['testResultImage']}"></ng-container>
 
 
           <mat-form-field class="w-full mb-4">

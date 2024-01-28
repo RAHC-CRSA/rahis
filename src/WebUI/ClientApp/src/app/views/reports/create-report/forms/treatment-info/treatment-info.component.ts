@@ -138,16 +138,20 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                             : this.controlMeasures.slice()
                     )
                 );
-            if (
-                this.formData.controlMeasuresCode &&
-                this.formData.controlMeasuresCode >= 0
-            ) {
-                this.selectedControlMeasure =
-                    this.controlMeasures[
-                        !this.formData.controlMeasuresCode
-                            ? this.formData.controlMeasuresCode
-                            : ''
-                    ];
+
+            if (this.formData.controlMeasuresCode) {
+                const controlMeasure = this.controlMeasures.find(
+                    (m) => m.code == this.formData.controlMeasuresCode
+                );
+
+                this.selectedControlMeasure = controlMeasure;
+                this.controlMeasuresControl.setValue(controlMeasure, {
+                    emitEvent: true,
+                });
+
+                this.treatmentInfo.patchValue({
+                    controlMeasuresCode: controlMeasure.code,
+                });
             }
         });
     }
@@ -239,6 +243,12 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             this.treatmentInfo.controls.treatmentDetails?.updateValueAndValidity();
             this.administeredMeds = value;
         });
+
+        this.treatmentInfo
+            .get('controlMeasuresCode')
+            ?.valueChanges.subscribe((value) => {
+                this.updateControlMeasure(this.selectedControlMeasure);
+            });
     }
 
     private _filterControlMeasures(name: string): ControlMeasureDto[] {
@@ -316,10 +326,16 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
     }
 
     updateControlMeasure(controlMeasure: ControlMeasureDto) {
+        if (controlMeasure == null) return;
+
         if (controlMeasure.code === 'CM002') {
-            this.corpseDestruction = true;
             this.treatmentInfo.patchValue(
                 { destructionOfCorpses: true },
+                { emitEvent: true }
+            );
+        } else {
+            this.treatmentInfo.patchValue(
+                { destructionOfCorpses: false },
                 { emitEvent: true }
             );
         }
@@ -329,15 +345,24 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                 { disinfection: true },
                 { emitEvent: true }
             );
+        } else {
+            this.treatmentInfo.patchValue(
+                { disinfection: false },
+                { emitEvent: true }
+            );
         }
 
         if (
             controlMeasure.code === 'CM005' ||
             controlMeasure.code === 'CM012'
         ) {
-            this.movementControlled = true;
             this.treatmentInfo.patchValue(
                 { movementControl: true },
+                { emitEvent: true }
+            );
+        } else {
+            this.treatmentInfo.patchValue(
+                { movementControl: false },
                 { emitEvent: true }
             );
         }
@@ -346,9 +371,13 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             controlMeasure.code === 'CM006' ||
             controlMeasure.code === 'CM007'
         ) {
-            this.wasObservation = true;
             this.treatmentInfo.patchValue(
                 { observation: true },
+                { emitEvent: true }
+            );
+        } else {
+            this.treatmentInfo.patchValue(
+                { observation: false },
                 { emitEvent: true }
             );
         }
