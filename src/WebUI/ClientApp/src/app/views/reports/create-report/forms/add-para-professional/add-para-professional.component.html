@@ -1,53 +1,58 @@
 <form [formGroup]="professionalForm" *transloco="let t">
-    <div class="w-full mb-4">
-        <h3>{{ t('Add Animal-Health Professional') }}</h3>
-      <ng-container>
-        <div class="w-full mt-4">
-          <h4 class="text-2xl mb-4">{{ t('Animal-Health Professionals') }}</h4>
+  <div class="w-full mb-4">
+    <h3>{{ t('Add Animal-Health Professional') }}</h3>
+    <ng-container>
+      <div class="w-full mt-4">
+        <h4 class="text-2xl mb-4">{{ t('Animal-Health Professionals') }}</h4>
 
-            <mat-form-field class="w-full mb-4">
-                <mat-label>{{ t('Name') }}</mat-label>
-                <input aria-label="{{ t('Animal-Health Professional name') }}" matInput formControlName="name" placeholder="Jane Doe" />
-            </mat-form-field>
+        <mat-form-field class="w-full mb-4">
+          <mat-label>{{ t('Name') }}</mat-label>
+          <input aria-label="{{ t('Animal-Health Professional name') }}" matInput formControlName="name"
+            placeholder="Jane Doe" />
+        </mat-form-field>
 
-            <mat-form-field class="w-full">
-                <mat-label>{{ t('Position') }}</mat-label>
-                <input aria-label="Animal-Health Professional position" matInput formControlName="position" placeholder="Animal Doctor" />
-              </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ t('Position') }}</mat-label>
+          <input aria-label="Animal-Health Professional position" matInput formControlName="position"
+            placeholder="Animal Doctor" />
+        </mat-form-field>
 
-              <mat-form-field class="w-full">
-                <mat-label>{{ t('Email') }}</mat-label>
-                <input type="email" aria-label="Email address" matInput formControlName="email" placeholder="jane.doe@hosiptal.com" />
-              </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ t('Email') }}</mat-label>
+          <input type="email" aria-label="Email address" matInput formControlName="email"
+            placeholder="jane.doe@hosiptal.com" />
+        </mat-form-field>
 
-              <mat-form-field class="w-full">
-                <mat-label>{{ t('Phone Number') }}</mat-label>
-                <input aria-label="Animal-Health Professional phone number" matInput formControlName="phone" placeholder="+2330099092739 " />
-              </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ t('Phone Number') }}</mat-label>
+          <input aria-label="Animal-Health Professional phone number" matInput formControlName="phone"
+            placeholder="+2330099092739 " />
+        </mat-form-field>
 
-              <mat-form-field class="w-full">
-                <mat-label>{{ t('Institution') }}</mat-label>
-                <input type="text" aria-label="Institution" matInput [formControl]="institutionControl"
-                  [matAutocomplete]="institutionAutocomplete">
-                <mat-autocomplete #institutionAutocomplete="matAutocomplete" [displayWith]="displayInstitutionFn"
-                  (optionSelected)="updateSelectedInstitution($event)">
-                  <mat-option *ngFor="let institution of filteredInstitutions | async" [value]="institution">
-                    {{ institution.name }}
-                  </mat-option>
-                </mat-autocomplete>
-                <mat-hint>{{ t("Select 'Other' to add a new institution") }}</mat-hint>
-              </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ t('Institution') }}</mat-label>
+          <input type="text" aria-label="Institution" matInput [formControl]="institutionControl"
+            [matAutocomplete]="institutionAutocomplete">
+          <mat-autocomplete #institutionAutocomplete="matAutocomplete" [displayWith]="displayInstitutionFn"
+            (optionSelected)="updateSelectedInstitution($event)">
+            <mat-option *ngFor="let institution of filteredInstitutions | async" [value]="institution">
+              {{ institution.name }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-hint>{{ t("Select 'Other' to add a new institution") }}</mat-hint>
+        </mat-form-field>
 
-              <div *ngIf="newInstitution" @expandCollapse>
-                  <app-add-institution (close)="onAddInstitutionClosed()"></app-add-institution>
-              </div>
-
+        <div *ngIf="newInstitution" @expandCollapse>
+          <app-add-institution (close)="onAddInstitutionClosed()"></app-add-institution>
         </div>
-      </ng-container>
-    </div>
-    <div class="flex justify-end mb-4">
-        <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onSubmit()" [disabled]="professionalForm.invalid">
-          {{ t('Add Animal-Health Professional') }}
-        </button>
+
       </div>
+    </ng-container>
+  </div>
+  <div class="flex justify-end mb-4">
+    <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onSubmit()"
+      [disabled]="professionalForm.invalid">
+      {{ t('Add Animal-Health Professional') }}
+    </button>
+  </div>
 </form>

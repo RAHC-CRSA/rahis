@@ -9,4 +9,5 @@ public class DiagnosticTestDto
     public int NumberNegative { get; set; }
     public long ProfessionalId { get; set; }
     public string ProfessionalName { get; set; }
+    public string? TestResultImage { get; set; }
 }

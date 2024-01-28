@@ -17,25 +17,24 @@ public class ParaProfessional : BaseAuditableEntity<long>
     {
     }
 
-    private ParaProfessional(string name, string email, string phone, string position, long countryId, long? institutionId) : this()
+    private ParaProfessional(string name, string email, string phone, string position, long? institutionId) : this()
     {
         Name = name;
         Email = email;
         Phone = phone;
         Position = position;
         InstitutionId = institutionId;
-        CountryId = countryId;
     }
 
-    public static ParaProfessional Create(string name, string email, string phone, string position, long countryId, long? institutionId = null)
+    public static ParaProfessional Create(string name, string email, string phone, string position, long? institutionId)
     {
         Guard.IsNotNullOrEmpty(name, nameof(name));
         Guard.IsNotNullOrEmpty(email, nameof(email));
         Guard.IsNotNullOrEmpty(phone, nameof(phone));
         Guard.IsNotNullOrEmpty(position, nameof(position));
-        Guard.IsNotNull(countryId, nameof(countryId));
+        Guard.IsNotNull(institutionId, nameof(institutionId));
 
-        return new ParaProfessional(name, email, phone, position, countryId, institutionId);
+        return new ParaProfessional(name, email, phone, position, institutionId);
     }
 
     public void Delete()

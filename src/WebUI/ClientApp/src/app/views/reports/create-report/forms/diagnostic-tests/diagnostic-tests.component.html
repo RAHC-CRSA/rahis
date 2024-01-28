@@ -62,7 +62,8 @@
         <form [formGroup]="testForm">
           <mat-form-field class="w-full mb-4">
             <mat-label>{{ t('Type of tests performed') }}?</mat-label>
-            <input aria-label="{{ t('Test name') }}" formControlName="name" matInput placeholder="{{ t('Test name') }}" />
+            <input aria-label="{{ t('Test name') }}" formControlName="name" matInput
+              placeholder="{{ t('Test name') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Test name is required', control: testForm.controls['name']}"></ng-container>
@@ -77,23 +78,39 @@
 
           <mat-form-field class="w-full mb-4">
             <mat-label>{{ t('Number of positive results') }}?</mat-label>
-            <input type="number" aria-label="{{ t('Number of positive results') }}" formControlName="numberPositive" matInput
-              placeholder="{{ t('Number of positive results') }}" />
+            <input type="number" aria-label="{{ t('Number of positive results') }}" formControlName="numberPositive"
+              matInput placeholder="{{ t('Number of positive results') }}" />
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Number positive results is required', control: testForm.controls['numberPositive']}"></ng-container>
 
+          <div class="w-full mb-4">
+            <mat-label>{{ t('Test result image') }}?</mat-label>
+            <button class="px-5" mat-flat-button [color]="'accent'" type="button" (click)="fileInput.click()">Select a
+              file
+            </button>
+            <input hidden type="file" #fileInput aria-label="{{ t('Test result image') }}"
+              (change)="onFileSelected($event)" placeholder="{{ t('Uplodad test result') }}"
+              accept=".jpg, .png, .jpeg" />
+            <img *ngIf="base64String?.length" [src]="'data:image/jpeg;base64,'+ base64String" class="w-[80px] h-auto" />
+          </div>
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'required', message: 'Test result upload is required', control: testForm.controls['testResultImage']}"></ng-container>
+
+
           <mat-form-field class="w-full mb-4">
             <mat-label>{{ t('Which animal-health professional carried out the tests') }}?</mat-label>
-            <input type="text" aria-label="{{ t('Select animal-health professional') }}" matInput [formControl]="professionalControl"
-              [matAutocomplete]="professionalAutocomplete" placeholder="{{ t('Select animal-health professional') }}">
+            <input type="text" aria-label="{{ t('Select animal-health professional') }}" matInput
+              [formControl]="professionalControl" [matAutocomplete]="professionalAutocomplete"
+              placeholder="{{ t('Select animal-health professional') }}">
             <mat-autocomplete #professionalAutocomplete="matAutocomplete" [displayWith]="displayProfessionalFn"
               (optionSelected)="updateSelectedProfessional($event)">
               <mat-option *ngFor="let professional of filteredProfessionals | async" [value]="professional">
                 {{ professional.name }}
               </mat-option>
             </mat-autocomplete>
-            <mat-hint>{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new Animal-Health Professional') }}</mat-hint>
+            <mat-hint>{{ t('Select') }} <strong>'{{ t(otherOption) }}'</strong> {{ t('to add a new Animal-Health
+              Professional') }}</mat-hint>
           </mat-form-field>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Animal-Health professional is required', control: testForm.controls['professionalId']}"></ng-container>

@@ -121,7 +121,7 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (
             {
                 foreach (var test in request.DiagnosticTests)
                 {
-                    report.AddDiagnosticTest(test.Name, test.NumberTested, test.NumberPositive, test.NumberNegative, test.ProfessionalId);
+                    report.AddDiagnosticTest(test.Name, test.NumberTested, test.NumberPositive, test.NumberNegative, test.ProfessionalId, test.TestResultImage);
                 }
             }
 

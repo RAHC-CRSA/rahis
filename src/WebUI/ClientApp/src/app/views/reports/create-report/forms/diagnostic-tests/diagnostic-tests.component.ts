@@ -26,6 +26,7 @@ import {
     ParaProfessionalDto,
 } from 'app/web-api-client';
 import { Observable, map, startWith } from 'rxjs';
+import { fileURLToPath } from 'url';
 
 @Component({
     selector: 'app-diagnostic-tests',
@@ -38,6 +39,9 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
 
     otherOption: string = 'Other';
     newProfessional: boolean = false;
+
+    selectedFile: File | null = null;
+    base64String: string | null = null;
 
     professionalControl = new FormControl();
     selectedProfessional: ParaProfessionalDto;
@@ -88,6 +92,7 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
 
         this.testForm = this.formBuilder.group({
             name: ['', [Validators.required]],
+            testResultImage: [''],
             numberTested: ['', [Validators.required]],
             numberPositive: ['', [Validators.required]],
             professionalId: ['', [Validators.required]],
@@ -193,7 +198,53 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
         this.testForm.patchValue({ professionalId: '' }, { emitEvent: true });
     }
 
+    onFileSelected(event: any) {
+        const files: FileList | null = event.target.files;
+
+        if (files && files.length > 0) {
+            console.log({ files: files.length });
+            const selectedFile: File = files[0];
+            if (this.isImageFile(selectedFile)) {
+                this.selectedFile = selectedFile;
+                this.convertToBase64(this.selectedFile);
+            }
+        }
+    }
+
+    isImageFile(file: File) {
+        console.log({ fileType: file.type });
+        return file.type.startsWith('image/');
+    }
+
+    convertToBase64(file: File) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+            console.log({ reader });
+            const fileType = file.type;
+            const imageString = reader.result as string;
+            this.base64String = imageString.replace(
+                `data:${fileType};base64,`,
+                ''
+            );
+        };
+
+        reader.onerror = (error) => {
+            console.error('Error converting file to base64:', error);
+        };
+    }
+
     onTestSubmitted() {
+        if (this.selectedFile != null) {
+            this.convertToBase64(this.selectedFile);
+            console.log({ imageString: this.base64String });
+            this.testForm.patchValue(
+                { testResultImage: this.base64String },
+                { emitEvent: true }
+            );
+        }
+
         this.formData.diagnosticTests = [
             ...this.formData.diagnosticTests,
             this.testForm.value,
@@ -206,6 +257,8 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
         );
 
         this.testForm.reset();
+        this.selectedFile = null;
+        this.base64String = null;
 
         this.testsInfo.controls.tests?.clearValidators();
         this.testsInfo.controls.tests?.updateValueAndValidity();

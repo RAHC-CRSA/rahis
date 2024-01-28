@@ -95,9 +95,9 @@ public class Report : BaseAuditableEntity<long>
         _medications.Add(medication);
     }
 
-    public void AddDiagnosticTest(string name, int numberTested, int numberPositive, int numberNegative, long professionalId)
+    public void AddDiagnosticTest(string name, int numberTested, int numberPositive, int numberNegative, long professionalId, string? testResultImage)
     {
-        var test = DiagnosticTest.Create(Id, name, numberTested, numberPositive, numberNegative, professionalId);
+        var test = DiagnosticTest.Create(Id, name, numberTested, numberPositive, numberNegative, professionalId, testResultImage);
         _diagnosticTests.Add(test);
     }
 

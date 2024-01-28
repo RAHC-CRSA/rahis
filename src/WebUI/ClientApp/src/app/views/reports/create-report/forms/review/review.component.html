@@ -138,15 +138,8 @@
         <mat-label>{{ t('For how long') }}?</mat-label>
         <div class="flex flex-row gap-3">
           <mat-form-field class="w-full">
-            <input type="number" aria-label="Observation duration" matInput formControlName="observationDuration"
-              placeholder="7" />
-          </mat-form-field>
-          <mat-form-field class="w-full">
-            <mat-select formControlName="observationDurationSuffix">
-              <mat-option *ngFor="let duration of durations" [value]="duration">
-                {{ duration }}
-              </mat-option>
-            </mat-select>
+            <input type="text" aria-label="Observation duration" matInput formControlName="observationDuration"
+              placeholder="7 days" />
           </mat-form-field>
         </div>
         <ng-container [ngTemplateOutlet]="formError"
@@ -169,15 +162,8 @@
         <mat-label>{{ t('For how long') }}?</mat-label>
         <div class="flex flex-row gap-3 w-full">
           <mat-form-field class="w-full">
-            <input type="number" aria-label="Quarantine duration" matInput formControlName="quarantineDuration"
+            <input type="text" aria-label="Quarantine duration" matInput formControlName="quarantineDuration"
               placeholder="{{ t('For how long') }}" />
-          </mat-form-field>
-          <mat-form-field class="w-full">
-            <mat-select formControlName="quarantineDurationSuffix">
-              <mat-option *ngFor="let duration of durations" [value]="duration">
-                {{ duration }}
-              </mat-option>
-            </mat-select>
           </mat-form-field>
         </div>
         <ng-container [ngTemplateOutlet]="formError"

@@ -18,9 +18,9 @@ if (app.Environment.IsDevelopment())
     // Initialise and seed database
     using (var scope = app.Services.CreateScope())
     {
-        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
-        await initialiser.InitialiseAsync();
-        await initialiser.SeedAsync();
+        //var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+        //await initialiser.InitialiseAsync();
+        //await initialiser.SeedAsync();
     }
 }
 else
