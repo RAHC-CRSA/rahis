@@ -42,7 +42,7 @@ public class AddDiagnosticTestCommandHandler : IRequestHandler<AddDiagnosticTest
                 return (Result.Failure(new List<string> { message }), null);
             }
 
-            var diagnosticTest = DiagnosticTest.Create(report.Id, request.Name, request.NumberTested, request.NumberPositive, request.NumberNegative, request.ProfessionalId, request.TestResultImage);
+            var diagnosticTest = DiagnosticTest.Create(report.Id, request.Name, request.NumberTested, request.NumberPositive, request.ProfessionalId, request.TestResultImage);
 
             await _context.DiagnosticTests.AddAsync(diagnosticTest);
             await _context.SaveChangesAsync(cancellationToken);
@@ -54,7 +54,6 @@ public class AddDiagnosticTestCommandHandler : IRequestHandler<AddDiagnosticTest
                 ReportId = diagnosticTest.ReportId,
                 NumberTested = diagnosticTest.NumberTested,
                 NumberPositive = diagnosticTest.NumberPositive,
-                NumberNegative = diagnosticTest.NumberNegative,
                 ProfessionalId = diagnosticTest.ProfessionalId,
             };
 

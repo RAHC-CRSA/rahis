@@ -26,7 +26,7 @@
     </mat-radio-group>
   </div>
 
-  <div class="mb-4">
+  <div class="mb-4" *ngIf="!country">
     <mat-form-field class="w-full">
       <mat-label>{{ t('Country') }}</mat-label>
       <input type="text" aria-label="{{ t('Country') }}" matInput [formControl]="countryControl"

@@ -5,6 +5,7 @@ import {
     AfterContentChecked,
     Output,
     ChangeDetectorRef,
+    Input,
 } from '@angular/core';
 import {
     FormBuilder,
@@ -38,6 +39,7 @@ import { Observable, map, startWith } from 'rxjs';
 export class AddParaProfessionalComponent
     implements OnInit, AfterContentChecked
 {
+    @Input() country: number | null;
     @Output() close = new EventEmitter();
 
     otherOption: string = 'Other';

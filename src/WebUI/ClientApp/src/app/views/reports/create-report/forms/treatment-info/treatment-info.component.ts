@@ -85,24 +85,17 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
             stampingOut: [this.formData.stampingOut, Validators.required],
             destructionOfCorpses: [
                 this.formData.destructionOfCorpses,
-                //  Validators.required,
+                Validators.required,
             ],
             corpsesDestroyed: [this.formData.corpsesDestroyed],
             disinfection: [this.formData.disinfection, Validators.required],
-            observation: [
-                this.formData.observation,
-                //   Validators.required
-            ],
+            observation: [this.formData.observation, Validators.required],
             observationDuration: [this.formData.observationDuration],
-            observationDurationSuffix: [
-                this.formData.observationDurationSuffix,
-            ],
             quarantine: [this.formData.quarantine, Validators.required],
             quarantineDuration: [this.formData.quarantineDuration],
-            quarantineDurationSuffix: [this.formData.quarantineDurationSuffix],
             movementControl: [
                 this.formData.movementControl,
-                //  Validators.required,
+                Validators.required,
             ],
             movementControlMeasures: [this.formData.movementControlMeasures],
             controlMeasuresCode: [this.formData.controlMeasuresCode],
@@ -139,7 +132,7 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                     )
                 );
 
-            if (this.formData.controlMeasuresCode) {
+            if (this.formData.controlMeasuresCode && this.controlMeasures) {
                 const controlMeasure = this.controlMeasures.find(
                     (m) => m.code == this.formData.controlMeasuresCode
                 );
@@ -150,8 +143,10 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                 });
 
                 this.treatmentInfo.patchValue({
-                    controlMeasuresCode: controlMeasure.code,
+                    controlMeasuresCode: controlMeasure?.code,
                 });
+
+                this.updateControlMeasure(controlMeasure);
             }
         });
     }
@@ -184,11 +179,9 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                         ?.setValidators([Validators.required]);
                 } else {
                     this.treatmentInfo.controls.observationDuration?.clearValidators();
-                    this.treatmentInfo.controls.observationDurationSuffix?.clearValidators();
                 }
 
                 this.treatmentInfo.controls.observationDuration?.updateValueAndValidity();
-                this.treatmentInfo.controls.observationDurationSuffix?.updateValueAndValidity();
                 this.wasObservation = value;
             });
 
@@ -204,10 +197,8 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
                         ?.setValidators([Validators.required]);
                 } else {
                     this.treatmentInfo.controls.quarantineDuration?.clearValidators();
-                    this.treatmentInfo.controls.quarantineDurationSuffix?.clearValidators();
                 }
                 this.treatmentInfo.controls.quarantineDuration?.updateValueAndValidity();
-                this.treatmentInfo.controls.quarantineDurationSuffix?.updateValueAndValidity();
                 this.wasQuarantined = value;
             });
 
@@ -306,22 +297,6 @@ export class TreatmentInfoComponent implements OnInit, AfterContentChecked {
     }
 
     onSubmit() {
-        if (this.f.observationDuration.value != '')
-            this.treatmentInfo.patchValue(
-                {
-                    observationDuration: `${this.f.observationDuration.value} ${this.f.observationDurationSuffix.value}`,
-                },
-                { emitEvent: true }
-            );
-
-        if (this.f.quarantineDuration.value != '')
-            this.treatmentInfo.patchValue(
-                {
-                    quarantineDuration: `${this.f.quarantineDuration.value} ${this.f.quarantineDurationSuffix.value}`,
-                },
-                { emitEvent: true }
-            );
-        console.log({ treatmentInfo: this.treatmentInfo.value });
         this.submit.emit(this.treatmentInfo.value);
     }
 
