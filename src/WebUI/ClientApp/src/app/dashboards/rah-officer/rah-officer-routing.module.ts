@@ -7,8 +7,8 @@ const routes: Routes = [
         path: '',
         component: RahOfficerComponent,
         data: {
-            roles: ['Verifier'],
-            title: 'Verifier Dashboard',
+            roles: ['Regional Animal Health Officer'],
+            title: 'Regional Animal Health Officer Dashboard',
         },
         children: [
             {
