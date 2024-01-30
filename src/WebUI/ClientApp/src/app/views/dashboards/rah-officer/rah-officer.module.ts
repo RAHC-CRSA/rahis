@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RahOfficerComponent } from './rah-officer.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { Route, RouterModule } from '@angular/router';
+import { ReportAnalyticsModule } from 'app/common/modules/report-analytics/report-analytics.module';
 
 export const routes: Route[] = [
     {
@@ -12,6 +13,10 @@ export const routes: Route[] = [
 
 @NgModule({
     declarations: [RahOfficerComponent],
-    imports: [SharedModule, RouterModule.forChild(routes)],
+    imports: [
+        SharedModule,
+        ReportAnalyticsModule,
+        RouterModule.forChild(routes),
+    ],
 })
 export class RahOfficerModule {}

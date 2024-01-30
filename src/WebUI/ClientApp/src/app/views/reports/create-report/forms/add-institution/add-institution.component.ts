@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -21,6 +21,7 @@ import { Observable, map, startWith } from 'rxjs';
     styleUrls: ['./add-institution.component.scss'],
 })
 export class AddInstitutionComponent implements OnInit {
+    @Input() country: number | null;
     @Output() close = new EventEmitter();
     institutionForm: FormGroup;
     loading$: Observable<boolean>;
@@ -60,6 +61,17 @@ export class AddInstitutionComponent implements OnInit {
                     name ? this._filterCountry(name) : this.countries.slice()
                 )
             );
+
+            if (this.country) {
+                const country = this.countries.find(
+                    (c) => c.id == this.country
+                );
+
+                this.selectedCountry = country;
+                this.countryControl.setValue(country, { emitEvent: true });
+
+                this.institutionForm.patchValue({ country: country.id });
+            }
         });
     }
 
@@ -68,7 +80,7 @@ export class AddInstitutionComponent implements OnInit {
             name: ['', [Validators.required]],
             publicSector: ['', [Validators.required]],
             type: [''],
-            country: ['', Validators.required],
+            country: [this.country, Validators.required],
         });
     }
 

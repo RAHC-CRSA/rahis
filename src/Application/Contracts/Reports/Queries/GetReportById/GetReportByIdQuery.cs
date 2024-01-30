@@ -41,6 +41,7 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
                 .Include(x => x.Disease)
                 .Include(x => x.Species)
                 // .Include(x => x.ReportStatus)
+                .Include(x => x.ControlMeasure)
                 .Include(x => x.DiagnosticTests.Where(t => !t.IsDeleted))
                     .ThenInclude(t => t.Professional)
                 .Include(x => x.Medications.Where(m => !m.IsDeleted))
@@ -86,6 +87,7 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
             Exposed = e.NumberExposed,
             Infected = e.NumberInfected,
             Mortality = e.Mortality,
+            Dead = e.Dead,
             HumanInfection = e.HumanInfection,
             HumansExposed = e.HumansExposed,
             IsOngoing = e.IsOngoing,
@@ -104,6 +106,7 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
             MovementControlMeasures = e.MovementControlMeasures,
             Treatment = e.Treatment,
             TreatmentDetails = e.TreatmentDetails,
+            ControlMeasuresCode = e.ControlMeasure.Code,
             Tested = e.DiagnosticTests.Any(),
             DiagnosticTests = e.DiagnosticTests.AsQueryable().Select(DiagnosticTestSelectorExpression()).ToList(),
             Medications = e.Medications.AsQueryable().Select(MedicationSelectorExpression()).ToList(),
@@ -122,6 +125,8 @@ public class GetReportByIdQueryHandler : IRequestHandler<GetReportByIdQuery, (Re
             Id = e.Id,
             Name = e.Name,
             NumberTested = e.NumberTested,
+            NumberPositive = e.NumberPositive,
+            NumberNegative = e.NumberNegative,
             ProfessionalName = e.Professional.Name,
             TestResultImage = e.TestResultImage,
         };

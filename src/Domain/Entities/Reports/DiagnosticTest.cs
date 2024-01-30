@@ -21,25 +21,24 @@ public class DiagnosticTest : BaseAuditableEntity<long>
     {
     }
 
-    private DiagnosticTest(long reportId, string name, int numberTested, int numberPositive, int numberNegative, long professionalId, string? testResultImage) : this()
+    private DiagnosticTest(long reportId, string name, int numberTested, int numberPositive, long professionalId, string? testResultImage) : this()
     {
         ReportId = reportId;
         Name = name;
         NumberTested = numberTested;
         NumberPositive = numberPositive;
-        NumberNegative = numberNegative;
         ProfessionalId = professionalId;
         TestResultImage = testResultImage;
     }
 
-    public static DiagnosticTest Create(long reportId, string name, int numberTested, int numberPositive, int numberNegative, long professionalId, string? testResultImage)
+    public static DiagnosticTest Create(long reportId, string name, int numberTested, int numberPositive, long professionalId, string? testResultImage)
     {
         Guard.IsNotNull(reportId, nameof(reportId));
         Guard.IsNotNullOrEmpty(name, nameof(name));
         Guard.IsNotNull(numberTested, nameof(numberTested));
         Guard.IsNotNull(professionalId, nameof(professionalId));
 
-        return new DiagnosticTest(reportId, name, numberTested, numberPositive, numberNegative, professionalId, testResultImage);
+        return new DiagnosticTest(reportId, name, numberTested, numberPositive, professionalId, testResultImage);
     }
 
     public void Delete()

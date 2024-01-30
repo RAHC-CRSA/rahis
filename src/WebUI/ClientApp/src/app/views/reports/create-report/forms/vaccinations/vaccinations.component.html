@@ -70,13 +70,15 @@
                   {{ professional.name }}
                 </mat-option>
               </mat-autocomplete>
-              <mat-hint>{{ t('Select') }} <strong>{{ t(otherOption) }}</strong>> {{ t('to add a new Animal-Health Professional') }}</mat-hint>
+              <mat-hint>{{ t('Select') }} <strong>{{ t(otherOption) }}</strong>> {{ t('to add a new Animal-Health
+                Professional') }}</mat-hint>
             </mat-form-field>
             <ng-container [ngTemplateOutlet]="formError"
               [ngTemplateOutletContext]="{validation: 'required', message: 'Animal-Health professional is required', control: vaccinationForm.controls['professionalId']}"></ng-container>
 
             <div *ngIf="newProfessional" @expandCollapse>
-              <app-add-para-professional (close)="onAddProfessionalClosed()"></app-add-para-professional>
+              <app-add-para-professional [country]="formData.country"
+                (close)="onAddProfessionalClosed()"></app-add-para-professional>
               <hr>
             </div>
 

@@ -69,8 +69,8 @@ export class ReviewComponent implements OnInit, AfterContentChecked {
         this.movementControlled = this.formData.movementControl;
         this.administeredMeds = this.formData.treatment;
 
-        this.initData();
         this.initForm();
+        this.initData();
 
         this.initConditionalValidation();
     }

@@ -95,9 +95,9 @@ public class Report : BaseAuditableEntity<long>
         _medications.Add(medication);
     }
 
-    public void AddDiagnosticTest(string name, int numberTested, int numberPositive, int numberNegative, long professionalId, string? testResultImage)
+    public void AddDiagnosticTest(string name, int numberTested, int numberPositive, long professionalId, string? testResultImage)
     {
-        var test = DiagnosticTest.Create(Id, name, numberTested, numberPositive, numberNegative, professionalId, testResultImage);
+        var test = DiagnosticTest.Create(Id, name, numberTested, numberPositive, professionalId, testResultImage);
         _diagnosticTests.Add(test);
     }
 
@@ -123,6 +123,7 @@ public class Report : BaseAuditableEntity<long>
         NumberExposed = numberExposed;
         NumberInfected = numberInfected;
         Mortality = mortality;
+        Dead = dead;
         HumanInfection = humanInfection;
         HumansExposed = humansExposed;
     }

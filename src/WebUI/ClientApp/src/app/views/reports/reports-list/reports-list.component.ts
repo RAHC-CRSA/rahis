@@ -113,7 +113,6 @@ export class ReportsListComponent {
             }
         });
         this.reports$.subscribe((items) => {
-            console.log({ reports: items });
             this.dataSource = new MatTableDataSource(items);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
