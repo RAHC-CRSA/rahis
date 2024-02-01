@@ -275,16 +275,11 @@ export class ReviewComponent implements OnInit, AfterContentChecked {
                 this.reviewForm
                     .get('medications')
                     ?.setValidators([Validators.required]);
-                // this.reviewForm
-                //     .get('treatmentDetails')
-                //     ?.setValidators([Validators.required]);
             } else {
                 this.reviewForm.controls.medications?.clearValidators();
-                this.reviewForm.controls.treatmentDetails?.clearValidators();
             }
 
             this.reviewForm.controls.medications?.updateValueAndValidity();
-            this.reviewForm.controls.treatmentDetails?.updateValueAndValidity();
             this.administeredMeds = value;
         });
 
@@ -399,6 +394,17 @@ export class ReviewComponent implements OnInit, AfterContentChecked {
 
     onTestSubmitted(diagnosticTest: DiagnosticTestDto) {
         console.log({ diagnosticTest });
+    }
+
+    onMedicationSubmit(medication: any) {
+        this.formData.medications = [...this.formData.medications, medication];
+        this.reviewForm.patchValue(
+            {
+                medications: this.formData.medications,
+            },
+            { emitEvent: true }
+        );
+        this.reviewForm.controls.medications?.updateValueAndValidity();
     }
 
     onSubmit() {

@@ -49,6 +49,9 @@
                   t('Ongoing') }}</span>
                 <span *ngIf="(report$ | async)?.isVerified" class="bg-green-500 text-white px-3 py-1 rounded-xl">{{
                   t('Verified') }}</span>
+                <span *ngIf="(report$ | async)?.reportStatus == reportStatus.Rejected"
+                  class="bg-red-500 text-white px-3 py-1 rounded-xl">{{
+                  t('Rejected') }}</span>
               </div>
               <h3 class="text-3xl">{{ (report$ | async)?.occurrenceTitle }}</h3>
               <h4 class="text-2xl">{{ (report$ | async)?.occurrenceRegion }}</h4>
@@ -60,7 +63,7 @@
           </div>
 
           <!-- Notifiability display -->
-          <div *ngIf="canNotify" class="w-full my-4">
+          <div *ngIf="canNotify && ((report$ | async)?.reportStatus !=  reportStatus.Rejected)" class="w-full my-4">
             <fuse-alert *ngIf="(report$ | async)?.notifiabilityPoints >= 7" [type]="'error'" [appearance]="'outline'">
               <span fuseAlertTitle>{{ t('Notification Recommended') }}</span>
               {{
@@ -352,7 +355,8 @@
 
           <form [formGroup]="verificationForm">
             <div class="mb-8">
-              <mat-form-field class="w-full mt-4" *ngIf="(canVerify && (report$ | async)?.reportStatus == '0')">
+              <mat-form-field class="w-full mt-4"
+                *ngIf="(canVerify && (report$ | async)?.reportStatus == reportStatus.Pending)">
                 <mat-label>Comment:</mat-label>
                 <textarea aria-label="Cvo Comment" formControlName="cvoComment" matInput
                   placeholder="Additional comment to for this report"></textarea>
@@ -382,16 +386,16 @@
             {{ t('Back') }}
           </a>
           <div class="flex justify-between my-4">
-            <button *ngIf="canVerify && (report$ | async)?.reportStatus == '0'" class="px-8 mr-2" mat-flat-button
-              [color]="'warn'" type="button" [disabled]="!canVerify" (click)="reject()">
+            <button *ngIf="canVerify && (report$ | async)?.reportStatus == reportStatus.Pending" class="px-8 mr-2"
+              mat-flat-button [color]="'warn'" type="button" [disabled]="!canVerify" (click)="reject()">
               <span *ngIf="!( loading$ | async )">
                 {{ t('Reject Report') }}
               </span>
               <mat-progress-spinner *ngIf="( loading$ | async )" [diameter]="24"
                 [mode]="'indeterminate'"></mat-progress-spinner>
             </button>
-            <button *ngIf="canVerify && ( report$ | async)?.reportStatus == '0'" class="px-8" mat-flat-button
-              [color]="'primary'" type="button" [disabled]="!canVerify" (click)="validate()">
+            <button *ngIf="canVerify && ( report$ | async)?.reportStatus == reportStatus.Pending" class="px-8"
+              mat-flat-button [color]="'primary'" type="button" [disabled]="!canVerify" (click)="validate()">
               <span *ngIf="!( loading$ | async )">
                 {{ t('Validate Report') }}
               </span>

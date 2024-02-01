@@ -5153,7 +5153,7 @@ export interface IAddDiagnosticTestCommand {
 }
 
 export class VaccinationDto implements IVaccinationDto {
-    id?: number;
+    id?: number | undefined;
     name?: string;
     numberVaccinated?: number;
     reportId?: number;
@@ -5206,7 +5206,7 @@ export class VaccinationDto implements IVaccinationDto {
 }
 
 export interface IVaccinationDto {
-    id?: number;
+    id?: number | undefined;
     name?: string;
     numberVaccinated?: number;
     reportId?: number;
@@ -5519,7 +5519,7 @@ export enum ReportStatus {
 }
 
 export class MedicationDto implements IMedicationDto {
-    id?: number;
+    id?: number | undefined;
     reportId?: number;
     name?: string;
     dosage?: string;
@@ -5560,14 +5560,14 @@ export class MedicationDto implements IMedicationDto {
 }
 
 export interface IMedicationDto {
-    id?: number;
+    id?: number | undefined;
     reportId?: number;
     name?: string;
     dosage?: string;
 }
 
 export class DiagnosticTestDto implements IDiagnosticTestDto {
-    id?: number;
+    id?: number | undefined;
     name?: string;
     reportId?: number;
     numberTested?: number;
@@ -5623,7 +5623,7 @@ export class DiagnosticTestDto implements IDiagnosticTestDto {
 }
 
 export interface IDiagnosticTestDto {
-    id?: number;
+    id?: number | undefined;
     name?: string;
     reportId?: number;
     numberTested?: number;

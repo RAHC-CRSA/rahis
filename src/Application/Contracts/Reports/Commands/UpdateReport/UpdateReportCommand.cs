@@ -110,7 +110,7 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (
                 report.UpdateTreatmentDetails(request.TreatmentDetails);
                 if (request.Medications.Any())
                 {
-                    foreach (var item in request.Medications)
+                    foreach (var item in request.Medications.Where(m => m.Id != null).ToList())
                     {
                         report.AddMedication(item.Name, item.Dosage);
                     }
@@ -119,7 +119,7 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (
 
             if (request.DiagnosticTests.Any())
             {
-                foreach (var test in request.DiagnosticTests)
+                foreach (var test in request.DiagnosticTests.Where(d => d.Id != null).ToList())
                 {
                     report.AddDiagnosticTest(test.Name, test.NumberTested, test.NumberPositive, test.ProfessionalId, test.TestResultImage);
                 }
@@ -127,7 +127,7 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (
 
             if (request.Vaccinations.Any())
             {
-                foreach (var vacc in request.Vaccinations)
+                foreach (var vacc in request.Vaccinations.Where(v => v.Id != null).ToList())
                 {
                     report.AddVaccination(vacc.Name, vacc.NumberVaccinated, vacc.IsHuman, vacc.IsAnimal, vacc.ProfessionalId);
                 }
