@@ -289,6 +289,20 @@ export class ReviewComponent implements OnInit, AfterContentChecked {
         });
 
         this.reviewForm
+            .get('humanInfection')
+            ?.valueChanges.subscribe((value) => {
+                if (value) {
+                    this.reviewForm
+                        .get('humansExposed')
+                        ?.setValidators([Validators.required]);
+                } else {
+                    this.reviewForm.controls.humansExposed?.clearValidators();
+                }
+
+                this.reviewForm.controls.humansExposed?.updateValueAndValidity();
+            });
+
+        this.reviewForm
             .get('controlMeasuresCode')
             ?.valueChanges.subscribe((value) => {
                 if (value)
