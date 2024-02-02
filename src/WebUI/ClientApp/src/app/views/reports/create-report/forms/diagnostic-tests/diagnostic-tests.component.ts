@@ -82,7 +82,7 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
 
     initForm() {
         this.testsInfo = this.formBuilder.group({
-            tested: [this.hasTests],
+            tested: [this.formData.diagnosticTests?.length],
             tests: [
                 this.formData.diagnosticTests?.length
                     ? this.formData.tests
@@ -245,7 +245,6 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
     onTestSubmitted() {
         if (this.selectedFile != null) {
             this.convertToBase64(this.selectedFile);
-            console.log({ imageString: this.base64String });
             this.testForm.patchValue(
                 { testResultImage: this.base64String },
                 { emitEvent: true }

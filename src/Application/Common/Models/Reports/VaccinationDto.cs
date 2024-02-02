@@ -1,7 +1,7 @@
 ﻿namespace RegionalAnimalHealth.Application.Common.Models.Reports;
 public class VaccinationDto
 {
-    public long Id { get; set; }
+    public long? Id { get; set; }
     public string Name { get; set; }
     public int NumberVaccinated { get; set; }
     public long ReportId { get; set; }
