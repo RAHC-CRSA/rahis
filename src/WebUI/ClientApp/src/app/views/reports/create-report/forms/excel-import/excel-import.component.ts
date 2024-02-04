@@ -119,11 +119,18 @@ export class ExcelImportComponent {
                         treatment: false,
                         treatmentDetails: '',
                         controlMeasuresCode: '',
+                        medications: [],
+                        vaccinations: [],
+                        tests: [],
                     };
 
                     Object.keys(formData).forEach((property, index) => {
                         formData[property] = importData[index];
                     });
+
+                    formData.medications = [];
+                    formData.tests = [];
+                    formData.vaccinations = [];
 
                     this.submit.emit(formData);
                 })

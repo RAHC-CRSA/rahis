@@ -42,7 +42,7 @@ export class ReviewComponent implements OnInit, AfterContentChecked {
     administeredMeds: boolean;
 
     hideRequiredMarker: boolean = true;
-    requiredLabel: string = '*required';
+    requiredLabel: string = '*';
 
     controlMeasuresControl = new FormControl();
     selectedControlMeasure: ControlMeasureDto;
@@ -51,6 +51,8 @@ export class ReviewComponent implements OnInit, AfterContentChecked {
     controlMeasures$: Observable<ControlMeasureDto[] | null | undefined>;
     controlMeasures: ControlMeasureDto[];
     filteredControlMeasures: Observable<ControlMeasureDto[]>;
+
+    medicationsColumns: string[] = ['name', 'dosage', 'actions'];
 
     loading$: Observable<boolean>;
 
@@ -121,6 +123,8 @@ export class ReviewComponent implements OnInit, AfterContentChecked {
                 }
             }
         });
+
+        console.log({ formData: this.formData });
     }
 
     initForm() {
@@ -405,6 +409,8 @@ export class ReviewComponent implements OnInit, AfterContentChecked {
             { emitEvent: true }
         );
         this.reviewForm.controls.medications?.updateValueAndValidity();
+
+        console.log({ medications: this.formData.medications });
     }
 
     onSubmit() {

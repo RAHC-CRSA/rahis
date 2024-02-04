@@ -83,10 +83,10 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
 
             int notifiabilityPoints = 0;
             Occurrence? occurrence;
-            
+
             if (request.OccurrenceId == null)
             {
-               
+
                 // TODO: Get occurrence date from request
                 occurrence = Occurrence.Create(request.CountryId, request.RegionId, request.MunicipalityId, request.DistrictId, request.CommunityId, DateOnly.FromDateTime(DateTime.UtcNow));
 
@@ -141,7 +141,8 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             // TODO: Add treatments, tests and vaccinations
             if (request.Treatment)
             {
-                report.UpdateTreatmentDetails(request.TreatmentDetails);
+                if (!string.IsNullOrEmpty(request.TreatmentDetails))
+                    report.UpdateTreatmentDetails(request.TreatmentDetails);
                 if (request.Medications.Any())
                 {
                     foreach (var item in request.Medications)
@@ -187,11 +188,11 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             if (latestReport != null)
             {
                 // Animal mortality points
-               // notifiabilityPoints += request.Mortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
+                // notifiabilityPoints += request.Mortality > latestReport.Mortality ? request.Mortality > (latestReport.Mortality / 2) ? 2 : 1 : 0;
             }
 
             // Calculate notifiability points out of 10
-            notifiabilityPoints = (int) Math.Round(notifiabilityPoints / 8.0 * 10);
+            notifiabilityPoints = (int)Math.Round(notifiabilityPoints / 8.0 * 10);
 
             // Set notifiable points for report
             report.SetNotifiabilityPoints(notifiabilityPoints);
@@ -202,10 +203,10 @@ public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, (
             occurrence.AddReport(report);
 
             // Save changes
-            await _context.SaveChangesAsync(cancellationToken); 
+            await _context.SaveChangesAsync(cancellationToken);
 
             // Notify reporter
-            var (_, user) = await  _identityService.GetUserAsync(_currentUserService?.UserId);
+            var (_, user) = await _identityService.GetUserAsync(_currentUserService?.UserId);
 
             var subject = $"Report Submitted";
             var content = $"You have successfully submitted a report.";

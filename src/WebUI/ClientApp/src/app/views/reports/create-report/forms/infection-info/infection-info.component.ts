@@ -58,12 +58,16 @@ export class InfectionInfoComponent implements OnInit, AfterContentChecked {
                 if (value) {
                     this.infectionInfo
                         .get('humansExposed')
-                        ?.setValidators([Validators.required]);
+                        ?.setValidators([
+                            Validators.required,
+                            Validators.min(1),
+                        ]);
                 } else {
                     this.infectionInfo.controls.humansExposed?.clearValidators();
                 }
 
                 this.infectionInfo.controls.humansExposed?.updateValueAndValidity();
+                this.humanInfection = value;
             });
     }
 

@@ -82,7 +82,7 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
 
     initForm() {
         this.testsInfo = this.formBuilder.group({
-            tested: [this.formData.diagnosticTests?.length],
+            tested: [this.hasTests, [Validators.required]],
             tests: [
                 this.formData.diagnosticTests?.length
                     ? this.formData.tests
@@ -265,6 +265,9 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
         this.testForm.reset();
         this.selectedFile = null;
         this.base64String = null;
+        this.professionalControl.reset();
+
+        console.log({ string: this.base64String });
 
         this.testsInfo.controls.tests?.clearValidators();
         this.testsInfo.controls.tests?.updateValueAndValidity();
