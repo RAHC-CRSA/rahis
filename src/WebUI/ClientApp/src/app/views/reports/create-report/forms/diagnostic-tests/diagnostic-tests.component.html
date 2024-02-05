@@ -93,7 +93,7 @@
             <input hidden type="file" #fileInput aria-label="{{ t('Test result image') }}"
               (change)="onFileSelected($event)" placeholder="{{ t('Uplodad test result') }}"
               accept=".jpg, .png, .jpeg" />
-            <img *ngIf="base64String?.length" [src]="'data:image/png;base64,'+ base64String" class="w-[80px] h-auto" />
+            <img *ngIf="selectedFile != null" [src]="'data:image/png;base64,'+ base64String" class="w-[80px] h-auto" />
           </div>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'fileSizeExceeded', message: 'Test result upload file size is too large', control: testForm.controls['testResultImage']}"></ng-container>

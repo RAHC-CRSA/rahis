@@ -33,6 +33,7 @@ import { Observable } from 'rxjs';
     animations: fuseAnimations,
 })
 export class CreateReportComponent implements OnInit {
+    userAction: string;
     reportId: number;
     formValues: any;
     updatingReport: boolean;
@@ -66,6 +67,7 @@ export class CreateReportComponent implements OnInit {
 
     initData() {
         if (this.reportId) {
+            this.userAction = 'Edit a Report';
             this.report$ = this.store.select(getReport);
             this.loaded$ = this.store.select(getReportsLoaded);
 
@@ -76,6 +78,7 @@ export class CreateReportComponent implements OnInit {
                 }
             });
         } else {
+            this.userAction = 'Create a Report';
             this.formValues = this._getFormValues();
         }
         this.feedback$ = this.store.select(getFeedback);

@@ -52,9 +52,9 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (
     private readonly IIdentityService _identityService;
     private readonly ICurrentUserService _currentUserService;
     private readonly IEmailService _emailService;
-    
 
-    public UpdateReportCommandHandler(IApplicationDbContext context,  IIdentityService identityService, ICurrentUserService currentUserService, IEmailService emailService, ILogger<UpdateReportCommand> logger)
+
+    public UpdateReportCommandHandler(IApplicationDbContext context, IIdentityService identityService, ICurrentUserService currentUserService, IEmailService emailService, ILogger<UpdateReportCommand> logger)
     {
         _context = context;
         _logger = logger;
@@ -107,10 +107,11 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (
             // TODO: Add treatments, tests and vaccinations
             if (request.Treatment)
             {
-                report.UpdateTreatmentDetails(request.TreatmentDetails);
+                if (!string.IsNullOrEmpty(request.TreatmentDetails))
+                    report.UpdateTreatmentDetails(request.TreatmentDetails);
                 if (request.Medications.Any())
                 {
-                    foreach (var item in request.Medications.Where(m => m.Id != null).ToList())
+                    foreach (var item in request.Medications.Where(m => m.Id < 1).ToList())
                     {
                         report.AddMedication(item.Name, item.Dosage);
                     }
@@ -119,7 +120,7 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (
 
             if (request.DiagnosticTests.Any())
             {
-                foreach (var test in request.DiagnosticTests.Where(d => d.Id != null).ToList())
+                foreach (var test in request.DiagnosticTests.Where(d => d.Id < 1).ToList())
                 {
                     report.AddDiagnosticTest(test.Name, test.NumberTested, test.NumberPositive, test.ProfessionalId, test.TestResultImage);
                 }
@@ -127,7 +128,7 @@ public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, (
 
             if (request.Vaccinations.Any())
             {
-                foreach (var vacc in request.Vaccinations.Where(v => v.Id != null).ToList())
+                foreach (var vacc in request.Vaccinations.Where(v => v.Id < 1).ToList())
                 {
                     report.AddVaccination(vacc.Name, vacc.NumberVaccinated, vacc.IsHuman, vacc.IsAnimal, vacc.ProfessionalId);
                 }

@@ -33,8 +33,8 @@
         <div class="w-full mb-4">
           <mat-label>{{ t('Were any humans exposed') }}?</mat-label>
           <mat-radio-group class="flex" formControlName="humanInfection" aria-label="Human infection">
-            <mat-radio-button [value]="false" (change)="onHumanInfectionChange(false)">{{ t('No') }}</mat-radio-button>
-            <mat-radio-button [value]="true" (change)="onHumanInfectionChange(true)">{{ t('Yes') }}</mat-radio-button>
+            <mat-radio-button [value]="false">{{ t('No') }}</mat-radio-button>
+            <mat-radio-button [value]="true">{{ t('Yes') }}</mat-radio-button>
           </mat-radio-group>
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Human infection is required', control: infectionInfo.controls['humanInfection']}"></ng-container>

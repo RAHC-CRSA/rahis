@@ -217,7 +217,7 @@
       <div *ngIf="administeredMeds" @expandCollapse>
         <div class="w-full mt-4">
           <h4 class="text-2xl mb-4">{{ t('Medications') }}</h4>
-          <div *ngIf="formData.medications?.length" @expandCollapse>
+          <div *ngIf="formData.medications?.length">
             <div class="mb-4">
               <table mat-table [dataSource]="formData.medications" class="w-full">
 
@@ -242,8 +242,8 @@
                     </button> </td>
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-header-row *matHeaderRowDef="medicationsColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: medicationsColumns;"></tr>
 
               </table>
             </div>
