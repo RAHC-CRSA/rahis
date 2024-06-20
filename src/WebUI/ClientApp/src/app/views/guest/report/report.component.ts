@@ -50,7 +50,7 @@ export class ReportComponent implements OnInit {
     }
 
     initData() {
-        this.store.dispatch(loadPublicReports());
+        this.store.dispatch(loadPublicReports({ payload: undefined }));
 
         this.reports$ = this.store.select(getPublicReports);
         this.reports$.subscribe((items) => {
@@ -80,7 +80,7 @@ export class ReportComponent implements OnInit {
                     id: e.id,
                     occurrenceTitle: e.occurrenceTitle,
                     location: e.location,
-                    verified: e.isVerified,
+                    isVerified: e.isVerified,
                     exposed: e.exposed,
                     infected: e.infected,
                 },
@@ -92,7 +92,7 @@ export class ReportComponent implements OnInit {
             let blob = new Blob([data], {
                 type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             });
-            fs.saveAs(blob, 'RAHIS_Monthly_Report.xlsx');
+            fs.saveAs(blob, 'RAHIS_Report.xlsx');
         });
     }
 }

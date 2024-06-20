@@ -122,12 +122,16 @@
             <hr>
           </div>
 
+          <ng-container [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{validation: 'numberNotGreater', message: 'Number positive cannot be greater than number tested', control: testForm}"></ng-container>
+
           <div class="flex justify-end mb-4">
             <button class="px-8" mat-flat-button [color]="'primary'" type="button" (click)="onTestSubmitted()"
               [disabled]="testForm.invalid">
               {{ t('Add Test') }}
             </button>
           </div>
+
         </form>
       </div>
       <hr>

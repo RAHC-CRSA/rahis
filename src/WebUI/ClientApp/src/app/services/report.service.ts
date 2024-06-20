@@ -81,7 +81,8 @@ export class ReportService {
         return this.getReportsClient.handle(
             payload.isVerified,
             payload.countryId,
-            payload.userId
+            payload.userId,
+            payload.fromMonths
         );
     }
 
@@ -109,8 +110,14 @@ export class ReportService {
         );
     }
 
-    getReportsAnalytics(payload: DataQueryTimeSpan) {
-        return this.getReportsAnalyticsClient.handle(payload);
+    getReportsAnalytics(payload: {
+        timeSpan: DataQueryTimeSpan;
+        countryId?: number | undefined;
+    }) {
+        return this.getReportsAnalyticsClient.handle(
+            payload.timeSpan,
+            payload.countryId
+        );
     }
 
     getPublicReports() {
