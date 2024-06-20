@@ -24,6 +24,9 @@ import { AddDiseaseComponent } from './forms/add-disease/add-disease.component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { ExcelImportComponent } from './forms/excel-import/excel-import.component';
 import { ReviewComponent } from './forms/review/review.component';
+import { AddTestComponent } from './forms/add-test/add-test.component';
+import { AddVaccinationComponent } from './forms/add-vaccination/add-vaccination.component';
+import { AddMedicationComponent } from './forms/add-medication/add-medication.component';
 
 export const routes: Route[] = [
     {
@@ -53,6 +56,9 @@ export const routes: Route[] = [
         ExcelImportComponent,
         ViewSummaryComponent,
         ReviewComponent,
+        AddTestComponent,
+        AddVaccinationComponent,
+        AddMedicationComponent,
     ],
     imports: [
         ReportsModule,
