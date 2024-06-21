@@ -106,7 +106,11 @@ export const LOAD_REPORTS_SUCCESS = `[Reports] Load Reports Success`;
 export const loadReports = createAction(
     LOAD_REPORTS,
     props<{
-        payload: { isVerified: boolean; countryId: number | undefined };
+        payload: {
+            isVerified: boolean;
+            countryId: number | undefined;
+            fromMonths?: number | undefined;
+        };
     }>()
 );
 export const loadReportsSuccess = createAction(
@@ -352,7 +356,12 @@ export const LOAD_ANALYTICS_SUCCESS = `[Reports] Load Analytics Success`;
 
 export const loadAnalytics = createAction(
     LOAD_ANALYTICS,
-    props<{ payload: DataQueryTimeSpan }>()
+    props<{
+        payload: {
+            timeSpan: DataQueryTimeSpan;
+            countryId?: number | undefined;
+        };
+    }>()
 );
 export const loadAnalyticsSuccess = createAction(
     LOAD_ANALYTICS_SUCCESS,
@@ -363,7 +372,10 @@ export const loadAnalyticsSuccess = createAction(
 export const LOAD_PUBLIC_REPORTS = `[Reports] Load Public Reports`;
 export const LOAD_PUBLIC_REPORTS_SUCCESS = `[Reports] Load Public Reports Success`;
 
-export const loadPublicReports = createAction(LOAD_PUBLIC_REPORTS);
+export const loadPublicReports = createAction(
+    LOAD_PUBLIC_REPORTS,
+    props<{ payload?: { fromMonths: number | undefined } }>()
+);
 export const loadPublicReportsSuccess = createAction(
     LOAD_PUBLIC_REPORTS_SUCCESS,
     props<{ payload: PublicReportDto[] }>()

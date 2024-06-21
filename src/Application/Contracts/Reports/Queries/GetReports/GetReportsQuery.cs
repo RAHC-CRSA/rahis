@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using RegionalAnimalHealth.Application.Common.Interfaces;
 using RegionalAnimalHealth.Application.Common.Models;
 using RegionalAnimalHealth.Domain.Entities.Reports;
-using RegionalAnimalHealth.Domain.Enums;
 
 namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReports;
 public class GetReportsQuery : IRequest<(Result, List<ReportListDto>?)>
@@ -13,6 +12,7 @@ public class GetReportsQuery : IRequest<(Result, List<ReportListDto>?)>
     public bool? IsVerified { get; set; }
     public long? CountryId { get; set; }
     public string? UserId { get; set; }
+    public int? FromMonths { get; set; }
     // public ReportStatus? ReportStatus { get; set; }
 }
 
@@ -43,6 +43,7 @@ public class GetReportsQueryHandler : IRequestHandler<GetReportsQuery, (Result, 
                 .Where(x => !x.IsDeleted &&
                     (request.IsVerified != null ? x.IsVerified == request.IsVerified : true) &&
                     (request.CountryId != null ? x.Occurrence.Country.Id == request.CountryId : true) &&
+                    (request.FromMonths != null ? x.Created >= DateTime.Today.AddMonths(-(int)request.FromMonths) : true) &&
                     (request.UserId != null ? x.CreatedBy == request.UserId : true))
                 .Select(ReportSelectorExpression())
                 .ToListAsync();

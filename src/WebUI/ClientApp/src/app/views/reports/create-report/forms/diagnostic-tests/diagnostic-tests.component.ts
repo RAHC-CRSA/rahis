@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
+import { numberNotGreaterValidator } from 'app/common/validators/notGreaterThan.validator';
 import { ReportState } from 'app/modules/reports/store';
 import {
     addParaProfessional,
@@ -90,13 +91,21 @@ export class DiagnosticTestsComponent implements OnInit, AfterContentChecked {
             ],
         });
 
-        this.testForm = this.formBuilder.group({
-            name: ['', [Validators.required]],
-            testResultImage: [''],
-            numberTested: ['', [Validators.required]],
-            numberPositive: ['', [Validators.required]],
-            professionalId: ['', [Validators.required]],
-        });
+        this.testForm = this.formBuilder.group(
+            {
+                name: ['', [Validators.required]],
+                testResultImage: [''],
+                numberTested: ['', [Validators.required]],
+                numberPositive: ['', [Validators.required]],
+                professionalId: ['', [Validators.required]],
+            },
+            {
+                validators: numberNotGreaterValidator(
+                    'numberTested',
+                    'numberPositive'
+                ),
+            }
+        );
     }
 
     initData() {

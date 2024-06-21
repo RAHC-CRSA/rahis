@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
+import { totalSumValidator } from 'app/common/validators/total-sum.validator';
 
 @Component({
     selector: 'app-infection-info',
@@ -39,16 +40,26 @@ export class InfectionInfoComponent implements OnInit, AfterContentChecked {
     }
 
     initForm() {
-        this.infectionInfo = this.formBuilder.group({
-            numberExposed: [this.formData.exposed, Validators.required],
-            numberInfected: [this.formData.infected, Validators.required],
-            numberDead: [this.formData.dead, Validators.required],
-            humanInfection: [
-                this.formData.humanInfection,
-                Validators.compose([Validators.required]),
-            ],
-            humansExposed: [this.formData.humansExposed],
-        });
+        this.infectionInfo = this.formBuilder.group(
+            {
+                numberExposed: [this.formData.exposed, Validators.required],
+                numberInfected: [this.formData.infected, Validators.required],
+                numberDead: [this.formData.dead, Validators.required],
+                humanInfection: [
+                    this.formData.humanInfection,
+                    Validators.compose([Validators.required]),
+                ],
+                humansExposed: [this.formData.humansExposed],
+            },
+            {
+                validators: totalSumValidator(
+                    'numberExposed',
+                    'numberInfected',
+                    'numberDead',
+                    'sumInvalid'
+                ),
+            }
+        );
     }
 
     initConditionalValidation() {

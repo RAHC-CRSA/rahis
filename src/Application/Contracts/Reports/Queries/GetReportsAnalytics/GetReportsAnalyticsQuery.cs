@@ -9,6 +9,7 @@ namespace RegionalAnimalHealth.Application.Contracts.Reports.Queries.GetReportsA
 public class GetReportsAnalyticsQuery : IRequest<(Result, ReportsAnalyticsDto)>
 {
     public DataQueryTimeSpan TimeSpan { get; set; }
+    public long? CountryId { get; set; }
 }
 
 public class GetReportsChartDataQueryHandler : IRequestHandler<GetReportsAnalyticsQuery, (Result, ReportsAnalyticsDto)>
@@ -31,7 +32,7 @@ public class GetReportsChartDataQueryHandler : IRequestHandler<GetReportsAnalyti
             var (start, end, format, series) = GetQuerySpan(seriesType, request.TimeSpan);
 
             var reports = await _context.Reports
-                .Where(x => !x.IsDeleted && x.Created.Date >= start && x.Created.Date <= end)
+                .Where(x => !x.IsDeleted && x.Created.Date >= start && x.Created.Date <= end && (request.CountryId != null ? x.Occurrence.CountryId == request.CountryId : true))
                 .OrderBy(x => x.Created)
                 .ToListAsync();
 
