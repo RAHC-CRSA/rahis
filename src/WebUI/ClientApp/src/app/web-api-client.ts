@@ -869,8 +869,9 @@ export interface IGetReportsClient {
      * @param isVerified (optional) 
      * @param countryId (optional) 
      * @param userId (optional) 
+     * @param fromMonths (optional) 
      */
-    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined, userId: string | null | undefined): Observable<ReportListDto[]>;
+    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined, userId: string | null | undefined, fromMonths: number | null | undefined): Observable<ReportListDto[]>;
 }
 
 @Injectable({
@@ -891,8 +892,9 @@ export class GetReportsClient implements IGetReportsClient {
      * @param isVerified (optional) 
      * @param countryId (optional) 
      * @param userId (optional) 
+     * @param fromMonths (optional) 
      */
-    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined, userId: string | null | undefined): Observable<ReportListDto[]> {
+    handle(isVerified: boolean | null | undefined, countryId: number | null | undefined, userId: string | null | undefined, fromMonths: number | null | undefined): Observable<ReportListDto[]> {
         let url_ = this.baseUrl + "/api/reports?";
         if (isVerified !== undefined && isVerified !== null)
             url_ += "IsVerified=" + encodeURIComponent("" + isVerified) + "&";
@@ -900,6 +902,8 @@ export class GetReportsClient implements IGetReportsClient {
             url_ += "CountryId=" + encodeURIComponent("" + countryId) + "&";
         if (userId !== undefined && userId !== null)
             url_ += "UserId=" + encodeURIComponent("" + userId) + "&";
+        if (fromMonths !== undefined && fromMonths !== null)
+            url_ += "FromMonths=" + encodeURIComponent("" + fromMonths) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1510,8 +1514,9 @@ export interface IGetReportsAnalyticsClient {
     /**
      * Gets analytics data for reports
      * @param timeSpan (optional) 
+     * @param countryId (optional) 
      */
-    handle(timeSpan: DataQueryTimeSpan | undefined): Observable<ReportsAnalyticsDto>;
+    handle(timeSpan: DataQueryTimeSpan | undefined, countryId: number | null | undefined): Observable<ReportsAnalyticsDto>;
 }
 
 @Injectable({
@@ -1530,13 +1535,16 @@ export class GetReportsAnalyticsClient implements IGetReportsAnalyticsClient {
     /**
      * Gets analytics data for reports
      * @param timeSpan (optional) 
+     * @param countryId (optional) 
      */
-    handle(timeSpan: DataQueryTimeSpan | undefined): Observable<ReportsAnalyticsDto> {
+    handle(timeSpan: DataQueryTimeSpan | undefined, countryId: number | null | undefined): Observable<ReportsAnalyticsDto> {
         let url_ = this.baseUrl + "/api/reports/analytics?";
         if (timeSpan === null)
             throw new Error("The parameter 'timeSpan' cannot be null.");
         else if (timeSpan !== undefined)
             url_ += "TimeSpan=" + encodeURIComponent("" + timeSpan) + "&";
+        if (countryId !== undefined && countryId !== null)
+            url_ += "CountryId=" + encodeURIComponent("" + countryId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {

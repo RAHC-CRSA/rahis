@@ -541,6 +541,16 @@
               "nullable": true
             },
             "x-position": 3
+          },
+          {
+            "name": "FromMonths",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 4
           }
         ],
         "responses": {
@@ -927,6 +937,16 @@
               "$ref": "#/components/schemas/DataQueryTimeSpan"
             },
             "x-position": 1
+          },
+          {
+            "name": "CountryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "nullable": true
+            },
+            "x-position": 2
           }
         ],
         "responses": {

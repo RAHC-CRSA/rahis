@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
 import { Store } from '@ngrx/store';
 import { ApexOptions } from 'apexcharts';
+import { AuthState } from 'app/core/auth/store';
+import { getUser } from 'app/core/auth/store/selectors';
 import { ReportState } from 'app/modules/reports/store';
 import { loadAnalytics } from 'app/modules/reports/store/actions';
 import { getAnalytics } from 'app/modules/reports/store/selectors';
@@ -20,14 +22,29 @@ export class ReportAnalyticsComponent implements OnInit {
     data$: Observable<ReportsAnalyticsDto | null | undefined>;
     data: ReportsAnalyticsDto;
 
-    constructor(private store: Store<ReportState>, private router: Router, private translocoService: TranslocoService) {}
+    constructor(
+        private store: Store<ReportState>,
+        private authStore: Store<AuthState>,
+        private router: Router,
+        private translocoService: TranslocoService
+    ) {}
 
     ngOnInit() {
         this.initData();
     }
 
     initData() {
-        this.store.dispatch(loadAnalytics({ payload: this.seriesTimeSpan }));
+        this.authStore.select(getUser).subscribe((user) => {
+            this.store.dispatch(
+                loadAnalytics({
+                    payload: {
+                        timeSpan: this.seriesTimeSpan,
+                        countryId: user?.countryId,
+                    },
+                })
+            );
+        });
+
         this.data$ = this.store.select(getAnalytics);
         this.data$.subscribe((data) => {
             this.data = data;
@@ -54,7 +71,9 @@ export class ReportAnalyticsComponent implements OnInit {
     }
 
     changeSeriesRange() {
-        this.store.dispatch(loadAnalytics({ payload: this.seriesTimeSpan }));
+        this.store.dispatch(
+            loadAnalytics({ payload: { timeSpan: this.seriesTimeSpan } })
+        );
     }
 
     prepareChartData() {

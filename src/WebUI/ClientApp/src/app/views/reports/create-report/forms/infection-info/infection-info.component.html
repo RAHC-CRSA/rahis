@@ -11,7 +11,6 @@
         <ng-container [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{validation: 'required', message: 'Number exposed is required', control: infectionInfo.controls['numberExposed']}"></ng-container>
 
-
         <mat-form-field class="w-full mb-4">
           <mat-label> {{ t('How many animals were infected') }}?</mat-label>
           <input type="number" aria-label="{{ t('Number infected') }}" matInput formControlName="numberInfected"
@@ -39,6 +38,9 @@
           <ng-container [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{validation: 'required', message: 'Human infection is required', control: infectionInfo.controls['humanInfection']}"></ng-container>
         </div>
+
+        <ng-container [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{validation: 'sumInvalid', message: 'Number exposed cannot be less than number infected and number dead combined', control: infectionInfo}"></ng-container>
 
         <div *ngIf="humanInfection" @expandCollapse>
           <h4 class="text-2xl mb-4">{{ t('Humans') }}</h4>
@@ -69,6 +71,7 @@
             [ngTemplateOutletContext]="{validation: 'required', message: 'Humans dead is required', control: infectionInfo.controls['humansDead']}"></ng-container> -->
 
         </div>
+
         <div class="flex justify-between my-4">
           <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="onPrevious()">
             {{ t('Back') }}
