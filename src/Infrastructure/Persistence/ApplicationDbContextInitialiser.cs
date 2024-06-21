@@ -280,22 +280,22 @@ public class ApplicationDbContextInitialiser
                 await _context.Diseases.AddRangeAsync(canineDiseases);
 
                 // Prioritized Zonotic diseases
-                classification = "Prioritized Zonotic diseases";
+                // classification = "Prioritized Zonotic diseases";
 
-                var zonoticSpecies = Species.Create("Zonotic");
-                var zonoticDiseases = new List<Disease>
-                {
-                    Disease.Create("Anthrax", "", classification),
-                    Disease.Create("Rabies", "", classification),
-                    Disease.Create("Ebola and other Viral Haemorrhagic Fevers (Marburg, Lassa fever, Rift Valley fever, and Crimean-Congo hemorrhagic fever)", "", classification),
-                    Disease.Create("Zoonotic Influenza A Viruses", "", classification),
-                    Disease.Create("Zoonotic Tuberculosis", "", classification),
-                    Disease.Create("Trypanosomiasis", "", classification),
-                    Disease.Create("Yellow Fever", "", classification)
-                }.OrderBy(d => d.Name);
+                // var zonoticSpecies = Species.Create("Zonotic");
+                // var zonoticDiseases = new List<Disease>
+                // {
+                //     Disease.Create("Anthrax", "", classification),
+                //     Disease.Create("Rabies", "", classification),
+                //     Disease.Create("Ebola and other Viral Haemorrhagic Fevers (Marburg, Lassa fever, Rift Valley fever, and Crimean-Congo hemorrhagic fever)", "", classification),
+                //     Disease.Create("Zoonotic Influenza A Viruses", "", classification),
+                //     Disease.Create("Zoonotic Tuberculosis", "", classification),
+                //     Disease.Create("Trypanosomiasis", "", classification),
+                //     Disease.Create("Yellow Fever", "", classification)
+                // }.OrderBy(d => d.Name);
 
-                await _context.Species.AddAsync(zonoticSpecies);
-                await _context.Diseases.AddRangeAsync(zonoticDiseases);
+                // await _context.Species.AddAsync(zonoticSpecies);
+                // await _context.Diseases.AddRangeAsync(zonoticDiseases);
 
                 // Fish diseases
                 classification = "Fish diseases";
@@ -430,7 +430,7 @@ public class ApplicationDbContextInitialiser
                     Species.Create("Apidae"),
                     Species.Create("Camelids"),
                     Species.Create("Canine"),
-                    Species.Create("Zonotic"),
+                   // Species.Create("Zonotic"),
                 });
 
                 species = species.OrderBy(e => e.Name).ToList();
